@@ -355,7 +355,7 @@ header .main-navigation ul li.current_page_item a,
 header .main-navigation ul li a:hover,
 header.alt .main-navigation ul li.current_page_item a,
 header.alt .main-navigation ul li a:hover,
-header .main-navigation li.parent-item ul.submenu li:hover > a {
+header .main-navigation li.parent-item ul.sub-menu li:hover > a {
     color: #fe9d68;
 }
 header.alt .main-navigation > ul > li.login > a {
@@ -396,10 +396,10 @@ header.alt .main-navigation > ul > li.courses-menu:hover a:after {
 header.alt .main-navigation > ul > li > a {
     color: #4b4f5c;
 }
-/* submenu */
-header .main-navigation li.parent-item ul.submenu,
+/* sub-menu */
+header .main-navigation li.parent-item ul.sub-menu,
 header .main-navigation li.courses-menu ul,
-header .main-navigation li.parent-item ul.submenu ul {
+header .main-navigation li.parent-item ul.sub-menu ul {
     position: absolute;
     left: 11px;
     top: 80px;
@@ -426,45 +426,40 @@ header .main-navigation li.parent-item ul.submenu ul {
     -o-transform-origin: 0 0;
     transform-origin: 0 0;
 }
-header.alt .main-navigation li.parent-item ul.submenu {
+header.alt .main-navigation li.parent-item ul.sub-menu {
     left: 0;
     top: 100%;
 }
-header .main-navigation li.parent-item ul.submenu ul {
-    left: 100%;
-    top: -3px;
-    overflow: hidden;
-    border-left: 1px solid #e6e6e7;
-}
-header .main-navigation li.parent-item ul.submenu ul.left-submenu {
+header .main-navigation li.parent-item ul.sub-menu ul {
+    top: 0;
     left: auto;
     right: 100%;
     border-left: 0;
     border-right: 1px solid #e6e6e7;
 }
-header .main-navigation li.parent-item ul.submenu li a {
+header .main-navigation li.parent-item ul.sub-menu li a {
     position: relative;
     display: block;
     color: #a9abb0;
     padding: 11px 20px;
     border-bottom: 1px solid #e6e6e7;
 }
-header .main-navigation li.parent-item ul.submenu li.haschild,
+header .main-navigation li.parent-item ul.sub-menu li.haschild,
 header .mobile-navigation .mobile-container li.haschild {
     position: relative;
 }
-header .main-navigation li.parent-item ul.submenu li.haschild > a:after,
+header .main-navigation li.parent-item ul.sub-menu li.haschild > a:after,
 header .mobile-navigation .mobile-container li.haschild > a:after {
     content: '\f107';
     font: normal normal normal 14px/1 "FontAwesome";
     float: right;
 }
-header .main-navigation li.parent-item ul.submenu li:hover > a {
+header .main-navigation li.parent-item ul.sub-menu li:hover > a {
     background: #f4f4f4;
 }
-header .main-navigation li.parent-item:hover ul.submenu,
+header .main-navigation li.parent-item:hover>ul.sub-menu,
 header .main-navigation li.courses-menu:hover ul,
-header .main-navigation li.parent-item ul.submenu li.haschild:hover ul {
+header .main-navigation li.parent-item ul.sub-menu li.haschild:hover ul {
     opacity: 1;
     visibility: visible;
     -moz-transform: scaleY(1);
@@ -634,13 +629,13 @@ header.alt .mobile-navigation .mobile-btn span:after {
 .mobile-navigation .mobile-container li.haschild > ul {
     display: none;
 }
-.mobile-navigation .mobile-container li.haschild > ul.submenu > li.sub-item > a {
+.mobile-navigation .mobile-container li.haschild > ul.sub-menu > li.sub-item > a {
     padding-left: 40px;
 }
-.mobile-navigation .mobile-container li.haschild > ul.submenu > li.sub-item > ul > li > a {
+.mobile-navigation .mobile-container li.haschild > ul.sub-menu > li.sub-item > ul > li > a {
     padding-left: 60px;
 }
-.mobile-navigation .mobile-container li.haschild > ul.submenu > li.sub-item > a:after {
+.mobile-navigation .mobile-container li.haschild > ul.sub-menu > li.sub-item > a:after {
     margin-right: 10px;
 }
 /* courses */
@@ -3263,8 +3258,8 @@ blockquote.blockquote-4 .story {
 .dark header.alt .main-navigation > ul > li > a {
     color: #efefef;
 }
-.dark header .main-navigation li.parent-item ul.submenu,
-.dark header .main-navigation li.parent-item ul.submenu ul,
+.dark header .main-navigation li.parent-item ul.sub-menu,
+.dark header .main-navigation li.parent-item ul.sub-menu ul,
 .dark header .main-navigation li.courses-menu li .single-item,
 .dark .mobile-navigation .mobile-container ul,
 .dark .mobile-navigation .mobile-container li.haschild > ul,
@@ -3273,15 +3268,15 @@ blockquote.blockquote-4 .story {
 .dark .course-search:before {
     background: #2c2f3c;
 }
-.dark header .main-navigation li.parent-item ul.submenu li a,
-.dark header .main-navigation li.parent-item ul.submenu ul,
+.dark header .main-navigation li.parent-item ul.sub-menu li a,
+.dark header .main-navigation li.parent-item ul.sub-menu ul,
 .dark .mobile-navigation .mobile-container li.parent-item a,
 .dark .mobile-navigation .mobile-container li.courses-menu .course-menu-item {
     border-bottom-color: #353845;
     border-left-color: #353845;
     border-right-color: #353845;
 }
-.dark header .main-navigation li.parent-item ul.submenu li:hover > a,
+.dark header .main-navigation li.parent-item ul.sub-menu li:hover > a,
 .dark .mobile-navigation .mobile-container li.parent-item a:hover {
     background: #262936;
 }
@@ -3599,7 +3594,7 @@ footer #bottom .footer-social-icons li a:hover i {
     color: #383c4b;
 }
 /* 25 - Animation & Transition */
-header .main-navigation li.parent-item ul.submenu li.haschild > a:after,
+header .main-navigation li.parent-item ul.sub-menu li.haschild > a:after,
 header .mobile-navigation .mobile-container li.haschild > a:after,
 .course-search:before, .accordion .inactive-header:after, .accordion .active-header:after,
 .course-search.alt #search-btn, .instructor.alt .details .rating span.star,

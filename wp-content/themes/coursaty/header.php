@@ -37,7 +37,7 @@
 					<span class="site-name">PTE Revolution<span>.</span></span>
 				</a>
 			</div><!-- End Logo Container -->
-            <?php wp_nav_menu(array('theme_location' => 'primary', 'container' => 'nav', 'container_class' => 'main-navigation fr', 'menu_class' => 'clearfix', 'walker' => new Cousaty_Walker_Nav_Menu())); ?>
+            <?php wp_nav_menu(array('theme_location' => 'primary', 'container' => 'nav', 'container_class' => 'main-navigation fr', 'menu_class' => 'clearfix')); ?>
 			<div class="mobile-navigation fr">
 				<a href="#" class="mobile-btn"><span></span></a>
 				<div class="mobile-container"></div>
