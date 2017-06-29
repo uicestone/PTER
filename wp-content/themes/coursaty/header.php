@@ -28,6 +28,7 @@
 <body id="home">
 <div id="entire">
 	<div class="loader"></div>
+    <?php if(!is_404()): ?>
 	<header id="header">
 		<div class="container">
 			<div class="logo-container fl clearfix">
@@ -43,3 +44,4 @@
 			</div><!-- end mobile navigation -->
 		</div>
 	</header><!-- End Main Header Container -->
+    <?php endif; ?>
