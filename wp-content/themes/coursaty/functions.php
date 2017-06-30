@@ -44,6 +44,9 @@ add_action('wp_enqueue_scripts', function(){
 add_action('init', function () {
 
 	register_nav_menu('primary', '主导航');
+	add_theme_support('post-thumbnails');
+	add_image_size('headline', 1600, 700, true);
+	add_image_size('mentor', 270, 270, true);
 
 	register_taxonomy('question_model', null, array(
 		'label' => '题型',
@@ -96,7 +99,7 @@ add_action('init', function () {
 			'not_found' => '未找到练习'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'custom-fields', 'comments', 'thumbnail'),
+		'supports' => array('title', 'editor', 'comments', 'thumbnail'),
 		'taxonomies' => array('question_model', 'post_tag'),
 		'menu_icon' => 'dashicons-editor-spellcheck',
 		'has_archive' => true

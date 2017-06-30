@@ -5,22 +5,22 @@
 		<div class="row">
 			<div class="col-md-3">
 				<div class="widget about-widget">
-					<h6 class="widget-title">About Coursaty</h6>
+                    <?php $about = get_posts(array('name' => 'about'))[0]; ?>
+					<h6 class="widget-title"><?=get_the_title($about)?></h6>
 					<p class="about-text">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam, adipiscing condimentum tristique vel, eleifend sed turpis. Pellentesque cursus arcu id magna euismod in elementum purus molestie.
+						<?=get_the_excerpt($about)?>
 					</p>
 					<div class="footer-links">
 						<ul>
-							<li><a href="#" class="ln-tr">About Us</a></li>
-							<li><a href="#" class="ln-tr">Meet Our Team</a></li>
-							<li><a href="#" class="ln-tr">Contact Us</a></li>
+							<li><a href="<?=site_url()?>/about/" class="ln-tr">关于我们</a></li>
+							<li><a href="<?=site_url()?>/contact/">联系我们</a></li>
 						</ul>
 					</div><!-- End Footer Links -->
 				</div><!-- End About Widget -->
 			</div><!-- End col-md3 -->
 			<div class="col-md-3">
 				<div class="widget twitter-widget">
-					<h6 class="widget-title">Latest Tweets</h6>
+					<h6 class="widget-title">最近动态</h6>
 					<div id="tweets-slider" class="flexslider">
 						<ul class="slides">
 							<li>
@@ -49,17 +49,18 @@
 			</div><!-- End col-md3 -->
 			<div class="col-md-4">
 				<div class="widget courses-widget">
-					<h6 class="widget-title">Latest Courses</h6>
+					<h6 class="widget-title">最新文章</h6>
 					<div id="footer-courses-slider" class="flexslider">
 						<ul class="slides">
+                            <?php foreach (get_posts() as $index => $post): ?>
 							<li class="clearfix">
 								<div class="course-icon fl">
 									<span class="icon grad-btn"><i class="fa fa-bookmark"></i></span>
 								</div><!-- End Course Icon -->
 								<div class="course-info">
-									<h4 class="footer-course-title"><a href="#" class="ln-tr">How to Design website?</a></h4>
-									<p class="footer-course-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem</p>
-									<span class="course-date">Dec 8, 2015</span>
+									<h4 class="footer-course-title"><a href="<?=get?>" class="ln-tr"><?=get_the_title($post)?></a></h4>
+									<p class="footer-course-description"><?=get_the_excerpt($post)?></p>
+									<span class="course-date"><?=get_the_date('', $post)?></span>
 								</div><!-- End Course Info -->
 								<div class="course-icon fl">
 									<span class="icon"><i class="fa fa-bookmark"></i></span>
@@ -70,40 +71,17 @@
 									<span class="course-date">Dec 8, 2015</span>
 								</div><!-- End Course Info -->
 							</li><!-- End 1st Slide Item -->
-							<li class="clearfix">
-								<div class="course-icon fl">
-									<span class="icon grad-btn"><i class="fa fa-bookmark"></i></span>
-								</div><!-- End Course Icon -->
-								<div class="course-info">
-									<h4 class="footer-course-title"><a href="#" class="ln-tr">How to Design website?</a></h4>
-									<p class="footer-course-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem</p>
-									<span class="course-date">Dec 8, 2015</span>
-								</div><!-- End Course Info -->
-								<div class="course-icon fl">
-									<span class="icon"><i class="fa fa-bookmark"></i></span>
-								</div><!-- End Course Icon -->
-								<div class="course-info">
-									<h4 class="footer-course-title"><a href="#" class="ln-tr">How to Design website?</a></h4>
-									<p class="footer-course-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem</p>
-									<span class="course-date">Dec 8, 2015</span>
-								</div><!-- End Course Info -->
-							</li><!-- End 2nd Slide Item -->
+                            <?php endforeach; ?>
 						</ul><!-- End ul Items -->
 					</div><!-- End Footer Scourses Slider -->
 				</div><!-- End Courses Widget -->
 			</div><!-- End col-md4 -->
 			<div class="col-md-2">
 				<div class="widget links-widget">
-					<h6 class="widget-title">Quick Links</h6>
+					<h6 class="widget-title">链接</h6>
 					<div class="footer-links">
 						<ul>
-							<li><a href="#" class="ln-tr">Help</a></li>
-							<li><a href="#" class="ln-tr">Sitemap</a></li>
-							<li><a href="#" class="ln-tr">Mobile</a></li>
-							<li><a href="#" class="ln-tr">Privacy Policy</a></li>
-							<li><a href="#" class="ln-tr">Support</a></li>
-							<li><a href="#" class="ln-tr">Careers</a></li>
-							<li><a href="#" class="ln-tr">Instructors</a></li>
+							<li><a href="http://pearsonpte.com/" class="ln-tr">PTE</a></li>
 						</ul>
 					</div><!-- End Footer Links -->
 				</div><!-- End Links Widget -->
@@ -113,16 +91,12 @@
 	<div id="bottom">
 		<div class="container">
 			<div class="fl copyright">
-				<p>All Rights Reserved &copy; Coursaty Template | By <a target="_blank" href="http://iseada.com/" class="ln-tr">iSeada</a> & <a target="_blank" href="http://7oroof.com/" class="ln-tr">7oroof</a></p>
+				<p>All Rights Reserved &copy; Bingo Training Pty. Ltd.</p>
 			</div><!-- End Copyright -->
 			<div class="fr footer-social-icons">
 				<ul class="clearfix">
 					<li><a href="#" class="fb-icon ln-tr"><i class="fa fa-facebook"></i></a></li>
-					<li><a href="#" class="tw-icon ln-tr"><i class="fa fa-twitter"></i></a></li>
-					<li><a href="#" class="gp-icon ln-tr"><i class="fa fa-google-plus"></i></a></li>
-					<li><a href="#" class="in-icon ln-tr"><i class="fa fa-linkedin"></i></a></li>
-					<li><a href="#" class="yt-icon ln-tr"><i class="fa fa-youtube-play"></i></a></li>
-					<li><a href="#" class="rss-icon ln-tr"><i class="fa fa-rss"></i></a></li>
+                    <li><a href="#" class="in-icon ln-tr"><i class="fa fa-weixin"></i></a></li>
 				</ul>
 			</div><!-- End Social Media Icons -->
 		</div><!-- End container -->
