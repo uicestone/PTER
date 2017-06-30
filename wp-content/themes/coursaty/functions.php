@@ -69,7 +69,7 @@ add_action('init', function () {
 			'not_found' => '未找到题型'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'custom-fields', 'thumbnail'),
+		'supports' => array('title', 'editor', 'thumbnail'),
 		'taxonomies' => array('question_model', 'post_tag'),
 		'menu_icon' => 'dashicons-feedback',
 		'has_archive' => true
@@ -84,7 +84,7 @@ add_action('init', function () {
 			'not_found' => '未找到技巧'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'custom-fields', 'thumbnail'),
+		'supports' => array('title', 'editor', 'thumbnail'),
 		'taxonomies' => array('question_model', 'post_tag'),
 		'menu_icon' => 'dashicons-clipboard',
 		'has_archive' => true
@@ -99,7 +99,7 @@ add_action('init', function () {
 			'not_found' => '未找到练习'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'comments', 'thumbnail'),
+		'supports' => array('title', 'editor', 'thumbnail'),
 		'taxonomies' => array('question_model', 'post_tag'),
 		'menu_icon' => 'dashicons-editor-spellcheck',
 		'has_archive' => true
