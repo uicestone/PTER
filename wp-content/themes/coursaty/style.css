@@ -426,11 +426,11 @@ header .main-navigation li.parent-item ul.sub-menu ul {
     -o-transform-origin: 0 0;
     transform-origin: 0 0;
 }
-header.alt .main-navigation li.parent-item ul.sub-menu {
+header.alt .main-navigation li.parent-item>ul.sub-menu {
     left: 0;
     top: 100%;
 }
-header .main-navigation li.parent-item ul.sub-menu ul {
+header .main-navigation li.parent-item>ul.sub-menu ul {
     top: 0;
     left: auto;
     right: 100%;
@@ -2417,7 +2417,7 @@ h6.head-title {
     border-color: #5a5e6a;
 }
 .comment-form .input textarea, .contact-form .input textarea {
-    min-height: 132px;
+    min-height: 103px;
     resize: vertical;
 }
 .comment-form .input .submit-input, .contact-form .input .submit-input {

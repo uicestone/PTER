@@ -29,7 +29,7 @@
 <div id="entire">
 	<div class="loader"></div>
     <?php if(!is_404()): ?>
-	<header id="header">
+	<header id="header" class="<?=is_home() ? '' : 'alt static-header'?>">
 		<div class="container">
 			<div class="logo-container fl clearfix">
 				<a href="#" class="ib">

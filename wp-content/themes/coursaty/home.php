@@ -6,7 +6,7 @@
             <?php foreach (get_posts(array('tag' => 'headline')) as $index => $post): ?>
             <li data-transition="random" data-slotamount="7" data-masterspeed="1500">
                 <!-- MAIN IMAGE -->
-                <?=get_the_post_thumbnail($post->ID, 'headline', array('alt' => 'slidebg' . ($index + 1), 'data-bgfit' => 'cover', 'data-bgposition' => 'left top', 'data-bgrepeat' => 'no-repeat'))?>
+                <?=get_the_post_thumbnail($post, 'headline', array('alt' => 'slidebg' . ($index + 1), 'data-bgfit' => 'cover', 'data-bgposition' => 'left top', 'data-bgrepeat' => 'no-repeat'))?>
                 <!-- LAYERS -->
                 <!-- LAYER NR. 1 -->
                 <div class="tp-caption sft skewtoleft tp-resizeme start white"
@@ -19,7 +19,7 @@
                     data-easing="Power3.easeInOut"
                     data-endspeed="300"
                     style="z-index: 2">
-                    <h2 class="slide-title"><?=get_the_title($post->ID)?></h2>
+                    <h2 class="slide-title"><?=get_the_title($post)?></h2>
                 </div>
                 <!-- LAYER NR. 2 -->
                 <div class="tp-caption black randomrotate skewtoleft tp-resizeme start"
@@ -34,7 +34,7 @@
                     data-elementdelay="0.1"
                     data-endelementdelay="0.1"
                     data-endspeed="500" style="z-index: 99; white-space: pre-line;">
-                    <p class="slide-description"><?=$post->post_excerpt?></p>
+                    <p class="slide-description"><?=get_the_subtitle($post)?></p>
                 </div>
             </li>
             <?php endforeach; ?>
@@ -46,82 +46,62 @@
 
 <div class="course-search fancy-shadow">
     <div class="container">
-        <form action="10-courses-grid-1.html" id="course-search-form" class="clearfix">
+        <form action="<?=site_url()?>/" id="course-search-form" class="clearfix">
             <input type="text" name="course-name" id="course-name" placeholder="搜索题型和技巧">
             <div class="select-category ib">
-                <select class="dropdown" name="course-category" id="course-category" data-settings='{"cutOff": 7}'>
-                    <option value="" class="label">全部</option>
+                <select class="dropdown" name="post_type" id="course-category">
+                    <option value="any" selected="selected">全部</option>
                     <option value="question_model">题型</option>
                     <option value="tip">技巧</option>
                 </select>
             </div><!-- End Select Category -->
 
             </div><!-- End Select Country -->
-            <input type="submit" name="search-btn" id="search-btn" class="grad-btn ln-tr" value="Search">
+            <button type="submit" id="search-btn" class="grad-btn ln-tr">搜索</button>
         </form><!-- End Sourse Search Form -->
     </div>
 </div><!-- End Course Container -->
 
 <div class="clearfix"></div>
 
+<?php $welcome_pages = get_posts(array('post_type' => 'page', 'name' => 'welcome')); if ($welcome_pages): $welcome_page = $welcome_pages[0]; ?>
 <section class="full-section features-section fancy-shadow">
     <div class="container">
-        <h3 class="section-title">欢迎使用PTE Revolution学习PTE考试技巧</h3>
+        <h3 class="section-title"><?=get_the_title($welcome_page)?></h3>
         <p class="section-description">
-            你将体验到前所未有的学习与考试乐趣，取得高分不再是梦
+            <?=get_the_subtitle($welcome_page)?>
         </p><!-- End Section Description -->
     </div>
     <div class="section-content features-content fadeInDown-animation">
         <div class="container">
             <div class="row">
+	            <?php foreach (get_posts(array('category_name' => 'service')) as $post): ?>
                 <div class="col-md-3 col-xs-6">
                     <div class="feature-box">
-                        <div class="icon"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/feature-icon-1.png" class="es-tr" alt=""></div><!-- End Icon -->
-                        <h5 class="feature-title">PTE口语技巧和练习</h5>
+                        <div class="icon">
+                            <?=get_the_post_thumbnail($post, 'thumbnail', array('class' => 'es-tr'))?>
+                        </div><!-- End Icon -->
+                        <h5 class="feature-title"><?=get_the_title($post)?></h5>
                         <p class="feature-description">
-
+                            <?=get_the_subtitle($post)?>
                         </p>
                     </div><!-- End Features Box -->
                 </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="feature-box">
-                        <div class="icon"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/feature-icon-2.png" class="es-tr" alt=""></div><!-- End Icon -->
-                        <h5 class="feature-title">PTE听力技巧和练习</h5>
-                        <p class="feature-description">
-
-                        </p>
-                    </div><!-- End Features Box -->
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="feature-box">
-                        <div class="icon"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/feature-icon-3.png" class="es-tr" alt=""></div><!-- End Icon -->
-                        <h5 class="feature-title">PTE阅读指导</h5>
-                        <p class="feature-description">
-
-                        </p>
-                    </div><!-- End Features Box -->
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="feature-box">
-                        <div class="icon"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/feature-icon-4.png" class="es-tr" alt=""></div><!-- End Icon -->
-                        <h5 class="feature-title">PTE写作指导</h5>
-                        <p class="feature-description">
-
-                        </p>
-                    </div><!-- End Features Box -->
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div><!-- End Features Section Content -->
 </section><!-- End Features Section -->
 
 <div class="clearfix"></div>
+<?php endif; ?>
 
+<?php $mentor_pages = get_posts(array('post_type' => 'page', 'name' => 'mentor')); if ($mentor_pages): $mentor_page = $mentor_pages[0]; ?>
 <section class="full-section instructors-section fancy-shadow">
     <div class="container">
-        <h3 class="section-title">我们的导师</h3>
+        <h3 class="section-title"><?=get_the_title($mentor_page)?></h3>
         <p class="section-description">
-            考神是来源于99%的自我努力加上1%的导师点拨，而那1%的点拨，往往是至关重要的 —— Bingo Training
+            <?=get_the_subtitle($mentor_page)?>
         </p><!-- End Section Description -->
     </div>
     <div class="section-content instructors-content fadeInDown-animation">
@@ -131,14 +111,15 @@
                 <div class="col-md-3 col-xs-6">
                     <div class="instructor">
                         <div class="avatar">
-                            <?=get_the_post_thumbnail($post->ID, 'mentor', array('class' => 'img-responsive'))?>
+                            <?=get_the_post_thumbnail($post, 'mentor', array('class' => 'img-responsive'))?>
                         </div><!-- End Avatar -->
                         <div class="instructor-info">
-                            <p class="name"><?=get_the_title($post->ID)?></p>
-                            <span class="position"><?=get_the_subtitle($post->ID)?></span>
+                            <p class="name"><?=get_the_title($post)?></p>
+                            <span class="position"><?=get_the_subtitle($post)?></span>
                             <div class="social-icons">
                                 <ul class="clearfix">
                                     <li><a href="#" class="fb-icon es-tr"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#" class="tw-icon es-tr"><i class="fa fa-envelope-o"></i></a></li>
                                     <li><a href="#" class="tw-icon es-tr"><i class="fa fa-weixin"></i></a></li>
                                 </ul>
                             </div>
@@ -152,6 +133,7 @@
 </section><!-- End Our Instructors Container -->
 
 <div class="clearfix"></div>
+<?php endif; ?>
 
 <section class="full-section latest-courses-section">
     <div class="container">
