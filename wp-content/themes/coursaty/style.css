@@ -1854,6 +1854,14 @@ h6.head-title {
     color: #5a5e6a;
     margin-bottom: 12px;
 }
+.post .entry .content img {
+    max-width: 100%;
+}
+.post .entry .content ul li, .post .entry .content ol li {
+    color: #5a5e6a;
+    line-height: 30px;
+    list-style: inside;
+}
 .post .entry .share-post, .follow-icons, .share-icons {
     background: #ffe1d1;
     border-radius: 4px;
@@ -3449,6 +3457,7 @@ footer .about-widget .about-text {
     line-height: 21px;
     text-align: justify;
     margin-bottom: 20px;
+    white-space: pre-line;
 }
 /* Links */
 footer .footer-links ul li {

@@ -75,6 +75,8 @@ add_action('init', function () {
 		'has_archive' => true
 	));
 
+	add_post_type_support('question_model', 'wps_subtitle');
+
 	register_post_type('tip', array(
 		'label' => '技巧',
 		'labels' => array(
@@ -89,6 +91,8 @@ add_action('init', function () {
 		'menu_icon' => 'dashicons-clipboard',
 		'has_archive' => true
 	));
+
+	add_post_type_support('tip', 'wps_subtitle');
 
 	register_post_type('exercise', array(
 		'label' => '练习',

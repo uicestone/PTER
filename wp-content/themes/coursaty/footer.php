@@ -25,22 +25,22 @@
 						<ul class="slides">
 							<li>
 								<div class="tweet">
-									<a href="#" class="ln-tr">@begha</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
-									<div class="date">Dec. 6, 2014</div>
+									<a href="#" class="ln-tr">@bingo</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
+									<div class="date">July. 1, 2017</div>
 								</div><!-- End Single Tweet -->
 								<div class="tweet">
-									<a href="#" class="ln-tr">@begha</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
-									<div class="date">Dec. 6, 2014</div>
+									<a href="#" class="ln-tr">@bingo</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
+									<div class="date">July. 1, 2017</div>
 								</div><!-- End Single Tweet -->
 							</li><!-- End 1st Tweet Slide Item -->
 							<li>
 								<div class="tweet">
-									<a href="#" class="ln-tr">@begha</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
-									<div class="date">Dec. 6, 2014</div>
+									<a href="#" class="ln-tr">@bingo</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
+									<div class="date">July. 1, 2017</div>
 								</div><!-- End Single Tweet -->
 								<div class="tweet">
-									<a href="#" class="ln-tr">@begha</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
-									<div class="date">Dec. 6, 2014</div>
+									<a href="#" class="ln-tr">@bingo</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
+									<div class="date">July. 1, 2017</div>
 								</div><!-- End Single Tweet -->
 							</li><!-- End 2nd Tweet Slide Item -->
 						</ul><!-- End ul Items -->
