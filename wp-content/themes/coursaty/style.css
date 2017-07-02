@@ -1855,7 +1855,10 @@ h6.head-title {
     margin-bottom: 12px;
 }
 .post .entry .content img {
-    max-width: 100%;
+    max-width: 95%;
+    height: auto;
+    margin: auto;
+    display: block;
 }
 .post .entry .content ul li, .post .entry .content ol li {
     color: #5a5e6a;
