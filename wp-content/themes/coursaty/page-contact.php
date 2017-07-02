@@ -71,7 +71,7 @@
 </article><!-- End Single Article -->
 
 <!-- start google maps code -->
-<script src='https://maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js'></script>
+<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCuo-7pilc2gDxQT8rzArOrcrQvm4N6yZk&sensor=false&extension=.js'></script>
 <script>
     google.maps.event.addDomListener(window, 'load', init);
     var map;
