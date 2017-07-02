@@ -403,6 +403,7 @@ header .main-navigation li.parent-item ul.sub-menu ul {
     position: absolute;
     left: 11px;
     top: 80px;
+    margin-left: 0;
     z-index: 2;
     min-width: 200px;
     background: #fafafa;
