@@ -58,10 +58,10 @@
     <div class="container">
         <h3 class="section-title">技巧</h3>
         <p class="section-description">
-            技巧描述，如何购买
+            订阅会员后可以学习全部技巧
         </p><!-- End Section Description -->
     </div>
-    <div class="section-content latest-courses-content alt fadeInDown-animation">
+    <div class="section-content post latest-courses-content alt fadeInDown-animation">
         <div class="container">
             <div class="row">
 				<?php foreach (get_posts(array(
@@ -74,10 +74,12 @@
 						)
 					)
 				)) as $post): ?>
-                <div class="add-courses box">
+                <div class="add-courses box entry">
                     <img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/addcourse-icon.png" alt="" class="fl add-courses-icon">
                     <span class="add-courses-title ln-tr"><?=get_the_title($post)?></span>
-                    <?=wpautop($post->post_content)?>
+                    <div class="content">
+						<?=wpautop(do_shortcode($post->post_content))?>
+                    </div>
                 </div>
                 <?php endforeach; ?>
             </div><!-- End row -->

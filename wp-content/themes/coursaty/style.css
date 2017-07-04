@@ -94,6 +94,9 @@ body {
 .full-section .section-content {
     margin-top: 54px;
 }
+.full-section .section-content.post {
+    padding-top: 0;
+}
 .fancy-shadow {
     box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
     position: relative;
@@ -1070,14 +1073,20 @@ header.alt .mobile-navigation .mobile-btn span:after {
 .add-courses.box {
     margin-top: 30px;
 }
+.post .add-courses.entry {
+    padding: 40px 85px 40px 40px;
+}
+.add-courses.entry .content {
+    margin-left: 100px;
+}
 .add-courses .add-courses-icon {
     width: 65px;
-    margin-right: 20px;
+    margin-right: 35px;
     border-radius: 3px;
 }
 .add-courses .add-courses-title {
     display: inline-block;
-    font-size: 17px;
+    font-size: 30px;
     font-weight: bold;
     color: #fe9d68;
     margin-bottom: 10px;
@@ -1781,6 +1790,18 @@ h6.head-title {
     margin-right: 6px;
     margin-bottom: 24px;
 }
+.post .entry h1, .post .entry h2, .post .entry h3, .post .entry h4 {
+    margin: 0.8em 0;
+}
+.post .entry h1 {
+    font-size: 30px;
+}
+.post .entry h2 {
+    font-size: 26px;
+}
+.post .entry h3 {
+    font-size: 22px;
+}
 .post .entry h4 {
     font-size: 18px;
 }
@@ -1794,10 +1815,19 @@ h6.head-title {
     margin: auto;
     display: block;
 }
+.post .entry .content ul, .post .entry .content ol {
+    margin-bottom: 12px;
+}
 .post .entry .content ul li, .post .entry .content ol li {
     color: #5a5e6a;
     line-height: 30px;
     list-style: inside;
+}
+.post .entry .content ol li {
+    list-style-type: decimal;
+}
+.post .entry .content a {
+    color: #fe9d68;
 }
 .post .entry .share-post, .follow-icons, .share-icons {
     background: #ffe1d1;
