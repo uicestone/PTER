@@ -40,31 +40,16 @@
                 </div><!-- End Sidebar Entry -->
             </div><!-- End col-md-3 -->
             <div class="col-md-9">
-                <div id="single-slider" class="alt flexslider">
-                    <ul class="slides">
-                        <li><div class="image"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/content/single-2-slide-1-870x352.jpg" alt="" class="img-responsive"></div></li>
-                        <li><div class="image"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/content/single-2-slide-2-870x352.jpg" alt="" class="img-responsive"></div></li>
-                    </ul><!-- End ul elements -->
-                </div><!-- End Single Slider -->
-            </div><!-- End col-md-12 -->
-        </div><!-- End row -->
-    </div><!-- End container -->
-
-    <div class="clearfix"></div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
                 <div class="entry clearfix">
                     <span class="entry-icon"><i class="fa fa-microphone"></i></span>
                     <h4 class="overview ib">题型概述</h4>
                     <div class="content">
-                        <?php the_content(); ?>
+						<?php the_content(); ?>
                     </div>
                 </div><!-- End Entry -->
             </div><!-- End col-md-12 -->
         </div><!-- End row -->
-    </div><!-- End Container -->
+    </div><!-- End container -->
 </article>
 
 <div class="clearfix"></div>
@@ -79,52 +64,22 @@
     <div class="section-content latest-courses-content alt fadeInDown-animation">
         <div class="container">
             <div class="row">
-                <div id="courses-slider" class="flexslider">
-                    <ul class="slides">
-                        <?php foreach (get_posts(array(
-                            'post_type' => 'tip',
-                            'tax_query' => array(
-                                array(
-									'taxonomy' => 'question_model',
-									'field' => 'slug',
-									'terms' => wp_get_object_terms(get_the_ID(), 'question_model')[0]->slug
-                                )
-                            )
-                        )) as $post): ?>
-                        <li class="course-slide-item clearfix" id="post-<?=$post->ID?>">
-                            <div class="col-md-12">
-                                <div class="course">
-                                    <?php if (get_post_meta($post->ID, 'free', true)): ?>
-                                    <div class="featured-badge"><span>免费试学</span></div>
-                                    <?php endif; ?>
-                                    <div class="course-image">
-                                        <div class="details-overlay">
-                                            <span class="place">
-                                                <i class="fa fa-map-marker"></i>
-                                                <span class="text">难度指数：<?=get_post_meta($post->ID, 'difficulty', true)?></span>
-                                            </span>
-                                            <span class="time">
-                                                <i class="fa fa-clock-o"></i>
-                                                <span class="text">提分指数：<?=get_post_meta($post->ID, 'gain', true)?></span>
-                                            </span>
-                                        </div><!-- End Course Overlay -->
-                                        <?=get_the_post_thumbnail($post, 'medium', array('class' => 'img-responsive'))?>
-                                    </div><!-- End Course Image -->
-                                    <div class="course-info">
-                                        <h3 class="course-title"><a href="<?=get_the_permalink($post)?>" class="ln-tr"><?=get_the_title($post)?></a></h3>
-                                        <p class="course-description">
-                                            <?=get_the_subtitle($post)?>
-                                        </p>
-                                        <div class="buttons">
-                                            <a href="#" class="btn grad-btn orange-btn read-btn">立即订阅</a>
-                                        </div>
-                                    </div>
-                                </div><!-- End Course -->
-                            </div><!-- End col-md-12 -->
-                        </li><!-- End 1st Slide -->
-                        <?php endforeach; ?>
-                    </ul><!-- End ul Items -->
-                </div><!-- End Courses Slider -->
+				<?php foreach (get_posts(array(
+					'post_type' => 'tip',
+					'tax_query' => array(
+						array(
+							'taxonomy' => 'question_model',
+							'field' => 'slug',
+							'terms' => wp_get_object_terms(get_the_ID(), 'question_model')[0]->slug
+						)
+					)
+				)) as $post): ?>
+                <div class="add-courses box">
+                    <img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/addcourse-icon.png" alt="" class="fl add-courses-icon">
+                    <span class="add-courses-title ln-tr"><?=get_the_title($post)?></span>
+                    <?=wpautop($post->post_content)?>
+                </div>
+                <?php endforeach; ?>
             </div><!-- End row -->
         </div><!-- End Container -->
     </div><!-- End Latest-Courses Section Content -->

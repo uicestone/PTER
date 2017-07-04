@@ -37,8 +37,8 @@
 /*   24 - Footer                   */
 /*   25 - Animation & Transition   */
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400italic,700,600,400);
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400italic,700,600,400);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,700italic);
 @import url(assets/css/base.css);
 @import url(assets/css/components.css);
 @import url(assets/css/font-awesome.min.css);
@@ -2768,8 +2768,16 @@ h6.head-title {
 blockquote {
     display: block;
     position: relative;
-    padding: 23px 30px 25px 30px;
+    padding: 10px 20px;
     margin: 6px 0;
+    border-left: 2px solid #fe9d68;
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+blockquote em {
+    color: #fe9d68;
+    font-weight: normal;
+    font-style: normal;
 }
 blockquote .story {
     font-size: 20px;
