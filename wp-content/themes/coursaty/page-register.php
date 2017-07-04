@@ -1,16 +1,15 @@
-<?php get_header(); ?>
+<?php get_header(); the_post(); ?>
 
 <div class="inner-head">
     <div class="container">
-        <h1 class="entry-title">Register new member</h1>
+        <h1 class="entry-title"><?php the_title(); ?></h1>
         <p class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam, adipiscing condimentum tristique vel, eleifend sed turpis. Pellentesque cursus arcu id magna euismod in elementum purus molestie.
+			<?php the_subtitle(); ?>
         </p>
         <div class="breadcrumb">
             <ul class="clearfix">
-                <li class="ib"><a href="">Home</a></li>
-                <li class="ib"><a href="">Blog</a></li>
-                <li class="ib current-page"><a href="">Register</a></li>
+                <li class="ib"><a href="<?=site_url()?>">首页</a></li>
+                <li class="ib current-page"><a href="<?php the_permalink(); ?>">注册</a></li>
             </ul>
         </div>
     </div><!-- End container -->
@@ -25,54 +24,38 @@
                 <div class="login-form register">
                     <div class="login-title">
                         <span class="icon"><i class="fa fa-group"></i></span>
-                        <span class="text">Register</span>
+                        <span class="text">注册</span>
                     </div><!-- End Title -->
                     <form method="post" action="/" id="register-form">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="text" id="reg_username" class="username-input" placeholder="User Name">
+                                    <input type="text" id="reg_username" class="username-input" placeholder="用户名">
                                 </div>
                             </div><!-- end username -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="email" id="reg_email" class="email-input" placeholder="Email">
+                                    <input type="email" id="reg_email" class="email-input" placeholder="电子邮箱">
                                 </div>
                             </div><!-- end email -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="password" id="reg_password" class="password-input" placeholder="Password">
+                                    <input type="password" id="reg_password" class="password-input" placeholder="密码">
                                 </div>
                             </div><!-- end password -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="password" id="reg_confirm-password" class="confirm-password-input" placeholder="Confirm Password">
+                                    <input type="password" id="reg_confirm-password" class="confirm-password-input" placeholder="确认密码">
                                 </div>
                             </div><!-- end confirm password -->
                             <div class="col-md-12">
                                 <div class="input clearfix">
-                                    <input type="submit" id="reg_submit" class="submit-input grad-btn ln-tr" value="Register">
+                                    <input type="submit" id="reg_submit" class="submit-input grad-btn ln-tr" value="注册">
                                 </div>
                             </div><!-- end submit -->
                         </div><!-- end row -->
                     </form><!-- End form -->
                 </div><!-- end login form -->
-                <div class="login-options">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <a href="#" class="login-op-btn grad-btn ln-tr fb">Login with Facebook Account</a>
-                        </div><!-- end FB login -->
-                        <div class="col-md-6 col-sm-6">
-                            <a href="#" class="login-op-btn grad-btn ln-tr gp">Login with Google Account</a>
-                        </div><!-- end GP login -->
-                        <div class="col-md-6 col-sm-6">
-                            <a href="#" class="login-op-btn grad-btn ln-tr tw">Login with Twitter Account</a>
-                        </div><!-- end TW login -->
-                        <div class="col-md-6 col-sm-6">
-                            <a href="#" class="login-op-btn grad-btn ln-tr ya">Login with Yahoo Account</a>
-                        </div><!-- end YA login -->
-                    </div>
-                </div><!-- end login optionss -->
             </div><!-- end col-md-8/offset -->
         </div><!-- end row -->
     </div><!-- end container -->

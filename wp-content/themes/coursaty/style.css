@@ -1772,6 +1772,7 @@ h6.head-title {
     position: relative;
     margin-right: 10px;
     padding-right: 10px;
+    line-height: 21px;
 }
 .inner-head .breadcrumb li:after {
     content: '\f105';
@@ -1780,18 +1781,18 @@ h6.head-title {
     position: absolute;
     left: 100%;
     top: 4px;
-    color: #cecfd2;
+    color: white;
 }
 .inner-head .breadcrumb li:last-child:after {
     display: none;
 }
 .inner-head .breadcrumb li a {
     display: block;
-    color: #f89966;
+    color: #ffdbc8;
 }
 .inner-head .breadcrumb li.current-page a,
 .inner-head .breadcrumb li:hover a  {
-    color: #cecfd2;
+    color: white;
 }
 /* 14 - Blog */
 .post {
@@ -2669,7 +2670,7 @@ h6.head-title {
 }
 .login-page {
     background: #f5f5f5;
-    padding: 150px 0;
+    padding: 100px 0;
 }
 .login-page .login-form {
     margin-bottom: 30px;

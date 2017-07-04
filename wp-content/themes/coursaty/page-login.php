@@ -1,16 +1,15 @@
-<?php get_header(); ?>
+<?php get_header(); the_post(); ?>
 
 <div class="inner-head">
     <div class="container">
-        <h1 class="entry-title">We Wanna Hear From You!</h1>
+        <h1 class="entry-title"><?php the_title(); ?></h1>
         <p class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam, adipiscing condimentum tristique vel, eleifend sed turpis. Pellentesque cursus arcu id magna euismod in elementum purus molestie.
+            <?php the_subtitle(); ?>
         </p>
         <div class="breadcrumb">
             <ul class="clearfix">
-                <li class="ib"><a href="">Home</a></li>
-                <li class="ib"><a href="">Blog</a></li>
-                <li class="ib current-page"><a href="">Login</a></li>
+                <li class="ib"><a href="<?=site_url()?>">首页</a></li>
+                <li class="ib current-page"><a href="<?php the_permalink(); ?>">登录</a></li>
             </ul>
         </div>
     </div><!-- End container -->
@@ -25,55 +24,39 @@
                 <div class="login-form">
                     <div class="login-title">
                         <span class="icon"><i class="fa fa-group"></i></span>
-                        <span class="text">Login Area</span>
+                        <span class="text">登录信息</span>
                     </div><!-- End Title -->
                     <form method="post" action="/" id="login-form">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="text" id="login_username" class="username-input" placeholder="User Name">
+                                    <input type="text" id="login_username" class="username-input" placeholder="用户名">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="password" id="login_password" class="password-input" placeholder="Password">
+                                    <input type="password" id="login_password" class="password-input" placeholder="密码">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="input clearfix">
-                                    <input type="submit" id="login_submit" class="submit-input grad-btn ln-tr" value="Login">
+                                    <input type="submit" id="login_submit" class="submit-input grad-btn ln-tr" value="登录">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6 clearfix">
                                 <div class="custom-checkbox fl">
                                     <input type="checkbox" id="login_remember" class="checkbox-input" checked>
-                                    <label for="login_remember">Remember Password</label>
+                                    <label for="login_remember">保持登录</label>
                                 </div>
                             </div><!-- end remember -->
                             <div class="col-md-6 col-sm-6 clearfix">
                                 <div class="forgot fr">
-                                    <a href="#" class="new-user">Create New Account</a> / <a href="#" class="reset">Forget Password ?</a>
+                                    <a href="<?=site_url()?>/register/" class="new-user">注册账号</a> / <a href="#" class="reset">忘记密码？</a>
                                 </div>
                             </div><!-- end forgot password -->
                         </div><!-- end row -->
                     </form><!-- End form -->
                 </div><!-- end login form -->
-                <div class="login-options">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <a href="#" class="login-op-btn grad-btn ln-tr fb">Login with Facebook Account</a>
-                        </div><!-- end FB login -->
-                        <div class="col-md-6 col-sm-6">
-                            <a href="#" class="login-op-btn grad-btn ln-tr gp">Login with Google Account</a>
-                        </div><!-- end GP login -->
-                        <div class="col-md-6 col-sm-6">
-                            <a href="#" class="login-op-btn grad-btn ln-tr tw">Login with Twitter Account</a>
-                        </div><!-- end TW login -->
-                        <div class="col-md-6 col-sm-6">
-                            <a href="#" class="login-op-btn grad-btn ln-tr ya">Login with Yahoo Account</a>
-                        </div><!-- end YA login -->
-                    </div>
-                </div><!-- end login optionss -->
             </div><!-- end col-md-8/offset -->
         </div><!-- end row -->
     </div><!-- end container -->
