@@ -131,10 +131,6 @@ add_filter('nav_menu_link_attributes', function($attrs, $item) {
 
 	$attrs['class'][] = 'ln-tr';
 
-	if(array_intersect(['current-menu-item', 'current-page-ancestor', 'current-post-ancestor'], $item->classes ?: [])) {
-		$attrs['class'][] = 'current_page_item';
-	}
-
 	$attrs['class'] = implode(' ', $attrs['class']);
 
 	$attrs['role'] = 'button';
@@ -147,6 +143,10 @@ add_filter('nav_menu_css_class', function($classes, $item) {
 
 	if(in_array('menu-item-has-children', $classes)) {
 		$classes[] = 'haschild';
+	}
+
+	if(array_intersect(['current-menu-item', 'current-page-ancestor', 'current-post-ancestor', 'current-question_model-ancestor'], $classes ?: [])) {
+		$classes[] = 'current_page_item';
 	}
 
 	if($item->menu_item_parent) {
