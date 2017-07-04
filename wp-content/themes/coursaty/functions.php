@@ -20,6 +20,7 @@ add_action('wp', function() {
 	wp_register_script('tools', get_stylesheet_directory_uri() . '/assets/js/jquery.themepunch.tools.min.js', array('jquery'), '1.0.0', true);
 	wp_register_script('viewportchecker', get_stylesheet_directory_uri() . '/assets/js/jquery.viewportchecker.min.js', array('jquery'), '1.8.0', true);
 	wp_register_script('waypoints', get_stylesheet_directory_uri() . '/assets/js/jquery.waypoints.min.js', array('jquery'), '3.0.0', true);
+	wp_register_script('sticky', get_stylesheet_directory_uri() . '/assets/js/jquery.sticky.min.js', array('jquery'), '1.0.4', true);
 	wp_register_script('scripts', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array('jquery'), '1.0.0', true);
 
 });
@@ -37,6 +38,7 @@ add_action('wp_enqueue_scripts', function(){
 	wp_enqueue_script('tools');
 	wp_enqueue_script('viewportchecker');
 	wp_enqueue_script('waypoints');
+	wp_enqueue_script('sticky');
 	wp_enqueue_script('scripts');
 });
 
@@ -145,7 +147,7 @@ add_filter('nav_menu_css_class', function($classes, $item) {
 		$classes[] = 'haschild';
 	}
 
-	if(array_intersect(['current-menu-item', 'current-page-ancestor', 'current-post-ancestor', 'current-question_model-ancestor'], $classes ?: [])) {
+	if(array_intersect(['current-menu-item', 'current-page-ancestor', 'current-post-ancestor', 'current-question_model-ancestor', 'current-exercise-ancestor'], $classes ?: [])) {
 		$classes[] = 'current_page_item';
 	}
 

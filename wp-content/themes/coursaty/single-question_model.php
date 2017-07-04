@@ -86,5 +86,19 @@
         </div><!-- End Container -->
     </div><!-- End Latest-Courses Section Content -->
 </section><!-- End Courses Section -->
+<script type="text/javascript">
+jQuery(function ($) {
+    var courseDetail = $('.course-details').sticky({topSpacing:0});
+    var heightDiff = $('.entry').height() + 40 - 342;
+    $(window).on('scroll load', function () {
+        endSticky(courseDetail, 227, heightDiff);
+    });
+    function endSticky(element, heightTop, heightDiff) {
+        if ($(window).scrollTop() > heightTop + heightDiff) {
+            element.css({position: 'relative', top: heightDiff});
+        }
+    }
+});
 
+</script>
 <?php get_footer(); ?>

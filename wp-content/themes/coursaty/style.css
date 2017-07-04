@@ -1776,6 +1776,9 @@ h6.head-title {
 .post .course-details {
     margin-bottom: 30px;
 }
+.post .overview.ib {
+    margin: 0;
+}
 .post .entry-icon, .sidebar .sidebar-widget .widget-icon,
 .comment-form .addcomment-title .icon, .contact .contact-left .contact-form-icon,
 .login-page .login-form .login-title .icon {
@@ -2272,7 +2275,7 @@ h6.head-title {
 }
 .post .entry .content {
     clear: both;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 .comments-list {
     background: #fa9964;
@@ -2810,7 +2813,7 @@ blockquote {
 }
 blockquote em {
     color: #fe9d68;
-    font-weight: normal;
+    font-weight: bold;
     font-style: normal;
 }
 blockquote .story {
