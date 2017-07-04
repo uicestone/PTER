@@ -1737,7 +1737,7 @@ h6.head-title {
 }
 /* 14 - Blog */
 .post {
-    padding-top: 100px;
+    padding-top: 40px;
     background: #f5f5f5;
 }
 .post #single-slider {
@@ -1808,6 +1808,9 @@ h6.head-title {
 }
 .post .entry .content p {
     color: #5a5e6a;
+    margin-bottom: 12px;
+}
+.post .entry .content .wp-audio-shortcode {
     margin-bottom: 12px;
 }
 .post .entry .content img {
