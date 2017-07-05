@@ -52,7 +52,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: normal;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.33;
     font-family: 'GillSansMTStd',"Gill Sans", "Gill Sans MT", Calibri, 'PingFang SC', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
     color: #353a48;
@@ -1810,7 +1810,7 @@ h6.head-title {
     font-size: 18px;
 }
 .post .entry .content p {
-    color: #5a5e6a;
+    /*color: #5a5e6a;*/
     margin-bottom: 12px;
 }
 .post .entry .content .wp-audio-shortcode {
@@ -1826,7 +1826,7 @@ h6.head-title {
     margin-bottom: 12px;
 }
 .post .entry .content ul li, .post .entry .content ol li {
-    color: #5a5e6a;
+    /*color: #5a5e6a;*/
     line-height: 30px;
     list-style: inside;
 }
