@@ -8,7 +8,7 @@ add_action('wp', function() {
 		header('Location: ' . site_url() . '/coming-soon/'); exit;
 	}
 
-	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.4');
+	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.5');
 	wp_register_style('responsive', get_stylesheet_directory_uri() . '/assets/css/responsive.css', array(), '1.0.0');
 
 	wp_register_script('jquery', get_stylesheet_directory_uri() . '/assets/js/vendor/jquery-1.11.2.min.js', array(), '1.11.2', true);

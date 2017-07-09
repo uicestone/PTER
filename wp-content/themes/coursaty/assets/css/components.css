@@ -1185,7 +1185,7 @@ img.tp-slider-alternative-image	{	width:100%; height:auto;}
 .tp-bullets.simplebullets.round .bullet:hover,
 .tp-bullets.simplebullets.round .bullet.selected,
 .tp-bullets.simplebullets.navbar .bullet:hover,
-.tp-bullets.simplebullets.navbar .bullet.selected		{	background:#fe9d68;}
+.tp-bullets.simplebullets.navbar .bullet.selected		{	background:#2997ab;}
 /*************************************
 	-	TP ARROWS 	-
 **************************************/
@@ -1923,7 +1923,7 @@ html[xmlns] .slides {display: block;}
     *height: 0;
 }
 .flex-direction-nav a {
-    background: #fe9d68;
+    background: #2997ab;
     display: block;
     width: 28px;
     height: 27px;
@@ -1976,7 +1976,7 @@ html[xmlns] .slides {display: block;}
 #sidebar-tweets .flex-direction-nav a:hover,
 .portfolio-slider .flex-direction-nav a:hover,
 .modal-slider .flex-direction-nav a:hover {
-    background: #fe9d68;
+    background: #2997ab;
 }
 /* Pause/Play */
 .flex-pauseplay a { display: block; width: 20px; height: 20px; position: absolute; bottom: 5px; left: 10px; opacity: 0.8; z-index: 10; overflow: hidden; cursor: pointer; color: #000; }
@@ -1988,7 +1988,7 @@ html[xmlns] .slides {display: block;}
 .flex-control-nav li {margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
 .flex-control-paging li a {width: 10px; height: 10px; display: block; background: #383c4b; cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; }
 .flex-control-paging li a:hover { background: #333; background: rgba(0,0,0,0.7); }
-.flex-control-paging li a.flex-active, .dark .flex-control-paging li a.flex-active { background: #fe9d68; cursor: default; }
+.flex-control-paging li a.flex-active, .dark .flex-control-paging li a.flex-active { background: #2997ab; cursor: default; }
 .flex-control-thumbs {margin: 5px 0 0; position: static; overflow: hidden;}
 .flex-control-thumbs li {width: 25%; float: left; margin: 0;}
 .flex-control-thumbs img {width: 100%; display: block; opacity: .7; cursor: pointer;}
@@ -2048,7 +2048,7 @@ html[xmlns] .slides {display: block;}
 	height: 18px;
 	margin-top: -5px;
 	z-index: 1;
-	background: #fe9d68;
+	background: #2997ab;
 	border-radius: 2px;
 	-webkit-transform-origin: 50% 20%;
 	-moz-transform-origin: 50% 20%;
@@ -2057,6 +2057,7 @@ html[xmlns] .slides {display: block;}
 }
 .dropdown .carat:after{
 	font-family: 'FontAwesome';
+	font-size: 13px;
 	content: '\f107';
 	position: absolute;
 	left: 5px;
