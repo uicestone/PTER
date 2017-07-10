@@ -181,7 +181,7 @@ h6.widget-title {
 }
 h2.about-title {
     font-size: 18px;
-    color: #fa9964;
+    color: #2997ab;
     font-weight: bold;
     margin-bottom: 22px;
 }
@@ -1926,7 +1926,7 @@ h6.head-title {
 .blog .blogpost h3.blogpost-title a, .post.single .single-title a {
     display: inline-block;
     padding-bottom: 11px;
-    color: #fa9964;
+    color: #2997ab;
 }
 .blog .blogpost h3.blogpost-title a:hover, .post.single .single-title a:hover,
 .post.single .meta div a:hover {
@@ -2066,7 +2066,7 @@ h6.head-title {
     color: #fff;
     text-align: center;
     vertical-align: middle;
-    background: #fa9964;
+    background: #2997ab;
 }
 .sidebar .primary-btn {
     margin-right: 0;
@@ -2121,7 +2121,7 @@ h6.head-title {
     padding: 0;
 }
 .sidebar .sidebar-widget ul.tabs li {
-    background: #fa9964;
+    background: #2997ab;
     float: left;
     width: 33.33333333%;
     font-size: 16px;
@@ -2138,7 +2138,7 @@ h6.head-title {
 }
 .sidebar .sidebar-widget ul.tabs li.active {
     background: #fff;
-    color: #fa9964;
+    color: #2997ab;
 }
 .sidebar .sidebar-widget ul.tabs li:last-child {
     border: 0;
@@ -2210,7 +2210,7 @@ h6.head-title {
     text-align: center;
 }
 .sidebar .sidebar-widget .tab-posts .post-item .read-more:hover {
-    background: #fa9964;
+    background: #2997ab;
 }
 .sidebar .sidebar-twitter-widget {
     background: #40bff5 url(assets/img/icons/twitter-sidebar-icon.png) no-repeat right bottom;
@@ -2291,22 +2291,13 @@ h6.head-title {
     font-size: 18px;
 }
 .comments-list {
-    background: #fa9964;
+    background: #2997ab;
     padding: 20px 20px 30px;
     margin: 30px 0;
     border-radius: 4px;
 }
 .comments-list.answer {
-    background: #fa9964;
-}
-.comments-list.answer .addcomment-title .icon {
-    background: none;
-}
-.comments-list.answer .addcomment-title .text {
-    color: white;
-}
-.comments-list.answer .content {
-    color: white;
+    border: 8px solid #2997ab;
 }
 .comments-list .comment-body {
     margin-bottom: 45px;
@@ -2524,7 +2515,7 @@ h6.head-title {
     font-size: 16px;
 }
 .portfolio-overlay .course-info .course-title a {
-    color: #fa9964;
+    color: #2997ab;
     padding: 0;
 }
 .latest-courses-section .portfolio-overlay .course-info .course-title a:hover {
@@ -3022,7 +3013,7 @@ blockquote.blockquote-4 .story {
 }
 .pricing-tables .table-row .table .table-footer .order-btn a {
     display: block;
-    background: #fa9964;
+    background: #2997ab;
     padding: 12px 10px;
     font-weight: bold;
     font-size: 20px;
@@ -3075,7 +3066,7 @@ blockquote.blockquote-4 .story {
     text-align: center;
 }
 .pricing-tables .table-2 .table .table-footer .order-btn a:hover {
-    background: #fa9964;
+    background: #2997ab;
 }
 /* table 3 */
 .pricing-tables .table-3 {
@@ -3141,7 +3132,7 @@ blockquote.blockquote-4 .story {
     padding-top: 15px;
     border-radius: 50%;
     border: 6px solid #313542;
-    color: #fa9964;
+    color: #2997ab;
     font-size: 50px;
     font-weight: bold;
     margin-left: 50px;
@@ -3159,7 +3150,7 @@ blockquote.blockquote-4 .story {
     padding: 108px 0 115px;
 }
 .error-page .not-found {
-    background: #fa9964;
+    background: #2997ab;
     width: 330px;
     height: 330px;
     margin: auto;
@@ -3212,7 +3203,7 @@ blockquote.blockquote-4 .story {
 }
 .error-page.full-page .not-found {
     background: none;
-    border: 5px solid #fa9964;
+    border: 5px solid #2997ab;
 }
 .error-page.full-page .error-message {
     color: #fff;
