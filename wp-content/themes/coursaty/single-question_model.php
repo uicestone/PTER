@@ -21,19 +21,19 @@
                         <h4 class="ib">题型概览</h4>
                         <div class="center">
                             <span class="icon"><i class="fa fa-building"></i></span>
-                            <span class="text">题型数量：</span>
+                            <span class="text">题型数量：<?=get_post_meta(get_the_ID(), 'quantity', true)?></span>
                         </div><!-- center icon -->
                         <div class="course-id">
                             <span class="icon"><i class="fa fa-exclamation-circle"></i></span>
-                            <span class="text">分数占比：</span>
+                            <span class="text">分数占比：<?=get_post_meta(get_the_ID(), 'percentage', true)?></span>
                         </div><!-- course ID -->
                         <div class="place">
                             <span class="icon"><i class="fa fa-map-marker"></i></span>
-                            <span class="text">难度系数：</span>
+                            <span class="text">难度系数：<?=get_post_meta(get_the_ID(), 'difficulty', true)?></span>
                         </div><!-- place icon -->
                         <div class="date">
                             <span class="icon"><i class="fa fa-clock-o"></i></span>
-                            <span class="text">时间占比：</span>
+                            <span class="text">时间占比：<?=get_post_meta(get_the_ID(), 'time', true)?></span>
                         </div><!-- date icon -->
                         <a href="#" class="btn grad-btn orange-btn join-btn">立即订阅技巧</a>
                     </div><!-- End Course Details -->
