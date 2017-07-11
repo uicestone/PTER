@@ -6,11 +6,11 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="not-found">
                     <span class="num">404</span>
-                    <span class="text">Page not found.</span>
+                    <span class="text">页面不存在</span>
                 </div><!-- end 404 circle -->
-                <div class="error-message">We're sorry, but the page you were looking for doesn't exist.</div><!-- end error msg -->
+                <div class="error-message">抱歉，您访问的内容不存在</div><!-- end error msg -->
                 <div class="share-icons clearfix">
-                    <p class="text fl">We Are Fixing The Error At This Moment</p>
+                    <p class="text fl">也许您输错了网址，或内容的已经被移动、删除</p>
                     <div class="icons fr">
                         <ul class="clearfix">
                             <li><a href="#" class="fb-icon ln-tr"><i class="fa fa-facebook"></i></a></li>
