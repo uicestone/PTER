@@ -29,7 +29,7 @@
                     <div class="contact-form">
                         <form method="post" action="" id="contact-form">
                             <div class="row">
-                                <?=do_shortcode('[contact-form-7 id="136" title="联系我们"]')?>
+                                <?php the_content(); ?>
                             </div><!-- end row -->
                         </form><!-- end form tag -->
                     </div><!-- end contact form -->
@@ -48,7 +48,7 @@
                         <div class="call">
                             <p>电话：<?=get_post_meta(get_the_ID(), 'phone', true)?></p>
                             <p>Email：<?=get_post_meta(get_the_ID(), 'email', true)?></p>
-                            <p>Facebook：<?=get_post_meta(get_the_ID(), 'facebook', true)?></p>
+                            <p>Facebook：<a href="<?=get_post_meta(get_the_ID(), 'facebook', true)?>" target="_blank">Bingo Training</a></p>
                         </div><!-- end call info -->
                     </div><!-- end 1st block -->
                     <div class="sidebar-widget follow-us">

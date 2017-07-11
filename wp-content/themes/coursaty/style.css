@@ -1838,7 +1838,7 @@ h6.head-title {
     color: #2997ab;
 }
 .post .entry .share-post, .follow-icons, .share-icons {
-    background: #ffe1d1;
+    background: rgba(41, 151, 171, .25);
     border-radius: 4px;
     padding: 12px;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, .03);
@@ -2403,7 +2403,7 @@ h6.head-title {
     border-color: #5a5e6a;
 }
 .comment-form .input textarea, .contact-form .input textarea {
-    min-height: 103px;
+    min-height: 120px;
     resize: vertical;
 }
 .comment-form .input .submit-input, .contact-form .input .submit-input {
