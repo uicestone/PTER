@@ -1730,7 +1730,7 @@ h6.head-title {
 }
 .inner-head .breadcrumb li a {
     display: block;
-    color: #ffdbc8;
+    color: #addae2;
 }
 .inner-head .breadcrumb li.current-page a,
 .inner-head .breadcrumb li:hover a  {
@@ -2842,7 +2842,8 @@ blockquote .story {
 }
 blockquote .name {
     font-size: 13px;
-    color: #5a5e6a;
+    font-weight: normal;
+    color: #addae2;
 }
 blockquote.blockquote-1 {
     border-left: 6px solid #2997ab;
@@ -2874,6 +2875,7 @@ blockquote.blockquote-4 {
 }
 blockquote.blockquote-4 .story {
     color: #fff;
+    font-weight: normal;
 }
 /* lists */
 .list ul li, .list ol li {

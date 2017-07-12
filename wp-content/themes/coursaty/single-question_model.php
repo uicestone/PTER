@@ -86,6 +86,42 @@
         </div><!-- End Container -->
     </div><!-- End Latest-Courses Section Content -->
 </section><!-- End Courses Section -->
+
+<section class="full-section latest-courses-section">
+    <div class="container">
+        <h3 class="section-title">练习</h3>
+        <p class="section-description">
+            订阅会员后可以进行全部练习
+        </p><!-- End Section Description -->
+    </div>
+    <div class="section-content post latest-courses-content alt fadeInDown-animation">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="<?=site_url()?>/exercise/<?=wp_get_object_terms(get_the_ID(), 'question_model')[0]->slug?>/">
+                        <blockquote class="blockquote-4">
+                            <div class="story">
+                                <h1>顺序练习</h1>
+                            </div><!-- end story -->
+                            <div class="name">按顺序浏览全部练习题</div><!-- end name -->
+                        </blockquote>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="<?=site_url()?>/exercise/<?=wp_get_object_terms(get_the_ID(), 'question_model')[0]->slug?>/?random=yes">
+                        <blockquote class="blockquote-4">
+                            <div class="story">
+                                <h1>随机练习</h1>
+                            </div><!-- end story -->
+                            <div class="name">每次随机挑选一道题进行练习</div><!-- end name -->
+                        </blockquote>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div><!-- End Latest-Courses Section Content -->
+</section><!-- End Courses Section -->
+
 <script type="text/javascript">
 jQuery(function ($) {
     var courseDetail = $('.course-details').sticky({topSpacing:0});
