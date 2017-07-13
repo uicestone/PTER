@@ -15,11 +15,8 @@
 	<?php wp_head(); ?>
 
 	<!-- FAV & Touch Icons -->
-	<link rel="shortcut icon" href="assets/img/icons/favicon.ico">
+	<link rel="shortcut icon" href="<?=get_stylesheet_directory_uri()?>/assets/img/icons/favicon.ico">
 	<link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="assets/img/icons/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="assets/img/icons/apple-touch-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="assets/img/icons/apple-touch-icon-144x144.png">
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<script>window.html5 || document.write('<script src="assets/js/vendor/html5shiv.js"><\/script>')</script>
