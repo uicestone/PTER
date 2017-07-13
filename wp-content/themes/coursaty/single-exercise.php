@@ -99,7 +99,15 @@
                                 <div class="skillbar-bar"></div>
                             </div>
                             <?php endif; ?>
-							<?php if(in_array($question_type->slug, array())): ?>
+							<?php if(in_array($question_type->slug, array('retell-lecture'))): ?>
+                                <div class="skillbar timer clearfix" data-duration="10" data-wait="previous">
+                                    <div class="skillbar-title">
+                                        <span>准备 <span class="seconds-left">10</span>s</span>
+                                    </div>
+                                    <div class="skillbar-bar"></div>
+                                </div>
+							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('describe-image'))): ?>
                             <div class="skillbar timer clearfix" data-duration="25">
                                 <div class="skillbar-title">
                                     <span>看图 <span class="seconds-left">25</span>s</span>
@@ -107,14 +115,23 @@
                                 <div class="skillbar-bar"></div>
                             </div>
 							<?php endif; ?>
-							<?php if(in_array($question_type->slug, array('read-aloud'))): ?>
-                            <div class="skillbar timer clearfix" data-wait="previous" data-duration="40">
+							<?php if(in_array($question_type->slug, array('read-aloud', 'describe-image'))): ?>
+                            <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
                                 <div class="skillbar-title">
                                     <span>说话 <span class="seconds-left">40</span>s</span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                             </div>
 							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('retell-lecture'))): ?>
+                                <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
+                                    <div class="skillbar-title">
+                                        <span>描述 <span class="seconds-left">40</span>s</span>
+                                    </div>
+                                    <div class="skillbar-bar"></div>
+                                </div>
+							<?php endif; ?>
+                            <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
                     </div>
                 </div>
@@ -145,14 +162,21 @@ jQuery(function($) {
     $('.sidebar').sticky({topSpacing:30, bottomSpacing: 615});
 
     $('.question.content audio').each(function() {
-        $(this).show(300);
+        $('.audio-progress').show();
+        var self = this;
         setTimeout(function () {
-            this.play();
+            self.play();
         }, 3000);
     })
     .on('timeupdate', function() {
         if (this.currentTime && this.duration) {
-            $('.audio-progress .skillbar-bar').show(300).css({width: this.currentTime / this.duration * 100 + '%'});
+            $('.audio-progress .skillbar-bar').css({width: this.currentTime / this.duration * 100 + '%'});
+        }
+    })
+    .on('ended', function () {
+        var nextTimer = $('.audio-progress').next('.timer');
+        if (nextTimer.data('wait') === 'previous') {
+            nextTimer.startTimer();
         }
     });
 
@@ -170,6 +194,10 @@ jQuery(function($) {
                 return false;
             }
         }, 1000);
+
+        if ($(this).data('is-answer')) {
+            $('#ding-sound').get(0).play();
+        }
     };
 
     $('.timer').each(function() {
