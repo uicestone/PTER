@@ -8,7 +8,7 @@ add_action('wp', function() {
 		header('Location: ' . site_url() . '/coming-soon/'); exit;
 	}
 
-	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.6');
+	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.7');
 	wp_register_style('responsive', get_stylesheet_directory_uri() . '/assets/css/responsive.css', array(), '1.0.0');
 
 	wp_register_script('jquery', get_stylesheet_directory_uri() . '/assets/js/vendor/jquery-1.11.2.min.js', array(), '1.11.2', true);
@@ -50,7 +50,7 @@ add_action('init', function () {
 	add_image_size('headline', 1600, 700, true);
 	add_image_size('mentor', 270, 270, true);
 
-	register_taxonomy('question_model', null, array(
+	register_taxonomy('question_type', null, array(
 		'label' => '题型',
 		'labels' => array(
 			'all_items' => '所有题型',
@@ -59,10 +59,11 @@ add_action('init', function () {
 		),
 		'public' => true,
 		'show_admin_column' => true,
+		'show_in_nav_menus' => false,
 		'hierarchical' => true
 	));
 
-	register_post_type('question_model', array(
+	register_post_type('question_type_desc', array(
 		'label' => '题型',
 		'labels' => array(
 			'all_items' => '所有题型',
@@ -71,13 +72,13 @@ add_action('init', function () {
 			'not_found' => '未找到题型'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'thumbnail'),
-		'taxonomies' => array('question_model', 'post_tag'),
+		'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
+		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-feedback',
 		'has_archive' => true
 	));
 
-	add_post_type_support('question_model', 'wps_subtitle');
+	add_post_type_support('question_type_desc', 'wps_subtitle');
 
 	register_post_type('tip', array(
 		'label' => '技巧',
@@ -88,8 +89,8 @@ add_action('init', function () {
 			'not_found' => '未找到技巧'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'thumbnail'),
-		'taxonomies' => array('question_model', 'post_tag'),
+		'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
+		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-clipboard',
 		'has_archive' => true
 	));
@@ -105,8 +106,8 @@ add_action('init', function () {
 			'not_found' => '未找到练习'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'thumbnail'),
-		'taxonomies' => array('question_model', 'post_tag'),
+		'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
+		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-editor-spellcheck',
 		'has_archive' => true
 	));
@@ -147,7 +148,7 @@ add_filter('nav_menu_css_class', function($classes, $item) {
 		$classes[] = 'haschild';
 	}
 
-	if(array_intersect(['current-menu-item', 'current-page-ancestor', 'current-post-ancestor', 'current-question_model-ancestor', 'current-exercise-ancestor'], $classes ?: [])) {
+	if(array_intersect(['current-menu-item', 'current-page-ancestor', 'current-post-ancestor', 'current-question_type_desc-ancestor', 'current-exercise-ancestor'], $classes ?: [])) {
 		$classes[] = 'current_page_item';
 	}
 
@@ -167,3 +168,44 @@ add_filter('nav_menu_css_class', function($classes, $item) {
 }, 10, 2);
 
 show_admin_bar( false );
+
+/**
+ * Display a custom taxonomy dropdown in admin
+ * @author Mike Hemberger
+ * @link http://thestizmedia.com/custom-post-type-filter-admin-custom-taxonomy/
+ */
+add_action('restrict_manage_posts', 'add_extra_tablenav');
+function add_extra_tablenav($post_type) {
+	$taxonomy  = 'question_type'; // change to your taxonomy
+	$post_types = array('question_type_desc', 'tip', 'exercise');
+	if (in_array($post_type, $post_types)) {
+		$selected      = isset($_GET[$taxonomy]) ? $_GET[$taxonomy] : '';
+		$info_taxonomy = get_taxonomy($taxonomy);
+		wp_dropdown_categories(array(
+			'show_option_all' => "全部{$info_taxonomy->label}",
+			'taxonomy'        => $taxonomy,
+			'name'            => $taxonomy,
+			'orderby'         => 'name',
+			'selected'        => $selected,
+			'hide_empty'      => false,
+			'hierarchical'	  => true,
+			'value_field'     => 'slug'
+		));
+	};
+}
+/**
+ * Filter posts by taxonomy in admin
+ * @author  Mike Hemberger
+ * @link http://thestizmedia.com/custom-post-type-filter-admin-custom-taxonomy/
+ */
+add_filter('parse_query', 'tsm_convert_id_to_term_in_query');
+function tsm_convert_id_to_term_in_query($query) {
+	global $pagenow;
+	$post_type = 'team'; // change to your post type
+	$taxonomy  = 'group'; // change to your taxonomy
+	$q_vars    = &$query->query_vars;
+	if ( $pagenow == 'edit.php' && isset($q_vars['post_type']) && $q_vars['post_type'] == $post_type && isset($q_vars[$taxonomy]) && is_numeric($q_vars[$taxonomy]) && $q_vars[$taxonomy] != 0 ) {
+		$term = get_term_by('id', $q_vars[$taxonomy], $taxonomy);
+		$q_vars[$taxonomy] = $term->slug;
+	}
+}

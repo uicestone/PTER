@@ -7,10 +7,10 @@
             <?php the_subtitle(); ?>
         </p>
         <div class="breadcrumb">
-			<?php $question_model = wp_get_object_terms(get_the_ID(), 'question_model')[0]; ?>
+			<?php $question_type = wp_get_object_terms(get_the_ID(), 'question_type')[0]; ?>
             <ul class="clearfix">
                 <li class="ib"><a href="<?=site_url()?>">首页</a></li>
-                <li class="ib"><a href="<?=site_url()?>/question_model/<?=$question_model->slug?>"><?=$question_model->name?></a></li>
+                <li class="ib"><a href="<?=site_url()?>/question_type_desc/<?=$question_type->slug?>"><?=$question_type->name?></a></li>
                 <li class="ib current-page"><a href="">技巧</a></li>
             </ul>
         </div>

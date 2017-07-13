@@ -1,4 +1,4 @@
-<?php get_header(); the_post(); ?>
+<?php get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'question_type')[0]; ?>
 
 <div class="inner-head">
     <div class="container">
@@ -68,9 +68,9 @@
 					'post_type' => 'tip',
 					'tax_query' => array(
 						array(
-							'taxonomy' => 'question_model',
+							'taxonomy' => 'question_type',
 							'field' => 'slug',
-							'terms' => wp_get_object_terms(get_the_ID(), 'question_model')[0]->slug
+							'terms' => $question_type->slug
 						)
 					)
 				)) as $post): ?>
@@ -98,7 +98,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <a href="<?=site_url()?>/exercise/<?=wp_get_object_terms(get_the_ID(), 'question_model')[0]->slug?>/">
+					<?php $ordered_exercises = get_posts(array(
+						'post_type' => 'exercise',
+						'tax_query' => array(
+							array(
+								'taxonomy' => 'question_type',
+								'field' => 'slug',
+								'terms' => $question_type->slug
+							)
+						),
+						'order' => 'asc',
+						'posts_per_page' => 1
+					)); if ($ordered_exercises && $ordered_exercise = $ordered_exercises[0]): ?>
+                    <a href="<?=get_the_permalink($ordered_exercise)?>">
                         <blockquote class="blockquote-4">
                             <div class="story">
                                 <h1>顺序练习</h1>
@@ -106,9 +118,22 @@
                             <div class="name">按顺序浏览全部练习题</div><!-- end name -->
                         </blockquote>
                     </a>
+					<?php endif; ?>
                 </div>
                 <div class="col-md-6">
-                    <a href="<?=site_url()?>/exercise/<?=wp_get_object_terms(get_the_ID(), 'question_model')[0]->slug?>/?random=yes">
+					<?php $random_exercises = get_posts(array(
+						'post_type' => 'exercise',
+						'tax_query' => array(
+							array(
+								'taxonomy' => 'question_type',
+								'field' => 'slug',
+								'terms' => $question_type->slug
+							)
+						),
+						'posts_per_page' => 1,
+						'orderby' => 'rand'
+					)); if ($random_exercises && $random_exercise = $random_exercises[0]): ?>
+                    <a href="<?=get_the_permalink()?>?random=yes">
                         <blockquote class="blockquote-4">
                             <div class="story">
                                 <h1>随机练习</h1>
@@ -116,6 +141,7 @@
                             <div class="name">每次随机挑选一道题进行练习</div><!-- end name -->
                         </blockquote>
                     </a>
+					<?php endif; ?>
                 </div>
             </div>
         </div>
@@ -131,7 +157,7 @@ jQuery(function ($) {
     });
     function endSticky(element, heightTop, heightDiff) {
         if ($(window).scrollTop() > heightTop + heightDiff) {
-            element.css({position: 'relative', top: heightDiff});
+            element.css({position: 'relative', top: Math.max(0, heightDiff)});
         }
     }
 });

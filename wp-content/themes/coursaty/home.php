@@ -51,7 +51,7 @@
             <div class="select-category ib">
                 <select class="dropdown" name="post_type" id="course-category">
                     <option value="any" selected="selected">全部</option>
-                    <option value="question_model">题型</option>
+                    <option value="question_type_desc">题型</option>
                     <option value="tip">技巧</option>
                 </select>
             </div><!-- End Select Category -->

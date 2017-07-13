@@ -1,4 +1,4 @@
-<?php get_header(); the_post(); ?>
+<?php get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'question_type')[0]; ?>
 
 <article class="post single">
 	<div class="container">
@@ -12,10 +12,11 @@
 								<a href="#" class="ln-tr"><?php the_title(); ?></a>
 							</h3><!-- End Title -->
 							<div class="clearfix"></div>
-							<div class="content">
+							<div class="question content">
 								<?php the_content(); ?>
 							</div>
 						</div><!-- End Entry -->
+                        <?php if (in_array($question_type->slug, array('summarize-spoken-text', 'write-from-dictation'))): ?>
 						<div class="clearfix" style="margin-top:30px"></div>
 						<div class="comment-form">
 							<div class="addcomment-title">
@@ -27,12 +28,12 @@
 									<div class="col-md-12">
 										<div class="input">
 											<textarea name="comment-area" id="comment-area" placeholder="内容"></textarea>
-											<input type="submit" id="comment-submit" class="submit-input grad-btn ln-tr" value="保存">
 										</div>
 									</div>
 								</div>
 							</form><!-- End form -->
 						</div><!-- End comment form -->
+                        <?php endif; ?>
                         <div class="comment-form comments-list entry answer">
                             <div class="addcomment-title" style="margin-bottom:20px">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
@@ -57,9 +58,9 @@
                             'post_type' => 'exercise',
                             'tax_query' => array(
                                 array(
-                                    'taxonomy' => 'question_model',
+                                    'taxonomy' => 'question_type',
                                     'field' => 'slug',
-                                    'terms' => wp_get_object_terms(get_the_ID(), 'question_model')[0]->slug
+                                    'terms' => $question_type->slug
                                 )
                             ),
                             'posts_per_page' => 1,
@@ -69,8 +70,8 @@
                         <a href="<?=get_the_permalink($random_exercise) . ($_GET['random'] ? '?random=yes' : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 换一题</a>
                         <?php endif; ?>
                     <?php else: ?>
-                    <?php $previous_exercise = get_adjacent_post(true, '', true, 'question_model');?>
-					<?php $next_exercise = get_adjacent_post(true, '', false, 'question_model');?>
+                    <?php $previous_exercise = get_adjacent_post(true, '', true, 'question_type');?>
+					<?php $next_exercise = get_adjacent_post(true, '', false, 'question_type');?>
                     <div class="row">
                         <div class="col-md-6">
 							<?php if ($previous_exercise): ?><a class="btn primary-btn " href="<?=get_the_permalink($previous_exercise)?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
@@ -84,18 +85,36 @@
                         <span class="widget-icon"><i class="fa fa-clock-o"></i></span>
                         <h5 class="sidebar-widget-title ib">计时器</h5>
                         <div class="home-skills">
+                            <div class="skillbar audio-progress clearfix" style="display:none">
+                                <div class="skillbar-title">
+                                    <span>音频</span>
+                                </div>
+                                <div class="skillbar-bar"></div>
+                            </div>
+                            <?php if(in_array($question_type->slug, array('read-aloud'))): ?>
+                            <div class="skillbar timer clearfix" data-duration="40">
+                                <div class="skillbar-title">
+                                    <span>准备 <span class="seconds-left">40</span>s</span>
+                                </div>
+                                <div class="skillbar-bar"></div>
+                            </div>
+                            <?php endif; ?>
+							<?php if(in_array($question_type->slug, array())): ?>
                             <div class="skillbar timer clearfix" data-duration="25">
                                 <div class="skillbar-title">
                                     <span>看图 <span class="seconds-left">25</span>s</span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                             </div>
-                            <div class="skillbar timer clearfix" data-wait="25" data-duration="40">
+							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('read-aloud'))): ?>
+                            <div class="skillbar timer clearfix" data-wait="previous" data-duration="40">
                                 <div class="skillbar-title">
                                     <span>说话 <span class="seconds-left">40</span>s</span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                             </div>
+							<?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -103,6 +122,12 @@
 		</div><!-- End main row -->
 	</div><!-- End container -->
 </article><!-- End Single Article -->
+
+<style type="text/css">
+    .question.content .mejs-audio {
+        display: none;
+    }
+</style>
 
 <script type="text/javascript">
 jQuery(function($) {
@@ -117,24 +142,50 @@ jQuery(function($) {
             $('.comments-list.answer .content').hide(300);
         }
     });
-    $('.sidebar').sticky({topSpacing:30, bottomSpacing: 614});
+    $('.sidebar').sticky({topSpacing:30, bottomSpacing: 615});
+
+    $('.question.content audio').each(function() {
+        $(this).show(300);
+        setTimeout(function () {
+            this.play();
+        }, 3000);
+    })
+    .on('timeupdate', function() {
+        if (this.currentTime && this.duration) {
+            $('.audio-progress .skillbar-bar').show(300).css({width: this.currentTime / this.duration * 100 + '%'});
+        }
+    });
+
+    $.fn.startTimer = function () {
+        var tick = 0;
+        var self = this;
+        var duration = $(this).data('duration');
+        var interval = setInterval(function() {
+            tick += 1;
+            $(self).find('.seconds-left').text((duration - tick));
+            $(self).find('.skillbar-bar').css({width: tick / duration * 100 + '%'});
+            if (tick === duration) {
+                clearInterval(interval);
+                $(self).trigger('time-up');
+                return false;
+            }
+        }, 1000);
+    };
 
     $('.timer').each(function() {
         var wait = $(this).data('wait') || 0;
-        var duration = $(this).data('duration');
-        var tick = 0;
         var self = this;
-        setTimeout(function(){
-            var interval = setInterval(function() {
-                tick += 0.1;
-                $(self).find('.seconds-left').text((duration - tick).toFixed(0).replace('-', ''));
-                $(self).find('.skillbar-bar').css({width: tick / duration * 100 + '%'});
-                if (tick.toFixed(1) === duration.toFixed(1)) {
-                    clearInterval(interval);
-                    return false;
-                }
-            }, 100);
-        }, wait * 1000);
+
+        if (!isNaN(wait)) {
+            setTimeout(function(){
+                $(self).startTimer();
+            }, wait * 1000);
+        }
+    }).on('time-up', function () {
+        var nextTimer = $(this).next('.timer');
+        if (nextTimer.data('wait') === 'previous') {
+            nextTimer.startTimer();
+        }
     });
 });
 </script>
