@@ -51,7 +51,7 @@ add_action('init', function () {
 	add_image_size('mentor', 270, 270, true);
 
 	register_taxonomy('question_type', null, array(
-		'label' => '题型',
+		'label' => '题型分类',
 		'labels' => array(
 			'all_items' => '所有题型',
 			'add_new' => '添加题型',
@@ -59,7 +59,6 @@ add_action('init', function () {
 		),
 		'public' => true,
 		'show_admin_column' => true,
-		'show_in_nav_menus' => false,
 		'hierarchical' => true
 	));
 
