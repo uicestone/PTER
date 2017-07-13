@@ -16,7 +16,6 @@
 
 	<!-- FAV & Touch Icons -->
 	<link rel="shortcut icon" href="<?=get_stylesheet_directory_uri()?>/assets/img/icons/favicon.ico">
-	<link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png">
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<script>window.html5 || document.write('<script src="assets/js/vendor/html5shiv.js"><\/script>')</script>

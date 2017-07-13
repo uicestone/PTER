@@ -12,22 +12,25 @@
 								<a href="#" class="ln-tr"><?php the_title(); ?></a>
 							</h3><!-- End Title -->
 							<div class="clearfix"></div>
-							<div class="question content">
+							<div class="question content<?php if($question_type->slug === 'highlight-incorrect-words'): ?> highlightable <?php endif; ?>">
 								<?php the_content(); ?>
 							</div>
 						</div><!-- End Entry -->
-                        <?php if (in_array($question_type->slug, array('summarize-spoken-text', 'write-from-dictation'))): ?>
+                        <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation'))): ?>
 						<div class="clearfix" style="margin-top:30px"></div>
 						<div class="comment-form">
 							<div class="addcomment-title">
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
 								<span class="text">你的回答</span>
+                                <?php if (in_array($question_type->slug, array('summarise-spoken-text'))): ?>
+                                <span class="pull-right word-count">词数：<span class="count">0</span></span>
+                                <?php endif; ?>
 							</div><!-- End Title -->
-							<form method="post" action="/" id="comment-form">
+							<form method="post" action="/" id="answer-form">
 								<div class="row">
 									<div class="col-md-12">
 										<div class="input">
-											<textarea name="comment-area" id="comment-area" placeholder="内容"></textarea>
+											<textarea name="answer-area" id="answer-area" placeholder="内容"></textarea>
 										</div>
 									</div>
 								</div>
@@ -131,6 +134,14 @@
                                     <div class="skillbar-bar"></div>
                                 </div>
 							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('summarise-spoken-text'))): ?>
+                                <div class="skillbar timer clearfix" data-duration="600">
+                                    <div class="skillbar-title">
+                                        <span>时间 <span class="seconds-left">600</span>s</span>
+                                    </div>
+                                    <div class="skillbar-bar"></div>
+                                </div>
+							<?php endif; ?>
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
                     </div>
@@ -148,6 +159,8 @@
 
 <script type="text/javascript">
 jQuery(function($) {
+
+    // toggle answer display
     $('.comments-list.answer .toggle').click(function(e) {
         e.preventDefault();
         if ($(this).text() === '显示') {
@@ -161,25 +174,7 @@ jQuery(function($) {
     });
     $('.sidebar').sticky({topSpacing:30, bottomSpacing: 615});
 
-    $('.question.content audio').each(function() {
-        $('.audio-progress').show();
-        var self = this;
-        setTimeout(function () {
-            self.play();
-        }, 3000);
-    })
-    .on('timeupdate', function() {
-        if (this.currentTime && this.duration) {
-            $('.audio-progress .skillbar-bar').css({width: this.currentTime / this.duration * 100 + '%'});
-        }
-    })
-    .on('ended', function () {
-        var nextTimer = $('.audio-progress').next('.timer');
-        if (nextTimer.data('wait') === 'previous') {
-            nextTimer.startTimer();
-        }
-    });
-
+    // timers
     $.fn.startTimer = function () {
         var tick = 0;
         var self = this;
@@ -200,6 +195,29 @@ jQuery(function($) {
         }
     };
 
+    // auto plays audio in question and show audio timer
+    $('.question.content audio').each(function() {
+        $('.audio-progress').show();
+        var self = this;
+        setTimeout(function () {
+            self.play();
+        }, 3000);
+    })
+    // update audio timer
+    .on('timeupdate', function() {
+        if (this.currentTime && this.duration) {
+            $('.audio-progress .skillbar-bar').css({width: this.currentTime / this.duration * 100 + '%'});
+        }
+    })
+    // trigger next timer on audio ended
+    .on('ended', function () {
+        var nextTimer = $('.audio-progress').next('.timer');
+        if (nextTimer.data('wait') === 'previous') {
+            nextTimer.startTimer();
+        }
+    });
+
+    // auto start timer
     $('.timer').each(function() {
         var wait = $(this).data('wait') || 0;
         var self = this;
@@ -209,11 +227,41 @@ jQuery(function($) {
                 $(self).startTimer();
             }, wait * 1000);
         }
-    }).on('time-up', function () {
+    })
+    // trigger next timer on time up
+    .on('time-up', function () {
         var nextTimer = $(this).next('.timer');
         if (nextTimer.data('wait') === 'previous') {
             nextTimer.startTimer();
         }
+    });
+
+    // answer word count
+    $('#answer-area').on('keyup', function() {
+        var wordCountElement = $(this).parents('.comment-form').find('.word-count>.count');
+        var wordCount = $(this).val().trim().split(/\s+/).length;
+        wordCountElement.text(wordCount);
+
+        if (wordCount > 70) {
+            wordCountElement.addClass('over-words');
+        }
+        else {
+            wordCountElement.removeClass(('over-words'));
+        }
+
+    });
+
+    // highlight on click
+    $('.question.content.highlightable blockquote p').each(function () {
+        $(this).html($(this).html().split(/\s+/).map(function (word) {
+            return '<span>' + word + '</span>';
+        }).join(' '));
+    })
+    .on('click', 'span', function () {
+        $(this).replaceWith('<del>' + $(this).html() + '</del>');
+    })
+    .on('click', 'del', function () {
+        $(this).replaceWith('<span>' + $(this).html() + '</span>');
     });
 });
 </script>

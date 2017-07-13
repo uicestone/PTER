@@ -2381,6 +2381,10 @@ h6.head-title {
     font-weight: bold;
     color: #383c4b;
 }
+.comment-form .addcomment-title .word-count .count.over-words {
+    color: #de0a0a;
+    font-weight: bold;
+}
 .comment-form .input, .contact-form .input {
     position: relative;
 }
@@ -2834,6 +2838,12 @@ blockquote em {
     color: #2997ab;
     font-weight: bold;
     font-style: normal;
+}
+blockquote del {
+    color: #de0a0a;
+}
+blockquote span, blockquote del {
+    cursor: default;
 }
 blockquote .story {
     font-size: 20px;
