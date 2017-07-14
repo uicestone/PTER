@@ -133,7 +133,7 @@
 						'posts_per_page' => 1,
 						'orderby' => 'rand'
 					)); if ($random_exercises && $random_exercise = $random_exercises[0]): ?>
-                    <a href="<?=get_the_permalink()?>?random=yes">
+                    <a href="<?=get_the_permalink($random_exercise)?>?random=yes">
                         <blockquote class="blockquote-4">
                             <div class="story">
                                 <h1>随机练习</h1>
