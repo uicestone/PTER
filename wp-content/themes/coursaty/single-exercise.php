@@ -145,6 +145,11 @@
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
                     </div>
+                    <?php if (!$_GET['random']): ?>
+                    <a class="btn primary-btn" href="<?=home_url(add_query_arg(array('random' => 'yes'), $wp->request . '/'));?>">随机练习</a>
+                    <?php else: ?>
+                    <a class="btn primary-btn" href="<?=home_url(remove_query_arg(array('random'), $wp->request . '/'));?>">顺序练习</a>
+					<?php endif; ?>
                 </div>
 			</div><!-- End Sidebar - RIGHT -->
 		</div><!-- End main row -->
