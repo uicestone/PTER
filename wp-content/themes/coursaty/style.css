@@ -441,7 +441,7 @@ header .main-navigation li.parent-item ul.sub-menu li:hover > a {
 }
 header .main-navigation li.parent-item:hover>ul.sub-menu,
 header .main-navigation li.courses-menu:hover ul,
-header .main-navigation li.parent-item ul.sub-menu li.haschild:hover ul {
+header .main-navigation li.parent-item ul.sub-menu li.haschild:hover>ul {
     opacity: 1;
     visibility: visible;
     transform: scaleY(1);
