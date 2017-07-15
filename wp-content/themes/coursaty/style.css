@@ -1086,7 +1086,7 @@ header.alt .mobile-navigation .mobile-btn span:after {
     margin-right: 35px;
     border-radius: 3px;
 }
-.add-courses .add-courses-title {
+.add-courses .add-courses-title, .add-courses .add-courses-title a {
     display: inline-block;
     font-size: 30px;
     font-weight: normal;
