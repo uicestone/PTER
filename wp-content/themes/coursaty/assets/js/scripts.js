@@ -89,6 +89,9 @@
         tb_container.addClass('slider-overlay');
     }, function() {
         tb_container.removeClass('slider-overlay');
+    })
+    .end().find('li.haschild').on('click', function (e) {
+        e.preventDefault();
     });
 
     /***************** Flex Slider ******************/
