@@ -90,7 +90,7 @@
     }, function() {
         tb_container.removeClass('slider-overlay');
     })
-    .end().find('li.haschild').on('click', function (e) {
+    .end().find('li.haschild>a').on('click', function (e) {
         e.preventDefault();
     });
 
