@@ -57,20 +57,29 @@
 			<div class="col-md-4">
                 <div class="sidebar">
                     <?php if ($_GET['random']): ?>
-                        <?php $random_exercises = get_posts(array(
-                            'post_type' => 'exercise',
-                            'tax_query' => array(
-                                array(
-                                    'taxonomy' => 'question_type',
-                                    'field' => 'slug',
-                                    'terms' => $question_type->slug
-                                )
-                            ),
-                            'posts_per_page' => 1,
-                            'orderby' => 'rand',
-                            'post__not_in' => array(get_the_ID())
-                        )); if ($random_exercises && $random_exercise = $random_exercises[0]): ?>
-                        <a href="<?=get_the_permalink($random_exercise) . ($_GET['random'] ? '?random=yes' : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 换一题</a>
+                        <?php
+                        $random_query = array(
+							'post_type' => 'exercise',
+							'posts_per_page' => 1,
+							'orderby' => 'rand',
+							'post__not_in' => array(get_the_ID())
+						);
+
+                        if ($_GET['tag']) {
+                            $random_query['tag'] = $_GET['tag'];
+                        }
+                        else {
+							$random_query['tax_query'] = array(
+								array(
+									'taxonomy' => 'question_type',
+									'field' => 'slug',
+									'terms' => $question_type->slug
+								)
+							);
+                        }
+
+                        $random_exercises = get_posts($random_query); if ($random_exercises && $random_exercise = $random_exercises[0]): ?>
+                        <a href="<?=get_the_permalink($random_exercise) . '?random=yes' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 换一题</a>
                         <?php endif; ?>
                     <?php else: ?>
                     <?php $previous_exercise = get_adjacent_post(true, '', true, $_GET['tag'] ? 'post_tag' : 'question_type');?>
@@ -80,7 +89,7 @@
 							<?php if ($previous_exercise): ?><a class="btn primary-btn " href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
                         </div>
                         <div class="col-md-6">
-							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise)?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
+							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
                         </div>
                     </div>
                     <?php endif; ?>
@@ -145,11 +154,11 @@
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
                     </div>
-                    <?php if (!$_GET['random']): ?>
-                    <a class="btn primary-btn" href="<?=home_url(add_query_arg(array('random' => 'yes'), $wp->request . '/'));?>">随机练习</a>
-                    <?php else: ?>
-                    <a class="btn primary-btn" href="<?=home_url(remove_query_arg(array('random'), $wp->request . '/'));?>">顺序练习</a>
-					<?php endif; ?>
+                    <?php
+                    $uri = $_GET['random'] ? remove_query_arg(array('random'), $wp->request . '/') : add_query_arg(array('random' => 'yes'), $wp->request . '/');
+					$uri = $_GET['tag'] ? add_query_arg(array('tag' => $_GET['tag']), $uri) : $uri;
+                    ?>
+                    <a class="btn primary-btn" href="<?=home_url($uri);?>">切换到<?=$_GET['random'] ? '顺序练习' : '随机练习'?></a>
                 </div>
 			</div><!-- End Sidebar - RIGHT -->
 		</div><!-- End main row -->
