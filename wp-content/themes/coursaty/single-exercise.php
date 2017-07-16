@@ -30,7 +30,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="input">
-											<textarea name="answer-area" id="answer-area" placeholder="内容"></textarea>
+											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false"></textarea>
 										</div>
 									</div>
 								</div>
