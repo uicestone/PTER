@@ -73,11 +73,11 @@
                         <a href="<?=get_the_permalink($random_exercise) . ($_GET['random'] ? '?random=yes' : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 换一题</a>
                         <?php endif; ?>
                     <?php else: ?>
-                    <?php $previous_exercise = get_adjacent_post(true, '', true, 'question_type');?>
-					<?php $next_exercise = get_adjacent_post(true, '', false, 'question_type');?>
+                    <?php $previous_exercise = get_adjacent_post(true, '', true, $_GET['tag'] ? 'post_tag' : 'question_type');?>
+					<?php $next_exercise = get_adjacent_post(true, '', false, $_GET['tag'] ? 'post_tag' : 'question_type');?>
                     <div class="row">
                         <div class="col-md-6">
-							<?php if ($previous_exercise): ?><a class="btn primary-btn " href="<?=get_the_permalink($previous_exercise)?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
+							<?php if ($previous_exercise): ?><a class="btn primary-btn " href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
                         </div>
                         <div class="col-md-6">
 							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise)?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
