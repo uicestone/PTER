@@ -75,7 +75,7 @@
 					)
 				)) as $post): ?>
                 <div class="add-courses box entry">
-                    <img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/addcourse-icon.png" alt="" class="fl add-courses-icon">
+                    <img src="<?=get_stylesheet_directory_uri()?>/assets/img/logo-bingo.png" alt="" class="fl add-courses-icon">
                     <span class="add-courses-title ln-tr"><?=get_the_title($post)?></span>
                     <div class="content">
 						<?=wpautop(do_shortcode($post->post_content))?>

@@ -15,7 +15,7 @@
 	<?php wp_head(); ?>
 
 	<!-- FAV & Touch Icons -->
-	<link rel="shortcut icon" href="<?=get_stylesheet_directory_uri()?>/assets/img/icons/favicon.ico">
+	<link rel="shortcut icon" href="<?=get_stylesheet_directory_uri()?>/assets/img/icons/favicon.ico?v=1">
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<script>window.html5 || document.write('<script src="assets/js/vendor/html5shiv.js"><\/script>')</script>
@@ -37,8 +37,7 @@
 		<div class="container">
 			<div class="logo-container fl clearfix">
 				<a href="#" class="ib">
-					<img src="<?=get_stylesheet_directory_uri()?>/assets/img/logo@2x.png" class="fl" alt="Logo">
-					<span class="site-name">PTE Revolution<span>.</span></span>
+					<img src="<?=get_stylesheet_directory_uri()?>/assets/img/<?=is_home() ? 'logo-white' : 'logo'?>.png" class="fl" alt="Logo">
 				</a>
 			</div><!-- End Logo Container -->
             <?php wp_nav_menu(array('theme_location' => 'primary', 'container' => 'nav', 'container_class' => 'main-navigation fr', 'menu_class' => 'clearfix')); ?>
