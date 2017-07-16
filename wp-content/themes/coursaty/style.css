@@ -3003,7 +3003,7 @@ blockquote.blockquote-4 .story {
     line-height: 100px;
     margin: auto;
     border-radius: 50%;
-    border: 4px solid #fa7c49;
+    border: 4px solid #167485;
 }
 .pricing-tables .table-row .table .table-header .icon i {
     color: #fff;
@@ -3031,7 +3031,7 @@ blockquote.blockquote-4 .story {
     display: block;
     background: #2997ab;
     padding: 12px 10px;
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-size: 20px;
     color: #fff;
     border-radius: 2px;
@@ -3067,14 +3067,14 @@ blockquote.blockquote-4 .story {
 }
 /* table 2 */
 .pricing-tables .table-2 .table .table-header {
-    padding: 50px 0;
+    padding: 41px 0;
 }
 .pricing-tables .table-2 .table .table-header .text {
     font-size: 25px;
 }
 .pricing-tables .table-2 .table .table-header .price {
     margin-top: 17px;
-    color: #2a2e3d;
+    color: #f5f5f5;
     font-size: 14px;
 }
 .pricing-tables .table-2 .table .table-footer .order-btn a {
@@ -3090,12 +3090,12 @@ blockquote.blockquote-4 .story {
 }
 .pricing-tables .table-3 .table {
     background: #383c4b;
-    text-align: left;
+    /*text-align: left;*/
     padding: 0 20px;
 }
 .pricing-tables .table-3 .table .table-header {
     background: none;
-    padding: 50px 0;
+    padding: 37px 0;
     border-bottom: 1px solid #2c2e39;
 }
 .pricing-tables .table-3 .table .table-header .text {
@@ -3108,7 +3108,7 @@ blockquote.blockquote-4 .story {
     font-size: 16px;
 }
 .pricing-tables .table-3 .table .table-body {
-    padding: 12px 0;
+    padding: 3px 0 2px;
 }
 .pricing-tables .table-3 .table .table-body .features li {
     border: none;
@@ -3119,11 +3119,11 @@ blockquote.blockquote-4 .story {
     border-top: 1px solid #2c2e39;
 }
 .pricing-tables .table-3 .table .table-footer .order-btn a {
-    display: inline-block;
+    /*display: inline-block;*/
     text-align: center;
-    font-size: 17px;
-    padding: 14px 0;
-    width: 105px;
+    /*font-size: 17px;*/
+    /*padding: 14px 0;*/
+    /*width: 105px;*/
 }
 .pricing-tables .table-3 .table .table-footer .order-btn a.details {
     background: #000020;
