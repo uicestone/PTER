@@ -20,6 +20,14 @@
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<script>window.html5 || document.write('<script src="assets/js/vendor/html5shiv.js"><\/script>')</script>
 	<![endif]-->
+
+    <style type="text/css">
+        <?php if (is_user_logged_in()): ?>
+        .main-navigation .login {
+            display: none;
+        }
+        <?php endif; ?>
+    </style>
 </head>
 <body id="home">
 <div id="entire">

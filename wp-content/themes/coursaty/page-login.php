@@ -1,4 +1,23 @@
-<?php get_header(); the_post(); ?>
+<?php
+
+if(isset($_POST['submit'])){
+	$user = wp_authenticate($_POST['username'], $_POST['password']);
+
+	if(is_a($user, 'WP_Error')){
+		exit(array_values($user->errors)[0][0]);
+	}
+
+	wp_set_auth_cookie($user->ID, isset($_POST['remember']));
+	wp_set_current_user($user->ID);
+	header('Location: ' . site_url());
+}
+
+if(isset($_GET['logout'])){
+	wp_logout();
+	header('Location: ' . site_url());
+}
+
+get_header(); the_post(); ?>
 
 <div class="inner-head">
     <div class="container">
@@ -26,26 +45,26 @@
                         <span class="icon"><i class="fa fa-group"></i></span>
                         <span class="text">登录信息</span>
                     </div><!-- End Title -->
-                    <form method="post" action="/" id="login-form">
+                    <form method="post" id="login-form">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="text" id="login_username" class="username-input" placeholder="用户名">
+                                    <input type="text" id="login_username" name="username" class="username-input" placeholder="用户名">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="password" id="login_password" class="password-input" placeholder="密码">
+                                    <input type="password" id="login_password" name="password" class="password-input" placeholder="密码">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="input clearfix">
-                                    <input type="submit" id="login_submit" class="submit-input grad-btn ln-tr" value="登录">
+                                    <input type="submit" id="login_submit" name="submit" class="submit-input grad-btn ln-tr" value="登录">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6 clearfix">
                                 <div class="custom-checkbox fl">
-                                    <input type="checkbox" id="login_remember" class="checkbox-input" checked>
+                                    <input type="checkbox" id="login_remember" name="remember" class="checkbox-input" checked>
                                     <label for="login_remember">保持登录</label>
                                 </div>
                             </div><!-- end remember -->
