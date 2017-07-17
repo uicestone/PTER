@@ -131,8 +131,6 @@
         </div>
     </div><!-- End Instructors Section Content -->
 </section><!-- End Our Instructors Container -->
-
-<div class="clearfix"></div>
 <?php endif; ?>
 
 <?php get_footer(); ?>

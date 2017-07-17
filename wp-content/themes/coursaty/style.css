@@ -3564,6 +3564,13 @@ footer .courses-widget .course-date {
     color: #afb1b2;
     margin-top: 5px;
 }
+footer .widget .content {
+    color: #afb1b2;
+    line-height: 1.15;
+}
+footer .widget .content p {
+    margin-bottom: 0.5em;
+}
 /* Bottom Footer **************************************************/
 footer #bottom {
     margin-top: 70px;

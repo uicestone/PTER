@@ -3,7 +3,7 @@
 <footer id="footer">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<div class="widget about-widget">
                     <?php $about = get_posts(array('name' => 'about'))[0]; ?>
 					<h6 class="widget-title"><?=get_the_title($about)?></h6>
@@ -18,36 +18,7 @@
 					</div><!-- End Footer Links -->
 				</div><!-- End About Widget -->
 			</div><!-- End col-md3 -->
-			<div class="col-md-3">
-				<div class="widget twitter-widget">
-					<h6 class="widget-title">最近动态</h6>
-					<div id="tweets-slider" class="flexslider">
-						<ul class="slides">
-							<li>
-								<div class="tweet">
-									<a href="#" class="ln-tr">@bingo</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
-									<div class="date">July. 1, 2017</div>
-								</div><!-- End Single Tweet -->
-								<div class="tweet">
-									<a href="#" class="ln-tr">@bingo</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
-									<div class="date">July. 1, 2017</div>
-								</div><!-- End Single Tweet -->
-							</li><!-- End 1st Tweet Slide Item -->
-							<li>
-								<div class="tweet">
-									<a href="#" class="ln-tr">@bingo</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
-									<div class="date">July. 1, 2017</div>
-								</div><!-- End Single Tweet -->
-								<div class="tweet">
-									<a href="#" class="ln-tr">@bingo</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lorem quam.
-									<div class="date">July. 1, 2017</div>
-								</div><!-- End Single Tweet -->
-							</li><!-- End 2nd Tweet Slide Item -->
-						</ul><!-- End ul Items -->
-					</div><!-- End Tweets Slider -->
-				</div><!-- End Twitter Widget -->
-			</div><!-- End col-md3 -->
-			<div class="col-md-4">
+			<div class="col-md-2">
 				<div class="widget courses-widget">
 					<h6 class="widget-title">最新文章</h6>
 					<div id="footer-courses-slider" class="flexslider">
@@ -72,14 +43,14 @@
 					</div><!-- End Footer Scourses Slider -->
 				</div><!-- End Courses Widget -->
 			</div><!-- End col-md4 -->
-			<div class="col-md-2">
-				<div class="widget links-widget">
-					<h6 class="widget-title">链接</h6>
-					<div class="footer-links">
-						<ul>
-							<li><a href="http://pearsonpte.com/" class="ln-tr">PTE</a></li>
-						</ul>
+			<div class="col-md-8">
+				<div class="widget">
+                    <?php if ($copyright = get_posts('name=copyright')[0]): ?>
+					<h6 class="widget-title"><?=get_the_subtitle($copyright)?></h6>
+					<div class="content">
+                        <?=wpautop($copyright->post_content)?>
 					</div><!-- End Footer Links -->
+                    <?php endif; ?>
 				</div><!-- End Links Widget -->
 			</div><!-- End col-md2 -->
 		</div>
