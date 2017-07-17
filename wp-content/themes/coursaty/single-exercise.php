@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     <?php endif; ?>
-                    <div class="sidebar-widget cats">
+                    <div class="sidebar-widget">
                         <span class="widget-icon"><i class="fa fa-clock-o"></i></span>
                         <h5 class="sidebar-widget-title ib">计时器</h5>
                         <div class="home-skills">
@@ -154,6 +154,22 @@
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
                     </div>
+                    <?php $question_type_desc = get_posts(array('post_type' => 'question_type_desc', 'posts_per_page' => 1, 'tax_query' => array(
+						array(
+							'taxonomy' => 'question_type',
+							'field' => 'slug',
+							'terms' => $question_type->slug
+						)
+					)))[0]; ?>
+                    <?php if ($tips = get_post_meta($question_type_desc->ID, 'tips', true)): ?>
+                    <div class="sidebar-widget">
+                        <span class="widget-icon"><i class="fa fa-info-circle"></i></span>
+                        <h5 class="sidebar-widget-title ib">提示</h5>
+                        <div class="content">
+                            <?=$tips?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                     <?php
                     $uri = $_GET['random'] ? remove_query_arg(array('random'), $wp->request . '/') : add_query_arg(array('random' => 'yes'), $wp->request . '/');
 					$uri = $_GET['tag'] ? add_query_arg(array('tag' => $_GET['tag']), $uri) : $uri;
