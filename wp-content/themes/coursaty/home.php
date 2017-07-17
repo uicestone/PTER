@@ -47,7 +47,7 @@
 <div class="course-search fancy-shadow">
     <div class="container">
         <form action="<?=site_url()?>/" id="course-search-form" class="clearfix">
-            <input type="text" name="course-name" id="course-name" placeholder="搜索题型和技巧">
+            <input type="text" name="s" id="course-name" placeholder="搜索题型和技巧">
             <div class="select-category ib">
                 <select class="dropdown" name="post_type" id="course-category">
                     <option value="any" selected="selected">全部</option>
