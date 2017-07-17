@@ -1982,6 +1982,7 @@ h6.head-title {
     float: left;
     margin-right: 20px;
     margin-bottom: 0;
+    max-width: 200px;
 }
 .blog.listview .blogpost .blogpost-info .blogpost-description {
     margin: 53px 0 8px;
