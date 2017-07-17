@@ -35,7 +35,7 @@
                             <span class="icon"><i class="fa fa-clock-o"></i></span>
                             <span class="text">时间占比：<?=get_post_meta(get_the_ID(), 'time', true)?></span>
                         </div><!-- date icon -->
-                        <a href="#" class="btn grad-btn orange-btn join-btn">立即订阅技巧</a>
+                        <a href="<?=site_url()?>/pricing-table/" class="btn grad-btn orange-btn join-btn">订阅</a>
                     </div><!-- End Course Details -->
                 </div><!-- End Sidebar Entry -->
             </div><!-- End col-md-3 -->
@@ -58,9 +58,10 @@
     <div class="container">
         <h3 class="section-title">技巧</h3>
         <p class="section-description">
-            订阅会员后可以学习全部技巧
+            <?=current_user_can('view_tips') ? '以下是该题型的全部技巧' : '订阅会员后可以学习全部技巧'?>
         </p><!-- End Section Description -->
     </div>
+    <?php if (current_user_can('view_tips')): ?>
     <div class="section-content post latest-courses-content alt fadeInDown-animation">
         <div class="container">
             <div class="row">
@@ -85,15 +86,17 @@
             </div><!-- End row -->
         </div><!-- End Container -->
     </div><!-- End Latest-Courses Section Content -->
+    <?php endif; ?>
 </section><!-- End Courses Section -->
 
 <section class="full-section latest-courses-section">
     <div class="container">
         <h3 class="section-title">练习</h3>
         <p class="section-description">
-            订阅会员后可以进行全部练习
+            <?=current_user_can('view_exercises') ? '从以下入口开始练习' : '订阅会员后可以进行全部练习'?>
         </p><!-- End Section Description -->
     </div>
+    <?php if (current_user_can('view_exercises')): ?>
     <div class="section-content post latest-courses-content alt fadeInDown-animation">
         <div class="container">
             <div class="row">
@@ -146,6 +149,7 @@
             </div>
         </div>
     </div><!-- End Latest-Courses Section Content -->
+    <?php endif; ?>
 </section><!-- End Courses Section -->
 
 <script type="text/javascript">

@@ -4,11 +4,11 @@ add_action('wp', function() {
 
 	$coming_soon_page = get_posts(array('name' => 'coming-soon', 'post_type' => 'page'));
 
-	if($coming_soon_page && !is_page('coming-soon') && !is_admin() && !current_user_can('administrator')) {
+	if($coming_soon_page && !is_page('coming-soon') && !is_page('login') && !is_admin() && !is_user_logged_in()) {
 		header('Location: ' . site_url() . '/coming-soon/'); exit;
 	}
 
-	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.12');
+	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.13');
 	wp_register_style('responsive', get_stylesheet_directory_uri() . '/assets/css/responsive.css', array(), '1.0.0');
 
 	wp_register_script('jquery', get_stylesheet_directory_uri() . '/assets/js/vendor/jquery-1.11.2.min.js', array(), '1.11.2', true);
@@ -42,14 +42,21 @@ add_action('wp_enqueue_scripts', function(){
 	wp_enqueue_script('scripts');
 });
 
-// change to after_switch_theme in production
-add_action('init', function () {
-
+add_action('after_switch_theme', function () {
 	register_nav_menu('primary', '主导航');
+	$administrator = get_role('administrator');
+	$administrator->add_cap('view_tips');
+	$administrator->add_cap('view_exercises');
+});
+
+add_action('after_setup_theme', function () {
 	add_theme_support('post-thumbnails');
 	add_image_size('headline', 1600, 700, true);
 	add_image_size('mentor', 270, 270, true);
 	add_image_size('post-thumbnail', 1280, 720, true);
+});
+
+add_action('init', function () {
 
 	register_taxonomy('question_type', null, array(
 		'label' => '题型分类',
@@ -126,6 +133,7 @@ add_action('init', function () {
 		'taxonomies' => array('post_tag'),
 		'menu_icon' => 'dashicons-cart',
 	));
+
 });
 
 add_filter('nav_menu_link_attributes', function($attrs, $item) {

@@ -83,7 +83,7 @@
 					</div><!-- end table header -->
 
 					<div class="table-body">
-						<ul class="features" style="padding: 48px 0 47px">
+						<ul class="features" style="padding: 51px 0 50px">
 							<li>超过3小时视频讲解PTE阅读</li>
 							<li>视频全程大纲</li>
 							<li>24小时学习时间</li>

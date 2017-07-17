@@ -1,4 +1,10 @@
-<?php get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id'))[0]; ?>
+<?php
+
+if(!has_tag('free-trial') && !current_user_can('view_exercises')) {
+	header('Location: ' . site_url() . '/pricing-table/'); exit;
+}
+
+get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id'))[0]; ?>
 
 <article class="post single">
 	<div class="container">
