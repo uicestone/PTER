@@ -49,6 +49,7 @@ add_action('init', function () {
 	add_theme_support('post-thumbnails');
 	add_image_size('headline', 1600, 700, true);
 	add_image_size('mentor', 270, 270, true);
+	add_image_size('post-thumbnail', 1280, 720, true);
 
 	register_taxonomy('question_type', null, array(
 		'label' => '题型分类',
