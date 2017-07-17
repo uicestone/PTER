@@ -2214,7 +2214,17 @@ h6.head-title {
 .sidebar .sidebar-widget .tab-posts .post-item .read-more:hover {
     background: #2997ab;
 }
-.sidebar .sidebar-widget .content ul li {
+.sidebar .sidebar-widget .content ul,
+.sidebar .sidebar-widget .content ol,
+.sidebar .sidebar-widget .content p,
+.sidebar .sidebar-widget .content h1,
+.sidebar .sidebar-widget .content h2,
+.sidebar .sidebar-widget .content h3,
+.sidebar .sidebar-widget .content h4
+{
+    margin-bottom: 10px;
+}
+.sidebar .sidebar-widget .content ul li, .sidebar .sidebar-widget .content ol li {
     list-style: inside;
 }
 .sidebar .sidebar-widget .content ol li {
