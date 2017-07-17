@@ -19,7 +19,7 @@
 
 <div class="clearfix"></div>
 
-<article class="post single fadeInDown-animation">
+<article class="post single">
     <div class="container">
         <div class="row">
             <div class="add-courses box entry">
