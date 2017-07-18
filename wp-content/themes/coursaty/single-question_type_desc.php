@@ -25,16 +25,26 @@
                         </div><!-- center icon -->
                         <div class="course-id">
                             <span class="icon"><i class="fa fa-exclamation-circle"></i></span>
-                            <span class="text">分数占比：<?=get_post_meta(get_the_ID(), 'percentage', true)?></span>
+                            <span class="text">重要指数：<?=get_post_meta(get_the_ID(), 'importance', true)?></span>
+                        </div><!-- course ID -->
+                        <div class="course-id">
+                            <span class="icon"><i class="fa fa-clock-o"></i></span>
+                            <span class="text">时间预估：<?=get_post_meta(get_the_ID(), 'time', true)?></span>
                         </div><!-- course ID -->
                         <div class="place">
-                            <span class="icon"><i class="fa fa-map-marker"></i></span>
-                            <span class="text">难度系数：<?=get_post_meta(get_the_ID(), 'difficulty', true)?></span>
+                            <span class="icon"><i class="fa fa-pencil"></i></span>
+                            <span class="text">练习数量：<?=count(get_posts(array(
+                                'post_type' => 'exercise',
+                                'tax_query' => array(
+                                    array(
+                                        'taxonomy' => 'question_type',
+                                        'field' => 'slug',
+                                        'terms' => $question_type->slug
+                                    )
+                                ),
+                                'posts_per_page' => -1,
+                            )))?>题</span>
                         </div><!-- place icon -->
-                        <div class="date">
-                            <span class="icon"><i class="fa fa-clock-o"></i></span>
-                            <span class="text">时间占比：<?=get_post_meta(get_the_ID(), 'time', true)?></span>
-                        </div><!-- date icon -->
                         <a href="<?=site_url()?>/pricing-table/" class="btn grad-btn orange-btn join-btn">订阅</a>
                     </div><!-- End Course Details -->
                 </div><!-- End Sidebar Entry -->
