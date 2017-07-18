@@ -218,7 +218,6 @@ jQuery(function($) {
             $('.comments-list.answer .content').hide(300);
         }
     });
-    $('.sidebar').sticky({topSpacing:30, bottomSpacing: 615});
 
     // timers
     $.fn.startTimer = function () {
