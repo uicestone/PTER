@@ -176,6 +176,16 @@ get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'qu
                         </div>
                     </div>
                     <?php endif; ?>
+					<?php if ($notes_id = get_post_meta(get_the_ID(), 'notes', true)): ?>
+                    <div class="sidebar-widget">
+                        <span class="widget-icon"><i class="fa fa-info-circle"></i></span>
+                        <h5 class="sidebar-widget-title ib">笔记</h5>
+                        <small class="fr">点击图片放大</small>
+                        <div class="content" style="overflow:auto;max-height:150px">
+                            <a href="<?=wp_get_attachment_url($notes_id)?>"><img src="<?=wp_get_attachment_image_url($notes_id, 'post-thumbnail')?>"></a>
+                        </div>
+                    </div>
+					<?php endif; ?>
                     <?php
                     $uri = $_GET['random'] ? remove_query_arg(array('random'), $wp->request . '/') : add_query_arg(array('random' => 'yes'), $wp->request . '/');
 					$uri = $_GET['tag'] ? add_query_arg(array('tag' => $_GET['tag']), $uri) : $uri;

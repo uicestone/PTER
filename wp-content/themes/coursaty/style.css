@@ -2230,6 +2230,9 @@ h6.head-title {
 .sidebar .sidebar-widget .content ol li {
     list-style-type: decimal;
 }
+.sidebar .sidebar-widget .content img {
+    max-width:100%;
+}
 .sidebar .sidebar-twitter-widget {
     background: #40bff5 url(assets/img/icons/twitter-sidebar-icon.png) no-repeat right bottom;
 }
