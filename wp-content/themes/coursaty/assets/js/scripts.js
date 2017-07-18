@@ -235,4 +235,9 @@
         }
     });
 
+    /********** Disable Context Menu in Content ***********/
+    $('.entry .content').on('contextmenu', function (e) {
+        e.preventDefault();
+    });
+
 })(jQuery);
