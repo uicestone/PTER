@@ -2879,6 +2879,9 @@ blockquote em {
 blockquote del {
     color: #de0a0a;
 }
+blockquote p:not(:last-child) {
+    margin-bottom: 10px;
+}
 blockquote span, blockquote del {
     cursor: default;
 }
@@ -3010,7 +3013,7 @@ blockquote.blockquote-4 .story {
 /* 22 - Pricing tables */
 .pricing-tables {
     background: #f5f5f5;
-    padding: 100px 0;
+    /*padding: 100px 0;*/
 }
 .pricing-tables .table-row {
     margin-bottom: 70px;
@@ -3165,6 +3168,14 @@ blockquote.blockquote-4 .story {
 .pricing-tables .table-3 .table .table-footer .order-btn a:hover {
     background: #fff;
     color: #383c4b;
+}
+.payment-gateways {
+    line-height: 150px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+.payment-gateways img {
+    max-width: 80%;
 }
 /* 21 - Coming soon */
 .coming-soon {
