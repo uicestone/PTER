@@ -11,8 +11,8 @@
 
 /**
  * 签名字符串
- * @param $prestr 需要签名的字符串
- * @param $key 私钥
+ * @param $prestr string 需要签名的字符串
+ * @param $key string 私钥
  * return 签名结果
  */
 function md5Sign($prestr, $key) {
@@ -22,9 +22,9 @@ function md5Sign($prestr, $key) {
 
 /**
  * 验证签名
- * @param $prestr 需要签名的字符串
- * @param $sign 签名结果
- * @param $key 私钥
+ * @param $prestr string 需要签名的字符串
+ * @param $sign string 签名结果
+ * @param $key string 私钥
  * return 签名结果
  */
 function md5Verify($prestr, $sign, $key) {

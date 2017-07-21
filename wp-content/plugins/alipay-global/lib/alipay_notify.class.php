@@ -17,26 +17,26 @@ require_once("alipay_core.function.php");
 require_once("alipay_md5.function.php");
 
 class AlipayNotify {
-    /**
-     * HTTPS形式消息验证地址
-     */
+	/**
+	 * HTTPS形式消息验证地址
+	 */
 	var $https_verify_url = 'https://mapi.alipay.com/gateway.do?service=notify_verify&';
 	/**
-     * HTTP形式消息验证地址
-     */
+	 * HTTP形式消息验证地址
+	 */
 	var $http_verify_url = 'http://notify.alipay.com/trade/notify_query.do?';
 	var $alipay_config;
 
 	function __construct($alipay_config){
 		$this->alipay_config = $alipay_config;
 	}
-    function AlipayNotify($alipay_config) {
-    	$this->__construct($alipay_config);
-    }
-    /**
-     * 针对notify_url验证消息是否是支付宝发出的合法消息
-     * @return 验证结果
-     */
+	function AlipayNotify($alipay_config) {
+		$this->__construct($alipay_config);
+	}
+	/**
+	 * 针对notify_url验证消息是否是支付宝发出的合法消息
+	 * @return bool 验证结果
+	 */
 	function verifyNotify(){
 		if(empty($_POST)) {//判断POST来的数组是否为空
 			return false;
@@ -71,10 +71,10 @@ class AlipayNotify {
 		}
 	}
 	
-    /**
-     * 针对return_url验证消息是否是支付宝发出的合法消息
-     * @return 验证结果
-     */
+	/**
+	 * 针对return_url验证消息是否是支付宝发出的合法消息
+	 * @return bool 验证结果
+	 */
 	function verifyReturn(){
 		if(empty($_GET)) {//判断POST来的数组是否为空
 			return false;
@@ -86,12 +86,12 @@ class AlipayNotify {
 		}
 	}
 	
-    /**
-     * 获取返回时的签名验证结果
-     * @param $para_temp 通知返回来的参数数组
-     * @param $sign 返回的签名结果
-     * @return 签名验证结果
-     */
+	/**
+	 * 获取返回时的签名验证结果
+	 * @param $para_temp array 通知返回来的参数数组
+	 * @param $sign string 返回的签名结果
+	 * @return bool 签名验证结果
+	 */
 	function getSignVeryfy($para_temp, $sign) {
 		//除去待签名参数数组中的空值和签名参数
 		$para_filter = paraFilter($para_temp);
@@ -114,15 +114,15 @@ class AlipayNotify {
 		return $isSgin;
 	}
 
-    /**
-     * 获取远程服务器ATN结果,验证返回URL
-     * @param $notify_id 通知校验ID
-     * @return 服务器ATN结果
-     * 验证结果集：
-     * invalid命令参数不对 出现这个错误，请检测返回处理中partner和key是否为空 
-     * true 返回正确信息
-     * false 请检查防火墙或者是服务器阻止端口问题以及验证时间是否超过一分钟
-     */
+	/**
+	 * 获取远程服务器ATN结果,验证返回URL
+	 * @param $notify_id int 通知校验ID
+	 * @return string 服务器ATN结果
+	 * 验证结果集：
+	 * invalid命令参数不对 出现这个错误，请检测返回处理中partner和key是否为空 
+	 * true 返回正确信息
+	 * false 请检查防火墙或者是服务器阻止端口问题以及验证时间是否超过一分钟
+	 */
 	function getResponse($notify_id) {
 		$transport = strtolower(trim($this->alipay_config['transport']));
 		$partner = trim($this->alipay_config['partner']);
