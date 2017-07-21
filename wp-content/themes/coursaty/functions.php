@@ -4,9 +4,9 @@ add_action('wp', function() {
 
 	$coming_soon_page = get_posts(array('name' => 'coming-soon', 'post_type' => 'page'));
 
-	if($coming_soon_page && !is_page('coming-soon') && !is_page('login') && !is_admin() && !is_user_logged_in()) {
-		header('Location: ' . site_url() . '/coming-soon/'); exit;
-	}
+//	if($coming_soon_page && !is_page('coming-soon') && !is_page('login') && !is_admin() && !is_user_logged_in()) {
+//		header('Location: ' . site_url() . '/coming-soon/'); exit;
+//	}
 
 	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.14');
 	wp_register_style('responsive', get_stylesheet_directory_uri() . '/assets/css/responsive.css', array(), '1.0.0');
@@ -93,6 +93,7 @@ add_action('init', function () {
 			'all_items' => '所有技巧',
 			'add_new' => '添加技巧',
 			'add_new_item' => '新技巧',
+			'edit_item' => '编辑技巧',
 			'not_found' => '未找到技巧'
 		),
 		'public' => true,
@@ -110,6 +111,7 @@ add_action('init', function () {
 			'all_items' => '所有练习',
 			'add_new' => '添加练习',
 			'add_new_item' => '新练习',
+			'edit_item' => '编辑练习',
 			'not_found' => '未找到练习'
 		),
 		'public' => true,
@@ -119,17 +121,18 @@ add_action('init', function () {
 		'has_archive' => true
 	));
 
-	register_post_type('order', array(
+	register_post_type('member_order', array(
 		'label' => '订单',
 		'labels' => array(
 			'all_items' => '所有订单',
 			'add_new' => '手动添加订单',
 			'add_new_item' => '新订单',
+			'edit_item' => '编辑订单',
 			'not_found' => '未找到订单'
 		),
 		'show_ui' => true,
 		'show_in_menu' => true,
-		'supports' => array('title', 'excerpt', 'custom-fields', 'comments'),
+		'supports' => array('title'),
 		'taxonomies' => array('post_tag'),
 		'menu_icon' => 'dashicons-cart',
 	));

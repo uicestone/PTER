@@ -53,7 +53,7 @@ $alipay_config = get_alipay_config();
 			echo "trade_status=".$_GET['trade_status'];
 		}
 
-		echo "验证成功<br />";
+		header('Location: ' . site_url());
 
 		//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 
@@ -62,7 +62,7 @@ $alipay_config = get_alipay_config();
 	else {
 		//验证失败
 		//如要调试，请看alipay_notify.php页面的verifyReturn函数
-		echo "验证失败";
+		header('Location: ' . site_url() . '/pricing-table/');
 	}
 	?>
 	<title>支付宝境外收单交易接口</title>

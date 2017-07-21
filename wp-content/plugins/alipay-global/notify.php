@@ -37,9 +37,11 @@ if($verify_result) {//验证成功
 
 		//注意：
 		//退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
+		$order = get_posts(array('name' => sanitize_title($_POST['out_trade_no']), 'post_type' => 'member_order', 'post_status' => 'private'))[0];
+		$result = update_post_meta($order->ID, 'status', 'paid');
 
 		//调试用，写文本函数记录程序运行情况是否正常
-		//logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+		logResult('TRADE_FINISHED ' . json_encode($_POST));
 	}
 	else if ($_POST['trade_status'] == 'TRADE_SUCCESS') {
 		//判断该笔订单是否在商户网站中已经做过处理
@@ -49,9 +51,12 @@ if($verify_result) {//验证成功
 
 		//注意：
 		//付款完成后，支付宝系统发送该交易状态通知
+		$order = get_posts(array('name' => sanitize_title($_POST['out_trade_no']), 'post_type' => 'member_order', 'post_status' => 'any'))[0];
+		update_post_meta($order->ID, 'status', 'paid');
+
 
 		//调试用，写文本函数记录程序运行情况是否正常
-		//logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+		logResult('TRADE_SUCCESS ' . json_encode($_POST));
 	}
 
 	//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
@@ -65,5 +70,5 @@ else {
 	echo "fail";
 
 	//调试用，写文本函数记录程序运行情况是否正常
-	//logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+	logResult('VERIFY_FAILED  ' . json_encode($_POST));
 }

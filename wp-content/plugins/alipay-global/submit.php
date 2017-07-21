@@ -43,12 +43,18 @@ $total_fee = $_GET['price'];
 //商品描述，可空
 $body = '';
 
+if (get_current_user_id() === 1) {
+	$total_fee = $total_fee / 10000;
+}
+
+$total_fee = max(round($total_fee, 2), 0.01);
+
 /************************************************************/
 
 //构造要请求的参数数组，无需改动
 $parameter = array(
-	"service"       => $alipay_config['service'],
-	"partner"       => $alipay_config['partner'],
+	"service"		=> $alipay_config['service'],
+	"partner"		=> $alipay_config['partner'],
 	"notify_url"	=> $alipay_config['notify_url'],
 	"return_url"	=> $alipay_config['return_url'],
 
@@ -62,6 +68,24 @@ $parameter = array(
 	//如"参数名"=>"参数值"
 
 );
+
+$order_id = wp_insert_post(array(
+	'post_type' => 'member_order',
+	'post_author' => get_current_user_id(),
+	'post_name' => $out_trade_no,
+	'post_title' => $subject,
+    'post_status' => 'private'
+));
+
+add_post_meta($order_id, 'price', $total_fee);
+add_post_meta($order_id, 'currency', $currency);
+add_post_meta($order_id, 'no', $out_trade_no);
+add_post_meta($order_id, 'user', get_current_user_id());
+add_post_meta($order_id, 'status', 'pending_payment');
+
+if (isset($_GET['expires_at'])) {
+	add_post_meta($order_id, 'expires_at', $_GET['expires_at']);
+}
 
 //建立请求
 $alipaySubmit = new AlipaySubmit($alipay_config);

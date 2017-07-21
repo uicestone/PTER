@@ -43,7 +43,7 @@
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#" data-price="20" data-subject="听说基础包30天" class="grad-btn ln-tr show-payment-method">订阅</a>
+							<a href="#payment" data-price="20" data-subject="听说基础包30天" class="grad-btn ln-tr show-payment-method">订阅</a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
@@ -70,7 +70,7 @@
 
 					<div class="table-footer">
 						<div class="order-btn clearfix">
-							<a href="#" data-price="30" data-subject="听说读写套餐30天" class="grad-btn ln-tr show-payment-method">订阅</a>
+							<a href="#payment" data-price="30" data-subject="听说读写套餐30天" class="grad-btn ln-tr show-payment-method">订阅</a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
@@ -95,7 +95,7 @@
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#" data-price="10" data-subject="阅读拓展包" class="grad-btn ln-tr show-payment-method">10 <span class="currency">$ / 次</span>
+							<a href="#payment" data-price="10" data-subject="阅读拓展包" class="grad-btn ln-tr show-payment-method">10 <span class="currency">$ / 次</span>
 								<span class="icon fr ln-tr"><i class="fa fa-angle-right"></i></span>
 							</a>
 						</div><!-- end order button -->
@@ -122,7 +122,7 @@
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#" data-price="10" data-subject="写作拓展包" class="grad-btn ln-tr show-payment-method">10 <span class="currency">$ / 次</span>
+							<a href="#payment" data-price="10" data-subject="写作拓展包" class="grad-btn ln-tr show-payment-method">10 <span class="currency">$ / 次</span>
 								<span class="icon fr ln-tr"><i class="fa fa-angle-right"></i></span>
 							</a>
 						</div><!-- end order button -->
@@ -133,7 +133,7 @@
 
 		</div><!-- end 1st row -->
 
-        <div class="row payment-gateways" style="display: none;">
+        <div id="payment" class="row payment-gateways" style="display: none;">
             <div class="col-sm-4"><a href="#" id="alipay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/alipay.png"></a></div>
             <div class="col-sm-4"><a href="#" id="wechatpay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/wechatpay.png"></a></div>
             <div class="col-sm-4"><a href="#" id="paypal"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/paypal.png"></a></div>
@@ -144,35 +144,45 @@
 
 <script type="text/javascript">
 jQuery(function ($) {
-    var price, subject, lastDay, year, month, date;
+
+    var price, subject, expiresAt, lastDay;
+
     $('.show-payment-method').on('click', function (e) {
-        e.preventDefault();
         $('.payment-gateways').hide(300).show(300);
         price = $(this).data('price');
         subject = $(this).data('subject');
         var matchDays = subject.match(/(\d+)天/);
         if (matchDays) {
-            lastDay = new Date((new Date()).getTime() + matchDays[1] * 86400000)
+            lastDay = new Date((new Date()).getTime() + matchDays[1] * 86400000);
         }
         else {
             lastDay = null;
         }
     });
+
     $('#alipay').on('click', function (e) {
         var href;
         e.preventDefault();
 
         if (lastDay) {
-            year = lastDay.getFullYear().toString().substr(2);
-            month = lastDay.getMonth().toString();
-            date = lastDay.getDate().toString();
-            month = ('00'+month).substring(month.length);
-            date = ('00'+date).substring(date.length);
-            subject += '至' + (year + month + date);
+            subject += '至' + lastDay.format();
+            expiresAt = (new Date(lastDay.getTime() + 86400000)).format();
         }
 
-        window.location.href = '/payment/alipay/?price=' + price + '&subject=' + encodeURIComponent(subject);
+        window.location.href = '/payment/alipay/?price='+ price
+            + '&subject=' + encodeURIComponent(subject)
+            + '&expires_at=' + expiresAt;
     });
+
+    Date.prototype.format = function() {
+        var m = this.getMonth() + 1; // getMonth() is zero-based
+        var d = this.getDate();
+
+        return [this.getFullYear(),
+            (m>9 ? '' : '0') + m,
+            (d>9 ? '' : '0') + d
+        ].join('');
+    };
 });
 </script>
 
