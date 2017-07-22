@@ -83,7 +83,7 @@
                         </div><!-- End Icon -->
                         <h5 class="feature-title"><?=get_the_title($post)?></h5>
                         <p class="feature-description">
-                            <?=get_the_subtitle($post)?>
+                            <?=wpautop($post->post_excerpt)?>
                         </p>
                     </div><!-- End Features Box -->
                 </div>
