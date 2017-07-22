@@ -55,6 +55,10 @@ if (get_current_user_id() === 1) {
 
 $total_fee = max(round($total_fee, 2), 0.01);
 
+if (isset($_GET['intend'])) {
+    $alipay_config['return_url'] = site_url() . $_GET['intend'];
+}
+
 /************************************************************/
 
 //构造要请求的参数数组，无需改动
@@ -62,7 +66,7 @@ $parameter = array(
 	"service"		=> $alipay_config['service'],
 	"partner"		=> $alipay_config['partner'],
 	"notify_url"	=> $alipay_config['notify_url'],
-	"return_url"	=> isset($_GET['intend']) ? site_url() . $_GET['intend'] : $alipay_config['return_url'],
+	"return_url"	=> $alipay_config['return_url'],
 
 	"out_trade_no"	=> $out_trade_no,
 	"subject"	=> $subject,
