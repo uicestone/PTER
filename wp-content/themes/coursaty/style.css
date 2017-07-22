@@ -328,10 +328,10 @@ header .main-navigation > ul > li:last-child a {
 }
 header .main-navigation > ul > li > a {
     color: #fff;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     line-height: 100px;
-    padding: 0 10px;
+    padding: 0 8px;
     display: block;
     position: relative;
 }
@@ -425,6 +425,7 @@ header .main-navigation li.parent-item ul.sub-menu li a {
     color: #a9abb0;
     padding: 11px 20px;
     border-bottom: 1px solid #e6e6e7;
+    font-size: 17px;
 }
 header .main-navigation li.parent-item ul.sub-menu li.haschild,
 header .mobile-navigation .mobile-container li.haschild {
@@ -638,7 +639,7 @@ header.alt .mobile-navigation .mobile-btn span:after {
     left: 0;
     top: 0;
     z-index: 21;
-    background: rgba(47, 51, 66, .7);
+    background: rgba(47, 51, 66, 0);
 }
 .tp-banner > ul li .tp-caption, .fullscreen > ul li .tp-caption {
     z-index: 22 !important;
@@ -646,7 +647,7 @@ header.alt .mobile-navigation .mobile-btn span:after {
 .tp-banner > ul li .slide-title, .fullscreen > ul li .slide-title {
     color: #fff;
     position: relative;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 4px black;
 }
 .tp-banner ul li .slide-title:after, .fullscreen ul li .slide-title:after {
     content: "";
@@ -661,9 +662,11 @@ header.alt .mobile-navigation .mobile-btn span:after {
 }
 .tp-banner ul li .slide-description, .fullscreen ul li .slide-description {
     position: relative;
-    font-size: 15px;
+    font-size: 25px;
+    font-weight: normal;
+    text-shadow: 1px 1px 2px black;
     line-height: 24px;
-    color: #a9abb0;
+    color: #ddd;
     margin-top: 37px;
     text-align: center;
     max-width: 950px;
@@ -754,6 +757,9 @@ header.alt .mobile-navigation .mobile-btn span:after {
 }
 .features-section .feature-title {
     margin: 10px 0 -2px;
+}
+.features-section .feature-box ul li {
+    list-style: inside;
 }
 .features-section .feature-box:hover .icon img {
     transform: translateY(-7px);
