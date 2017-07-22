@@ -36,7 +36,7 @@
 	<header id="header" class="<?=is_home() ? '' : 'alt static-header'?>">
 		<div class="container">
 			<div class="logo-container fl clearfix">
-				<a href="#" class="ib">
+				<a href="<?=site_url()?>" class="ib">
 					<img src="<?=get_stylesheet_directory_uri()?>/assets/img/<?=is_home() ? 'logo-white' : 'logo'?>.png" class="fl" alt="Logo">
 				</a>
 			</div><!-- End Logo Container -->
