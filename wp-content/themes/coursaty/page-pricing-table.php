@@ -1,4 +1,4 @@
-<?php get_header(); the_post() ?>
+<?php redirect_login(); get_header(); the_post() ?>
 
 <div class="inner-head">
 	<div class="container">
@@ -22,13 +22,13 @@
         <div style="margin:50px 0">
 			<?php the_content(); ?>
         </div><!-- End main content row -->
-		<div class="row table-row fadeInDown-animation table-1">
+		<div class="row table-row fadeInDown-animation">
 			<div class="col-md-3 col-sm-6 table-2">
 				<div class="table">
 
 					<div class="table-header grad-btn">
 						<p class="text">听说基础包</p><!-- end text -->
-						<p class="price">20 $ / 月</p><!-- end price -->
+						<p class="price"><?=get_post_meta(get_the_ID(), 'price_base', true)?> $ / 月</p><!-- end price -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
@@ -43,7 +43,7 @@
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#payment" data-price="20" data-subject="听说基础包30天" class="grad-btn ln-tr show-payment-method">订阅</a>
+							<a href="#payment" data-price="<?=get_post_meta(get_the_ID(), 'price_base', true)?>" data-subject="听说基础包30天" class="grad-btn ln-tr show-payment-method">订阅</a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
@@ -55,7 +55,7 @@
 
 					<div class="table-header grad-btn">
 						<p class="text">听说读写套餐</p><!-- end text -->
-						<p class="price">30 $ / 月</p><!-- end price -->
+						<p class="price"><?=get_post_meta(get_the_ID(), 'price_full', true)?> $ / 月</p><!-- end price -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
@@ -70,14 +70,14 @@
 
 					<div class="table-footer">
 						<div class="order-btn clearfix">
-							<a href="#payment" data-price="30" data-subject="听说读写套餐30天" class="grad-btn ln-tr show-payment-method">订阅</a>
+							<a href="#payment" data-price="<?=get_post_meta(get_the_ID(), 'price_full', true)?>" data-subject="听说读写套餐30天" class="grad-btn ln-tr show-payment-method">订阅</a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
 				</div><!-- end table -->
 			</div><!-- end col-md-3 col-sm-6 -->
 
-			<div class="col-md-3 col-sm-6">
+			<div class="col-md-3 col-sm-6 table-1">
 				<div class="table">
 
 					<div class="table-header grad-btn">
@@ -86,7 +86,7 @@
 					</div><!-- end table header -->
 
 					<div class="table-body">
-						<ul class="features" style="padding: 51px 0 50px">
+						<ul class="features">
 							<li>超过3小时视频讲解PTE阅读</li>
 							<li>视频全程大纲</li>
 							<li>24小时学习时间</li>
@@ -95,7 +95,7 @@
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#payment" data-price="10" data-subject="阅读拓展包" class="grad-btn ln-tr show-payment-method">10 <span class="currency">$ / 次</span>
+							<a href="#payment" data-price="<?=get_post_meta(get_the_ID(), 'price_reading', true)?>" data-subject="阅读拓展包" class="grad-btn ln-tr show-payment-method"><?=get_post_meta(get_the_ID(), 'price_reading', true)?> <span class="currency">$ / 次</span>
 								<span class="icon fr ln-tr"><i class="fa fa-angle-right"></i></span>
 							</a>
 						</div><!-- end order button -->
@@ -104,7 +104,7 @@
 				</div><!-- end table -->
 			</div><!-- end col-md-3 col-sm-6 -->
 
-			<div class="col-md-3 col-sm-6">
+			<div class="col-md-3 col-sm-6 table-1">
 				<div class="table">
 
 					<div class="table-header grad-btn">
@@ -113,7 +113,7 @@
 					</div><!-- end table header -->
 
 					<div class="table-body">
-						<ul class="features" style="padding: 48px 0 47px">
+						<ul class="features">
 							<li>超过3小时视频讲解PTE写作</li>
 							<li>视频全程大纲</li>
 							<li>24小时学习时间</li>
@@ -122,7 +122,7 @@
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#payment" data-price="10" data-subject="写作拓展包" class="grad-btn ln-tr show-payment-method">10 <span class="currency">$ / 次</span>
+							<a href="#payment" data-price="<?=get_post_meta(get_the_ID(), 'price_writing', true)?>" data-subject="写作拓展包" class="grad-btn ln-tr show-payment-method"><?=get_post_meta(get_the_ID(), 'price_writing', true)?> <span class="currency">$ / 次</span>
 								<span class="icon fr ln-tr"><i class="fa fa-angle-right"></i></span>
 							</a>
 						</div><!-- end order button -->
@@ -133,7 +133,9 @@
 
 		</div><!-- end 1st row -->
 
-        <div id="payment" class="row payment-gateways" style="display: none;">
+        <div id="payment"></div>
+
+        <div class="row payment-gateways" style="display: none;">
             <div class="col-sm-4"><a href="#" id="alipay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/alipay.png"></a></div>
             <div class="col-sm-4"><a href="#" id="wechatpay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/wechatpay.png"></a></div>
             <div class="col-sm-4"><a href="#" id="paypal"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/paypal.png"></a></div>
@@ -145,7 +147,7 @@
 <script type="text/javascript">
 jQuery(function ($) {
 
-    var price, subject, expiresAt, lastDay;
+    var price, subject, service, expiresAt, lastDay;
 
     $('.show-payment-method').on('click', function (e) {
         $('.payment-gateways').hide(300).show(300);
@@ -164,14 +166,18 @@ jQuery(function ($) {
         var href;
         e.preventDefault();
 
+        service = subject;
+
         if (lastDay) {
             subject += '至' + lastDay.format();
             expiresAt = (new Date(lastDay.getTime() + 86400000)).format();
         }
 
         window.location.href = '/payment/alipay/?price='+ price
-            + '&subject=' + encodeURIComponent(subject)
-            + '&expires_at=' + expiresAt;
+            + '&subject=' + (subject)
+            + '&service=' + (service)
+            + '&expires_at=' + expiresAt
+            + '&intend=' + ('<?=$_GET['intend']?>');
     });
 
     Date.prototype.format = function() {

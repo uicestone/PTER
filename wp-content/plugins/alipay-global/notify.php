@@ -37,8 +37,8 @@ if($verify_result) {//验证成功
 
 		//注意：
 		//退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
-		$order = get_posts(array('name' => sanitize_title($_POST['out_trade_no']), 'post_type' => 'member_order', 'post_status' => 'private'))[0];
-		$result = update_post_meta($order->ID, 'status', 'paid');
+
+		order_paid($_POST['out_trade_no']);
 
 		//调试用，写文本函数记录程序运行情况是否正常
 		logResult('TRADE_FINISHED ' . json_encode($_POST));
@@ -51,9 +51,7 @@ if($verify_result) {//验证成功
 
 		//注意：
 		//付款完成后，支付宝系统发送该交易状态通知
-		$order = get_posts(array('name' => sanitize_title($_POST['out_trade_no']), 'post_type' => 'member_order', 'post_status' => 'any'))[0];
-		update_post_meta($order->ID, 'status', 'paid');
-
+		order_paid($_POST['out_trade_no']);
 
 		//调试用，写文本函数记录程序运行情况是否正常
 		logResult('TRADE_SUCCESS ' . json_encode($_POST));

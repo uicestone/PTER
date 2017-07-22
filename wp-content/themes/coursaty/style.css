@@ -3098,13 +3098,16 @@ blockquote.blockquote-4 .story {
     background: #fff;
     color: #383c4b;
 }
+.pricing-tables .table-1 .table .table-body .features {
+    padding: 51px 0;
+}
 .pricing-tables .table-1 .table .table-body .features li:hover,
 .pricing-tables .table-2 .table .table-body .features li:hover {
     background: #f9f9f9;
 }
 /* table 2 */
 .pricing-tables .table-2 .table .table-header {
-    padding: 41px 0;
+    padding: 49px 0;
 }
 .pricing-tables .table-2 .table .table-header .text {
     font-size: 25px;
@@ -3132,7 +3135,7 @@ blockquote.blockquote-4 .story {
 }
 .pricing-tables .table-3 .table .table-header {
     background: none;
-    padding: 36px 0;
+    padding: 44px 0;
     border-bottom: 1px solid #2c2e39;
 }
 .pricing-tables .table-3 .table .table-header .text {

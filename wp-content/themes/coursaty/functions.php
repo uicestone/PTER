@@ -8,7 +8,7 @@ add_action('wp', function() {
 //		header('Location: ' . site_url() . '/coming-soon/'); exit;
 //	}
 
-	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.14');
+	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.15');
 	wp_register_style('responsive', get_stylesheet_directory_uri() . '/assets/css/responsive.css', array(), '1.0.0');
 
 	wp_register_script('jquery', get_stylesheet_directory_uri() . '/assets/js/vendor/jquery-1.11.2.min.js', array(), '1.11.2', true);
@@ -47,6 +47,8 @@ add_action('after_switch_theme', function () {
 	$administrator = get_role('administrator');
 	$administrator->add_cap('view_tips');
 	$administrator->add_cap('view_exercises');
+
+	// TODO create scheduled event to remove cap for expired users
 });
 
 add_action('after_setup_theme', function () {
@@ -269,5 +271,55 @@ function tsm_convert_id_to_term_in_query($query) {
 	if ( $pagenow == 'edit.php' && isset($q_vars['post_type']) && $q_vars['post_type'] == $post_type && isset($q_vars[$taxonomy]) && is_numeric($q_vars[$taxonomy]) && $q_vars[$taxonomy] != 0 ) {
 		$term = get_term_by('id', $q_vars[$taxonomy], $taxonomy);
 		$q_vars[$taxonomy] = $term->slug;
+	}
+}
+
+function redirect_login () {
+
+	if (is_user_logged_in()) {
+		return;
+	}
+
+	header('Location: ' . site_url() . '/login/?intend=' . ($_SERVER['REQUEST_URI'])); exit;
+}
+
+function redirect_pricing_table ($cap) {
+	if (current_user_can($cap)) {
+		return;
+	}
+	else {
+		header('Location: ' . site_url() . '/pricing-table/?intend=' . ($_SERVER['REQUEST_URI'])); exit;
+	}
+}
+
+function order_paid ($order_no) {
+	// find the order
+	$order = get_posts(array('name' => sanitize_title($order_no), 'post_type' => 'member_order', 'post_status' => 'private'))[0];
+
+	// update order payment status
+	update_post_meta($order->ID, 'status', 'paid');
+
+	// TODO price-service needs to be verified
+
+	// get the user and add cap
+	$user = get_user_by('ID', $order->post_author);
+
+	$service = get_post_meta($order->ID, 'service', true);
+
+	if (in_array($service, array('听说基础包30天', '听说读写套餐30天'))) {
+		$user->add_cap('view_tips');
+		$user->add_cap('view_exercises');
+	}
+
+	if (in_array($service, array('听说读写套餐30天', '阅读拓展包'))) {
+		$user->add_cap('view_reading');
+	}
+
+	if (in_array($service, array('听说读写套餐30天', '写作拓展包'))) {
+		$user->add_cap('view_writing');
+	}
+
+	if (in_array($service, array('听说基础包30天', '听说读写套餐30天'))) {
+		update_user_meta($user->ID, 'service_valid_before_' . get_post_meta($order->ID, 'service', true), get_post_meta($order->ID, 'expires_at', true));
 	}
 }

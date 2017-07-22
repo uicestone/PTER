@@ -1,7 +1,7 @@
 <?php
 
-if(!has_tag('free-trial') && !current_user_can('view_exercises')) {
-	header('Location: ' . site_url() . '/pricing-table/'); exit;
+if(!has_tag('free-trial')) {
+    redirect_pricing_table('view_exercises');
 }
 
 get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id'))[0]; ?>

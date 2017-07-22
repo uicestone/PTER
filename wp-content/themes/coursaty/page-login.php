@@ -9,7 +9,13 @@ if(isset($_POST['submit'])){
 
 	wp_set_auth_cookie($user->ID, isset($_POST['remember']));
 	wp_set_current_user($user->ID);
-	header('Location: ' . site_url());
+
+	if ($_GET['intend']) {
+	    header('Location: ' . $_GET['intend']); exit;
+    }
+    else {
+		header('Location: ' . site_url()); exit;
+    }
 }
 
 if(isset($_GET['logout'])){

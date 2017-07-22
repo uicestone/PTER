@@ -27,6 +27,12 @@
 require_once("lib/alipay_submit.class.php");
 $alipay_config = get_alipay_config();
 
+//echo $_GET['subject'];
+//echo $_GET['price'];
+//echo $_GET['intend'];
+//echo $_GET['service'];
+//echo $_GET['expires_at']; exit;
+
 /**************************请求参数**************************/
 //商户订单号，商户网站订单系统中唯一订单号，必填
 $out_trade_no = uniqid('', true);
@@ -56,7 +62,7 @@ $parameter = array(
 	"service"		=> $alipay_config['service'],
 	"partner"		=> $alipay_config['partner'],
 	"notify_url"	=> $alipay_config['notify_url'],
-	"return_url"	=> $alipay_config['return_url'],
+	"return_url"	=> isset($_GET['intend']) ? site_url() . $_GET['intend'] : $alipay_config['return_url'],
 
 	"out_trade_no"	=> $out_trade_no,
 	"subject"	=> $subject,
@@ -81,6 +87,7 @@ add_post_meta($order_id, 'price', $total_fee);
 add_post_meta($order_id, 'currency', $currency);
 add_post_meta($order_id, 'no', $out_trade_no);
 add_post_meta($order_id, 'user', get_current_user_id());
+add_post_meta($order_id, 'service', $_GET['service']);
 add_post_meta($order_id, 'status', 'pending_payment');
 
 if (isset($_GET['expires_at'])) {

@@ -1,4 +1,4 @@
-<?php get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id'))[0]; ?>
+<?php redirect_login(); get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id'))[0]; ?>
 
 <div class="inner-head">
     <div class="container">
@@ -45,7 +45,9 @@
                                 'posts_per_page' => -1,
                             )))?>题</span>
                         </div><!-- place icon -->
-                        <a href="<?=site_url()?>/pricing-table/" class="btn grad-btn orange-btn join-btn">订阅</a>
+                        <?php if (!current_user_can('view_tips')): ?>
+                        <a href="<?=site_url()?>/pricing-table/?intend=<?=urlencode($_SERVER['REQUEST_URI'])?>" class="btn grad-btn orange-btn join-btn">订阅</a>
+                        <?php endif; ?>
                     </div><!-- End Course Details -->
                 </div><!-- End Sidebar Entry -->
             </div><!-- End col-md-3 -->

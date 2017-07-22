@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php redirect_login(); get_header(); ?>
 
 <div class="inner-head">
     <div class="container">

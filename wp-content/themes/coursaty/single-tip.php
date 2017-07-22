@@ -1,7 +1,7 @@
 <?php
 
-if(!has_tag('free-trial') && !current_user_can('view_tips')) {
-    header('Location: ' . site_url() . '/pricing-table/'); exit;
+if(!has_tag('free-trial')) {
+    redirect_pricing_table('view_tips');
 }
 
 get_header(); the_post(); ?>
