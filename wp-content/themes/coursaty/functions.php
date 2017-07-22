@@ -312,11 +312,11 @@ function order_paid ($order_no) {
 	}
 
 	if (in_array($service, array('听说读写套餐30天', '阅读拓展包'))) {
-		$user->add_cap('view_reading');
+		add_user_meta($user->ID, 'service_valid_before_阅读拓展包', 'inactivated');
 	}
 
 	if (in_array($service, array('听说读写套餐30天', '写作拓展包'))) {
-		$user->add_cap('view_writing');
+		add_user_meta($user->ID, 'service_valid_before_写作拓展包', 'inactivated');
 	}
 
 	if (in_array($service, array('听说基础包30天', '听说读写套餐30天'))) {

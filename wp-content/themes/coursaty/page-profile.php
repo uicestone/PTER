@@ -78,6 +78,67 @@ get_header(); the_post(); ?>
 						</div><!-- end row -->
 					</form><!-- End form -->
 				</div><!-- end login form -->
+				<div class="login-form register my-services">
+					<div class="login-title">
+						<span class="icon"><i class="fa fa-group"></i></span>
+						<span class="text">我的服务</span>
+					</div><!-- End Title -->
+					<div class="home-skills">
+						<?php
+						$service_base = get_user_meta($user->ID, 'service_valid_before_听说基础包30天', true);
+						$service_full = get_user_meta($user->ID, 'service_valid_before_听说读写套餐30天', true);
+						if ($service_full || $service_base): ?>
+						<div class="add-courses box additional-pack">
+							<?php if ($service_base): $percent = max(0, strtotime($service_base) - time() / (30 * 86400)) * 100 ?>
+							<a href="#" class="add-courses-title ln-tr">听说基础包30天</a>
+							<div class="skillbar clearfix" data-percent="<?=$percent?>%">
+								<div class="skillbar-title"><span><?=round($percent)?>%</span></div><div class="skillbar-bar" style="width: <?=$percent?>%;"></div>
+							</div>
+							<?php else: $percent = max(0, strtotime($service_full) - time() / (30 * 86400)) * 100 ?>
+							<a href="#" class="add-courses-title ln-tr">听说读写套餐30天</a>
+							<div class="skillbar clearfix" data-percent="<?=$percent?>%">
+								<div class="skillbar-title"><span><?=round($percent)?>%</span></div><div class="skillbar-bar" style="width: <?=$percent?>%;"></div>
+							</div>
+							<?php endif; ?>
+						</div>
+						<?php endif; ?>
+					</div>
+					<div class="row">
+						<?php
+						$service_reading = get_user_meta($user->ID, 'service_valid_before_阅读拓展包', true);
+						$service_writing = get_user_meta($user->ID, 'service_valid_before_写作拓展包', true);
+						?>
+						<?php if ($service_reading): ?>
+						<div class="col-md-6">
+							<div class="add-courses box additional-pack">
+								<div class="icon"><i class="fa fa-book"></i></div>
+								<a href="#" class="add-courses-title ln-tr">阅读拓展包</a>
+								<p class="add-courses-description">
+									你可以在激活后24小时内完整学习1次视频
+								</p>
+								<form method="post"><input type="submit" name="active_阅读拓展包" value="激活" class="btn ln-tr active"></form>
+							</div>
+						</div>
+						<?php endif; ?>
+						<?php if ($service_writing): ?>
+						<div class="col-md-6">
+							<div class="add-courses box additional-pack">
+								<div class="icon"><i class="fa fa-pencil"></i></div>
+								<a href="#" class="add-courses-title ln-tr">写作拓展包</a>
+								<p class="add-courses-description">
+									你可以在激活后24小时内完整学习1次视频
+								</p>
+								<form method="post"><input type="submit" name="active_写作拓展包" value="激活" class="btn ln-tr active"></form>
+							</div>
+						</div>
+						<?php endif; ?>
+						<?php if (!$service_base && !$service_full && !$service_reading && !$service_writing): ?>
+						<div class="subscribe">
+							<a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您目前没有任何服务，点击订阅</a>
+						</div>
+						<?php endif; ?>
+					</div>
+				</div><!-- end login form -->
 			</div><!-- end col-md-8/offset -->
 		</div><!-- end row -->
 	</div><!-- end container -->

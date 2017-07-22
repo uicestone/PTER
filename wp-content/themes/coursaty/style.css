@@ -2707,6 +2707,52 @@ h6.head-title {
     color: #383c4b;
     cursor: pointer;
 }
+.my-services .additional-pack {
+    box-shadow: none;
+    margin-top: 0;
+}
+.my-services .additional-pack .add-courses-title {
+    font-size: 24px;
+}
+.my-services .additional-pack .icon {
+    background: #2f3342;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 10px 10px 0;
+    border-radius: 50%;
+    border: 4px solid #167485;
+    display: inline-block;
+    text-align: center;
+}
+.my-services .additional-pack .icon i {
+    color: #fff;
+    font-size: 24px;
+}
+.my-services .additional-pack .active.btn {
+    width: 100%;
+    background: #2997ab;
+    font-size: 100%;
+}
+.my-services .additional-pack .active.btn:hover {
+    background: #383c4b;
+}
+.my-services .subscribe {
+    padding: 15px;
+}
+.my-services .subscribe .subscribe-btn {
+    width: 100%;
+    background: #2a97ab;
+    height: 39px;
+    line-height: 39px;
+    text-align: center;
+    display: block;
+    color: white;
+    font-weight: bold;
+}
+.my-services .subscribe-btn:hover {
+    background: #383c4b;
+}
 /* custom checkbox */
 .custom-checkbox:not(#foo) .checkbox-input {
     position: absolute;
