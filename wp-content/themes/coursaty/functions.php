@@ -274,9 +274,9 @@ function tsm_convert_id_to_term_in_query($query) {
 	}
 }
 
-function redirect_login () {
+function redirect_login ($force = false) {
 
-	if (is_user_logged_in()) {
+	if (!$force && is_user_logged_in()) {
 		return;
 	}
 

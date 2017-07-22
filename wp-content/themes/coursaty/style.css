@@ -2427,12 +2427,25 @@ h6.head-title {
 }
 .comment-form .input input:not([type=submit]), .comment-form .input textarea,
 .contact-form .input input:not([type=submit]), .contact-form .input textarea,
-.login-page .login-form .input input {
+.login-page .login-form .input input, .login-page .login-form .input-with-label {
     display: block;
     width: 100%;
     padding: 9px 20px;
     border: 1px solid #d7d8db;
     border-radius: 2px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #5a5e6a;
+}
+.login-page .login-form .input-with-label input {
+    font-size: 100%;
+    width: 200px;
+}
+.login-page .login-form .static {
+    display: block;
+    width: 100%;
+    padding: 9px 20px;
     font-size: 15px;
     font-weight: bold;
     margin-top: 20px;
