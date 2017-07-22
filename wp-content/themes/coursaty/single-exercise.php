@@ -108,6 +108,11 @@ get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'qu
                                     <span>音频</span>
                                 </div>
                                 <div class="skillbar-bar"></div>
+                                <div class="controls">
+                                    <i id="play-control" class="fa fa-play" style="display:none;"></i>
+                                    <i id="pause-control" class="fa fa-pause"></i>
+                                    <i id="replay-control" class="fa fa-refresh"></i>
+                                </div>
                             </div>
                             <?php if(in_array($question_type->slug, array('read-aloud'))): ?>
                             <div class="skillbar timer clearfix" data-duration="40">
@@ -243,8 +248,21 @@ jQuery(function($) {
 
     // auto plays audio in question and show audio timer
     $('.question.content audio').each(function() {
-        $('.audio-progress').show();
         var self = this;
+        $('.audio-progress').show()
+        .on('click', '#pause-control', function () {
+            self.pause();
+            $(this).hide().siblings('#play-control').show();
+        })
+        .on('click', '#play-control', function () {
+            self.play();
+            $(this).hide().siblings('#pause-control').show();
+        })
+        .on('click', '#replay-control', function () {
+            self.currentTime = 0;
+            $(this).siblings('#play-control').hide().siblings('#pause-control').show();
+            self.play();
+        });
         setTimeout(function () {
             self.play();
         }, 3000);

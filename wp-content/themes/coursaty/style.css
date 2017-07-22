@@ -1451,6 +1451,17 @@ h6.head-title {
     background: #2997ab;
     border-radius: 2px;
 }
+.home-skills .controls {
+    position: absolute;
+    right: 14px;
+    top: 0;
+    height: 38px;
+    line-height: 38px;
+    color: white;
+}
+.home-skills .controls i {
+    margin-left: 10px;
+}
 /* home 3 */
 .tp-banner-container.has-btns .slider-btns a {
     font-size: 15px;
