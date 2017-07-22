@@ -160,6 +160,11 @@ get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'qu
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
                     </div>
+					<?php
+					$uri = $_GET['random'] ? remove_query_arg(array('random'), $wp->request . '/') : add_query_arg(array('random' => 'yes'), $wp->request . '/');
+					$uri = $_GET['tag'] ? add_query_arg(array('tag' => $_GET['tag']), $uri) : $uri;
+					?>
+                    <a class="btn primary-btn" href="<?=home_url($uri);?>">切换到<?=$_GET['random'] ? '顺序练习' : '随机练习'?></a>
                     <?php $question_type_desc = get_posts(array('post_type' => 'question_type_desc', 'posts_per_page' => 1, 'tax_query' => array(
 						array(
 							'taxonomy' => 'question_type',
@@ -186,11 +191,6 @@ get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'qu
                         </div>
                     </div>
 					<?php endif; ?>
-                    <?php
-                    $uri = $_GET['random'] ? remove_query_arg(array('random'), $wp->request . '/') : add_query_arg(array('random' => 'yes'), $wp->request . '/');
-					$uri = $_GET['tag'] ? add_query_arg(array('tag' => $_GET['tag']), $uri) : $uri;
-                    ?>
-                    <a class="btn primary-btn" href="<?=home_url($uri);?>">切换到<?=$_GET['random'] ? '顺序练习' : '随机练习'?></a>
                 </div>
 			</div><!-- End Sidebar - RIGHT -->
 		</div><!-- End main row -->
