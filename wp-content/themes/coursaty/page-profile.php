@@ -15,6 +15,16 @@ if (isset($_POST['submit'])) {
 		wp_set_password($_POST['password'], $user->ID);
 		redirect_login(true);
 	}
+	if ($_POST['invitation_code']) {
+		$invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
+		if (count($invited_by_users) !== 1) {
+			exit('无法确定你的邀请人，请联系客服稍后绑定邀请人');
+		}
+		if ($invited_by_users[0]->ID === $user->ID) {
+		    exit('不能邀请自己');
+        }
+		add_user_meta($user->ID, 'invited_by_user', $invited_by_users[0]->ID);
+	}
 }
 
 if (isset($_POST['activate_reading'])) {
@@ -68,7 +78,7 @@ get_header(); the_post(); ?>
 									<label>显示名：</label>
 									<input type="text" id="reg_name" name="display_name" class="name-input" placeholder="对外显示的我的名称" value="<?=$user->display_name?>">
 								</div>
-							</div><!-- end username -->
+							</div><!-- end display_name -->
 							<div class="col-md-6 col-sm-6">
 								<div class="input-with-label">
 									<label>电子邮箱：</label>
@@ -80,6 +90,20 @@ get_header(); the_post(); ?>
 									<input type="password" id="reg_password" name="password" class="password-input" placeholder="重置密码">
 								</div>
 							</div><!-- end password -->
+                            <?php if ($invited_by_user = get_user_by('ID', get_user_meta($user->ID, 'invited_by_user', true))): ?>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="static">
+                                    <label>邀请人：</label>
+                                    <?=$invited_by_user->display_name?>
+                                </div>
+                            </div><!-- end username -->
+                            <?php else: ?>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input">
+                                    <input type="text" id="reg_invitation_code" name="invitation_code" class="invitation_code-input" placeholder="邀请码，填写后你和邀请人都将获得奖励">
+                                </div>
+                            </div><!-- end invitation_code -->
+                            <?php endif; ?>
 							<div class="col-md-12">
 								<div class="input clearfix">
 									<input type="submit" id="reg_submit" name="submit" value="修改" class="submit-input grad-btn ln-tr">
@@ -92,6 +116,18 @@ get_header(); the_post(); ?>
 					<div class="login-title">
 						<span class="icon"><i class="fa fa-group"></i></span>
 						<span class="text">我的服务</span>
+                        <div class="ib fr">
+                            <span>付款：$<?=get_user_meta($user->ID, 'total_paid', true) ?: 0?></span>，
+                            <span>奖励：$<?=get_user_meta($user->ID, 'total_awarded', true) ?: 0?></span>，
+                            <?php
+							$invitation_code = get_user_meta($user->ID, 'invitation_code', true);
+							if (!$invitation_code) {
+								$invitation_code = sha1('Bingo' . $user->ID);
+								add_user_meta($user->ID, 'invitation_code', $invitation_code);
+							}
+                            ?>
+                            <span>邀请码：<?=substr($invitation_code, 0, 6)?></span>
+                        </div>
 					</div><!-- End Title -->
 					<div class="home-skills">
 						<?php

@@ -2455,6 +2455,9 @@ h6.head-title {
     margin-top: 20px;
     color: #5a5e6a;
 }
+.login-page .login-form .input-with-label {
+    padding: 8px 20px;
+}
 .login-page .login-form .input-with-label input {
     font-size: 100%;
     width: 200px;

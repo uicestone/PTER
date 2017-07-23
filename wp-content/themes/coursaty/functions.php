@@ -362,6 +362,8 @@ function order_paid ($order_no) {
 	if (in_array($service, array('听说基础包30天', '听说读写套餐30天'))) {
 		update_user_meta($user->ID, 'service_valid_before_' . get_post_meta($order->ID, 'service', true), get_post_meta($order->ID, 'expires_at', true));
 	}
+
+	update_user_meta($user->ID, 'total_paid', (get_user_meta($user->ID, 'total_paid', true) ?: 0) + get_post_meta($order->ID, 'price', true));
 }
 
 function pter_adjacent_post_where ($where) {

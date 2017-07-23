@@ -1,9 +1,15 @@
 <?php
 
 if(isset($_POST['submit'])){
+
+    if ($_POST['password'] !== $_POST['confirm_password']) {
+        exit('两次输入密码不一致，请返回修改');
+    }
+
 	$user_id = wp_insert_user(array(
 		'user_pass' => $_POST['password'],
 		'user_login' => $_POST['username'],
+		'display_name' => $_POST['display_name'],
 		'user_email' => $_POST['email'],
 		'user_registered' => date('Y-m-d H:i:s'),
 		'show_admin_bar_front' => false
@@ -12,7 +18,15 @@ if(isset($_POST['submit'])){
 	if(is_a($user_id, 'WP_Error')){
 		exit(array_values($user_id->errors)[0][0]);
 	}
-	update_user_meta($user_id, 'mobile', $_POST['mobile']);
+
+	if ($_POST['invitation_code']) {
+	    $invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
+	    if (count($invited_by_users) !== 1) {
+	        exit('无法确定你的邀请人，请联系客服稍后绑定邀请人');
+        }
+		add_user_meta($user_id, 'invited_by_user', $invited_by_users[0]->ID);
+    }
+
 	wp_set_auth_cookie($user_id, true);
 	wp_set_current_user($user_id);
 
@@ -52,28 +66,38 @@ get_header(); the_post(); ?>
                         <span class="icon"><i class="fa fa-group"></i></span>
                         <span class="text">注册</span>
                     </div><!-- End Title -->
-                    <form method="post" action="/" id="register-form">
+                    <form method="post" id="register-form">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="text" id="reg_username" name="username" class="username-input" placeholder="用户名">
+                                    <input type="text" id="reg_username" name="username" class="username-input" placeholder="用户名*" required>
                                 </div>
                             </div><!-- end username -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="email" id="reg_email" name="email" class="email-input" placeholder="电子邮箱">
+                                    <input type="email" id="reg_email" name="email" class="email-input" placeholder="电子邮箱*" required>
                                 </div>
                             </div><!-- end email -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="password" id="reg_password" name="password" class="password-input" placeholder="密码">
+                                    <input type="password" id="reg_password" name="password" class="password-input" placeholder="密码*" required>
                                 </div>
                             </div><!-- end password -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="password" id="reg_confirm-password" name="confirm_password" class="confirm-password-input" placeholder="确认密码">
+                                    <input type="password" id="reg_confirm-password" name="confirm_password" class="confirm-password-input" placeholder="确认密码*" required>
                                 </div>
                             </div><!-- end confirm password -->
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input">
+                                    <input type="text" id="reg_username" name="display_name" class="display_name-input" placeholder="显示名">
+                                </div>
+                            </div><!-- end username -->
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input">
+                                    <input type="text" id="reg_invitation_code" name="invitation_code" class="invitation_code-input" placeholder="邀请码（可选，也可稍后绑定）">
+                                </div>
+                            </div><!-- end username -->
                             <div class="col-md-12">
                                 <div class="input clearfix">
                                     <input type="submit" id="reg_submit" name="submit" class="submit-input grad-btn ln-tr" value="注册">
