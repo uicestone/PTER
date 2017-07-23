@@ -139,6 +139,46 @@ add_action('init', function () {
 		'menu_icon' => 'dashicons-cart',
 	));
 
+	add_filter('manage_member_order_posts_columns', function($columns) {
+		$newcolumns = array(
+			'cb' => $columns['cb'],
+			'title' => $columns['title'],
+			'date' => '下单时间',
+			'status' => '状态',
+			'user'=>'用户',
+			'price'=>'金额',
+			'expires_at' => '过期时间'
+		);
+		return $newcolumns;
+	});
+
+	add_action('manage_member_order_posts_custom_column', function($column_name) {
+		global $post;
+		switch ($column_name ) {
+			case 'user' :
+				$user = get_user_by('ID', $post->post_author);
+				echo $user->display_name;
+				break;
+			case 'price' :
+				$price = get_post_meta($post->ID, 'price', true);
+				echo $price;
+				break;
+			case 'expires_at' :
+				$expires_at = get_post_meta($post->ID, 'expires_at', true);
+				echo date('Y-m-d', strtotime($expires_at));
+				break;
+			case 'status' :
+				$status = get_post_meta($post->ID, 'status', true);
+				switch ($status) {
+					case 'pending_payment': echo '待付款'; break;
+					case 'paid': echo '已付款'; break;
+					case 'cancelled': echo '已取消'; break;
+					default;
+				}
+				break;
+			default;
+		}
+	});
 });
 
 add_filter('nav_menu_link_attributes', function($attrs, $item) {
