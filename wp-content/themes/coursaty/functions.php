@@ -363,3 +363,43 @@ function order_paid ($order_no) {
 		update_user_meta($user->ID, 'service_valid_before_' . get_post_meta($order->ID, 'service', true), get_post_meta($order->ID, 'expires_at', true));
 	}
 }
+
+function pter_adjacent_post_where ($where) {
+
+	global $post;
+
+	if ($post->post_type === 'exercise' && $_GET['tag'] !== 'free-trial') {
+		$where = str_replace('p.post_date', 'p.ID', $where);
+		$where = preg_replace('/\'\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}\'/', $post->ID, $where);
+		return $where;
+	}
+
+	return $where;
+};
+
+function pter_previous_post_sort ($orderby) {
+
+	global $post;
+
+	if ($post->post_type === 'exercise' && $_GET['tag'] !== 'free-trial') {
+		return 'ORDER BY p.ID DESC LIMIT 1';
+	}
+
+	return $orderby;
+}
+
+function pter_next_post_sort ($orderby) {
+
+	global $post;
+
+	if ($post->post_type === 'exercise' && $_GET['tag'] !== 'free-trial') {
+		return 'ORDER BY p.ID ASC LIMIT 1';
+	}
+
+	return $orderby;
+}
+
+add_filter('get_previous_post_where', 'pter_adjacent_post_where');
+add_filter('get_next_post_where', 'pter_adjacent_post_where');
+add_filter('get_previous_post_sort', 'pter_previous_post_sort');
+add_filter('get_next_post_sort', 'pter_next_post_sort');
