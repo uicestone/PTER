@@ -346,21 +346,24 @@ function order_paid ($order_no) {
 
 	$service = get_post_meta($order->ID, 'service', true);
 
-	if (in_array($service, array('听说基础包30天', '听说读写套餐30天'))) {
+	if (in_array($service, array('tips', 'base', 'full'))) {
 		$user->add_cap('view_tips');
+	}
+
+	if (in_array($service, array('exercises', 'base', 'full'))) {
 		$user->add_cap('view_exercises');
 	}
 
-	if (in_array($service, array('听说读写套餐30天', '阅读拓展包'))) {
-		add_user_meta($user->ID, 'service_valid_before_阅读拓展包', 'inactivated');
+	if (in_array($service, array('full', 'reading'))) {
+		add_user_meta($user->ID, 'service_reading_valid_before', 'inactivated');
 	}
 
-	if (in_array($service, array('听说读写套餐30天', '写作拓展包'))) {
-		add_user_meta($user->ID, 'service_valid_before_写作拓展包', 'inactivated');
+	if (in_array($service, array('full', 'writing'))) {
+		add_user_meta($user->ID, 'service_writing_valid_before', 'inactivated');
 	}
 
-	if (in_array($service, array('听说基础包30天', '听说读写套餐30天'))) {
-		update_user_meta($user->ID, 'service_valid_before_' . get_post_meta($order->ID, 'service', true), get_post_meta($order->ID, 'expires_at', true));
+	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {
+		update_user_meta($user->ID, 'service_' . $service . '_valid_before', get_post_meta($order->ID, 'expires_at', true));
 	}
 
 	update_user_meta($user->ID, 'total_paid', (get_user_meta($user->ID, 'total_paid', true) ?: 0) + get_post_meta($order->ID, 'price', true));

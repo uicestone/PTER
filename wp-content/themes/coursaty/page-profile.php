@@ -28,12 +28,12 @@ if (isset($_POST['submit'])) {
 }
 
 if (isset($_POST['activate_reading'])) {
-    update_user_meta(get_current_user_id(), 'service_valid_before_阅读拓展包', time() + 86400, 'inactivated');
+    update_user_meta(get_current_user_id(), 'service_reading_valid_before', time() + 86400, 'inactivated');
     sleep(1);
 }
 
 if (isset($_POST['activate_writing'])) {
-	update_user_meta(get_current_user_id(), 'service_valid_before_写作拓展包', time() + 86400, 'inactivated');
+	update_user_meta(get_current_user_id(), 'service_writing_valid_before', time() + 86400, 'inactivated');
 	sleep(1);
 }
 
@@ -131,12 +131,18 @@ get_header(); the_post(); ?>
 					</div><!-- End Title -->
 					<div class="home-skills">
 						<?php
-                        if ($service_package_expires_at = get_user_meta($user->ID, 'service_valid_before_听说基础包30天', true)) {
-							$service_package = '听说基础包30天';
+                        if ($service_package_expires_at = get_user_meta($user->ID, 'service_base_valid_before', true)) {
+							$service_package = '听力口语技巧+练习包';
                         }
-                        elseif ($service_package_expires_at = get_user_meta($user->ID, 'service_valid_before_听说读写套餐30天', true)) {
-							$service_package = '听说读写套餐30天';
+                        elseif ($service_package_expires_at = get_user_meta($user->ID, 'service_full_valid_before', true)) {
+							$service_package = '听说读写大礼包';
                         }
+                        elseif ($service_package_expires_at = get_user_meta($user->ID, 'service_tips_valid_before', true)) {
+							$service_package = '听力口语技巧包';
+						}
+                        elseif ($service_package_expires_at = get_user_meta($user->ID, 'service_exercises_valid_before', true)) {
+							$service_package = '听力口语练习包';
+						}
                         else {
                             $service_package = null;
                         }
@@ -160,8 +166,8 @@ get_header(); the_post(); ?>
 					</div>
 					<div class="row">
 						<?php
-						$service_reading = get_user_meta($user->ID, 'service_valid_before_阅读拓展包', true);
-						$service_writing = get_user_meta($user->ID, 'service_valid_before_写作拓展包', true);
+						$service_reading = get_user_meta($user->ID, 'service_reading_valid_before', true);
+						$service_writing = get_user_meta($user->ID, 'service_writing_valid_before', true);
 						?>
 						<?php if ($service_reading): ?>
 						<div class="col-md-6">

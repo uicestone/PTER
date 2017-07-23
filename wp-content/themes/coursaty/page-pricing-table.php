@@ -23,66 +23,103 @@
 			<?php the_content(); ?>
         </div><!-- End main content row -->
 		<div class="row table-row fadeInDown-animation">
-			<div class="col-md-3 col-sm-6 table-2">
+            <div class="col-md-4 col-sm-6 table-2">
+                <div class="table">
+
+                    <div class="table-header grad-btn">
+                        <p class="text">听力口语技巧包</p><!-- end text -->
+                        <p class="price">
+                            <span class="price-amount"><?=get_post_meta(get_the_ID(), 'price_tips', true)?></span>
+                            $ / 月
+                        </p><!-- end price -->
+                    </div><!-- end table header -->
+
+                    <div class="table-body">
+                        <ul class="features" style="padding:51px 10px">
+                            <li>全站口语技巧浏览</li>
+                            <li>全站听力技巧浏览</li>
+                            <li>30天有效期</li>
+                        </ul><!-- end features list -->
+                    </div><!-- end table body -->
+
+                    <div class="table-footer">
+                        <div class="order-btn">
+                            <a href="#payment" data-service="tips" class="grad-btn ln-tr show-payment-method">订阅</a>
+                        </div><!-- end order button -->
+                    </div><!-- end table footer -->
+
+                </div><!-- end table -->
+            </div><!-- end col-md-3 col-sm-6 -->
+
+            <div class="col-md-4 col-sm-6 table-2">
+                <div class="table">
+
+                    <div class="table-header grad-btn">
+                        <p class="text">听力口语练习包</p><!-- end text -->
+                        <p class="price">
+                            <span class="price-amount"><?=get_post_meta(get_the_ID(), 'price_exercises', true)?></span>
+                            $ / 月
+                        </p><!-- end price -->
+                    </div><!-- end table header -->
+
+                    <div class="table-body">
+                        <ul class="features" style="padding:51px 10px">
+                            <li>全站口语练习实践</li>
+                            <li>全站听力练习实践</li>
+                            <li>30天有效期</li>
+                        </ul><!-- end features list -->
+                    </div><!-- end table body -->
+
+                    <div class="table-footer">
+                        <div class="order-btn">
+                            <a href="#payment" data-service="exercises" class="grad-btn ln-tr show-payment-method">订阅</a>
+                        </div><!-- end order button -->
+                    </div><!-- end table footer -->
+
+                </div><!-- end table -->
+            </div><!-- end col-md-3 col-sm-6 -->
+
+            <div class="col-md-4 col-sm-6 table-2">
 				<div class="table">
 
 					<div class="table-header grad-btn">
-						<p class="text">听说基础包</p><!-- end text -->
-						<p class="price"><?=get_post_meta(get_the_ID(), 'price_base', true)?> $ / 月</p><!-- end price -->
+						<p class="text">听力口语技巧+练习包</p><!-- end text -->
+						<p class="price">
+                            <?php $price = get_post_meta(get_the_ID(), 'price_base', true); if (get_user_meta(get_current_user_id(), 'invited_by_user')): ?>
+                            <del><?=$price?></del>
+                            <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
+                            <?php else: ?>
+                            <span class="price-amount"><?=$price?></span>
+                            <?php endif; ?>
+                            $ / 月
+                        </p><!-- end price -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
 						<ul class="features">
 							<li>全站口语技巧浏览</li>
-							<li>全站口语练习实践</li>
+                            <li>全站口语练习实践</li>
 							<li>全站听力技巧浏览</li>
-							<li>全站听力练习实践</li>
+                            <li>全站听力练习实践</li>
 							<li>30天有效期</li>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#payment" data-price="<?=get_post_meta(get_the_ID(), 'price_base', true)?>" data-subject="听说基础包30天" class="grad-btn ln-tr show-payment-method">订阅</a>
+							<a href="#payment" data-service="base" class="grad-btn ln-tr show-payment-method">订阅</a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
 				</div><!-- end table -->
 			</div><!-- end col-md-3 col-sm-6 -->
-
-			<div class="col-md-3 col-sm-6 table-3">
-				<div class="table">
-
-					<div class="table-header grad-btn">
-						<p class="text">听说读写套餐</p><!-- end text -->
-						<p class="price"><?=get_post_meta(get_the_ID(), 'price_full', true)?> $ / 月</p><!-- end price -->
-					</div><!-- end table header -->
-
-					<div class="table-body">
-						<ul class="features">
-							<li>全站口语技巧和练习</li>
-							<li>全站听力技巧和练习</li>
-							<li>一次阅读视频讲解</li>
-							<li>一次写作视频讲解</li>
-							<li>30天有效期</li>
-						</ul><!-- end features list -->
-					</div><!-- end table body -->
-
-					<div class="table-footer">
-						<div class="order-btn clearfix">
-							<a href="#payment" data-price="<?=get_post_meta(get_the_ID(), 'price_full', true)?>" data-subject="听说读写套餐30天" class="grad-btn ln-tr show-payment-method">订阅</a>
-						</div><!-- end order button -->
-					</div><!-- end table footer -->
-
-				</div><!-- end table -->
-			</div><!-- end col-md-3 col-sm-6 -->
-
-			<div class="col-md-3 col-sm-6 table-1">
+            <div class="clearfix" style="margin:20px"></div>
+			<div class="col-md-4 col-sm-6 table-1">
 				<div class="table">
 
 					<div class="table-header grad-btn">
 						<div class="icon ln-tr"><i class="fa fa-book"></i></div><!-- end icon -->
-						<p class="text">阅读拓展包</p><!-- end text -->
+						<p class="text">阅读技巧包</p><!-- end text -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
@@ -95,7 +132,9 @@
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#payment" data-price="<?=get_post_meta(get_the_ID(), 'price_reading', true)?>" data-subject="阅读拓展包" class="grad-btn ln-tr show-payment-method"><?=get_post_meta(get_the_ID(), 'price_reading', true)?> <span class="currency">$ / 次</span>
+							<a href="#payment" data-service="reading" class="grad-btn ln-tr show-payment-method">
+                                <span class="price-amount"><?=get_post_meta(get_the_ID(), 'price_reading', true)?></span>
+                                <span class="currency">$ / 次</span>
 								<span class="icon fr ln-tr"><i class="fa fa-angle-right"></i></span>
 							</a>
 						</div><!-- end order button -->
@@ -104,12 +143,12 @@
 				</div><!-- end table -->
 			</div><!-- end col-md-3 col-sm-6 -->
 
-			<div class="col-md-3 col-sm-6 table-1">
+			<div class="col-md-4 col-sm-6 table-1">
 				<div class="table">
 
 					<div class="table-header grad-btn">
 						<div class="icon ln-tr"><i class="fa fa-pencil"></i></div><!-- end icon -->
-						<p class="text">写作拓展包</p><!-- end text -->
+						<p class="text">写作技巧包</p><!-- end text -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
@@ -122,7 +161,8 @@
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#payment" data-price="<?=get_post_meta(get_the_ID(), 'price_writing', true)?>" data-subject="写作拓展包" class="grad-btn ln-tr show-payment-method"><?=get_post_meta(get_the_ID(), 'price_writing', true)?> <span class="currency">$ / 次</span>
+							<a href="#payment" data-service="writing" class="grad-btn ln-tr show-payment-method">
+                                <span class="price-amount"><?=get_post_meta(get_the_ID(), 'price_writing', true)?></span> <span class="currency">$ / 次</span>
 								<span class="icon fr ln-tr"><i class="fa fa-angle-right"></i></span>
 							</a>
 						</div><!-- end order button -->
@@ -131,7 +171,42 @@
 				</div><!-- end table -->
 			</div><!-- end col-md-3 col-sm-6 -->
 
-		</div><!-- end 1st row -->
+            <div class="col-md-4 col-sm-6 table-3">
+                <div class="table">
+
+                    <div class="table-header grad-btn">
+                        <p class="text">听说读写大礼包</p><!-- end text -->
+                        <p class="price">
+							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if (get_user_meta(get_current_user_id(), 'invited_by_user')): ?>
+                            <del><?=$price?></del>
+                            <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
+							<?php else: ?>
+                            <span class="price-amount"><?=$price?></span>
+							<?php endif; ?>
+                            $ / 月
+                        </p><!-- end price -->
+                    </div><!-- end table header -->
+
+                    <div class="table-body">
+                        <ul class="features">
+                            <li>全站口语技巧和练习</li>
+                            <li>全站听力技巧和练习</li>
+                            <li>一次阅读视频讲解</li>
+                            <li>一次写作视频讲解</li>
+                            <li>30天有效期</li>
+                        </ul><!-- end features list -->
+                    </div><!-- end table body -->
+
+                    <div class="table-footer">
+                        <div class="order-btn clearfix">
+                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">订阅</a>
+                        </div><!-- end order button -->
+                    </div><!-- end table footer -->
+
+                </div><!-- end table -->
+            </div><!-- end col-md-3 col-sm-6 -->
+
+        </div><!-- end 1st row -->
 
         <div id="payment"></div>
 
@@ -151,11 +226,12 @@ jQuery(function ($) {
 
     $('.show-payment-method').on('click', function (e) {
         $('.payment-gateways').hide(300).show(300);
-        price = $(this).data('price');
-        subject = $(this).data('subject');
-        var matchDays = subject.match(/(\d+)天/);
-        if (matchDays) {
-            lastDay = new Date((new Date()).getTime() + matchDays[1] * 86400000);
+        price = $(this).parents('.table').find('.price-amount').text();
+        subject = $(this).parents('.table').find('.table-header>.text').text();
+        service = $(this).data('service');
+
+        if (service !== 'reading' && service !== 'writing') {
+            lastDay = new Date((new Date()).getTime() + 30 * 86400000);
         }
         else {
             lastDay = null;
@@ -166,10 +242,8 @@ jQuery(function ($) {
         var href;
         e.preventDefault();
 
-        service = subject;
-
         if (lastDay) {
-            subject += '至' + lastDay.format();
+            subject += ' 至' + lastDay.format();
             expiresAt = (new Date(lastDay.getTime() + 86400000)).format();
         }
 
