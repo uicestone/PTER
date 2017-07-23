@@ -76,7 +76,7 @@ get_header(); the_post(); ?>
                             </div><!-- end remember -->
                             <div class="col-md-6 col-sm-6 clearfix">
                                 <div class="forgot fr">
-                                    <a href="<?=site_url()?>/register/" class="new-user">注册账号</a> / <a href="#" class="reset">忘记密码？</a>
+                                    <a href="<?=site_url()?>/register/<?=(isset($_GET['intend']) ? '?intend=' . $_GET['intend'] : '')?>" class="new-user">注册账号</a> / <a href="#" class="reset">忘记密码？</a>
                                 </div>
                             </div><!-- end forgot password -->
                         </div><!-- end row -->

@@ -2869,7 +2869,7 @@ h6.head-title {
     background-color: #383c4b;
 }
 .login-page .register .input .submit-input {
-    margin-bottom: 0;
+    /*margin-bottom: 0;*/
 }
 /* 20 - Contact */
 .contact {

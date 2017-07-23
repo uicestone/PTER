@@ -8,7 +8,7 @@ add_action('wp', function() {
 //		header('Location: ' . site_url() . '/coming-soon/'); exit;
 //	}
 
-	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.17');
+	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.18');
 	wp_register_style('responsive', get_stylesheet_directory_uri() . '/assets/css/responsive.css', array(), '1.0.0');
 
 	wp_register_script('jquery', get_stylesheet_directory_uri() . '/assets/js/vendor/jquery-1.11.2.min.js', array(), '1.11.2', true);
@@ -280,7 +280,7 @@ function redirect_login ($force = false) {
 		return;
 	}
 
-	header('Location: ' . site_url() . '/login/?intend=' . ($_SERVER['REQUEST_URI'])); exit;
+	header('Location: ' . site_url() . '/register/?intend=' . ($_SERVER['REQUEST_URI'])); exit;
 }
 
 function redirect_pricing_table ($cap) {
