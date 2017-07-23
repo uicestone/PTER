@@ -35,10 +35,12 @@
                     </div><!-- end table header -->
 
                     <div class="table-body">
-                        <ul class="features" style="padding:51px 10px">
-                            <li>全站口语技巧浏览</li>
-                            <li>全站听力技巧浏览</li>
-                            <li>30天有效期</li>
+                        <ul class="features">
+                            <li>全站口语技巧例题详解</li>
+                            <li>全站听力技巧例题详解</li>
+                            <li>PTE题型讲解</li>
+                            <li>PTE评分细则</li>
+                            <li>PTE推荐练习材料</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
@@ -63,10 +65,13 @@
                     </div><!-- end table header -->
 
                     <div class="table-body">
-                        <ul class="features" style="padding:51px 10px">
-                            <li>全站口语练习实践</li>
-                            <li>全站听力练习实践</li>
-                            <li>30天有效期</li>
+                        <ul class="features">
+                            <li>Read Aloud 32题，含6，7，8分参考答案</li>
+                            <li>Repeat Sentence 100题</li>
+                            <li>Describe Image 100题，含8分参考答案</li>
+                            <li>Retell Lecture 15题，含笔记和参考答案</li>
+                            <li>Write from dictation 70题，Highlight Incorrect Words 15题</li>
+                            <li>Summarise Spoken Text 15题，含通用和高级版本答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
@@ -97,11 +102,11 @@
 
 					<div class="table-body">
 						<ul class="features">
-							<li>全站口语技巧浏览</li>
-                            <li>全站口语练习实践</li>
-							<li>全站听力技巧浏览</li>
-                            <li>全站听力练习实践</li>
-							<li>30天有效期</li>
+							<li>全站口语技巧例题详解</li>
+                            <li>全站听力技巧例题详解</li>
+							<li>口语听力全套练习及参考答案</li>
+                            <li>PTE题型讲解</li>
+							<li>PTE推荐练习材料</li>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
@@ -124,9 +129,11 @@
 
 					<div class="table-body">
 						<ul class="features">
-							<li>超过3小时视频讲解PTE阅读</li>
-							<li>视频全程大纲</li>
-							<li>24小时学习时间</li>
+							<li>PTE阅读题型详解</li>
+							<li>PTE阅读技巧详解</li>
+							<li>PTE阅读例题详解</li>
+                            <li>句子精读详解</li>
+                            <li>推荐词汇讲解</li>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
@@ -153,9 +160,10 @@
 
 					<div class="table-body">
 						<ul class="features">
-							<li>超过3小时视频讲解PTE写作</li>
-							<li>视频全程大纲</li>
-							<li>24小时学习时间</li>
+							<li>PTE写作题型详解</li>
+							<li>PTE写作技巧模板详解</li>
+							<li>PTE小作文例题</li>
+                            <li>PTE大作文范文</li>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
@@ -189,11 +197,12 @@
 
                     <div class="table-body">
                         <ul class="features">
-                            <li>全站口语技巧和练习</li>
-                            <li>全站听力技巧和练习</li>
-                            <li>一次阅读视频讲解</li>
-                            <li>一次写作视频讲解</li>
-                            <li>30天有效期</li>
+                            <li>全站听力口语技巧详解</li>
+                            <li>PTE阅读写作技巧</li>
+                            <li>全站听力口语练习题</li>
+                            <li>PTE题型讲解</li>
+                            <li>PTE评分细则</li>
+                            <li>PTE推荐联系材料</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 

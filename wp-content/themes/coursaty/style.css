@@ -3148,7 +3148,7 @@ blockquote.blockquote-4 .story {
 .pricing-tables .table-row .table .table-body .features li {
     font-size: 16px;
     color: #5a5e6a;
-    padding: 13px 5px;
+    padding: 13px 30px;
     border-bottom: 1px solid #ededed;
     cursor: default;
 }
@@ -3190,7 +3190,7 @@ blockquote.blockquote-4 .story {
     color: #383c4b;
 }
 .pricing-tables .table-1 .table .table-body .features {
-    padding: 51px 0;
+    height: 305px;
 }
 .pricing-tables .table-1 .table .table-body .features li:hover,
 .pricing-tables .table-2 .table .table-body .features li:hover {
@@ -3198,7 +3198,7 @@ blockquote.blockquote-4 .story {
 }
 /* table 2 */
 .pricing-tables .table-2 .table .table-header {
-    padding: 49px 0;
+    padding: 47px 0;
 }
 .pricing-tables .table-2 .table .table-header .text {
     font-size: 25px;
@@ -3206,7 +3206,7 @@ blockquote.blockquote-4 .story {
 .pricing-tables .table-2 .table .table-header .price {
     margin-top: 17px;
     color: #f5f5f5;
-    font-size: 14px;
+    font-size: 17px;
 }
 .pricing-tables .table-2 .table .table-footer .order-btn a {
     background: #000020;
@@ -3214,6 +3214,10 @@ blockquote.blockquote-4 .story {
 }
 .pricing-tables .table-2 .table .table-footer .order-btn a:hover {
     background: #2997ab;
+}
+.pricing-tables .table-2 .table .table-body .features {
+    height: 305px;
+    overflow: auto;
 }
 /* table 3 */
 .pricing-tables .table-3 {
