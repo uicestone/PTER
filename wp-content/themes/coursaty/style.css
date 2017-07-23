@@ -2727,9 +2727,21 @@ h6.head-title {
 .my-services .additional-pack {
     box-shadow: none;
     margin-top: 0;
+    padding: 20px 20px 0;
 }
 .my-services .additional-pack .add-courses-title {
     font-size: 24px;
+}
+.my-services .additional-pack .expires-at {
+    text-align: right;
+    margin-bottom: 10px;
+}
+.my-services .additional-pack .expires-at .btn.active {
+    text-align: center;
+    margin: 0 0 0 10px;
+}
+.my-services .additional-pack .expires-at .btn-sm.active {
+    width: 100px;
 }
 .my-services .additional-pack .icon {
     background: #2f3342;

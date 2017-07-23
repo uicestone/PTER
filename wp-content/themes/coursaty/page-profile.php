@@ -17,6 +17,16 @@ if (isset($_POST['submit'])) {
 	}
 }
 
+if (isset($_POST['activate_reading'])) {
+    update_user_meta(get_current_user_id(), 'service_valid_before_阅读拓展包', time() + 86400, 'inactivated');
+    sleep(1);
+}
+
+if (isset($_POST['activate_writing'])) {
+	update_user_meta(get_current_user_id(), 'service_valid_before_写作拓展包', time() + 86400, 'inactivated');
+	sleep(1);
+}
+
 get_header(); the_post(); ?>
 
 <div class="inner-head">
@@ -85,21 +95,30 @@ get_header(); the_post(); ?>
 					</div><!-- End Title -->
 					<div class="home-skills">
 						<?php
-						$service_base = get_user_meta($user->ID, 'service_valid_before_听说基础包30天', true);
-						$service_full = get_user_meta($user->ID, 'service_valid_before_听说读写套餐30天', true);
-						if ($service_full || $service_base): ?>
-						<div class="add-courses box additional-pack">
-							<?php if ($service_base): $percent = max(0, strtotime($service_base) - time() / (30 * 86400)) * 100 ?>
-							<a href="#" class="add-courses-title ln-tr">听说基础包30天</a>
+                        if ($service_package_expires_at = get_user_meta($user->ID, 'service_valid_before_听说基础包30天', true)) {
+							$service_package = '听说基础包30天';
+                        }
+                        elseif ($service_package_expires_at = get_user_meta($user->ID, 'service_valid_before_听说读写套餐30天', true)) {
+							$service_package = '听说读写套餐30天';
+                        }
+                        else {
+                            $service_package = null;
+                        }
+
+						if ($service_package): ?>
+						<div class="add-courses box base-pack additional-pack">
+							<?php $percent = max(0, 1 - (strtotime($service_package_expires_at) - time()) / (30 * 86400)) * 100 ?>
+							<a href="#" class="add-courses-title ln-tr"><?=$service_package?></a>
 							<div class="skillbar clearfix" data-percent="<?=$percent?>%">
 								<div class="skillbar-title"><span><?=round($percent)?>%</span></div><div class="skillbar-bar" style="width: <?=$percent?>%;"></div>
 							</div>
-							<?php else: $percent = max(0, strtotime($service_full) - time() / (30 * 86400)) * 100 ?>
-							<a href="#" class="add-courses-title ln-tr">听说读写套餐30天</a>
-							<div class="skillbar clearfix" data-percent="<?=$percent?>%">
-								<div class="skillbar-title"><span><?=round($percent)?>%</span></div><div class="skillbar-bar" style="width: <?=$percent?>%;"></div>
-							</div>
-							<?php endif; ?>
+                            <hr>
+                            <div class="expires-at">
+                                下次续费日期 <?=date('Y-m-d', strtotime($service_package_expires_at))?>
+								<?php if (strtotime($service_package_expires_at) - time() < 86400 * 10): ?>
+                                <a href="<?=site_url()?>/pricig-table/" class="active btn btn-sm ln-tr">续费</a>
+								<?php endif; ?>
+                            </div>
 						</div>
 						<?php endif; ?>
 					</div>
@@ -116,7 +135,15 @@ get_header(); the_post(); ?>
 								<p class="add-courses-description">
 									你可以在激活后24小时内完整学习1次视频
 								</p>
-								<form method="post"><input type="submit" name="active_阅读拓展包" value="激活" class="btn ln-tr active"></form>
+                                <hr>
+	    						<?php if ($service_reading === 'inactivated'): ?>
+								<form method="post"><input type="submit" name="activate_reading" value="激活" class="btn btn-sm ln-tr active"></form>
+    							<?php else: ?>
+                                <div class="expires-at">
+                                    还可以学习 <?=date('H:i', $service_reading - time())?>
+                                    <a href="<?=site_url()?>/tip/pte-reading/" class="active btn btn-sm ln-tr learn">前往学习</a>
+                                </div>
+                                <?php endif; ?>
 							</div>
 						</div>
 						<?php endif; ?>
@@ -128,11 +155,19 @@ get_header(); the_post(); ?>
 								<p class="add-courses-description">
 									你可以在激活后24小时内完整学习1次视频
 								</p>
-								<form method="post"><input type="submit" name="active_写作拓展包" value="激活" class="btn ln-tr active"></form>
+                                <hr>
+								<?php if ($service_writing === 'inactivated'): ?>
+                                    <form method="post"><input type="submit" name="activate_writing" value="激活" class="btn btn-sm ln-tr active"></form>
+								<?php else: ?>
+                                    <div class="expires-at">
+                                        还可以学习 <?=date('H:i', $service_writing - time())?>
+                                        <a href="<?=site_url()?>/tip/pte-reading/" class="active btn btn-sm ln-tr learn">前往学习</a>
+                                    </div>
+								<?php endif; ?>
 							</div>
 						</div>
 						<?php endif; ?>
-						<?php if (!$service_base && !$service_full && !$service_reading && !$service_writing): ?>
+						<?php if (!$service_package && !$service_reading && !$service_writing): ?>
 						<div class="subscribe">
 							<a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您目前没有任何服务，点击订阅</a>
 						</div>
