@@ -8,6 +8,8 @@ Version: 3.3.0
 Author URI: https://www.alipay.com/
 */
 
+require __DIR__ . '/lib/alipay_refund.class.php';
+
 add_action('activate_' . plugin_basename(__FILE__), function () {
 	add_rewrite_rule('payment/alipay/notify/?$', 'index.php?alipay-global=notify', 'top');
 	add_rewrite_rule('payment/alipay/return/?$', 'index.php?alipay-global=return', 'top');

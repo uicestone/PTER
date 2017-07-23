@@ -49,8 +49,8 @@ $total_fee = $_GET['price'];
 //商品描述，可空
 $body = '';
 
-if (get_current_user_id() === 1) {
-	$total_fee = $total_fee / 10000;
+if (get_current_user_id() === 1 || get_current_user_id() === 16) {
+	$total_fee = $total_fee / 1000;
 }
 
 $total_fee = max(round($total_fee, 2), 0.01);

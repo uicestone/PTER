@@ -90,7 +90,8 @@
 					<div class="table-header grad-btn">
 						<p class="text">听力口语技巧+练习包</p><!-- end text -->
 						<p class="price">
-                            <?php $price = get_post_meta(get_the_ID(), 'price_base', true); if (get_user_meta(get_current_user_id(), 'invited_by_user')): ?>
+                            <?php $discountable = get_user_meta(get_current_user_id(), 'invited_by_user', true) && !get_user_meta(get_current_user_id(), 'discount_order', true)?>
+                            <?php $price = get_post_meta(get_the_ID(), 'price_base', true); if ($discountable): ?>
                             <del><?=$price?></del>
                             <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
                             <?php else: ?>
@@ -185,7 +186,7 @@
                     <div class="table-header grad-btn">
                         <p class="text">听说读写大礼包</p><!-- end text -->
                         <p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if (get_user_meta(get_current_user_id(), 'invited_by_user')): ?>
+							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if ($discountable): ?>
                             <del><?=$price?></del>
                             <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
 							<?php else: ?>
@@ -256,11 +257,16 @@ jQuery(function ($) {
             expiresAt = (new Date(lastDay.getTime() + 86400000)).format();
         }
 
-        window.location.href = '/payment/alipay/?price='+ price
+        href = '/payment/alipay/?price='+ price
             + '&subject=' + (subject)
             + '&service=' + (service)
-            + '&expires_at=' + expiresAt
             + '&intend=' + ('<?=$_GET['intend']?>');
+
+        if (expiresAt) {
+            href += '&expires_at=' + expiresAt;
+        }
+
+        window.location.href = href;
     });
 
     Date.prototype.format = function() {

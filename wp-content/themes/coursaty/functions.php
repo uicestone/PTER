@@ -165,7 +165,10 @@ add_action('init', function () {
 				break;
 			case 'expires_at' :
 				$expires_at = get_post_meta($post->ID, 'expires_at', true);
-				echo date('Y-m-d', strtotime($expires_at));
+
+				if ($expires_at) {
+					echo date('Y-m-d', strtotime($expires_at));
+				}
 				break;
 			case 'status' :
 				$status = get_post_meta($post->ID, 'status', true);
@@ -332,12 +335,14 @@ function redirect_pricing_table ($cap) {
 	}
 }
 
-function order_paid ($order_no) {
+function order_paid ($order_no, $gateway) {
 	// find the order
 	$order = get_posts(array('name' => sanitize_title($order_no), 'post_type' => 'member_order', 'post_status' => 'private'))[0];
 
 	// update order payment status
 	update_post_meta($order->ID, 'status', 'paid');
+	add_post_meta($order->ID, 'refundable_amount', get_post_meta($order->ID, 'price', true));
+	add_post_meta($order->ID, 'gateway', $gateway);
 
 	// TODO price-service needs to be verified
 
@@ -366,7 +371,75 @@ function order_paid ($order_no) {
 		update_user_meta($user->ID, 'service_' . $service . '_valid_before', get_post_meta($order->ID, 'expires_at', true));
 	}
 
+	// user total pay
 	update_user_meta($user->ID, 'total_paid', (get_user_meta($user->ID, 'total_paid', true) ?: 0) + get_post_meta($order->ID, 'price', true));
+
+	// invititation award and discount
+	$inviter_id = get_user_meta($user->ID, 'invited_by_user', true);
+	$service_awardable = in_array(get_post_meta($order->ID, 'service', true), array('base', 'full'));
+	$discount_order = get_user_meta($user->ID, 'discount_order', true);
+
+	if ($inviter_id && $service_awardable && !$discount_order) {
+
+		add_user_meta($user->ID, 'discount_order', $order->ID);
+
+		// award the inviter
+		$award_amount_fixed = get_post_meta(get_page_by_path('pricing-table')->ID, 'intro_award', true);
+		$awardable_amount = round(get_user_meta($inviter_id, 'total_paid', true) - get_user_meta($inviter_id, 'total_awarded', true), 2);
+
+		$award_amount = min($award_amount_fixed, $awardable_amount);
+
+		if  ($award_amount > 0) {
+			// get oldest refundable orders
+			$refundable_orders = get_posts(array(
+				'post_type' => 'member_order',
+				'post_status' => 'private',
+				'author' => $inviter_id,
+				'date_query' => array('after' => '-3 months'),
+				'order' => 'asc',
+				'posts_per_page' => '-1',
+				'meta_key' => 'refundable_amount',
+				'meta_compare' => '>',
+				'meta_value' => '0')
+			);
+
+			foreach ($refundable_orders as $refundable_order) {
+				$refund_amount = min(get_post_meta($refundable_order->ID, 'refundable_amount', true), $award_amount);
+				refund_order($refundable_order->ID, $refund_amount);
+				$award_amount -= $refund_amount;
+				if ($award_amount <= 0) {
+					break;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * refund an order through it's gateway
+ * @param $order_id
+ */
+function refund_order ($order_id, $amount) {
+
+	$amount = round($amount, 2);
+
+	if ($amount <= 0) {
+		return;
+	}
+
+	switch (get_post_meta($order_id)) {
+		case 'alipay':
+		default:
+			(new AlipayRefund(get_alipay_config()))->refund(get_post_meta($order_id, 'no', true), $amount);
+	}
+
+	update_post_meta($order_id, 'refundable_amount',
+		round(get_post_meta($order_id, 'refundable_amount', true) - $amount, 2)
+	);
+
+	$user = get_post($order_id)->post_author;
+
+	update_user_meta($user, 'total_awarded', get_user_meta($user, 'total_awarded', true) + $amount);
 }
 
 function pter_adjacent_post_where ($where) {
