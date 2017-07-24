@@ -330,6 +330,7 @@ header .main-navigation > ul > li > a {
     color: #fff;
     font-size: 18px;
     font-weight: bold;
+    text-shadow: 1px 1px 3px #4b4f5c;
     line-height: 100px;
     padding: 0 8px;
     display: block;
@@ -388,6 +389,7 @@ header.alt .main-navigation > ul > li.courses-menu:hover a:after {
 }
 header.alt .main-navigation > ul > li > a {
     color: #4b4f5c;
+    text-shadow: none;
 }
 /* sub-menu */
 header .main-navigation li.parent-item ul.sub-menu,
