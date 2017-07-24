@@ -1,4 +1,18 @@
-<?php redirect_login(); get_header(); the_post() ?>
+<?php redirect_login();
+
+if ($invitation_code = $_POST['invitation_code']) {
+	$invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
+	if (count($invited_by_users) !== 1) {
+		exit('无法确定你的邀请人，请联系客服稍后绑定邀请人');
+	}
+	if ($invited_by_users[0]->ID === get_current_user_id()) {
+		exit('不能邀请自己');
+	}
+	add_user_meta(get_current_user_id(), 'invited_by_user', $invited_by_users[0]->ID);
+
+}
+
+get_header(); the_post() ?>
 
 <div class="inner-head">
 	<div class="container">
@@ -19,9 +33,17 @@
 
 <section class="pricing-tables">
 	<div class="container">
-        <div style="margin:50px 0">
-			<?php the_content(); ?>
+        <div class="row" style="margin-top:50px;margin-bottom:50px">
+            <div class="col-sm-4">
+				<?php if (!get_user_meta(get_current_user_id(), 'invited_by_user', true)): ?>
+                <form method="post" class="invitation_code-form">
+                    <input type="text" id="invitation_code-input" name="invitation_code" class="invitation_code-input" placeholder="输入邀请码获得优惠价格">
+                    <input type="submit" id="invitation_code-submit" name="invitation_code_submit" class="invitation_code-submit" value="保存">
+                </form>
+				<?php endif; ?>
+            </div>
         </div><!-- End main content row -->
+
 		<div class="row table-row fadeInDown-animation">
             <div class="col-md-4 col-sm-6 table-2">
                 <div class="table">

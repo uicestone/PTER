@@ -2446,7 +2446,8 @@ h6.head-title {
 }
 .comment-form .input input:not([type=submit]), .comment-form .input textarea,
 .contact-form .input input:not([type=submit]), .contact-form .input textarea,
-.login-page .login-form .input input, .login-page .login-form .input-with-label {
+.login-page .login-form .input input, .login-page .login-form .input-with-label,
+.invitation_code-form .invitation_code-input {
     display: block;
     width: 100%;
     padding: 9px 20px;
@@ -3107,6 +3108,22 @@ blockquote.blockquote-4 .story {
 .pricing-tables {
     background: #f5f5f5;
     /*padding: 100px 0;*/
+}
+.pricing-tables .invitation_code-input {
+    width: calc(100% - 67px);
+    display: inline-block;
+    margin: 0;
+    vertical-align: bottom;
+}
+.pricing-tables .invitation_code-submit {
+    background: #2997ab;
+    padding: 0 15px;
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 2px;
+    font-size: 100%;
+    color: #fff;
 }
 .pricing-tables .table-row {
     margin-bottom: 70px;
