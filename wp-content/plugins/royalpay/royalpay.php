@@ -10,7 +10,7 @@ Author URI: https://www.royalpay.com.au/
 
 require_once 'lib/RoyalPay.Api.php';
 
-add_action('activate_' . plugin_basename(__FILE__), function () {
+add_action('init', function () {
 	add_rewrite_rule('payment/wechatpay/notify/?$', 'index.php?royalpay=notify', 'top');
 	add_rewrite_rule('payment/wechatpay/?$', 'index.php?royalpay=submit', 'top');
 });
