@@ -14,7 +14,6 @@ add_action('activate_' . plugin_basename(__FILE__), function () {
 	add_rewrite_rule('payment/alipay/notify/?$', 'index.php?alipay-global=notify', 'top');
 	add_rewrite_rule('payment/alipay/return/?$', 'index.php?alipay-global=return', 'top');
 	add_rewrite_rule('payment/alipay/?$', 'index.php?alipay-global=submit', 'top');
-	flush_rewrite_rules();
 });
 
 add_filter('query_vars', function ($vars) {
