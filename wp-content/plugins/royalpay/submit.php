@@ -1,7 +1,4 @@
 <?php
-
-require_once 'lib/RoyalPay.Api.php';
-
 /**
  * 流程：
  * 1、创建QRCode支付单，取得code_url，生成二维码

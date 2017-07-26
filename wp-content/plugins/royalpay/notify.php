@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(E_ERROR);
-require_once 'lib/RoyalPay.Api.php';
 require_once 'lib/RoyalPay.Data.php';
 
 //回调参数读取

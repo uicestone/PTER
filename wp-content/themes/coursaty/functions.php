@@ -444,15 +444,23 @@ function create_order ($out_trade_no, $subject, $total_fee, $currency, $service,
 function refund_order ($order_id, $amount) {
 
 	$amount = round($amount, 2);
+	$order_no = get_post_meta($order_id, 'no', true);
 
 	if ($amount <= 0) {
 		return;
 	}
 
-	switch (get_post_meta($order_id)) {
+	switch (get_post_meta($order_id, 'gateway', true)) {
+		case 'wechatpay':
+			$input = new RoyalPayApplyRefund();
+			$input->setOrderId($order_no);
+			$input->setRefundId('refund.' . $order_no);
+			$input->setFee($amount * 100);
+			RoyalPayApi::refund($input);
+			break;
 		case 'alipay':
 		default:
-			(new AlipayRefund(get_alipay_config()))->refund(get_post_meta($order_id, 'no', true), $amount);
+			(new AlipayRefund(get_alipay_config()))->refund($order_no, $amount);
 	}
 
 	update_post_meta($order_id, 'refundable_amount',
