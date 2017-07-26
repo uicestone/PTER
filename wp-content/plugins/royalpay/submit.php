@@ -18,7 +18,7 @@ $subject = $_GET['subject'];
 
 $total_fee = $_GET['price'];
 
-if (get_current_user_id() === 1 || get_current_user_id() === 16) {
+if (get_current_user_id() <= 18) {
 	$total_fee = $total_fee / 1000;
 }
 
