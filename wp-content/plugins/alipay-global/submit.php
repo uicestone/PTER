@@ -79,24 +79,7 @@ $parameter = array(
 
 );
 
-$order_id = wp_insert_post(array(
-	'post_type' => 'member_order',
-	'post_author' => get_current_user_id(),
-	'post_name' => $out_trade_no,
-	'post_title' => $subject,
-    'post_status' => 'private'
-));
-
-add_post_meta($order_id, 'price', $total_fee);
-add_post_meta($order_id, 'currency', $currency);
-add_post_meta($order_id, 'no', $out_trade_no);
-add_post_meta($order_id, 'user', get_current_user_id());
-add_post_meta($order_id, 'service', $_GET['service']);
-add_post_meta($order_id, 'status', 'pending_payment');
-
-if (isset($_GET['expires_at'])) {
-	add_post_meta($order_id, 'expires_at', $_GET['expires_at']);
-}
+create_order($out_trade_no, $subject, $total_fee, $currency, $_GET['service'], $_GET['expires_at']);
 
 //建立请求
 $alipaySubmit = new AlipaySubmit($alipay_config);

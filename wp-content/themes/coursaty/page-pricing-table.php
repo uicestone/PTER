@@ -33,7 +33,7 @@ get_header(); the_post() ?>
 
 <section class="pricing-tables">
 	<div class="container">
-        <div class="row" style="margin-top:50px;margin-bottom:50px">
+        <div class="row" style="margin-top:25px;margin-bottom:25px">
             <div class="col-sm-4">
 				<?php if (!get_user_meta(get_current_user_id(), 'invited_by_user', true)): ?>
                 <form method="post" class="invitation_code-form">
@@ -45,7 +45,81 @@ get_header(); the_post() ?>
         </div><!-- End main content row -->
 
 		<div class="row table-row fadeInDown-animation">
+            <div class="col-md-offset-2 col-md-4 col-sm-6 table-3 recommended">
+                <div class="table">
+
+                    <div class="table-header grad-btn">
+                        <p class="text">听说读写大礼包</p><!-- end text -->
+                        <p class="price">
+							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if ($discountable): ?>
+                                <del><?=$price?></del>
+                                <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
+							<?php else: ?>
+                                <span class="price-amount"><?=$price?></span>
+							<?php endif; ?>
+                            $ / 月
+                        </p><!-- end price -->
+                    </div><!-- end table header -->
+
+                    <div class="table-body">
+                        <ul class="features">
+                            <li>全站听力口语技巧详解</li>
+                            <li>PTE阅读写作技巧</li>
+                            <li>全站听力口语练习题</li>
+                            <li>PTE题型讲解</li>
+                            <li>PTE评分细则</li>
+                            <li>PTE推荐联系材料</li>
+                        </ul><!-- end features list -->
+                    </div><!-- end table body -->
+
+                    <div class="table-footer">
+                        <div class="order-btn clearfix">
+                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">推荐购买</a>
+                        </div><!-- end order button -->
+                    </div><!-- end table footer -->
+
+                </div><!-- end table -->
+            </div><!-- end col-md-3 col-sm-6 -->
+
             <div class="col-md-4 col-sm-6 table-2">
+                <div class="table">
+
+                    <div class="table-header grad-btn">
+                        <p class="text">听力口语技巧+练习包</p><!-- end text -->
+                        <p class="price">
+							<?php $discountable = get_user_meta(get_current_user_id(), 'invited_by_user', true) && !get_user_meta(get_current_user_id(), 'discount_order', true)?>
+							<?php $price = get_post_meta(get_the_ID(), 'price_base', true); if ($discountable): ?>
+                                <del><?=$price?></del>
+                                <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
+							<?php else: ?>
+                                <span class="price-amount"><?=$price?></span>
+							<?php endif; ?>
+                            $ / 月
+                        </p><!-- end price -->
+                    </div><!-- end table header -->
+
+                    <div class="table-body">
+                        <ul class="features">
+                            <li>全站口语技巧例题详解</li>
+                            <li>全站听力技巧例题详解</li>
+                            <li>口语听力全套练习及参考答案</li>
+                            <li>PTE题型讲解</li>
+                            <li>PTE推荐练习材料</li>
+                        </ul><!-- end features list -->
+                    </div><!-- end table body -->
+
+                    <div class="table-footer">
+                        <div class="order-btn">
+                            <a href="#payment" data-service="base" class="grad-btn ln-tr show-payment-method">推荐购买</a>
+                        </div><!-- end order button -->
+                    </div><!-- end table footer -->
+
+                </div><!-- end table -->
+            </div><!-- end col-md-3 col-sm-6 -->
+
+            <div class="clearfix" style="margin:20px"></div>
+
+            <div class="col-md-3 col-sm-6 table-2">
                 <div class="table">
 
                     <div class="table-header grad-btn">
@@ -75,7 +149,7 @@ get_header(); the_post() ?>
                 </div><!-- end table -->
             </div><!-- end col-md-3 col-sm-6 -->
 
-            <div class="col-md-4 col-sm-6 table-2">
+            <div class="col-md-3 col-sm-6 table-2">
                 <div class="table">
 
                     <div class="table-header grad-btn">
@@ -106,43 +180,7 @@ get_header(); the_post() ?>
                 </div><!-- end table -->
             </div><!-- end col-md-3 col-sm-6 -->
 
-            <div class="col-md-4 col-sm-6 table-2">
-				<div class="table">
-
-					<div class="table-header grad-btn">
-						<p class="text">听力口语技巧+练习包</p><!-- end text -->
-						<p class="price">
-                            <?php $discountable = get_user_meta(get_current_user_id(), 'invited_by_user', true) && !get_user_meta(get_current_user_id(), 'discount_order', true)?>
-                            <?php $price = get_post_meta(get_the_ID(), 'price_base', true); if ($discountable): ?>
-                            <del><?=$price?></del>
-                            <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
-                            <?php else: ?>
-                            <span class="price-amount"><?=$price?></span>
-                            <?php endif; ?>
-                            $ / 月
-                        </p><!-- end price -->
-					</div><!-- end table header -->
-
-					<div class="table-body">
-						<ul class="features">
-							<li>全站口语技巧例题详解</li>
-                            <li>全站听力技巧例题详解</li>
-							<li>口语听力全套练习及参考答案</li>
-                            <li>PTE题型讲解</li>
-							<li>PTE推荐练习材料</li>
-						</ul><!-- end features list -->
-					</div><!-- end table body -->
-
-					<div class="table-footer">
-						<div class="order-btn">
-							<a href="#payment" data-service="base" class="grad-btn ln-tr show-payment-method">订阅</a>
-						</div><!-- end order button -->
-					</div><!-- end table footer -->
-
-				</div><!-- end table -->
-			</div><!-- end col-md-3 col-sm-6 -->
-            <div class="clearfix" style="margin:20px"></div>
-			<div class="col-md-4 col-sm-6 table-1">
+            <div class="col-md-3 col-sm-6 table-1">
 				<div class="table">
 
 					<div class="table-header grad-btn">
@@ -173,7 +211,7 @@ get_header(); the_post() ?>
 				</div><!-- end table -->
 			</div><!-- end col-md-3 col-sm-6 -->
 
-			<div class="col-md-4 col-sm-6 table-1">
+			<div class="col-md-3 col-sm-6 table-1">
 				<div class="table">
 
 					<div class="table-header grad-btn">
@@ -202,50 +240,14 @@ get_header(); the_post() ?>
 				</div><!-- end table -->
 			</div><!-- end col-md-3 col-sm-6 -->
 
-            <div class="col-md-4 col-sm-6 table-3">
-                <div class="table">
-
-                    <div class="table-header grad-btn">
-                        <p class="text">听说读写大礼包</p><!-- end text -->
-                        <p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if ($discountable): ?>
-                            <del><?=$price?></del>
-                            <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
-							<?php else: ?>
-                            <span class="price-amount"><?=$price?></span>
-							<?php endif; ?>
-                            $ / 月
-                        </p><!-- end price -->
-                    </div><!-- end table header -->
-
-                    <div class="table-body">
-                        <ul class="features">
-                            <li>全站听力口语技巧详解</li>
-                            <li>PTE阅读写作技巧</li>
-                            <li>全站听力口语练习题</li>
-                            <li>PTE题型讲解</li>
-                            <li>PTE评分细则</li>
-                            <li>PTE推荐联系材料</li>
-                        </ul><!-- end features list -->
-                    </div><!-- end table body -->
-
-                    <div class="table-footer">
-                        <div class="order-btn clearfix">
-                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">订阅</a>
-                        </div><!-- end order button -->
-                    </div><!-- end table footer -->
-
-                </div><!-- end table -->
-            </div><!-- end col-md-3 col-sm-6 -->
-
         </div><!-- end 1st row -->
 
         <div id="payment"></div>
 
         <div class="row payment-gateways" style="display: none;">
-            <div class="col-sm-4"><a href="#" id="alipay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/alipay.png"></a></div>
-            <div class="col-sm-4"><a href="#" id="wechatpay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/wechatpay.png"></a></div>
-            <div class="col-sm-4"><a href="#" id="paypal"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/paypal.png"></a></div>
+            <div class="col-sm-4"><a href="" id="alipay" class="gateway" data-gateway="alipay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/alipay.png"></a></div>
+            <div class="col-sm-4"><a href="" id="wechatpay" class="gateway" data-gateway="wechatpay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/wechatpay.png"></a></div>
+            <div class="col-sm-4"><a href="" id="paypal" class="gateway" data-gateway="paypal"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/paypal.png"></a></div>
         </div>
 
 	</div><!-- end container -->
@@ -270,16 +272,18 @@ jQuery(function ($) {
         }
     });
 
-    $('#alipay').on('click', function (e) {
-        var href;
+    $('.payment-gateways .gateway').on('click', function (e) {
+        var href, gateway;
         e.preventDefault();
+
+        gateway = $(this).data('gateway');
 
         if (lastDay) {
             subject += ' 至' + lastDay.format();
             expiresAt = (new Date(lastDay.getTime() + 86400000)).format();
         }
 
-        href = '/payment/alipay/?price='+ price
+        href = '/payment/' + gateway + '/?price='+ price
             + '&subject=' + (subject)
             + '&service=' + (service)
             + '&intend=' + ('<?=$_GET['intend']?>');
@@ -290,6 +294,10 @@ jQuery(function ($) {
 
         window.location.href = href;
     });
+
+    setInterval(function () {
+        $('.recommended a').trigger('hover');
+    }, 1000);
 
     Date.prototype.format = function() {
         var m = this.getMonth() + 1; // getMonth() is zero-based

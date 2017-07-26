@@ -415,6 +415,28 @@ function order_paid ($order_no, $gateway) {
 	}
 }
 
+function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $expires_at) {
+	$order_id = wp_insert_post(array(
+		'post_type' => 'member_order',
+		'post_author' => get_current_user_id(),
+		'post_name' => $out_trade_no,
+		'post_title' => $subject,
+		'post_status' => 'private'
+	));
+
+	add_post_meta($order_id, 'price', $total_fee);
+	add_post_meta($order_id, 'currency', $currency);
+	add_post_meta($order_id, 'no', $out_trade_no);
+	add_post_meta($order_id, 'user', get_current_user_id());
+	add_post_meta($order_id, 'service', $service);
+	add_post_meta($order_id, 'status', 'pending_payment');
+
+	if (isset($_GET['expires_at'])) {
+		add_post_meta($order_id, 'expires_at', $expires_at);
+	}
+
+}
+
 /**
  * refund an order through it's gateway
  * @param $order_id
