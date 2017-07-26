@@ -413,6 +413,8 @@ function order_paid ($order_no, $gateway) {
 			}
 		}
 	}
+
+	return $order;
 }
 
 function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $expires_at) {
@@ -458,6 +460,9 @@ function refund_order ($order_id, $amount) {
 			$input->setFee($amount * 100);
 			RoyalPayApi::refund($input);
 			break;
+		case 'paypal':
+			$sale_id = get_post_meta($order_id, 'sale_id', true);
+			paypal_sale_refund($sale_id, $amount);
 		case 'alipay':
 		default:
 			(new AlipayRefund(get_alipay_config()))->refund($order_no, $amount);
