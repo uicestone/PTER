@@ -782,6 +782,13 @@ header.alt .mobile-navigation .mobile-btn span:after {
 .features-section .feature-box.alt:hover .icon img {
     transform: rotate(360deg);
 }
+.features-section .subscribe.btn {
+    background: #2997ab;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 30px;
+    margin-top: 20px;
+}
 /* 06 - Instructors */
 .instructors-section {
     position: relative;

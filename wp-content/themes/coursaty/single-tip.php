@@ -49,13 +49,14 @@ get_header(); the_post(); ?>
 </article><!-- End Single Article -->
 <?php endif; ?>
 
-<?php if (has_tag('free-trial') && $welcome_pages = get_posts(array('post_type' => 'page', 'name' => 'welcome'))): $welcome_page = $welcome_pages[0]; ?>
+<?php if ((has_tag('free-trial') || ($post->post_name === 'pte-reading' && !current_user_can('view_reading')) || ($post->post_name === 'pte-writing' && !current_user_can('view_writing'))) && $welcome_pages = get_posts(array('post_type' => 'page', 'name' => 'welcome'))): $welcome_page = $welcome_pages[0]; ?>
 <section class="full-section features-section fancy-shadow" style="padding-top:0">
     <div class="container">
         <h3 class="section-title"><?=get_the_title($welcome_page)?></h3>
         <p class="section-description">
             <?=get_the_subtitle($welcome_page)?>
         </p><!-- End Section Description -->
+        <p><a href="<?=site_url()?>/pricing-table/" class="btn subscribe">立即订阅</a></p>
     </div>
     <div class="section-content features-content fadeInDown-animation">
         <div class="container">
