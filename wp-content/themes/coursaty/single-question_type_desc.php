@@ -11,7 +11,7 @@
 
 <div class="clearfix"></div>
 
-<article class="post">
+<article class="post<?=current_user_can('view_tips') ? '' : ' free-trial'?>">
     <div class="container">
         <div class="row">
             <div class="col-md-3">
