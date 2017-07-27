@@ -23,10 +23,6 @@
                                 <a href="<?php the_permalink(); ?>" class="ln-tr"><?php the_title(); ?></a>
                             </h3><!-- End Title -->
                             <div class="meta fr">
-                                <div class="date ib">
-                                    <span class="icon"><i class="fa fa-clock-o"></i></span>
-                                    <span class="text"><?php the_date(); ?></span>
-                                </div><!-- date icon -->
                             </div><!-- End Meta -->
                             <div class="clearfix"></div>
                             <div class="content">
