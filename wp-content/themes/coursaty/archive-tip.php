@@ -17,7 +17,7 @@
             <div class="row">
 				<?php while (have_posts()): the_post(); ?>
                 <div class="add-courses box entry">
-                    <img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/addcourse-icon.png" alt="" class="fl add-courses-icon">
+                    <img src="<?=get_stylesheet_directory_uri()?>/assets/img/logo-bingo.png" alt="" class="fl add-courses-icon">
                     <span class="add-courses-title ln-tr"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></span>
                     <div class="content">
 						<?php the_excerpt(); ?>

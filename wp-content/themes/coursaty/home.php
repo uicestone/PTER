@@ -1,12 +1,13 @@
 <?php get_header(); ?>
 
+<?php $banners = get_posts(array('tag' => 'headline')); ?>
 <div class="tp-banner-container">
     <div class="tp-banner">
         <ul>
-            <?php foreach (get_posts(array('tag' => 'headline')) as $index => $post): ?>
+            <?php foreach ($banners as $index => $banner): ?>
             <li data-transition="random" data-slotamount="7" data-masterspeed="1500">
                 <!-- MAIN IMAGE -->
-                <?=get_the_post_thumbnail($post, 'headline', array('alt' => 'slidebg' . ($index + 1), 'data-bgfit' => 'cover', 'data-bgposition' => 'left top', 'data-bgrepeat' => 'no-repeat'))?>
+                <?=get_the_post_thumbnail($banner, 'headline', array('alt' => 'slidebg' . ($index + 1), 'data-bgfit' => 'cover', 'data-bgposition' => 'left top', 'data-bgrepeat' => 'no-repeat'))?>
                 <!-- LAYERS -->
                 <!-- LAYER NR. 1 -->
                 <div class="tp-caption sft skewtoleft tp-resizeme start white"
@@ -19,7 +20,7 @@
                     data-easing="Power3.easeInOut"
                     data-endspeed="300"
                     style="z-index: 2">
-                    <h2 class="slide-title"><?=get_the_title($post)?></h2>
+                    <h2 class="slide-title"><?=get_the_title($banner)?></h2>
                 </div>
                 <!-- LAYER NR. 2 -->
                 <div class="tp-caption black randomrotate skewtoleft tp-resizeme start"
@@ -34,7 +35,7 @@
                     data-elementdelay="0.1"
                     data-endelementdelay="0.1"
                     data-endspeed="500" style="z-index: 99; white-space: pre-line;">
-                    <p class="slide-description"><?=get_the_subtitle($post)?></p>
+                    <p class="slide-description"><?=get_the_subtitle($banner)?></p>
                 </div>
                 <div class="tp-caption black randomrotate skewtoleft tp-resizeme start"
                      data-x="center"
@@ -58,7 +59,26 @@
     </div><!-- end tp-banner -->
 </div><!-- End Home Slider Container -->
 
+<?php foreach ($banners as $index => $banner): ?>
+<section class="full-section banner" style="background-image:url('<?=get_the_post_thumbnail_url($banner)?>')">
+    <div class="container">
+        <h3 class="section-title"><?=get_the_title($banner)?></h3>
+        <p class="section-description">
+			<?=get_the_subtitle($banner)?>
+        </p><!-- End Section Description -->
+        <div class="banner-actions">
+			<?php if ($index === 0): ?>
+            <a href="<?=site_url()?>/tip/?tag=free-trial" class="btn">Free trial</a>
+			<?php elseif ($index === 1): ?>
+            <a href="<?=site_url()?>/tip/how-to-use/" class="btn">使用指南</a>
+			<?php elseif ($index === 2): ?>
+            <a href="<?=site_url()?>/promotion/" class="btn">限时免费</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
 <div class="clearfix"></div>
+<?php endforeach; ?>
 
 <?php $welcome_pages = get_posts(array('post_type' => 'page', 'name' => 'welcome')); if ($welcome_pages): $welcome_page = $welcome_pages[0]; ?>
 <section class="full-section features-section fancy-shadow">
@@ -72,15 +92,15 @@
     <div class="section-content features-content fadeInDown-animation">
         <div class="container">
             <div class="row">
-	            <?php foreach (get_posts(array('category_name' => 'service')) as $post): ?>
+	            <?php foreach (get_posts(array('category_name' => 'service')) as $service): ?>
                 <div class="col-md-3 col-xs-6">
                     <div class="feature-box">
                         <div class="icon">
-                            <?=get_the_post_thumbnail($post, 'thumbnail', array('class' => 'es-tr'))?>
+                            <?=get_the_post_thumbnail($service, 'thumbnail', array('class' => 'es-tr'))?>
                         </div><!-- End Icon -->
-                        <h5 class="feature-title"><?=get_the_title($post)?></h5>
+                        <h5 class="feature-title"><?=get_the_title($service)?></h5>
                         <p class="feature-description">
-                            <?=wpautop($post->post_excerpt)?>
+                            <?=wpautop($service->post_excerpt)?>
                         </p>
                     </div><!-- End Features Box -->
                 </div>

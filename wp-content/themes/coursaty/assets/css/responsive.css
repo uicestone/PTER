@@ -208,6 +208,15 @@
 	header .main-navigation li.courses-menu li .single-item {
 		margin-bottom: 15px;
 	}
+	header .main-navigation > ul > li {
+		margin-right: 30px;
+	}
+	header .main-navigation > ul > li > a {
+		line-height: 50px;
+	}
+	header .main-navigation li.parent-item ul.sub-menu, header .main-navigation li.courses-menu ul, header .main-navigation li.parent-item ul.sub-menu ul {
+		top: 50px;
+	}
 	h2.slide-title {
 		font-size: 30px;
 	}
@@ -723,13 +732,58 @@
 @media only screen and (max-width : 480px) {
 
 	/*==========  01 - Home  ==========*/
-
-	.full-section .section-content [class^="col-xs-"],
-	.full-section .section-content [class*="col-xs-"],
-	.instructors-page [class^="col-"],
-	.instructors-page [class*="col-"] {
-		width: 100%;
+	.tp-banner-container {
+		display: none !important;
 	}
+
+	.full-section.banner {
+		display: block;
+		background-repeat: no-repeat;
+		background-size: cover;
+		height: 400px;
+		margin-bottom: 10px;
+		box-shadow: 0 3px 10px #888;
+	}
+
+	.full-section.banner {
+		padding-top: 100px;
+	}
+
+	.full-section.banner h3.section-title {
+		color: white;
+		text-shadow: 2px 2px 5px #333;
+		line-height: 1.2;
+		margin-bottom: 15px;
+	}
+
+	.full-section.banner .section-description {
+		text-align: center;
+		color: #f6f6f6;
+		max-width: 770px;
+		margin: auto;
+		/*font-size: 18px;*/
+		font-weight: bold;
+		text-shadow: 2px 2px 5px #333;
+	}
+
+	.full-section.banner .banner-actions {
+		text-align: center;
+	}
+
+	.full-section.banner .banner-actions .btn {
+		background: white;
+		opacity: 0.9;
+		color: #2997ab;
+		font-weight: bold;
+		padding: 10px 30px;
+		height: 48px;
+		margin: 30px;
+		box-shadow: 2px 2px 5px #ccc;
+	}
+	.full-section.banner .banner-actions .btn:hover {
+		opacity: 1;
+	}
+
 	.add-courses .add-courses-title {
 		line-height: 28px;
 	}
@@ -813,6 +867,12 @@
 	.follow-icons, .share-icons {
 		text-align: center;
 	}
+	.post .entry, .post .course-details,
+	.contact .contact-left,
+	.login-page .login-form,
+	.login-page .login-options {
+		padding: 15px;
+	}
 	.comments-list li .avatar,
 	.comments-list li.haschild > .comment-body:after,
 	.comments-list li.haschild > .comment-body:before {
@@ -820,6 +880,40 @@
 	}
 	.comments-list ul.children {
 		margin-left: 20px;
+	}
+
+	footer h6.widget-title {
+		text-align: center;
+	}
+
+	footer .widget {
+		padding: 0 15px;
+	}
+
+	footer .widget.about-widget {
+		text-align: center;
+	}
+
+	/*================== tip archive =================*/
+	.post .add-courses.entry {
+		padding: 20px;
+	}
+
+	.add-courses.entry .content {
+		margin-left: 10px;
+	}
+
+	.add-courses .add-courses-title, .add-courses .add-courses-title a {
+		line-height: 1.1;
+		text-align: center;
+	}
+
+	.payment-gateways {
+		display: none !important;
+	}
+
+	.mobile-payment-notice {
+		display: block !important;
 	}
 
 	/*========== 28, 29, 30, 31 - Portfolio ==========*/
@@ -838,6 +932,10 @@
 	.login-page .login-form .forgot {
 		float: none;
 		text-align: center;
+	}
+
+	.login-page .login-form .input-with-label input {
+		width: auto;
 	}
 
 	/*========== 45 - Soon ==========*/

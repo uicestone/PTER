@@ -304,6 +304,13 @@ get_header(); the_post() ?>
             <div class="col-sm-4"><a href="" id="paypal" class="gateway" data-gateway="paypal"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/paypal.png"></a></div>
         </div>
 
+        <div class="mobile-payment-notice" style="display:none;">
+            <blockquote>
+            <p>小屏支付暂未开通，请访问http://www.bingotraining.com支付</p>
+            <p>记住网址，在大屏上使用以获得更好的体验</p>
+            </blockquote>
+        </div>
+
 	</div><!-- end container -->
 </section><!-- end pricing section -->
 

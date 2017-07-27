@@ -23,7 +23,7 @@
 
     <style type="text/css">
         <?php if (is_user_logged_in()): ?>
-        .main-navigation .login {
+        .main-navigation .login, .mobile-navigation .login {
             display: none;
         }
         <?php endif; ?>

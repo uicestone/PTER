@@ -577,7 +577,7 @@ header.alt .mobile-navigation .mobile-btn span:after {
     z-index: 999;
 }
 /* 1st level */
-.mobile-navigation .mobile-container li.parent-item a {
+.mobile-navigation .mobile-container li a {
     display: block;
     color: #a9abb0;
     padding: 10px 20px;
@@ -621,6 +621,13 @@ header.alt .mobile-navigation .mobile-btn span:after {
 }
 .mobile-navigation .mobile-container li.courses-menu .course-menu-item .courses-num {
     display: none;
+}
+.mobile-navigation .mobile-container ul > li.login > a span {
+    background: #2997ab;
+    padding: 5px 10px;
+    border-radius: 3px;
+    box-shadow: none;
+    color: white;
 }
 /* 04 - Revolution Slider */
 .tp-banner-container {
@@ -685,6 +692,9 @@ header.alt .mobile-navigation .mobile-btn span:after {
 }
 .tp-banner ul li .btn:hover {
     opacity: 1;
+}
+.full-section.banner {
+    display: none;
 }
 .slider-overlay:after {
     content: '';
@@ -788,6 +798,7 @@ header.alt .mobile-navigation .mobile-btn span:after {
     line-height: 50px;
     padding: 0 30px;
     margin-top: 20px;
+    margin-right: 0;
 }
 /* 06 - Instructors */
 .instructors-section {

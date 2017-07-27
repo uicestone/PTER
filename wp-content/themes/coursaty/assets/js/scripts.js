@@ -216,7 +216,7 @@
         }); 
     });
 
-    $('.mobile-navigation').find('.haschild').children('a').one('click',function() {
+    $('.mobile-navigation').find('.haschild').children('a').on('click',function() {
         return false;
     }).on("click", function() {
         return true;

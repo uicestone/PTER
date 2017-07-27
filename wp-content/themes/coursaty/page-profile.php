@@ -131,6 +131,7 @@ get_header(); the_post(); ?>
                             <span>邀请码：<?=substr($invitation_code, 0, 6)?></span>
                         </div>
 					</div><!-- End Title -->
+                    <div class="clearfix"></div>
 					<div class="home-skills">
 						<?php
                         if ($service_package_expires_at = get_user_meta($user->ID, 'service_base_valid_before', true)) {
