@@ -87,7 +87,12 @@ get_header(); the_post() ?>
                     <div class="table-header grad-btn">
                         <p class="text">听力口语技巧+练习包</p><!-- end text -->
                         <p class="price">
-							<?php $discountable = get_user_meta(get_current_user_id(), 'invited_by_user', true) && !get_user_meta(get_current_user_id(), 'discount_order', true)?>
+							<?php
+                            $invited_by_user = get_user_meta(get_current_user_id(), 'invited_by_user', true);
+                            $invited_by_user_total_paid = get_user_meta($invited_by_user, 'total_paid', true);
+                            $discount_order = get_user_meta(get_current_user_id(), 'discount_order', true);
+
+                            $discountable = $invited_by_user && $invited_by_user_total_paid > 0 && !$discount_order?>
 							<?php $price = get_post_meta(get_the_ID(), 'price_base', true); if ($discountable): ?>
                                 <del><?=$price?></del>
                                 <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
