@@ -49,4 +49,35 @@ get_header(); the_post(); ?>
 </article><!-- End Single Article -->
 <?php endif; ?>
 
+<?php if (has_tag('free-trial') && $welcome_pages = get_posts(array('post_type' => 'page', 'name' => 'welcome'))): $welcome_page = $welcome_pages[0]; ?>
+<section class="full-section features-section fancy-shadow" style="padding-top:0">
+    <div class="container">
+        <h3 class="section-title"><?=get_the_title($welcome_page)?></h3>
+        <p class="section-description">
+            <?=get_the_subtitle($welcome_page)?>
+        </p><!-- End Section Description -->
+    </div>
+    <div class="section-content features-content fadeInDown-animation">
+        <div class="container">
+            <div class="row">
+                <?php foreach (get_posts(array('category_name' => 'service')) as $service): ?>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="feature-box">
+                            <div class="icon">
+                                <?=get_the_post_thumbnail($service, 'thumbnail', array('class' => 'es-tr'))?>
+                            </div><!-- End Icon -->
+                            <h5 class="feature-title"><?=get_the_title($service)?></h5>
+                            <p class="feature-description">
+                                <?=wpautop($service->post_excerpt)?>
+                            </p>
+                        </div><!-- End Features Box -->
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div><!-- End Features Section Content -->
+</section><!-- End Features Section -->
+
+<?php endif; ?>
+
 <?php get_footer(); ?>
