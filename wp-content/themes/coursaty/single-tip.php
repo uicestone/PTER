@@ -31,7 +31,7 @@ get_header(); the_post(); ?>
     <div class="container">
         <div class="row">
             <div class="add-courses box entry">
-                <img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/addcourse-icon.png" alt="" class="fl add-courses-icon">
+                <img src="<?=get_stylesheet_directory_uri()?>/assets/img/logo-bingo.png" alt="" class="fl add-courses-icon">
                 <span class="add-courses-title ln-tr"><?php the_title(); ?></span>
                 <div class="content">
                     <?php the_content(); ?>
@@ -40,5 +40,13 @@ get_header(); the_post(); ?>
         </div><!-- End main row -->
     </div><!-- End container -->
 </article><!-- End Single Article -->
+
+<?php if (in_array($post->post_name, array('pte-reading', 'pte-writing')) && current_user_can(str_replace('pte-', 'view_', $post->post_name))): ?>
+<article class="post single">
+    <div class="container" style="padding:0">
+		<?=do_shortcode('[video width="1280" height="720" mp4="' . site_url() . '/wp-content/uploads/' . $post->post_name . '.mp4"][/video]')?>
+    </div><!-- End container -->
+</article><!-- End Single Article -->
+<?php endif; ?>
 
 <?php get_footer(); ?>

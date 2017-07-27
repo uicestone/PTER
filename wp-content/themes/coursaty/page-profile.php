@@ -29,11 +29,13 @@ if (isset($_POST['submit'])) {
 
 if (isset($_POST['activate_reading'])) {
     update_user_meta(get_current_user_id(), 'service_reading_valid_before', time() + 86400, 'inactivated');
+    $user->add_cap('view_reading');
     sleep(1);
 }
 
 if (isset($_POST['activate_writing'])) {
 	update_user_meta(get_current_user_id(), 'service_writing_valid_before', time() + 86400, 'inactivated');
+	$user->add_cap('view_writing');
 	sleep(1);
 }
 
@@ -203,7 +205,7 @@ get_header(); the_post(); ?>
 								<?php else: ?>
                                     <div class="expires-at">
                                         还可以学习 <?=date('H:i', $service_writing - time())?>
-                                        <a href="<?=site_url()?>/tip/pte-reading/" class="active btn btn-sm ln-tr learn">前往学习</a>
+                                        <a href="<?=site_url()?>/tip/pte-writing/" class="active btn btn-sm ln-tr learn">前往学习</a>
                                     </div>
 								<?php endif; ?>
 							</div>
