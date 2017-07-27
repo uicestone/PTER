@@ -36,6 +36,22 @@
                     data-endspeed="500" style="z-index: 99; white-space: pre-line;">
                     <p class="slide-description"><?=get_the_subtitle($post)?></p>
                 </div>
+                <div class="tp-caption black randomrotate skewtoleft tp-resizeme start"
+                     data-x="center"
+                     data-hoffset="0"
+                     data-y="430"
+                     data-speed="500"
+                     data-start="1300"
+                     data-easing="Power3.easeInOut"
+                     data-splitin="none"
+                     data-splitout="none"
+                     data-elementdelay="0.1"
+                     data-endelementdelay="0.1"
+                     data-endspeed="500" style="z-index:99">
+                    <a href="<?=site_url()?>/tip/?tag=free-trial" class="btn">Free trial</a>
+                    <a href="<?=site_url()?>/how-to-use/" class="btn">使用指南</a>
+                    <a href="<?=site_url()?>/how-to-use/" class="btn">限时免费</a>
+                </div>
             </li>
             <?php endforeach; ?>
         </ul><!-- end ul elements -->

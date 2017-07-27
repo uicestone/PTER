@@ -21,9 +21,11 @@
                         <input type="submit" id="submit" class="submit-btn ln-tr fr" value="&#xf002;">
                     </form><!-- End Search form -->
                 </div><!-- End Search bar -->
+                <?php if (has_post_thumbnail()): ?>
                 <div class="featured-image">
 					<?php the_post_thumbnail('post-thumbnail'); ?>
                 </div><!-- End featured image -->
+                <?php endif; ?>
                 <div class="sidebar-widget last-posts">
                     <span class="widget-icon"><i class="fa fa-comments"></i></span>
                     <h5 class="sidebar-widget-title ib">最新文章</h5>

@@ -12,6 +12,8 @@
 					</p>
 					<div class="footer-links">
 						<ul>
+                            <li><a href="<?=site_url()?>/agreement/">使用协议</a></li>
+                            <li><a href="<?=site_url()?>/how-to-use/">使用指南</a></li>
 							<li><a href="<?=site_url()?>/about/" class="ln-tr">关于我们</a></li>
 							<li><a href="<?=site_url()?>/contact/">联系我们</a></li>
 						</ul>
