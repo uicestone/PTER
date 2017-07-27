@@ -14,32 +14,7 @@
 <article class="post single fadeInDown-animation">
     <div class="container">
         <div class="row">
-            <div class="col-md-3 sidebar">
-                <div class="search">
-                    <form action="<?=site_url()?>" id="search">
-                        <input type="search" id="search" class="search-input" name="s" placeholder="在这里搜索...">
-                        <input type="submit" id="submit" class="submit-btn ln-tr fr" value="&#xf002;">
-                    </form><!-- End Search form -->
-                </div><!-- End Search bar -->
-                <?php if (has_post_thumbnail()): ?>
-                <div class="featured-image">
-					<?php the_post_thumbnail('post-thumbnail'); ?>
-                </div><!-- End featured image -->
-                <?php endif; ?>
-                <div class="sidebar-widget last-posts">
-                    <span class="widget-icon"><i class="fa fa-comments"></i></span>
-                    <h5 class="sidebar-widget-title ib">最新文章</h5>
-                    <ul class="clearfix">
-                        <?php foreach (get_posts() as $latest_post): ?>
-                        <li>
-                            <a href="<?=get_the_permalink($latest_post)?>" class="ln-tr"><?=get_the_title($latest_post)?></a>
-                            <span class="date"><?=get_the_date('', $latest_post)?></span>
-                        </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div><!-- End Latest Posts Widget -->
-            </div><!-- End Sidebar - LEFT -->
-            <div class="col-md-9 main-content">
+            <div class="col-md-12 main-content">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="entry clearfix">
