@@ -34,8 +34,8 @@
 			</div><!-- End Copyright -->
 			<div class="fr footer-social-icons">
 				<ul class="clearfix">
-					<li><a href="#" class="fb-icon ln-tr"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#" class="in-icon ln-tr"><i class="fa fa-weixin"></i></a></li>
+<!--					<li><a href="#" class="fb-icon ln-tr"><i class="fa fa-facebook"></i></a></li>-->
+<!--                    <li><a href="#" class="in-icon ln-tr"><i class="fa fa-weixin"></i></a></li>-->
 				</ul>
 			</div><!-- End Social Media Icons -->
 		</div><!-- End container -->

@@ -46,24 +46,11 @@
                             </p>
                         </div><!-- end text info -->
                         <div class="call">
-                            <p>电话：<?=get_post_meta(get_the_ID(), 'phone', true)?></p>
-                            <p>Email：<?=get_post_meta(get_the_ID(), 'email', true)?></p>
-                            <p>Facebook：<a href="<?=get_post_meta(get_the_ID(), 'facebook', true)?>" target="_blank">Bingo Training</a></p>
+                            <?php $email = get_post_meta(get_the_ID(), 'email', true); ?>
+                            <p>咨询：<a href="mailto:<?=$email?>"><?=$email?></a></p>
+                            <p>合作：<a href="mailto:cooperation@bingotraining.com">cooperation@bingotraining.com</a></p>
                         </div><!-- end call info -->
                     </div><!-- end 1st block -->
-                    <div class="sidebar-widget follow-us">
-                        <span class="widget-icon"><i class="fa fa-share-alt"></i></span>
-                        <h5 class="sidebar-widget-title ib">关注我们</h5>
-                        <div class="follow-icons clearfix">
-                            <div class="icons">
-                                <ul class="clearfix">
-                                    <li><a href="#" class="fb-icon ln-tr"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#" class="tw-icon ln-tr"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#" class="tw-icon ln-tr"><i class="fa fa-weixin"></i></a></li>
-                                </ul>
-                            </div>
-                        </div><!-- end social icons -->
-                    </div><!-- end 2nd block -->
                 </div><!-- End contact right -->
             </div><!-- end col-md-4 -->
         </div><!-- end row -->
