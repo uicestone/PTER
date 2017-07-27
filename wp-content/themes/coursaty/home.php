@@ -49,34 +49,14 @@
                      data-endelementdelay="0.1"
                      data-endspeed="500" style="z-index:99">
                     <a href="<?=site_url()?>/tip/?tag=free-trial" class="btn">Free trial</a>
-                    <a href="<?=site_url()?>/how-to-use/" class="btn">使用指南</a>
-                    <a href="<?=site_url()?>/how-to-use/" class="btn">限时免费</a>
+                    <a href="<?=site_url()?>/tip/how-to-use/" class="btn">使用指南</a>
+                    <a href="<?=site_url()?>/promotion/" class="btn">限时免费</a>
                 </div>
             </li>
             <?php endforeach; ?>
         </ul><!-- end ul elements -->
     </div><!-- end tp-banner -->
 </div><!-- End Home Slider Container -->
-
-<div class="clearfix"></div>
-
-<div class="course-search fancy-shadow">
-    <div class="container">
-        <form action="<?=site_url()?>/" id="course-search-form" class="clearfix">
-            <input type="text" name="s" id="course-name" placeholder="搜索题型和技巧">
-            <div class="select-category ib">
-                <select class="dropdown" name="post_type" id="course-category">
-                    <option value="any" selected="selected">全部</option>
-                    <option value="question_type_desc">题型</option>
-                    <option value="tip">技巧</option>
-                </select>
-            </div><!-- End Select Category -->
-
-            </div><!-- End Select Country -->
-            <button type="submit" id="search-btn" class="grad-btn ln-tr">搜索</button>
-        </form><!-- End Sourse Search Form -->
-    </div>
-</div><!-- End Course Container -->
 
 <div class="clearfix"></div>
 
@@ -112,7 +92,7 @@
 <div class="clearfix"></div>
 <?php endif; ?>
 
-<?php $recommended_posts = get_posts(array('tag' => 'recommended', 'posts_per_page' => 4)); if ($recommended_posts): ?>
+<?php $recommended_posts = get_posts(array('post_type' => array('post', 'tip'), 'tag' => 'recommended', 'posts_per_page' => 4, 'orderby' => 'menu_order', 'order' => 'asc')); if ($recommended_posts): ?>
 <section class="full-section instructors-section fancy-shadow">
     <div class="container">
         <h3 class="section-title">推荐阅读</h3>
