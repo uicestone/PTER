@@ -98,6 +98,37 @@ get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'qu
 							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <select style="width:100%;height:40px;font-size:16px;margin-bottom:10px;">
+                                <?php $all_query = array(
+									'post_type' => 'exercise',
+									'posts_per_page' => -1,
+									'order' => 'asc',
+									'orderby' => 'ID'
+								);
+
+								if ($_GET['tag']) {
+									$all_query['tag'] = $_GET['tag'];
+									$all_query['order'] = 'desc';
+									$all_query['orderby'] = 'post_date';
+								}
+								else {
+									$all_query['tax_query'] = array(
+										array(
+											'taxonomy' => 'question_type',
+											'field' => 'slug',
+											'terms' => $question_type->slug
+										)
+									);
+								}
+
+                                foreach(get_posts($all_query) as $exercise): ?>
+                                <option value="<?=get_the_permalink($exercise)?>"<?=$exercise->ID === get_the_ID() ? ' selected' : ''?>><?=get_the_title($exercise)?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
                     <?php endif; ?>
                     <div class="sidebar-widget">
                         <span class="widget-icon"><i class="fa fa-clock-o"></i></span>
