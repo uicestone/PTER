@@ -96,33 +96,26 @@
 <div class="clearfix"></div>
 <?php endif; ?>
 
-<?php $mentor_pages = get_posts(array('post_type' => 'page', 'name' => 'mentor')); if ($mentor_pages): $mentor_page = $mentor_pages[0]; ?>
+<?php $recommended_posts = get_posts(array('tag' => 'recommended', 'posts_per_page' => 4)); if ($recommended_posts): ?>
 <section class="full-section instructors-section fancy-shadow">
     <div class="container">
-        <h3 class="section-title"><?=get_the_title($mentor_page)?></h3>
+        <h3 class="section-title">推荐阅读</h3>
         <p class="section-description">
-            <?=get_the_subtitle($mentor_page)?>
+
         </p><!-- End Section Description -->
     </div>
     <div class="section-content instructors-content fadeInDown-animation">
         <div class="container">
             <div class="row">
-                <?php foreach (get_posts(array('category_name' => 'mentor')) as $post): ?>
+                <?php foreach ($recommended_posts as $recommended_post): ?>
                 <div class="col-md-3 col-xs-6">
                     <div class="instructor">
                         <div class="avatar">
-                            <?=get_the_post_thumbnail($post, 'mentor', array('class' => 'img-responsive'))?>
+                            <a href="<?=get_permalink($recommended_post)?>"><?=get_the_post_thumbnail($recommended_post, 'mentor', array('class' => 'img-responsive'))?></a>
                         </div><!-- End Avatar -->
                         <div class="instructor-info">
-                            <p class="name"><?=get_the_title($post)?></p>
-                            <span class="position"><?=get_the_subtitle($post)?></span>
-                            <div class="social-icons">
-                                <ul class="clearfix">
-                                    <li><a href="#" class="fb-icon es-tr"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#" class="tw-icon es-tr"><i class="fa fa-envelope-o"></i></a></li>
-                                    <li><a href="#" class="tw-icon es-tr"><i class="fa fa-weixin"></i></a></li>
-                                </ul>
-                            </div>
+                            <p class="name"><a href="<?=get_permalink($recommended_post)?>"><?=get_the_title($recommended_post)?></a></p>
+                            <span class="position"><?=get_the_subtitle($recommended_post)?></span>
                         </div>
                     </div><!-- End Instructor Box -->
                 </div>

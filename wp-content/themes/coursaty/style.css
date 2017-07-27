@@ -789,6 +789,9 @@ header.alt .mobile-navigation .mobile-btn span:after {
     font-weight: bold;
     margin-bottom: 11px;
 }
+.instructors-section .instructor-info .name a {
+    color: inherit;
+}
 .instructor-info .position {
     font-size: 12px;
     color: #5a5e6a;
@@ -2071,7 +2074,7 @@ h6.head-title {
 }
 .sidebar .search .search-input {
     background-color: #e1e1e1;
-    width: 270px;
+    width: 190px;
     height: 40px;
     line-height: 40px;
     padding: 0 10px;
@@ -2317,7 +2320,7 @@ h6.head-title {
     z-index: 1;
 }
 .post .featured-image img {
-    width: 100%;
+    max-width: 100%;
     height: auto;
 }
 .post .featured-image:after {
@@ -2329,6 +2332,9 @@ h6.head-title {
     position: absolute;
     left: 0;
     bottom: 0;
+}
+.sidebar .featured-image:after {
+    background: none;
 }
 .post .entry .content {
     clear: both;

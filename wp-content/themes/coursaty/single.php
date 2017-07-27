@@ -14,13 +14,16 @@
 <article class="post single fadeInDown-animation">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 sidebar">
+            <div class="col-md-3 sidebar">
                 <div class="search">
                     <form action="<?=site_url()?>" id="search">
                         <input type="search" id="search" class="search-input" name="s" placeholder="在这里搜索...">
                         <input type="submit" id="submit" class="submit-btn ln-tr fr" value="&#xf002;">
                     </form><!-- End Search form -->
                 </div><!-- End Search bar -->
+                <div class="featured-image">
+					<?php the_post_thumbnail('post-thumbnail'); ?>
+                </div><!-- End featured image -->
                 <div class="sidebar-widget last-posts">
                     <span class="widget-icon"><i class="fa fa-comments"></i></span>
                     <h5 class="sidebar-widget-title ib">最新文章</h5>
@@ -34,12 +37,9 @@
                     </ul>
                 </div><!-- End Latest Posts Widget -->
             </div><!-- End Sidebar - LEFT -->
-            <div class="col-md-8 main-content">
+            <div class="col-md-9 main-content">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="featured-image">
-                            <?php the_post_thumbnail('post-thumbnail'); ?>
-                        </div><!-- End featured image -->
                         <div class="entry clearfix">
                             <h3 class="single-title fl">
                                 <span class="post-type-icon"><i class="fa fa-comment"></i></span>
