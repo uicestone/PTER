@@ -67,6 +67,7 @@
         <p class="section-description">
             <?=get_the_subtitle($welcome_page)?>
         </p><!-- End Section Description -->
+        <p><a href="<?=site_url()?>/pricing-table/" class="btn subscribe">立即订阅</a></p>
     </div>
     <div class="section-content features-content fadeInDown-animation">
         <div class="container">
