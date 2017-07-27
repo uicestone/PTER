@@ -51,6 +51,7 @@ get_header(); the_post() ?>
                     <div class="table-header grad-btn">
                         <p class="text">听说读写大礼包</p><!-- end text -->
                         <p class="price">
+                            （价值1600澳币）<br>
 							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if ($discountable): ?>
                                 <del><?=$price?></del>
                                 <span class="price-amount"><?=round($price * (1 - get_post_meta(get_the_ID(), 'intro_discount', true) / 100), 2)?></span>
@@ -63,30 +64,32 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
-                            <li>全站听力口语技巧详解</li>
-                            <li>PTE阅读写作技巧</li>
-                            <li>全站听力口语练习题</li>
-                            <li>PTE题型讲解</li>
-                            <li>PTE评分细则</li>
-                            <li>PTE推荐联系材料</li>
+                            <li>全站听力口语技巧，模板详解</li>
+                            <li>PTE阅读技巧及备考建议</li>
+                            <li>PTE写作技巧，范文讲解</li>
+                            <li>PTE题型详解+评分细则</li>
+                            <li>全站近400道练习题+答案</li>
+                            <li>参考笔记，答题要点</li>
+                            <li>口语6，7，8分考生真实答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
                     <div class="table-footer">
                         <div class="order-btn clearfix">
-                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">推荐购买</a>
+                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
                         </div><!-- end order button -->
                     </div><!-- end table footer -->
 
                 </div><!-- end table -->
             </div><!-- end col-md-3 col-sm-6 -->
 
-            <div class="col-md-4 col-sm-6 table-2">
+            <div class="col-md-4 col-sm-6 table-2 recommended">
                 <div class="table">
 
                     <div class="table-header grad-btn">
                         <p class="text">听力口语技巧+练习包</p><!-- end text -->
                         <p class="price">
+                            （价值1200澳币）<br>
 							<?php
                             $invited_by_user = get_user_meta(get_current_user_id(), 'invited_by_user', true);
                             $invited_by_user_total_paid = get_user_meta($invited_by_user, 'total_paid', true);
@@ -105,17 +108,18 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
-                            <li>全站口语技巧例题详解</li>
-                            <li>全站听力技巧例题详解</li>
-                            <li>口语听力全套练习及参考答案</li>
-                            <li>PTE题型讲解</li>
-                            <li>PTE推荐练习材料</li>
+                            <li>全站听力口语技巧，模板详解</li>
+                            <li>PTE题型详解+评分细则</li>
+                            <li>全站近400道练习题+答案</li>
+                            <li>参考笔记，答题要点</li>
+                            <li>口语6，7，8分考生真实答案</li>
+                            <li>听力通用版+高阶版参考答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
                     <div class="table-footer">
                         <div class="order-btn">
-                            <a href="#payment" data-service="base" class="grad-btn ln-tr show-payment-method">推荐购买</a>
+                            <a href="#payment" data-service="base" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
                         </div><!-- end order button -->
                     </div><!-- end table footer -->
 
@@ -137,11 +141,10 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
-                            <li>全站口语技巧例题详解</li>
-                            <li>全站听力技巧例题详解</li>
-                            <li>PTE题型讲解</li>
-                            <li>PTE评分细则</li>
-                            <li>PTE推荐练习材料</li>
+                            <li>全站听力技巧，模板详解</li>
+                            <li>全站口语技巧，模板详解</li>
+                            <li>PTE题型详解+评分细则</li>
+                            <li>全站听力口语例题+参考答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
@@ -167,12 +170,10 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
-                            <li>Read Aloud 32题，含6，7，8分参考答案</li>
-                            <li>Repeat Sentence 100题</li>
-                            <li>Describe Image 100题，含8分参考答案</li>
-                            <li>Retell Lecture 15题，含笔记和参考答案</li>
-                            <li>Write from dictation 70题，Highlight Incorrect Words 15题</li>
-                            <li>Summarise Spoken Text 15题，含通用和高级版本答案</li>
+                            <li>全站近400道练习题+答案</li>
+                            <li>参考笔记，答题要点</li>
+                            <li>口语6，7，8分考生真实答案</li>
+                            <li>听力通用版+高阶版参考答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
@@ -301,8 +302,8 @@ jQuery(function ($) {
     });
 
     setInterval(function () {
-        $('.recommended a').trigger('hover');
-    }, 1000);
+        $('.recommended a').toggleClass('bling');
+    }, 500);
 
     Date.prototype.format = function() {
         var m = this.getMonth() + 1; // getMonth() is zero-based

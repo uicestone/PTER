@@ -3241,7 +3241,8 @@ blockquote.blockquote-4 .story {
     color: #383c4b;
 }
 .pricing-tables .table-1 .table .table-body .features {
-    height: 305px;
+    height: 230px;
+    overflow: auto;
 }
 .pricing-tables .table-1 .table .table-body .features li:hover,
 .pricing-tables .table-2 .table .table-body .features li:hover {
@@ -3263,11 +3264,11 @@ blockquote.blockquote-4 .story {
     background: #000020;
     text-align: center;
 }
-.pricing-tables .table-2 .table .table-footer .order-btn a:hover {
+.pricing-tables .table-2 .table .table-footer .order-btn a:hover, .pricing-tables .table-2 .table .table-footer .order-btn a.bling {
     background: #2997ab;
 }
 .pricing-tables .table-2 .table .table-body .features {
-    height: 305px;
+    height: 230px;
     overflow: auto;
 }
 /* table 3 */
@@ -3296,6 +3297,10 @@ blockquote.blockquote-4 .story {
 .pricing-tables .table-3 .table .table-body {
     padding: 3px 0 2px;
 }
+.pricing-tables .table-3 .table .table-body .features {
+    height: 226px;
+    overflow: auto;
+}
 .pricing-tables .table-3 .table .table-body .features li {
     border: none;
     color: #b5b7bb;
@@ -3314,7 +3319,7 @@ blockquote.blockquote-4 .story {
 .pricing-tables .table-3 .table .table-footer .order-btn a.details {
     background: #000020;
 }
-.pricing-tables .table-3 .table .table-footer .order-btn a:hover {
+.pricing-tables .table-3 .table .table-footer .order-btn a:hover, .pricing-tables .table-3 .table .table-footer .order-btn a.bling {
     background: #fff;
     color: #383c4b;
 }
