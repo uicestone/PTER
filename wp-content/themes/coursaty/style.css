@@ -2382,6 +2382,7 @@ h6.head-title {
 }
 .comments-list.answer {
     border: 4px solid #2997ab;
+    text-align: justify;
 }
 .comments-list.answer del {
     color: #de0a0a;
