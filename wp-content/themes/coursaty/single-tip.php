@@ -27,7 +27,7 @@ get_header(); the_post(); ?>
 
 <div class="clearfix"></div>
 
-<article class="post single">
+<article class="post single<?=has_tag('free-trial') ? ' free-trial' : ''?>">
     <div class="container">
         <div class="row">
             <div class="add-courses box entry">

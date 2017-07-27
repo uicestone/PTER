@@ -1112,6 +1112,11 @@ header.alt .mobile-navigation .mobile-btn span:after {
 .add-courses.entry .content {
     margin-left: 100px;
 }
+.post.free-trial .add-courses.entry .content del, .post.free-trial .add-courses.entry .content del span {
+    color: transparent !important;
+    text-shadow: 0 0 6px rgba(0,0,0,0.4);
+    text-decoration: none;
+}
 .add-courses .add-courses-icon {
     width: 65px;
     margin-right: 35px;
