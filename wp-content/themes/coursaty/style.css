@@ -674,13 +674,14 @@ header.alt .mobile-navigation .mobile-btn span:after {
     max-width: 950px;
 }
 .tp-banner ul li .btn {
-    background: #2997ab;
-    opacity: 0.7;
-    color: white;
+    background: white;
+    opacity: 0.9;
+    color: #2997ab;
     font-weight: bold;
     padding: 10px 30px;
     height: 48px;
     margin: 30px;
+    box-shadow: 2px 2px 5px #ccc;
 }
 .tp-banner ul li .btn:hover {
     opacity: 1;
