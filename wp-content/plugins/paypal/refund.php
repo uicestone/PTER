@@ -6,8 +6,8 @@
 // using the Payments API.
 // API used: /v1/payments/sale/{sale-id}/refund
 
-require 'autoload.php';
-require 'common.php';
+require_once __DIR__ . '/autoload.php';
+require_once __DIR__ . '/common.php';
 
 use PayPal\Api\Amount;
 use PayPal\Api\Refund;

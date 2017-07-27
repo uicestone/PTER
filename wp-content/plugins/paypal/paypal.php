@@ -8,7 +8,7 @@ Version: 1.12.0
 Author URI: https://developer.paypal.com
 */
 
-require 'refund.php';
+require_once __DIR__ . '/refund.php';
 
 add_action('init', function () {
 	add_rewrite_rule('payment/paypal/?$', 'index.php?paypal=submit', 'top');

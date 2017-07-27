@@ -463,6 +463,7 @@ function refund_order ($order_id, $amount) {
 		case 'paypal':
 			$sale_id = get_post_meta($order_id, 'sale_id', true);
 			paypal_sale_refund($sale_id, $amount);
+			break;
 		case 'alipay':
 		default:
 			(new AlipayRefund(get_alipay_config()))->refund($order_no, $amount);

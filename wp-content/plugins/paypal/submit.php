@@ -5,8 +5,8 @@
 // PayPal Account based Payment.
 // API used: /v1/payments/payment
 
-require __DIR__ . '/autoload.php';
-require __DIR__ . '/common.php';
+require_once __DIR__ . '/autoload.php';
+require_once __DIR__ . '/common.php';
 
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
