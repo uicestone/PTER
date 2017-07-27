@@ -6,6 +6,10 @@ if(isset($_POST['submit'])){
         exit('两次输入密码不一致，请返回修改');
     }
 
+    if ($_POST['agree'] !== 'yes') {
+		exit('请同意用户协议');
+    }
+
 	$user_id = wp_insert_user(array(
 		'user_pass' => $_POST['password'],
 		'user_login' => $_POST['username'],
@@ -98,6 +102,12 @@ get_header(); the_post(); ?>
                                     <input type="text" id="reg_invitation_code" name="invitation_code" class="invitation_code-input" placeholder="邀请码（可选，也可稍后绑定）">
                                 </div>
                             </div><!-- end username -->
+                            <div class="col-md-6">
+                                <div class="input clearfix agree">
+                                    <input type="checkbox" id="reg_agree" name="agree" class="agrre-input" value="yes">
+                                    同意 <a href="<?=site_url()?>/agreement/" target="_blank">用户协议</a>
+                                </div>
+                            </div><!-- end submit -->
                             <div class="col-md-12">
                                 <div class="input clearfix">
                                     <input type="submit" id="reg_submit" name="submit" class="submit-input grad-btn ln-tr" value="注册">
