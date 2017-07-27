@@ -60,6 +60,8 @@ add_action('after_setup_theme', function () {
 
 add_action('init', function () {
 
+	add_post_type_support('post', 'page-attributes');
+
 	register_taxonomy('question_type', null, array(
 		'label' => '题型分类',
 		'labels' => array(
@@ -81,7 +83,7 @@ add_action('init', function () {
 			'not_found' => '未找到题型'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
+		'supports' => array('title', 'editor', 'revisions', 'thumbnail', 'page-attributes'),
 		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-feedback',
 		'has_archive' => true
@@ -99,7 +101,7 @@ add_action('init', function () {
 			'not_found' => '未找到技巧'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
+		'supports' => array('title', 'editor', 'revisions', 'thumbnail', 'page-attributes'),
 		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-clipboard',
 		'has_archive' => true
@@ -117,7 +119,7 @@ add_action('init', function () {
 			'not_found' => '未找到练习'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
+		'supports' => array('title', 'editor', 'revisions', 'thumbnail', 'page-attributes'),
 		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-editor-spellcheck',
 		'has_archive' => true
