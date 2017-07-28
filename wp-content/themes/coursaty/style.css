@@ -3164,6 +3164,9 @@ blockquote.blockquote-4 .story {
     background: #f5f5f5;
     /*padding: 100px 0;*/
 }
+.pricing-tables .invitation_code-form {
+    margin-bottom: 10px;
+}
 .pricing-tables .invitation_code-input {
     width: calc(100% - 67px);
     display: inline-block;

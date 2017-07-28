@@ -79,7 +79,7 @@ get_header(); the_post() ?>
 
 <section class="pricing-tables">
 	<div class="container">
-        <div class="row" style="margin-top:25px;margin-bottom:25px">
+        <div class="row" style="margin-top:25px;margin-bottom:15px">
 			<?php if (!$invited_by_user): ?>
             <div class="col-sm-4">
                 <form method="post" class="invitation_code-form">
