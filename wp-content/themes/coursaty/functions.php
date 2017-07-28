@@ -149,6 +149,7 @@ add_action('init', function () {
 			'status' => '状态',
 			'user'=>'用户',
 			'price'=>'金额',
+			'gateway' => '通道',
 			'expires_at' => '过期时间'
 		);
 		return $newcolumns;
@@ -181,6 +182,10 @@ add_action('init', function () {
 					default;
 				}
 				break;
+            case 'gateway':
+				$gateway = get_post_meta($post->ID, 'gateway', true);
+				echo $gateway;
+                break;
 			default;
 		}
 	});
