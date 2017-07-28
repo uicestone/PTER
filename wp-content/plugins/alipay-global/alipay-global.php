@@ -3,7 +3,7 @@
 Plugin Name: Alipay Global
 Plugin URI: https://global.alipay.com/service/website/4
 Description: Alipay SDK for cross-border online payment.
-Author: Alipay
+Author: Uice Lu, Alipay
 Version: 3.3.0
 Author URI: https://www.alipay.com/
 */

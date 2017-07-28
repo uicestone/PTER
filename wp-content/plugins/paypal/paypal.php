@@ -3,7 +3,7 @@
 Plugin Name: Paypal
 Plugin URI: https://github.com/paypal/PayPal-PHP-SDK
 Description: Paypal SDK for online payment.
-Author: Paypal
+Author: Uice Lu, Paypal
 Version: 1.12.0
 Author URI: https://developer.paypal.com
 */

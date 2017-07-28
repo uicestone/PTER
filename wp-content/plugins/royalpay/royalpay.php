@@ -3,7 +3,7 @@
 Plugin Name: RoyalPay
 Plugin URI: https://mpay.royalpay.com.au/static/phpdemo.zip
 Description: RoyalPay Wechat Payment SDK for PHP.
-Author: qiniu
+Author: Uice Lu, RoyalPay
 Version: 1.0
 Author URI: https://www.royalpay.com.au/
 */
