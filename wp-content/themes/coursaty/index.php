@@ -14,12 +14,6 @@
 							<span class="post-type-icon"><i class="fa fa-comment"></i></span>
 							<a href="<?php the_permalink(); ?>" class="ln-tr"><?php the_title(); ?></a>
 						</h3>
-						<div class="meta fr">
-							<div class="date ib">
-								<span class="icon"><i class="fa fa-clock-o"></i></span>
-								<span class="text"><?php the_date(); ?></span>
-							</div><!-- date icon -->
-						</div><!-- End Meta -->
 						<p class="blogpost-description">
 							<?php the_excerpt(); ?>
 						</p>
