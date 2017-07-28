@@ -100,7 +100,7 @@ get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'qu
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <select class="go-to-exercise" style="width:100%;height:40px;font-size:16px;margin-bottom:10px;">
+                            <select class="go-to-exercise" style="width:100%;height:40px;font-size:16px;margin-bottom:10px;background:none">
                                 <?php $all_query = array(
 									'post_type' => 'exercise',
 									'posts_per_page' => -1,
