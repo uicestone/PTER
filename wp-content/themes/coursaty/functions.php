@@ -519,3 +519,22 @@ add_filter('get_previous_post_where', 'pter_adjacent_post_where');
 add_filter('get_next_post_where', 'pter_adjacent_post_where');
 add_filter('get_previous_post_sort', 'pter_previous_post_sort');
 add_filter('get_next_post_sort', 'pter_next_post_sort');
+
+add_action('login_enqueue_scripts', function () { ?>
+	<style type="text/css">
+		#login h1 a, .login h1 a {
+			background-image: url(<?=get_stylesheet_directory_uri()?>/assets/img/logo-admin.png);
+			height:100px;
+			width:250px;
+			background-size: contain;
+			background-repeat: no-repeat;
+			padding-bottom: 30px;
+		}
+		#nav {
+			display: none;
+		}
+	</style>
+	<?php
+});
+
+
