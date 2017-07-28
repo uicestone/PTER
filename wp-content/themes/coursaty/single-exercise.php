@@ -4,7 +4,7 @@ if(!has_tag('free-trial')) {
     redirect_pricing_table('view_exercises');
 }
 
-get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id'))[0]; ?>
+get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1]; ?>
 
 <article class="post single">
 	<div class="container">
@@ -118,7 +118,7 @@ get_header(); the_post(); $question_type = wp_get_object_terms(get_the_ID(), 'qu
 										array(
 											'taxonomy' => 'question_type',
 											'field' => 'slug',
-											'terms' => $question_type->slug
+											'terms' => $question_sub_type ? $question_sub_type->slug : $question_type->slug
 										)
 									);
 								}
