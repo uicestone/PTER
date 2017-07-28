@@ -31,7 +31,9 @@
 </head>
 <body id="home">
 <div id="entire">
+    <?php if (is_home()): ?>
 	<div class="loader"></div>
+    <?php endif; ?>
     <?php if(!is_404()): ?>
 	<header id="header" class="<?=is_home() ? '' : 'alt static-header'?>">
 		<div class="container">
