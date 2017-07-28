@@ -306,8 +306,8 @@ get_header(); the_post() ?>
 
         <div class="mobile-payment-notice" style="display:none;">
             <blockquote>
-            <p>小屏支付暂未开通，请访问http://www.bingotraining.com支付</p>
-            <p>记住网址，在大屏上使用以获得更好的体验</p>
+            <p>手机支付暂未开通，请用电脑版进行支付</p>
+            <p>记住网址http://www.bingotraining.com 在大屏上使用以获得更好的体验</p>
             </blockquote>
         </div>
 
