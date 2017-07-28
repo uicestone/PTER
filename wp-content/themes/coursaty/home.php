@@ -51,7 +51,7 @@
                      data-endspeed="500" style="z-index:99">
                     <a href="<?=site_url()?>/tip/?tag=free-trial" class="btn">Free trial</a>
                     <a href="<?=site_url()?>/tip/how-to-use/" class="btn">使用指南</a>
-                    <a href="<?=site_url()?>/promotion/" class="btn">限时免费</a>
+                    <a href="<?=site_url()?>/promotion/" class="btn">限时优惠</a>
                 </div>
             </li>
             <?php endforeach; ?>
