@@ -1,7 +1,5 @@
 <?php
 
-redirect_login();
-
 $ordered_exercises = new WP_Query($query_string. (isset($_GET['tag']) && $_GET['tag'] === 'free-trial' ? '' : '&orderby=ID') ."&order=ASC&posts_per_page=1");
 
 if ($ordered_exercises->have_posts()): $ordered_exercises->the_post();
