@@ -189,6 +189,39 @@ add_action('init', function () {
 			default;
 		}
 	});
+	
+	add_action('restrict_manage_posts', function() {
+		
+	    global $current_screen;
+		
+		if ($current_screen->post_type == 'member_order') {
+			
+			$available_statuses = array('pending_payment' => '待付款', 'paid' => '已付款', 'cancelled' => '已取消');
+			
+			echo '<select name="status">';
+			echo '<option value="">所有状态</option>';
+			
+			foreach ($available_statuses as $status_name => $status_label) {
+				$selected = (!empty($_GET['status']) && $_GET['status'] == $status_name ) ? ' selected="selected"' : '';
+				echo '<option' . $selected . ' value="' . $status_name . '">' . $status_label . '</option>';
+			}
+			
+			echo '</select>';
+		}
+	});
+
+	add_filter('parse_query', function ($query) {
+		if (is_admin() AND $query->query['post_type'] === 'member_order') {
+			$qv = &$query->query_vars;
+			$qv['meta_query'] = array();
+			if (!empty($_GET['status'])) {
+				$qv['meta_query'][] = array(
+					'field' => 'status',
+					'value' => $_GET['status']
+				);
+			}
+		}
+	});
 });
 
 add_filter('nav_menu_link_attributes', function($attrs, $item) {
