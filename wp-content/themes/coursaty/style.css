@@ -257,7 +257,7 @@ header.alt .logo-container .site-name {
 }
 header.static-header, .sidebar .sidebar-widget .post-item .read-more {
     border-bottom: 1px solid #dbdbdb;
-    background-image: linear-gradient(90deg, #f7f7f7 0%, #fff 100%);
+    background-image: linear-gradient(90deg,#fff,#e5edee 100%);
 }
 header.static-header {
     position: static;
