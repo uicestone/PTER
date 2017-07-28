@@ -102,10 +102,12 @@ get_header(); the_post(); ?>
                                     <input type="text" id="reg_invitation_code" name="invitation_code" class="invitation_code-input" placeholder="邀请码（可选，也可稍后绑定）">
                                 </div>
                             </div><!-- end username -->
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="input clearfix agree">
-                                    <input type="checkbox" id="reg_agree" name="agree" class="agrre-input" value="yes">
-                                    同意 <a href="<?=site_url()?>/agreement/" target="_blank">用户协议</a>
+                                    <div class="custom-checkbox">
+                                        <input type="checkbox" id="reg_agree" name="agree" value="yes" class="checkbox-input">
+                                        <label for="reg_agree">同意 <a href="<?=site_url()?>/agreement/" target="_blank">用户协议</a></label>
+                                    </div>
                                 </div>
                             </div><!-- end submit -->
                             <div class="col-md-12">

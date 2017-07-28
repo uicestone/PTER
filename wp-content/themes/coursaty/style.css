@@ -2847,7 +2847,7 @@ h6.head-title {
     content: '';
     margin-right: 10px;
     display: inline-block;
-    vertical-align: text-top;
+    vertical-align: bottom;
     width: 22px;
     height: 22px;
     background: #d7d8db;
@@ -2866,7 +2866,7 @@ h6.head-title {
     content: '';
     position: absolute;
     left: 5px;
-    top: 9px;
+    top: 8px;
     background: white;
     width: 4px;
     height: 4px;
@@ -2923,17 +2923,11 @@ h6.head-title {
     /*margin-bottom: 0;*/
 }
 .login-page .register .input.agree {
-    line-height: 30px;
+    margin-top: 20px;
+    text-align: center;
 }
 .login-page .register .input.agree a {
     color: #2997ab;
-}
-.login-page .register .input.agree input {
-    width: 25px;
-    height: 25px;
-    display: inline;
-    line-height: 25px;
-    vertical-align: bottom;
 }
 /* 20 - Contact */
 .contact {
