@@ -11,7 +11,7 @@ if(isset($_POST['submit'])){
 	wp_set_current_user($user->ID);
 
 	// 检查并记录当日IP数
-    add_user_meta($user->ID, 'ip_' . date('Y-m-d'), get_the_user_ip());
+    add_user_meta($user->ID, 'ip_' . date('Y-m-d'), get_the_user_ip(), true);
     if (count(get_user_meta($user->ID, 'ip_' . date('Y-m-d'))) > 2) {
         exit('账号状态异常');
     }
