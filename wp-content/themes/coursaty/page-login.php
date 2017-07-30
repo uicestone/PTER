@@ -17,7 +17,7 @@ if(isset($_POST['submit'])){
     }
 
     if (count($user_ips_today) > 2) {
-        exit('账号状态异常，如果您使用的是朋友的账号，或许可以考虑：<br><a href="' . site_url() . '/register/">注册自己的账号</a>，输入朋友的<b>邀请码</b>优惠购买！<br>当前优惠折扣：<b>' . get_post_meta(get_page_by_path('pricing-table')->ID, 'discount', true) . '%OFF</b>');
+        exit('账号状态异常，如果您使用的是朋友的账号，或许可以考虑：<br><a href="' . site_url() . '/register/">注册自己的账号</a>，输入朋友的<b>邀请码</b>优惠购买！<br>当前优惠折扣：<b>' . get_post_meta(get_page_by_path('pricing-table')->ID, 'intro_discount', true) . '%OFF</b>');
     }
 
 	wp_set_auth_cookie($user->ID, isset($_POST['remember']));
