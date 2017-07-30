@@ -71,7 +71,7 @@ if (isset($_GET['success']) && $_GET['success'] == 'true') {
 		try {
 			$payment = Payment::get($paymentId, $apiContext);
 
-//			header('Location: ' . site_url() . $_GET['intend']);
+			header('Location: ' . site_url() . $_GET['intend']);
 		} catch (Exception $ex) {
 			// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
 //			ResultPrinter::printError("Get Payment", "Payment", null, null, $ex);
