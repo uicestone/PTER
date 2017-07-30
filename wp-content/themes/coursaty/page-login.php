@@ -7,14 +7,21 @@ if(isset($_POST['submit'])){
 		exit(array_values($user->errors)[0][0]);
 	}
 
+	// 检查并记录当日IP数
+    $user_ips_today = get_user_meta($user->ID, 'ip_' . date('Y-m-d'));
+    $user_ip = get_the_user_ip();
+
+    if (!in_array(get_the_user_ip(), $user_ips_today)) {
+		$user_ips_today[] = $user_ip;
+		add_user_meta($user->ID, 'ip_' . date('Y-m-d'), $user_ip);
+    }
+
+    if (count($user_ips_today) > 2) {
+        exit('账号状态异常，如果您使用的是朋友的账号，或许可以考虑：<br><a href="' . site_url() . '/register/">注册自己的账号</a>，输入朋友的<b>邀请码</b>优惠购买！<br>当前优惠折扣：<b>' . get_post_meta(get_page_by_path('pricing-table')->ID, 'discount', true) . '%OFF</b>');
+    }
+
 	wp_set_auth_cookie($user->ID, isset($_POST['remember']));
 	wp_set_current_user($user->ID);
-
-	// 检查并记录当日IP数
-    add_user_meta($user->ID, 'ip_' . date('Y-m-d'), get_the_user_ip(), true);
-    if (count(get_user_meta($user->ID, 'ip_' . date('Y-m-d'))) > 2) {
-        exit('账号状态异常');
-    }
 
 	if ($_GET['intend']) {
 	    header('Location: ' . $_GET['intend']); exit;
