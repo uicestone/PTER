@@ -79,7 +79,7 @@ $parameter = array(
 
 );
 
-create_order($out_trade_no, $subject, $total_fee, $currency, $_GET['service'], $_GET['expires_at']);
+create_order($out_trade_no, $subject, $total_fee, $currency, $_GET['service'], $_GET['expires_at'], 'alipay');
 
 //建立请求
 $alipaySubmit = new AlipaySubmit($alipay_config);

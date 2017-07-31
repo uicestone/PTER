@@ -220,6 +220,12 @@ add_action('init', function () {
 					'value' => $_GET['status']
 				);
 			}
+			if (!empty($_GET['price'])) {
+				$qv['meta_query'][] = array(
+					'field' => 'price',
+					'value' => $_GET['price']
+				);
+			}
 		}
 	});
 });
@@ -382,7 +388,7 @@ function order_paid ($order_no, $gateway) {
 	// update order payment status
 	update_post_meta($order->ID, 'status', 'paid');
 	add_post_meta($order->ID, 'refundable_amount', get_post_meta($order->ID, 'price', true));
-	add_post_meta($order->ID, 'gateway', $gateway);
+	update_post_meta($order->ID, 'gateway', $gateway);
 
 	// TODO price-service needs to be verified
 
@@ -457,7 +463,7 @@ function order_paid ($order_no, $gateway) {
 	return $order;
 }
 
-function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $expires_at) {
+function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $expires_at, $gateway = null) {
 	$order_id = wp_insert_post(array(
 		'post_type' => 'member_order',
 		'post_author' => get_current_user_id(),
@@ -472,6 +478,10 @@ function create_order ($out_trade_no, $subject, $total_fee, $currency, $service,
 	add_post_meta($order_id, 'user', get_current_user_id());
 	add_post_meta($order_id, 'service', $service);
 	add_post_meta($order_id, 'status', 'pending_payment');
+
+	if ($gateway) {
+		add_post_meta($order_id, 'gateway', $gateway);
+    }
 
 	if (isset($_GET['expires_at'])) {
 		add_post_meta($order_id, 'expires_at', $expires_at);
