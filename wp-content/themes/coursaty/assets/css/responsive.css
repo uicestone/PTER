@@ -908,7 +908,7 @@
 		text-align: center;
 	}
 
-	.payment-gateways {
+	.payment-gateways #alipay, .payment-gateways #wechatpay {
 		display: none !important;
 	}
 
