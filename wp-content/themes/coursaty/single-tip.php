@@ -50,6 +50,14 @@ get_header(); the_post(); ?>
 <?php endif; ?>
 
 <?php if ((has_tag('free-trial') || ($post->post_name === 'pte-reading' && !current_user_can('view_reading')) || ($post->post_name === 'pte-writing' && !current_user_can('view_writing'))) && $welcome_pages = get_posts(array('post_type' => 'page', 'name' => 'welcome'))): $welcome_page = $welcome_pages[0]; ?>
+<div class="features-section">
+    <div class="container">
+        <blockquote>
+            <p>收费视频未显示，要观看，请在下方订阅包含视频课程的学习包</p>
+            <p>若您已经购买，请前往<strong><a href="<?=site_url()?>/profile/">个人中心</a></strong>激活该视频，并在24小时内学习完毕</p>
+        </blockquote>
+    </div>
+</div>
 <section class="full-section features-section fancy-shadow" style="padding-top:0">
     <div class="container">
         <h3 class="section-title"><?=get_the_title($welcome_page)?></h3>
