@@ -148,7 +148,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                             <?php if(in_array($question_type->slug, array('read-aloud'))): ?>
                             <div class="skillbar timer clearfix" data-duration="40">
                                 <div class="skillbar-title">
-                                    <span>准备 <span class="seconds-left">0:40</span></span>
+                                    <span>准备 <span class="seconds-left">00:40</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
@@ -159,7 +159,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 							<?php if(in_array($question_type->slug, array('retell-lecture'))): ?>
                             <div class="skillbar timer clearfix" data-duration="10" data-wait="previous">
                                 <div class="skillbar-title">
-                                    <span>准备 <span class="seconds-left">0:10</span></span>
+                                    <span>准备 <span class="seconds-left">00:10</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
@@ -170,7 +170,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 							<?php if(in_array($question_type->slug, array('describe-image'))): ?>
                             <div class="skillbar timer clearfix" data-duration="25">
                                 <div class="skillbar-title">
-                                    <span>看图 <span class="seconds-left">0:25</span></span>
+                                    <span>看图 <span class="seconds-left">00:25</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
@@ -181,7 +181,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 							<?php if(in_array($question_type->slug, array('read-aloud', 'describe-image'))): ?>
                             <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
                                 <div class="skillbar-title">
-                                    <span>说话 <span class="seconds-left">0:40</span></span>
+                                    <span>说话 <span class="seconds-left">00:40</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                             </div>
@@ -189,7 +189,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 							<?php if(in_array($question_type->slug, array('retell-lecture'))): ?>
                             <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
                                 <div class="skillbar-title">
-                                    <span>描述 <span class="seconds-left">0:40</span></span>
+                                    <span>描述 <span class="seconds-left">00:40</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                             </div>
@@ -272,7 +272,9 @@ jQuery(function($) {
         var interval = setInterval(function() {
             tick += 1;
             var secondsLeft = duration - tick;
-            $(self).find('.seconds-left').text(Math.floor(secondsLeft / 60) + ':' + secondsLeft % 60);
+            var minutesLeft = Math.floor(secondsLeft / 60);
+            var minuteSecondsLeft = secondsLeft % 60;
+            $(self).find('.seconds-left').text(('0' + minutesLeft).slice(-2) + ':' + ('0' + minuteSecondsLeft).slice(-2));
             $(self).find('.skillbar-bar').css({width: tick / duration * 100 + '%'});
             if (tick === duration) {
                 clearInterval(interval);
@@ -347,7 +349,7 @@ jQuery(function($) {
         clearInterval($(self).data('interval'));
         $(self).find('.seconds-left').text('00:00');
         $(self).find('.skillbar-bar').css({width: '100%'});
-        $(this).trigger('time-up');
+        $(this).trigger('time-up').remove();
     });
 
     // answer word count
