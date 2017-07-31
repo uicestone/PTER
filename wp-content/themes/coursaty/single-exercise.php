@@ -151,15 +151,21 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                                     <span>准备 <span class="seconds-left">0:40</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
+                                <div class="controls">
+                                    <i class="skip fa fa-step-forward"></i>
+                                </div>
                             </div>
                             <?php endif; ?>
 							<?php if(in_array($question_type->slug, array('retell-lecture'))): ?>
-                                <div class="skillbar timer clearfix" data-duration="10" data-wait="previous">
-                                    <div class="skillbar-title">
-                                        <span>准备 <span class="seconds-left">0:10</span></span>
-                                    </div>
-                                    <div class="skillbar-bar"></div>
+                            <div class="skillbar timer clearfix" data-duration="10" data-wait="previous">
+                                <div class="skillbar-title">
+                                    <span>准备 <span class="seconds-left">0:10</span></span>
                                 </div>
+                                <div class="skillbar-bar"></div>
+                                <div class="controls">
+                                    <i class="skip fa fa-step-forward"></i>
+                                </div>
+                            </div>
 							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('describe-image'))): ?>
                             <div class="skillbar timer clearfix" data-duration="25">
@@ -167,6 +173,9 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                                     <span>看图 <span class="seconds-left">0:25</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
+                                <div class="controls">
+                                    <i class="skip fa fa-step-forward"></i>
+                                </div>
                             </div>
 							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('read-aloud', 'describe-image'))): ?>
@@ -178,20 +187,20 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                             </div>
 							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('retell-lecture'))): ?>
-                                <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
-                                    <div class="skillbar-title">
-                                        <span>描述 <span class="seconds-left">0:40</span></span>
-                                    </div>
-                                    <div class="skillbar-bar"></div>
+                            <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
+                                <div class="skillbar-title">
+                                    <span>描述 <span class="seconds-left">0:40</span></span>
                                 </div>
+                                <div class="skillbar-bar"></div>
+                            </div>
 							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('summarise-spoken-text'))): ?>
-                                <div class="skillbar timer clearfix" data-duration="600">
-                                    <div class="skillbar-title">
-                                        <span>时间 <span class="seconds-left">10:00</span></span>
-                                    </div>
-                                    <div class="skillbar-bar"></div>
+                            <div class="skillbar timer clearfix" data-duration="600">
+                                <div class="skillbar-title">
+                                    <span>时间 <span class="seconds-left">10:00</span></span>
                                 </div>
+                                <div class="skillbar-bar"></div>
+                            </div>
 							<?php endif; ?>
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
@@ -275,6 +284,8 @@ jQuery(function($) {
         if ($(this).data('is-answer')) {
             $('#ding-sound').get(0).play();
         }
+
+        return interval;
     };
 
     // auto plays audio in question and show audio timer
@@ -319,7 +330,8 @@ jQuery(function($) {
 
         if (!isNaN(wait)) {
             setTimeout(function(){
-                $(self).startTimer();
+                var interval = $(self).startTimer();
+                $(self).data('interval', interval);
             }, wait * 1000);
         }
     })
@@ -327,8 +339,15 @@ jQuery(function($) {
     .on('time-up', function () {
         var nextTimer = $(this).next('.timer');
         if (nextTimer.data('wait') === 'previous') {
-            nextTimer.startTimer();
+            nextTimer.data('interval', nextTimer.startTimer());
         }
+    })
+    .on('click', '.skip', function (e) {
+        var self = e.delegateTarget;
+        clearInterval($(self).data('interval'));
+        $(self).find('.seconds-left').text('00:00');
+        $(self).find('.skillbar-bar').css({width: '100%'});
+        $(this).trigger('time-up');
     });
 
     // answer word count
