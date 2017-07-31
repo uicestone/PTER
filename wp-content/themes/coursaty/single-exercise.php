@@ -141,7 +141,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
                                     <i id="play-control" class="fa fa-play" style="display:none;"></i>
-                                    <i id="pause-control" class="fa fa-pause"></i>
+                                    <i id="pause-control" class="fa fa-pause" style="display:none"></i>
                                     <i id="replay-control" class="fa fa-refresh"></i>
                                 </div>
                             </div>
@@ -291,25 +291,31 @@ jQuery(function($) {
     };
 
     // auto plays audio in question and show audio timer
+    var audioProgress = $('.audio-progress');
     $('.question.content audio').each(function() {
         var self = this;
-        $('.audio-progress').show()
+        audioProgress.show()
         .on('click', '#pause-control', function () {
             self.pause();
-            $(this).hide().siblings('#play-control').show();
         })
         .on('click', '#play-control', function () {
             self.play();
-            $(this).hide().siblings('#pause-control').show();
         })
         .on('click', '#replay-control', function () {
             self.currentTime = 0;
-            $(this).siblings('#play-control').hide().siblings('#pause-control').show();
             self.play();
         });
         setTimeout(function () {
             self.play();
         }, 3000);
+    })
+    .on('play', function() {
+        audioProgress.find('#play-control').hide();
+        audioProgress.find('#pause-control').show();
+    })
+    .on('pause', function() {
+        audioProgress.find('#play-control').show();
+        audioProgress.find('#pause-control').hide();
     })
     // update audio timer
     .on('timeupdate', function() {
@@ -319,10 +325,11 @@ jQuery(function($) {
     })
     // trigger next timer on audio ended
     .on('ended', function () {
-        var nextTimer = $('.audio-progress').next('.timer');
+        var nextTimer = audioProgress.next('.timer');
         if (nextTimer.data('wait') === 'previous') {
             nextTimer.startTimer();
         }
+        audioProgress.find('#pause-control').hide();
     });
 
     // auto start timer
@@ -343,13 +350,14 @@ jQuery(function($) {
         if (nextTimer.data('wait') === 'previous') {
             nextTimer.data('interval', nextTimer.startTimer());
         }
+        $(this).find('.skip').remove();
     })
     .on('click', '.skip', function (e) {
         var self = e.delegateTarget;
         clearInterval($(self).data('interval'));
         $(self).find('.seconds-left').text('00:00');
         $(self).find('.skillbar-bar').css({width: '100%'});
-        $(this).trigger('time-up').remove();
+        $(this).trigger('time-up');
     });
 
     // answer word count
