@@ -8,12 +8,12 @@ if(isset($_POST['submit'])){
 	}
 
 	// 检查并记录当日IP数
-    $user_ips_today = get_user_meta($user->ID, 'ip_' . date('Y-m-d'));
+    $user_ips_today = get_user_meta($user->ID, 'ip_' . current_time('Y-W'));
     $user_ip = get_the_user_ip();
 
     if (!in_array(get_the_user_ip(), $user_ips_today)) {
 		$user_ips_today[] = $user_ip;
-		add_user_meta($user->ID, 'ip_' . date('Y-m-d'), $user_ip);
+		add_user_meta($user->ID, 'ip_' . current_time('Y-W'), $user_ip);
     }
 
     if (count($user_ips_today) > 2) {
