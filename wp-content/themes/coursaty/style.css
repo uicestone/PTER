@@ -1797,6 +1797,13 @@ h6.head-title {
 .inner-head .breadcrumb li:hover a  {
     color: white;
 }
+.copyright-header {
+    padding-top: 35px;
+    text-align: center;
+    background: #f5f5f5;
+    font-weight: lighter;
+    color: #8c8c8c;
+}
 /* 14 - Blog */
 .post {
     padding-top: 40px;

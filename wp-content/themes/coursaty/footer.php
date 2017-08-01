@@ -30,7 +30,7 @@
 	<div id="bottom">
 		<div class="container">
 			<div class="fl copyright">
-				<p>All Rights Reserved &copy; Bingo Training Pty. Ltd.</p>
+				<p>All Rights Reserved &copy; Bingo Training Pty. Ltd. ABN 64 618 887 951, ACN 618 887 951</p>
 			</div><!-- End Copyright -->
 			<div class="fr footer-social-icons">
 				<ul class="clearfix">

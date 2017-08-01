@@ -11,6 +11,10 @@
 
 <div class="clearfix"></div>
 
+<div class="copyright-header">
+    <p>All Rights Reserved &copy; Bingo Training Pty. Ltd. ABN 64 618 887 951, ACN 618 887 951</p>
+</div>
+
 <article class="post<?=current_user_can('view_tips') ? '' : ' free-trial'?>">
     <div class="container">
         <div class="row">

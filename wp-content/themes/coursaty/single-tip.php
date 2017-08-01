@@ -25,6 +25,10 @@ get_header(); the_post(); ?>
     </div><!-- End container -->
 </div><!-- End Inner Page Head -->
 
+<div class="copyright-header">
+    <p>All Rights Reserved &copy; Bingo Training Pty. Ltd. ABN 64 618 887 951, ACN 618 887 951</p>
+</div>
+
 <div class="clearfix"></div>
 
 <article class="post single<?=has_tag('free-trial') ? ' free-trial' : ''?>">

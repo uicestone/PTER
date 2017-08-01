@@ -6,6 +6,10 @@ if(!has_tag('free-trial')) {
 
 get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1]; ?>
 
+<div class="copyright-header">
+    <p>All Rights Reserved &copy; Bingo Training Pty. Ltd. ABN 64 618 887 951, ACN 618 887 951</p>
+</div>
+
 <article class="post single">
 	<div class="container">
 		<div class="row">
