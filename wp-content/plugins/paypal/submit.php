@@ -31,7 +31,6 @@ $total_fee = max(round($total_fee, 2), 0.01);
 $currency = 'AUD';
 
 $service = $_GET['service'];
-$expires_at = $_GET['expires_at'];
 
 // ### Payer
 // A resource representing a Payer that funds a payment
@@ -126,7 +125,7 @@ try {
 // method
 $approvalUrl = $payment->getApprovalLink();
 
-create_order($order_no, $subject, $total_fee, $currency, $service, $expires_at, 'paypal');
+create_order($order_no, $subject, $total_fee, $currency, $service, 'paypal');
 
 // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
 header('Location: ' . $approvalUrl);

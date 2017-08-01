@@ -10,8 +10,7 @@
 //echo $_GET['subject'];
 //echo $_GET['price'];
 //echo $_GET['intend'];
-//echo $_GET['service'];
-//echo $_GET['expires_at']; exit;
+//echo $_GET['service'];exit;
 
 $order_no = uniqid('', true);
 $subject = $_GET['subject'];

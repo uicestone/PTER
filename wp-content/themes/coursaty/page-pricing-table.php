@@ -317,20 +317,13 @@ get_header(); the_post() ?>
 <script type="text/javascript">
 jQuery(function ($) {
 
-    var price, subject, service, expiresAt, lastDay;
+    var price, subject, service;
 
     $('.show-payment-method').on('click', function (e) {
         $('.payment-gateways').hide(300).show(300);
         price = $(this).parents('.table').find('.price-amount').text();
         subject = $(this).parents('.table').find('.table-header>.text').text();
         service = $(this).data('service');
-
-        if (service !== 'reading' && service !== 'writing') {
-            lastDay = new Date((new Date()).getTime() + 30 * 86400000);
-        }
-        else {
-            lastDay = null;
-        }
     });
 
     $('.payment-gateways .gateway').on('click', function (e) {
@@ -339,19 +332,10 @@ jQuery(function ($) {
 
         gateway = $(this).data('gateway');
 
-        if (lastDay) {
-            subject += ' 至' + lastDay.format();
-            expiresAt = (new Date(lastDay.getTime() + 86400000)).format();
-        }
-
         href = '/payment/' + gateway + '/?price='+ price
             + '&subject=' + (subject)
             + '&service=' + (service)
             + '&intend=' + ('<?=$_GET['intend']?>');
-
-        if (expiresAt) {
-            href += '&expires_at=' + expiresAt;
-        }
 
         window.location.href = href;
     });

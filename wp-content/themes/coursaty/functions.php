@@ -142,17 +142,16 @@ add_action('init', function () {
 	));
 
 	add_filter('manage_member_order_posts_columns', function($columns) {
-		$newcolumns = array(
+		$new_columns = array(
 			'cb' => $columns['cb'],
 			'title' => $columns['title'],
 			'date' => '下单时间',
 			'status' => '状态',
 			'user'=>'用户',
 			'price'=>'金额',
-			'gateway' => '通道',
-			'expires_at' => '过期时间'
+			'gateway' => '通道'
 		);
-		return $newcolumns;
+		return $new_columns;
 	});
 
 	add_action('manage_member_order_posts_custom_column', function($column_name) {
@@ -165,13 +164,6 @@ add_action('init', function () {
 			case 'price' :
 				$price = get_post_meta($post->ID, 'price', true);
 				echo $price;
-				break;
-			case 'expires_at' :
-				$expires_at = get_post_meta($post->ID, 'expires_at', true);
-
-				if ($expires_at) {
-					echo date('Y-m-d', strtotime($expires_at));
-				}
 				break;
 			case 'status' :
 				$status = get_post_meta($post->ID, 'status', true);
@@ -414,7 +406,8 @@ function order_paid ($order_no, $gateway) {
 	}
 
 	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {
-		update_user_meta($user->ID, 'service_' . $service . '_valid_before', get_post_meta($order->ID, 'expires_at', true));
+		// TODO calculate cap expire time base on current cap
+		update_user_meta($user->ID, 'service_' . $service . '_valid_before', null);
 	}
 
 	// user total pay
@@ -463,7 +456,15 @@ function order_paid ($order_no, $gateway) {
 	return $order;
 }
 
-function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $expires_at, $gateway = null) {
+/**
+ * @param $out_trade_no string order no in our system
+ * @param $subject string order title
+ * @param $total_fee number a price in basic unit
+ * @param $currency string
+ * @param $service string base, full, tips, exercises, reading or writing
+ * @param $gateway string alipay, wechatpay or paypal
+ */
+function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $gateway) {
 	$order_id = wp_insert_post(array(
 		'post_type' => 'member_order',
 		'post_author' => get_current_user_id(),
@@ -479,13 +480,7 @@ function create_order ($out_trade_no, $subject, $total_fee, $currency, $service,
 	add_post_meta($order_id, 'service', $service);
 	add_post_meta($order_id, 'status', 'pending_payment');
 
-	if ($gateway) {
-		add_post_meta($order_id, 'gateway', $gateway);
-    }
-
-	if (isset($_GET['expires_at'])) {
-		add_post_meta($order_id, 'expires_at', $expires_at);
-	}
+	add_post_meta($order_id, 'gateway', $gateway);
 
 }
 
