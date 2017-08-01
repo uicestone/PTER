@@ -3,6 +3,16 @@
 redirect_login();
 $user = wp_get_current_user();
 
+//if (get_current_user_id() === 1) {
+//    for ($i = 0; $i < 10; $i++) {
+//		$promotion_code = md5('Bingo promotion ' . uniqid());
+//		$promotion_code_id = wp_insert_post(array('post_type' => 'promotion_code', 'post_status' => 'private', 'post_name' => $promotion_code, 'post_title' => $promotion_code));
+//		add_post_meta($promotion_code_id, 'expires_at', strtotime('2018-08-01'));
+//		add_post_meta($promotion_code_id, 'discount', 99.99);
+//    }
+//    exit('done');
+//}
+
 if (isset($_POST['submit'])) {
 	if ($_POST['email']) {
 		$user->user_email = $_POST['email'];
