@@ -241,4 +241,6 @@
         e.preventDefault();
     });
 
+    $('.entry .content img').wrap('<div class="watermark"/>');
+
 })(jQuery);

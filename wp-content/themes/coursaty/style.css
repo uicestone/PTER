@@ -1886,10 +1886,28 @@ h6.head-title {
     margin-bottom: 12px;
 }
 .post .entry .content img {
-    max-width: 95%;
+    max-width: 100%;
     height: auto;
+    opacity: 0;
+}
+.post .entry .content .watermark img {
+    opacity: 1;
+}
+.post .entry .content .watermark {
     margin: auto;
-    display: block;
+    display: table;
+    position: relative;
+}
+.post .entry .content .watermark:after {
+    content: '';
+    background-image: url(assets/img/logo.png);
+    opacity: 0.025;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-size: 67%;
 }
 .post .entry .content ul, .post .entry .content ol {
     margin-bottom: 12px;
