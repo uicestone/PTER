@@ -159,7 +159,7 @@ add_action('init', function () {
 		switch ($column_name ) {
 			case 'user' :
 				$user = get_user_by('ID', $post->post_author);
-				echo $user->display_name;
+				echo '<a href="' . site_url() . 'wp-admin/user-edit.php?user_id=' . $user->ID . '">' . $user->display_name . '</a>';
 				break;
 			case 'price' :
 				$price = get_post_meta($post->ID, 'price', true);
