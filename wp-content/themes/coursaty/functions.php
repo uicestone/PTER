@@ -159,7 +159,7 @@ add_action('init', function () {
 		switch ($column_name ) {
 			case 'user' :
 				$user = get_user_by('ID', $post->post_author);
-				echo '<a href="' . site_url() . 'wp-admin/user-edit.php?user_id=' . $user->ID . '">' . $user->display_name . '</a>';
+				echo '<a href="' . admin_url() . 'user-edit.php?user_id=' . $user->ID . '">' . $user->display_name . '</a>';
 				break;
 			case 'price' :
 				$price = get_post_meta($post->ID, 'price', true);
@@ -407,22 +407,25 @@ function order_paid ($order_no, $gateway) {
 	}
 
 	if (in_array($service, array('full', 'reading'))) {
-		add_user_meta($user->ID, 'service_reading_valid_before', 'inactivated');
+	    $inactivated_readings = get_user_meta($user->ID, 'service_reading_inactivated', true) ?: 0;
+		update_user_meta($user->ID, 'service_reading_inactivated', ++$inactivated_readings);
 	}
 
 	if (in_array($service, array('full', 'writing'))) {
-		add_user_meta($user->ID, 'service_writing_valid_before', 'inactivated');
+		$inactivated_writings = get_user_meta($user->ID, 'service_writing_inactivated', true) ?: 0;
+		update_user_meta($user->ID, 'service_writing_inactivated', ++$inactivated_writings);
 	}
 
 	if (in_array($service, array('base', 'full'))) {
-	    // TODO calculate cap expire time base on current cap
-		update_user_meta($user->ID, 'service_tips_valid_before', time() + 86400 * 30);
-		update_user_meta($user->ID, 'service_exercises_valid_before', time() + 86400 * 30);
+	    $service_tips_valid_after = get_user_meta($user->ID, 'service_tips_valid_before', true) ?: time();
+		$service_exercises_valid_after = get_user_meta($user->ID, 'service_exercises_valid_before', true) ?: time();
+		update_user_meta($user->ID, 'service_tips_valid_before', $service_tips_valid_after + 86400 * 30);
+		update_user_meta($user->ID, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * 30);
     }
 
 	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {
-		// TODO calculate cap expire time base on current cap
-		update_user_meta($user->ID, 'service_' . $service . '_valid_before', time() + 86400 * 30);
+		$service_valid_after = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true) ?: time();
+		update_user_meta($user->ID, 'service_' . $service . '_valid_before', $service_valid_after + 86400 * 30);
 	}
 
 	// user total pay

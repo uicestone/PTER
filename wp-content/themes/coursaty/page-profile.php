@@ -37,16 +37,24 @@ if (isset($_POST['submit'])) {
 	}
 }
 
-if (isset($_POST['activate_reading'])) {
-    update_user_meta(get_current_user_id(), 'service_reading_valid_before', time() + 86400, 'inactivated');
-    $user->add_cap('view_reading');
-    sleep(1);
-}
+foreach (array('reading', 'writing') as $service) {
+	if (isset($_POST['activate_' . $service])) {
+		$service_inactivated = get_user_meta($user->ID, 'service_' . $service . '_inactivated', true);
+		$service_valid_before =  get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
 
-if (isset($_POST['activate_writing'])) {
-	update_user_meta(get_current_user_id(), 'service_writing_valid_before', time() + 86400, 'inactivated');
-	$user->add_cap('view_writing');
-	sleep(1);
+		if ($service_valid_before >= time()) {
+			exit('已激活，不要重复激活');
+		}
+
+		if ($service_inactivated < 0) {
+			exit('激活失败，没有可激活的额度');
+		}
+
+		update_user_meta($user->ID, 'service_' . $service . '_inactivated', --$service_inactivated);
+		update_user_meta($user->ID, 'service_' . $service . '_valid_before', time() + 86400 - 1);
+		$user->add_cap('view_' . $service);
+		header('Location: ' . site_url() . $_SERVER['REQUEST_URI']); exit;
+	}
 }
 
 get_header(); the_post(); ?>
@@ -144,85 +152,54 @@ get_header(); the_post(); ?>
                     <div class="clearfix"></div>
 					<div class="home-skills">
 						<?php
-                        if ($service_package_expires_at = get_user_meta($user->ID, 'service_base_valid_before', true)) {
-							$service_package = '听力口语技巧+练习包';
-                        }
-                        elseif ($service_package_expires_at = get_user_meta($user->ID, 'service_full_valid_before', true)) {
-							$service_package = '听说读写大礼包';
-                        }
-                        elseif ($service_package_expires_at = get_user_meta($user->ID, 'service_tips_valid_before', true)) {
-							$service_package = '听力口语技巧包';
-						}
-                        elseif ($service_package_expires_at = get_user_meta($user->ID, 'service_exercises_valid_before', true)) {
-							$service_package = '听力口语练习包';
-						}
-                        else {
-                            $service_package = null;
-                        }
-
-						if ($service_package): ?>
-						<div class="add-courses box base-pack additional-pack">
-							<?php $percent = max(0, 1 - ($service_package_expires_at - time()) / (30 * 86400)) * 100 ?>
-							<a href="#" class="add-courses-title ln-tr"><?=$service_package?></a>
-							<div class="skillbar clearfix" data-percent="<?=$percent?>%">
-								<div class="skillbar-title"><span><?=round($percent)?>%</span></div><div class="skillbar-bar" style="width: <?=$percent?>%;"></div>
+                        $active_services = array();
+                        foreach (array ('tips' => '听力口语技巧', 'exercises' => '听力口语练习') as $service => $service_name):
+                            $service_valid_before = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
+                            if ($service_valid_before && $service_valid_before >= time()): $active_services[] = $service; ?>
+                        <div class="add-courses box base-pack additional-pack">
+							<?php $percent = ($service_valid_before - time()) / (30 * 86400) * 100 ?>
+							<a href="#" class="add-courses-title ln-tr"><?=$service_name?></a>
+							<div class="skillbar clearfix" data-percent="<?=min($percent, 100)?>%">
+								<div class="skillbar-title"><span><?=round($percent)?>%</span></div><div class="skillbar-bar" style="width:0"></div>
 							</div>
                             <hr>
                             <div class="expires-at">
-                                剩余天数：<?=round(($service_package_expires_at - time()) / 86400, 1)?>
-								<?php if ($service_package_expires_at - time() < 86400 * 10): ?>
+                                剩余天数：<?=round(($service_valid_before - time()) / 86400, 1)?>
+								<?php if ($service_valid_before - time() < 86400 * 10): ?>
                                 <a href="<?=site_url()?>/pricig-table/" class="active btn btn-sm ln-tr">续费</a>
 								<?php endif; ?>
                             </div>
 						</div>
-						<?php endif; ?>
+                        <?php endif; endforeach; ?>
 					</div>
 					<div class="row">
 						<?php
-						$service_reading = get_user_meta($user->ID, 'service_reading_valid_before', true);
-						$service_writing = get_user_meta($user->ID, 'service_writing_valid_before', true);
-						?>
-						<?php if ($service_reading): ?>
+                        foreach (array ('reading' => '阅读拓展包', 'writing' => '写作拓展包') as $service => $service_name):
+                            $service_valid_before = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
+    						$service_inactivated = get_user_meta($user->ID, 'service_' . $service . '_inactivated', true);
+						    if ($service_valid_before >= time() || $service_inactivated > 0): $active_services[] = $service; ?>
 						<div class="col-md-6">
 							<div class="add-courses box additional-pack">
 								<div class="icon"><i class="fa fa-book"></i></div>
-								<a href="#" class="add-courses-title ln-tr">阅读拓展包</a>
+								<a href="#" class="add-courses-title ln-tr"><?=$service_name?></a>
 								<p class="add-courses-description">
 									你可以在激活后24小时内完整学习1次视频
 								</p>
                                 <hr>
-	    						<?php if ($service_reading === 'inactivated'): ?>
-								<form method="post"><input type="submit" name="activate_reading" value="激活" class="btn btn-sm ln-tr active"></form>
+	    						<?php if ($service_valid_before < time()): ?>
+								<form method="post"><input type="submit" name="activate_<?=$service?>" value="激活" class="btn btn-sm ln-tr active"></form>
     							<?php else: ?>
                                 <div class="expires-at">
-                                    还可以学习 <?=date('H:i', $service_reading - time())?>
-                                    <a href="<?=site_url()?>/tip/pte-reading/" class="active btn btn-sm ln-tr learn">前往学习</a>
+                                    还可以学习 <?=date('H:i', $service_valid_before - time())?>
+                                    <?php if ($service_inactivated): ?>+<?=$service_inactivated?>次<?php endif; ?>
+                                    <a href="<?=site_url()?>/tip/pte-<?=$service?>/" class="active btn btn-sm ln-tr learn">前往学习</a>
                                 </div>
                                 <?php endif; ?>
 							</div>
 						</div>
-						<?php endif; ?>
-						<?php if ($service_writing): ?>
-						<div class="col-md-6">
-							<div class="add-courses box additional-pack">
-								<div class="icon"><i class="fa fa-pencil"></i></div>
-								<a href="#" class="add-courses-title ln-tr">写作拓展包</a>
-								<p class="add-courses-description">
-									你可以在激活后24小时内完整学习1次视频
-								</p>
-                                <hr>
-								<?php if ($service_writing === 'inactivated'): ?>
-                                    <form method="post"><input type="submit" name="activate_writing" value="激活" class="btn btn-sm ln-tr active"></form>
-								<?php else: ?>
-                                    <div class="expires-at">
-                                        还可以学习 <?=date('H:i', $service_writing - time())?>
-                                        <a href="<?=site_url()?>/tip/pte-writing/" class="active btn btn-sm ln-tr learn">前往学习</a>
-                                    </div>
-								<?php endif; ?>
-							</div>
-						</div>
-						<?php endif; ?>
-						<?php if (!$service_package && !$service_reading && !$service_writing): ?>
+						<?php endif; endforeach; ?>
+
+						<?php if (!$active_services): ?>
 						<div class="subscribe">
 							<a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您目前没有任何服务，点击订阅</a>
 						</div>
