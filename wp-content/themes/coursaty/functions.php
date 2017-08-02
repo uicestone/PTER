@@ -407,7 +407,7 @@ function order_paid ($order_no, $gateway) {
 
 	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {
 		// TODO calculate cap expire time base on current cap
-		update_user_meta($user->ID, 'service_' . $service . '_valid_before', null);
+		update_user_meta($user->ID, 'service_' . $service . '_valid_before', time() + 86400 * 30);
 	}
 
 	// user total pay
