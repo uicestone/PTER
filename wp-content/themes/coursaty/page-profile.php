@@ -7,7 +7,7 @@ $user = wp_get_current_user();
 //    for ($i = 0; $i < 10; $i++) {
 //		$promotion_code = md5('Bingo promotion ' . uniqid());
 //		$promotion_code_id = wp_insert_post(array('post_type' => 'promotion_code', 'post_status' => 'private', 'post_name' => $promotion_code, 'post_title' => $promotion_code));
-//		add_post_meta($promotion_code_id, 'expires_at', strtotime('2018-08-01'));
+//		add_post_meta($promotion_code_id, 'expires_at', strtotime('2018-08-01 +1000'));
 //		add_post_meta($promotion_code_id, 'discount', 99.99);
 //    }
 //    exit('done');
@@ -162,15 +162,15 @@ get_header(); the_post(); ?>
 
 						if ($service_package): ?>
 						<div class="add-courses box base-pack additional-pack">
-							<?php $percent = max(0, 1 - (strtotime($service_package_expires_at) - time()) / (30 * 86400)) * 100 ?>
+							<?php $percent = max(0, 1 - ($service_package_expires_at - time()) / (30 * 86400)) * 100 ?>
 							<a href="#" class="add-courses-title ln-tr"><?=$service_package?></a>
 							<div class="skillbar clearfix" data-percent="<?=$percent?>%">
 								<div class="skillbar-title"><span><?=round($percent)?>%</span></div><div class="skillbar-bar" style="width: <?=$percent?>%;"></div>
 							</div>
                             <hr>
                             <div class="expires-at">
-                                下次续费日期 <?=date('Y-m-d', strtotime($service_package_expires_at))?>
-								<?php if (strtotime($service_package_expires_at) - time() < 86400 * 10): ?>
+                                下次续费日期 <?=date('Y-m-d', $service_package_expires_at)?>
+								<?php if ($service_package_expires_at - time() < 86400 * 10): ?>
                                 <a href="<?=site_url()?>/pricig-table/" class="active btn btn-sm ln-tr">续费</a>
 								<?php endif; ?>
                             </div>
