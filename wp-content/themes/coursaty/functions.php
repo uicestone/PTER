@@ -377,6 +377,11 @@ function order_paid ($order_no, $gateway) {
 	// find the order
 	$order = get_posts(array('name' => sanitize_title($order_no), 'post_type' => 'member_order', 'post_status' => 'private'))[0];
 
+	if (!$order) {
+	    error_log('order_paid(): order not found. (order no: ' . $order_no . ')');
+	    exit;
+    }
+
 	// update order payment status
 	update_post_meta($order->ID, 'status', 'paid');
 	add_post_meta($order->ID, 'refundable_amount', get_post_meta($order->ID, 'price', true));
@@ -386,6 +391,10 @@ function order_paid ($order_no, $gateway) {
 
 	// get the user and add cap
 	$user = get_user_by('ID', $order->post_author);
+
+	if (!$user) {
+	    error_log('order_paid(): order user not found. (order no: ' . $order_no . ')');
+    }
 
 	$service = get_post_meta($order->ID, 'service', true);
 
