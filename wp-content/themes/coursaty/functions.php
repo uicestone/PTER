@@ -414,6 +414,12 @@ function order_paid ($order_no, $gateway) {
 		add_user_meta($user->ID, 'service_writing_valid_before', 'inactivated');
 	}
 
+	if (in_array($service, array('base', 'full'))) {
+	    // TODO calculate cap expire time base on current cap
+		update_user_meta($user->ID, 'service_tips_valid_before', time() + 86400 * 30);
+		update_user_meta($user->ID, 'service_exercises_valid_before', time() + 86400 * 30);
+    }
+
 	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {
 		// TODO calculate cap expire time base on current cap
 		update_user_meta($user->ID, 'service_' . $service . '_valid_before', time() + 86400 * 30);
