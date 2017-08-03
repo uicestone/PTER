@@ -299,7 +299,7 @@ get_header(); the_post() ?>
         <div id="payment"></div>
 
         <div class="row payment-gateways" style="display: none;">
-            <div class="col-sm-4"><a href="" id="alipay" class="gateway" data-gateway="alipay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/alipay.png"></a></div>
+<!--            <div class="col-sm-4"><a href="" id="alipay" class="gateway" data-gateway="alipay"><img src="--><?//=get_stylesheet_directory_uri()?><!--/assets/img/icons/alipay.png"></a></div>-->
             <div class="col-sm-4"><a href="" id="wechatpay" class="gateway" data-gateway="wechatpay"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/wechatpay.png"></a></div>
             <div class="col-sm-4"><a href="" id="paypal" class="gateway" data-gateway="paypal"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/paypal.png"></a></div>
         </div>
