@@ -2,12 +2,6 @@
 
 add_action('wp', function() {
 
-	$coming_soon_page = get_posts(array('name' => 'coming-soon', 'post_type' => 'page'));
-
-//	if($coming_soon_page && !is_page('coming-soon') && !is_page('login') && !is_admin() && !is_user_logged_in()) {
-//		header('Location: ' . site_url() . '/coming-soon/'); exit;
-//	}
-
 	wp_register_style('style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.19');
 	wp_register_style('responsive', get_stylesheet_directory_uri() . '/assets/css/responsive.css', array(), '1.0.0');
 
