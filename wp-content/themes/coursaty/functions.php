@@ -47,7 +47,9 @@ add_action('after_switch_theme', function () {
 	$administrator->add_cap('view_tips');
 	$administrator->add_cap('view_exercises');
 
-	// TODO create scheduled event to remove cap for expired users
+	if (! wp_next_scheduled ( 'bingo_caps_clean' )) {
+		wp_schedule_event(strtotime('+1 hour') - time() % 3600, 'hourly', 'bingo_caps_clean');
+	}
 });
 
 add_action('after_setup_theme', function () {
@@ -618,8 +620,18 @@ add_filter ('sanitize_user', function ($username, $raw_username, $strict) {
 	return $username;
 }, 10, 3);
 
-// Display User IP in WordPress
+add_action('bingo_caps_clean', 'clean_expired_user_caps');
 
+function clear_expired_user_caps () {
+    foreach (array('tips', 'exercises', 'reading', 'writing') as $service) {
+		$users = get_users(array('meta_key' => 'service_' . $service . '_valid_before', 'meta_compare' => '<', 'meta_value' => (string)time()));
+		foreach ($users as $user) {
+			$user->remove_cap('view_' . $service);
+		}
+    }
+}
+
+// Display User IP in WordPress
 function get_the_user_ip() {
 	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
         //check ip from share internet
