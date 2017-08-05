@@ -30,7 +30,8 @@ $alipay_config = get_alipay_config();
 //echo $_GET['subject'];
 //echo $_GET['price'];
 //echo $_GET['intend'];
-//echo $_GET['service']; exit;
+//echo $_GET['service'];
+//echo $_GET['promotion_code'];exit;
 
 /**************************请求参数**************************/
 //商户订单号，商户网站订单系统中唯一订单号，必填
@@ -44,6 +45,10 @@ $currency = 'AUD';
 
 //付款外币金额，必填
 $total_fee = $_GET['price'];
+
+$service = $_GET['service'];
+
+$promotion_code = $_GET['promotion_code'];
 
 //商品描述，可空
 $body = '';
@@ -78,7 +83,7 @@ $parameter = array(
 
 );
 
-create_order($out_trade_no, $subject, $total_fee, $currency, $_GET['service'], 'alipay');
+create_order($out_trade_no, $subject, $total_fee, $currency, $service, $promotion_code, 'alipay');
 
 //建立请求
 $alipaySubmit = new AlipaySubmit($alipay_config);

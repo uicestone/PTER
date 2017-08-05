@@ -32,6 +32,8 @@ $currency = 'AUD';
 
 $service = $_GET['service'];
 
+$promotion_code = $_GET['promotion_code'];
+
 // ### Payer
 // A resource representing a Payer that funds a payment
 // For paypal account payments, set payment method
@@ -125,7 +127,7 @@ try {
 // method
 $approvalUrl = $payment->getApprovalLink();
 
-create_order($order_no, $subject, $total_fee, $currency, $service, 'paypal');
+create_order($order_no, $subject, $total_fee, $currency, $service, $promotion_code, 'paypal');
 
 // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
 header('Location: ' . $approvalUrl);

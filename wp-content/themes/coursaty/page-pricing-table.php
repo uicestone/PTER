@@ -11,31 +11,32 @@ if ($invitation_code = $_POST['invitation_code']) {
 	add_user_meta(get_current_user_id(), 'invited_by_user', $invited_by_users[0]->ID);
 }
 
-if ($promotion_code_input = $_POST['promotion_code']) {
+$discount = 0;
+
+if ($promotion_code_input = $_GET['promotion_code']) {
 	$promotion_code = get_posts(array('post_type' => 'promotion_code', 'name' => $promotion_code_input, 'post_status' => 'private'))[0];
 
 	if (!$promotion_code) {
 		exit('错误的优惠码');
 	}
 
-	$bind_to_user = get_post_meta($promotion_code->ID, 'bind_to_user', true);
+	if (!get_post_meta($promotion_code->ID, 'multi_time', true)) {
+		$bind_to_user = get_post_meta($promotion_code->ID, 'bind_to_user', true);
 
-	if ($bind_to_user) {
-	    exit('优惠码已经被绑定');
+		if ($bind_to_user) {
+			exit('优惠码已经被绑定');
+		}
     }
 
 	$expires_at = get_post_meta($promotion_code->ID, 'expires_at', true);
-	$discount = get_post_meta($promotion_code->ID, 'discount', true);
 
 	if ($expires_at < time()) {
 		exit('优惠码已过期');
 	}
 
-	add_user_meta(get_current_user_id(), 'promotion_discount', $discount . ' ' . $expires_at);
-	add_post_meta($promotion_code->ID, 'bind_to_user', get_current_user_id());
+	$discount = get_post_meta($promotion_code->ID, 'discount', true);
 }
 
-$discount = 0;
 // invitation discount
 $invited_by_user = get_user_meta(get_current_user_id(), 'invited_by_user', true);
 $invited_by_user_total_paid = get_user_meta($invited_by_user, 'total_paid', true);
@@ -43,19 +44,6 @@ $discount_order = get_user_meta(get_current_user_id(), 'discount_order', true);
 $discountable = $invited_by_user && $invited_by_user_total_paid > 0 && !$discount_order;
 if ($discountable) {
 	$discount = get_post_meta(get_the_ID(), 'intro_discount', true);
-}
-
-// promotion discount
-$promotion_discount_meta = get_user_meta(get_current_user_id(), 'promotion_discount', true);
-if ($promotion_discount_meta) {
-    $params = explode(' ', $promotion_discount_meta);
-    $promotion_discount_expires_at = $params[1];
-    if ($promotion_discount_expires_at >= time()) {
-        $promotion_discount = $params[0];
-        if ($promotion_discount > $discount) {
-            $discount = $promotion_discount;
-        }
-    }
 }
 
 get_header(); the_post() ?>
@@ -90,9 +78,9 @@ get_header(); the_post() ?>
 			<?php endif; ?>
 			<?php if (!isset($promotion_discount)): ?>
             <div class="col-sm-4">
-                <form method="post" class="invitation_code-form">
-                    <input type="text" id="promotion_code-input" name="promotion_code" class="invitation_code-input" placeholder="输入优惠码，获得优惠价格">
-                    <input type="submit" id="promotion_code-submit" name="promotion_code_submit" class="invitation_code-submit" value="保存">
+                <form method="get" class="invitation_code-form">
+                    <input type="text" id="promotion_code-input" name="promotion_code" value="<?=$_GET['promotion_code']?>" class="invitation_code-input" placeholder="输入优惠码，获得优惠价格">
+                    <input type="submit" id="promotion_code-submit" class="invitation_code-submit" value="使用">
                 </form>
             </div>
             <?php endif; ?>
@@ -335,7 +323,8 @@ jQuery(function ($) {
         href = '/payment/' + gateway + '/?price='+ price
             + '&subject=' + (subject)
             + '&service=' + (service)
-            + '&intend=' + ('<?=$_GET['intend']?>');
+            + '&intend=' + ('<?=$_GET['intend']?>')
+            + '&promotion_code=' + ('<?=$_GET['promotion_code']?>');
 
         window.location.href = href;
     });

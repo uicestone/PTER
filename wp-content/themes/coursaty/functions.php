@@ -424,10 +424,21 @@ function order_paid ($order_no, $gateway) {
 		update_user_meta($user->ID, 'service_' . $service . '_valid_before', $service_valid_after + 86400 * 30);
 	}
 
-	// user total pay
-	update_user_meta($user->ID, 'total_paid', (get_user_meta($user->ID, 'total_paid', true) ?: 0) + get_post_meta($order->ID, 'price', true));
+	$order_price = get_post_meta($order->ID, 'price', true);
+	$order_service = get_post_meta($order->ID, 'service', true);
 
-	// invititation award and discount
+	// user total pay
+	update_user_meta($user->ID, 'total_paid', (get_user_meta($user->ID, 'total_paid', true) ?: 0) + $order_price);
+
+	// log to promotion_code for base & full package
+	$promotion_code_id = get_post_meta($order->ID, 'promotion_code', true);
+    if ($promotion_code_id && in_array($order_service, array('base', 'full'))) {
+		add_post_meta($promotion_code_id, 'user', $user->ID);
+		$promotion_code_total_paid = get_post_meta($promotion_code_id, 'total_paid', true) ?: 0;
+		update_post_meta($promotion_code_id, 'total_paid', $promotion_code_total_paid + $order_price);
+    }
+
+	// invitation award and discount
 	$inviter_id = get_user_meta($user->ID, 'invited_by_user', true);
 	$service_awardable = in_array(get_post_meta($order->ID, 'service', true), array('base', 'full'));
 	$discount_order = get_user_meta($user->ID, 'discount_order', true);
@@ -476,9 +487,10 @@ function order_paid ($order_no, $gateway) {
  * @param $total_fee number a price in basic unit
  * @param $currency string
  * @param $service string base, full, tips, exercises, reading or writing
+ * @param $promotion_code string promotion code
  * @param $gateway string alipay, wechatpay or paypal
  */
-function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $gateway) {
+function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $promotion_code, $gateway) {
 	$order_id = wp_insert_post(array(
 		'post_type' => 'member_order',
 		'post_author' => get_current_user_id(),
@@ -496,6 +508,15 @@ function create_order ($out_trade_no, $subject, $total_fee, $currency, $service,
 
 	add_post_meta($order_id, 'gateway', $gateway);
 
+	if ($promotion_code) {
+		$promotion_code_object = get_posts(array('post_type' => 'promotion_code', 'name' => $promotion_code, 'post_status' => 'private'))[0];
+
+		if (!$promotion_code_object) {
+			exit('错误的优惠码');
+		}
+
+		add_post_meta($order_id, 'promotion_code', $promotion_code_object->ID);
+	}
 }
 
 /**

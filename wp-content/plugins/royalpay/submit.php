@@ -10,7 +10,8 @@
 //echo $_GET['subject'];
 //echo $_GET['price'];
 //echo $_GET['intend'];
-//echo $_GET['service'];exit;
+//echo $_GET['service'];
+//echo $_GET['promotion_code'];exit;
 
 $order_no = uniqid('', true);
 $subject = $_GET['subject'];
@@ -27,6 +28,7 @@ $currency = 'AUD';
 
 $service = $_GET['service'];
 $expires_at = $_GET['expires_at'];
+$promotion_code = $_GET['promotion_code'];
 
 //获取扫码
 $input = new RoyalPayUnifiedOrder();
@@ -39,7 +41,7 @@ $input->setOperator(get_current_user_id());
 
 $result = RoyalPayApi::qrOrder($input);
 
-create_order($order_no, $subject, $total_fee, $currency, $service, 'wechatpay');
+create_order($order_no, $subject, $total_fee, $currency, $service, $promotion_code, 'wechatpay');
 
 //跳转
 $inputObj = new RoyalPayRedirect();
