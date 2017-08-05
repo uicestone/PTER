@@ -39,7 +39,7 @@ $input->setOperator(get_current_user_id());
 
 $result = RoyalPayApi::qrOrder($input);
 
-create_order($order_no, $subject, $total_fee, $currency, $service, $expires_at, 'wechatpay');
+create_order($order_no, $subject, $total_fee, $currency, $service, 'wechatpay');
 
 //跳转
 $inputObj = new RoyalPayRedirect();
