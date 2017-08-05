@@ -15,7 +15,7 @@ if(isset($_POST['submit'])){
 		'user_login' => $_POST['username'],
 		'display_name' => $_POST['display_name'],
 		'user_email' => $_POST['email'],
-		'user_registered' => current_time('Y-m-d H:i:s'),
+		'user_registered' => date('Y-m-d H:i:s'),
 		'show_admin_bar_front' => false
 	));
 
