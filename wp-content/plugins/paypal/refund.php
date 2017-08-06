@@ -45,12 +45,12 @@ function paypal_sale_refund ($sale_id, $amount) {
 		$refundedSale = $sale->refundSale($refundRequest, $apiContext);
 	} catch (Exception $ex) {
 		// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
-		ResultPrinter::printError("Refund Sale", "Sale", null, $refundRequest, $ex);
+//		ResultPrinter::printError("Refund Sale", "Sale", null, $refundRequest, $ex);
 		exit(1);
 	}
 
 	// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
-	ResultPrinter::printResult("Refund Sale", "Sale", $refundedSale->getId(), $refundRequest, $refundedSale);
+//	ResultPrinter::printResult("Refund Sale", "Sale", $refundedSale->getId(), $refundRequest, $refundedSale);
 
 	return $refundedSale;
 }
