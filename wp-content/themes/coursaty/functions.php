@@ -727,7 +727,7 @@ add_filter ('sanitize_user', function ($username, $raw_username, $strict) {
 
 add_action('bingo_caps_clean', 'clean_expired_user_caps');
 
-function clear_expired_user_caps () {
+function clean_expired_user_caps () {
     foreach (array('tips', 'exercises', 'reading', 'writing') as $service) {
 		$users = get_users(array('meta_key' => 'service_' . $service . '_valid_before', 'meta_compare' => '<', 'meta_value' => (string)time()));
 		foreach ($users as $user) {
