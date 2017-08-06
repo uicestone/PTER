@@ -555,11 +555,17 @@ function order_paid ($order_no, $gateway) {
 	}
 
 	$services = array ('full' => '听说读写大礼包', 'base' => '听力口语技巧+练习包', 'tips' => '听力口语技巧包', 'exercises' => '听力口语练习包', 'reading' => '阅读技巧包', 'writing' => '写作技巧包');
+    $package_name = $services[$service];
+
+    if (!$package_name) {
+        error_log('Service package name not found: ' . $service);
+        return false;
+    }
 
 	send_template_mail('subscribed-email', $user->user_email, array(
         'user_name' => $user->display_name,
         'package_name' => $services[$service],
-        'expires_at' => isset($service_expires_at) ? $service_expires_at : '激活后24小时'
+        'expires_at' => isset($service_expires_at) ? date('Y-m-d H:i', $service_expires_at + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) : '激活后24小时'
     ));
 
 	return $order;
@@ -784,5 +790,11 @@ function send_template_mail ($template_slug, $to, $args = array()) {
 		$headers->addSubstitution('[%' . $key . '%]', array($value));
     }
 
-    return wp_mail($to, '', '', $headers);
+    $result =  wp_mail($to, '', '', $headers);
+
+	if (!$result) {
+	    error_log('Email sent fail, to: ' . $to . ', header was: ' . json_encode($headers, JSON_UNESCAPED_UNICODE));
+    }
+
+	return $result;
 }
