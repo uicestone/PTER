@@ -234,7 +234,9 @@ add_action('init', function () {
     });
 
 	add_action('acf/load_value/name=expires_at', function ($expires_at) {
-	    return date('Y-m-d', $expires_at + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS);
+	    if ($expires_at) {
+			return date('Y-m-d', $expires_at + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS);
+        }
     });
 
 	add_action('restrict_manage_posts', function() {
@@ -280,7 +282,7 @@ add_action('init', function () {
 			if (empty($_GET['multi_time'])) {
 				$qv['meta_query'][] = array(
 					'field' => 'multi_time',
-					'value' => 'yes'
+					'value' => '1'
 				);
 			}
         }
