@@ -622,6 +622,12 @@ function refund_order ($order_id, $amount) {
 		return;
 	}
 
+	$refundable = get_post_meta($order_id, 'refundable', true);
+
+	if ($refundable <= 0) {
+	    return;
+    }
+
 	switch (get_post_meta($order_id, 'gateway', true)) {
 		case 'wechatpay':
 			$input = new RoyalPayApplyRefund();
