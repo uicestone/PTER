@@ -177,7 +177,66 @@ add_action('init', function () {
 			default;
 		}
 	});
-	
+
+	register_post_type('promotion_code', array(
+		'label' => '优惠码',
+		'labels' => array(
+			'all_items' => '所有优惠码',
+			'add_new' => '添加优惠码',
+			'add_new_item' => '新优惠码',
+			'edit_item' => '编辑优惠码',
+			'not_found' => '未找到优惠码'
+		),
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'supports' => array('title'),
+		'taxonomies' => array('post_tag'),
+		'menu_icon' => 'dashicons-megaphone',
+	));
+
+	add_filter('manage_promotion_code_posts_columns', function($columns) {
+		$new_columns = array(
+			'cb' => $columns['cb'],
+			'title' => $columns['title'],
+			'user' => '付款用户',
+			'total_paid' => '总付款',
+			'expires_at' => '过期时间'
+		);
+		return $new_columns;
+	});
+
+	add_action('manage_promotion_code_posts_custom_column', function($column_name) {
+		global $post;
+		switch ($column_name ) {
+			case 'user' :
+				$users = get_post_meta($post->ID, 'user');
+				echo count($users);
+				break;
+			case 'total_paid' :
+				$total_paid = get_post_meta($post->ID, 'total_paid', true);
+				echo $total_paid;
+				break;
+			case 'expires_at' :
+				$expires_at = get_post_meta($post->ID, 'expires_at', true);
+				echo date('Y-m-d', $expires_at + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS);
+				break;
+			default;
+		}
+	});
+
+	add_action('acf/update_value/name=expires_at', function ($expires_at_date) {
+        if(strtotime($expires_at_date)) {
+            return strtotime($expires_at_date) - get_option( 'gmt_offset' ) * HOUR_IN_SECONDS;
+        }
+        else {
+            return $expires_at_date;
+        }
+    });
+
+	add_action('acf/load_value/name=expires_at', function ($expires_at) {
+	    return date('Y-m-d', $expires_at + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS);
+    });
+
 	add_action('restrict_manage_posts', function() {
 		
 	    global $current_screen;
@@ -199,7 +258,7 @@ add_action('init', function () {
 	});
 
 	add_filter('parse_query', function ($query) {
-		if (is_admin() AND $query->query['post_type'] === 'member_order') {
+		if (is_admin() && $query->query['post_type'] === 'member_order') {
 			$qv = &$query->query_vars;
 			$qv['meta_query'] = array();
 			if (!empty($_GET['status'])) {
@@ -215,6 +274,16 @@ add_action('init', function () {
 				);
 			}
 		}
+
+		if (is_admin() && $query->query['post_type'] === 'promotion_code') {
+			$qv = &$query->query_vars;
+			if (empty($_GET['multi_time'])) {
+				$qv['meta_query'][] = array(
+					'field' => 'multi_time',
+					'value' => 'yes'
+				);
+			}
+        }
 	});
 });
 
