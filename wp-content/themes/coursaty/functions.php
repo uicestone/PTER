@@ -44,6 +44,10 @@ add_action('after_switch_theme', function () {
 	if (! wp_next_scheduled ( 'bingo_caps_clean' )) {
 		wp_schedule_event(strtotime('+1 hour') - time() % 3600, 'hourly', 'bingo_caps_clean');
 	}
+
+	if (! wp_next_scheduled ( 'bingo_subscription_remind' )) {
+		wp_schedule_event(strtotime('next monday 20:00') - get_option( 'gmt_offset' ) * HOUR_IN_SECONDS, 'daily', 'bingo_subscription_remind');
+	}
 });
 
 add_action('after_setup_theme', function () {
@@ -492,7 +496,8 @@ function order_paid ($order_no, $gateway) {
 
 	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {
 		$service_valid_after = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true) ?: time();
-		update_user_meta($user->ID, 'service_' . $service . '_valid_before', $service_valid_after + 86400 * 30);
+		$service_expires_at = $service_valid_after + 86400 * 30;
+		update_user_meta($user->ID, 'service_' . $service . '_valid_before', $service_expires_at);
 	}
 
 	$order_price = get_post_meta($order->ID, 'price', true);
@@ -548,6 +553,14 @@ function order_paid ($order_no, $gateway) {
 			}
 		}
 	}
+
+	$services = array ('full' => '听说读写大礼包', 'base' => '听力口语技巧+练习包', 'tips' => '听力口语技巧包', 'exercises' => '听力口语练习包', 'reading' => '阅读技巧包', 'writing' => '写作技巧包');
+
+	send_template_mail('subscribed-email', $user->user_email, array(
+        'user_name' => $user->display_name,
+        'package_name' => $services[$service],
+        'expires_at' => isset($service_expires_at) ? $service_expires_at : '激活后24小时'
+    ));
 
 	return $order;
 }
@@ -717,6 +730,22 @@ function clear_expired_user_caps () {
     }
 }
 
+add_action('bingo_subscription_remind', 'remind_unsubscribed_users');
+
+function remind_unsubscribed_users () {
+    $users = get_users(array(
+        'date_query' => array (
+            'after' => date('Y-m-d H:i:s', time() - 8 * 86400),
+            'before' => date('Y-m-d H:i:s', time() - 7 * 86400),
+        ))
+    );
+    foreach ($users as $user) {
+        if (!$user->can('view_tips') && !$user->can('view_exercises')) {
+            send_template_mail('subscription-reminder-email', $user->user_email, array('user_name' => $user->display_name));
+        }
+    }
+}
+
 // Display User IP in WordPress
 function get_the_user_ip() {
 	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
@@ -729,4 +758,31 @@ function get_the_user_ip() {
 		$ip = $_SERVER['REMOTE_ADDR'];
 	}
 	return $ip;
+}
+
+/**
+ * send template mail by sendgrid
+ *
+ * @param $template_slug string slug for the template email post
+ * @param $to string a single email address
+ * @param array $args key value pairs of arguments
+ */
+function send_template_mail ($template_slug, $to, $args = array()) {
+
+    $template = get_page_by_path($template_slug, OBJECT, 'post');
+    $template_id = get_the_subtitle($template);
+
+    if (!$template || !$template_id) {
+        error_log('Email template not found: ' . $template_slug);
+        return false;
+    }
+
+	$headers = new SendGrid\Email();
+    $headers->setTemplateId($template_id);
+
+	foreach ($args as $key => $value) {
+		$headers->addSubstitution('[%' . $key . '%]', array($value));
+    }
+
+    return wp_mail($to, '', '', $headers);
 }

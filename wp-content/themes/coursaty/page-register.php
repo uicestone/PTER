@@ -34,10 +34,7 @@ if(isset($_POST['submit'])){
 	wp_set_auth_cookie($user_id, true);
 	wp_set_current_user($user_id);
 
-	if (wp_get_current_user()->user_email) {
-	    $welcome_email = get_posts(array('post_status' => 'private', 'name' => 'welcome-email'))[0];
-	    wp_mail(wp_get_current_user()->user_email, get_the_subtitle($welcome_email), wpautop($welcome_email->post_content));
-    }
+	send_template_mail('welcome-email', wp_get_current_user()->user_email);
 
 	if ($_GET['intend']) {
 		header('Location: ' . $_GET['intend']); exit;
