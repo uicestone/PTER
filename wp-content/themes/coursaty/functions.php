@@ -158,7 +158,8 @@ add_action('init', function () {
 		global $post;
 		switch ($column_name ) {
 			case 'user' :
-				$user = get_user_by('ID', $post->post_author);
+			    $user_id = get_post_meta($post->ID, 'user', true);
+				$user = get_user_by('ID', $user_id);
 				echo '<a href="' . admin_url() . 'user-edit.php?user_id=' . $user->ID . '">' . $user->display_name . '</a>';
 				break;
 			case 'price' :
@@ -444,7 +445,7 @@ function redirect_pricing_table ($cap) {
 	}
 }
 
-function order_paid ($order_no, $gateway) {
+function order_paid ($order_no, $gateway = null) {
 	// find the order
 	$order = get_posts(array('name' => sanitize_title($order_no), 'post_type' => 'member_order', 'post_status' => 'private'))[0];
 
@@ -456,12 +457,16 @@ function order_paid ($order_no, $gateway) {
 	// update order payment status
 	update_post_meta($order->ID, 'status', 'paid');
 	add_post_meta($order->ID, 'refundable_amount', get_post_meta($order->ID, 'price', true));
-	update_post_meta($order->ID, 'gateway', $gateway);
+
+	if ($gateway) {
+		update_post_meta($order->ID, 'gateway', $gateway);
+    }
 
 	// TODO price-service needs to be verified
 
 	// get the user and add cap
-	$user = get_user_by('ID', $order->post_author);
+    $user_id = get_post_meta($order->ID, 'user', true);
+	$user = get_user_by('ID', $user_id);
 
 	if (!$user) {
 	    error_log('order_paid(): order user not found. (order no: ' . $order_no . ')');
@@ -649,7 +654,7 @@ function refund_order ($order_id, $amount) {
 		round(get_post_meta($order_id, 'refundable_amount', true) - $amount, 2)
 	);
 
-	$user = get_post($order_id)->post_author;
+	$user = get_post_meta(get_post($order_id)->ID, 'user', true);
 
 	update_user_meta($user, 'total_awarded', get_user_meta($user, 'total_awarded', true) + $amount);
 }
@@ -778,6 +783,7 @@ function get_the_user_ip() {
  * @param $template_slug string slug for the template email post
  * @param $to string a single email address
  * @param array $args key value pairs of arguments
+ * @return bool send result
  */
 function send_template_mail ($template_slug, $to, $args = array()) {
 
