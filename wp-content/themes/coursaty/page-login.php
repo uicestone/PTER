@@ -4,7 +4,10 @@ if(isset($_POST['submit'])){
 	$user = wp_authenticate($_POST['username'], $_POST['password']);
 
 	if(is_a($user, 'WP_Error')){
-		exit(array_values($user->errors)[0][0]);
+	    echo '<meta charset="utf-8">';
+	    echo array_values($user->errors)[0][0];
+	    echo '<br><br> <b>客服微信</b>：<br><img width="150px" src="' . get_template_directory_uri() . '/assets/img/qrcode_cs.jpg">';
+		exit;
 	}
 
 	// 检查并记录当日IP数
