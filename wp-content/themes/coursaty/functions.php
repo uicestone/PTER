@@ -763,6 +763,13 @@ function remind_unsubscribed_users () {
     }
 }
 
+add_filter('wpjam_cdn_host', function ($host) {
+    if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
+        return defined('CDN_CN') ? CDN_CN : site_url() . '/';
+    }
+    return $host;
+}, 11);
+
 // Display User IP in WordPress
 function get_the_user_ip() {
 	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
