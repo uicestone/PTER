@@ -766,6 +766,13 @@ header.alt .mobile-navigation .mobile-btn span:after {
 .contact-form .input .submit-input:hover {
     background-color: #2997ab;
 }
+.comment-form .input .submit-input[disabled], .comments-list.answer a.toggle.disabled {
+    background-color: #d1d1d1;
+}
+.comment-form .input .submit-input[disabled]:hover, .comments-list.answer a.toggle.disabled:hover {
+    background-color: #d1d1d1;
+    color: white;
+}
 /* 05 - Sections */
 .features-section {
     background: #f5f5f5;
@@ -2514,6 +2521,13 @@ h6.head-title {
 }
 .comment-form .input, .contact-form .input {
     position: relative;
+}
+.comment-form .diff-check-result .added {
+    color: red;
+    text-decoration: line-through;
+}
+.comment-form .diff-check-result .removed {
+    color: green;
 }
 .comment-form .input input:not([type=submit]), .comment-form .input textarea,
 .contact-form .input input:not([type=submit]), .contact-form .input textarea,

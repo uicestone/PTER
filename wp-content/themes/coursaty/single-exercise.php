@@ -26,21 +26,29 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 								<?php the_content(); ?>
 							</div>
 						</div><!-- End Entry -->
-                        <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation'))): ?>
+                        <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening'))): ?>
 						<div class="clearfix" style="margin-top:30px"></div>
-						<div class="comment-form">
+						<div class="comment-form answer-form">
 							<div class="addcomment-title">
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
 								<span class="text">你的回答</span>
                                 <?php if (in_array($question_type->slug, array('summarise-spoken-text'))): ?>
                                 <span class="pull-right word-count">词数：<span class="count">0</span></span>
                                 <?php endif; ?>
+								<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))): ?>
+                                    <span class="pull-right word-diff-count">正确率：<span class="diff-percentage">-</span></span>
+								<?php endif; ?>
 							</div><!-- End Title -->
 							<form method="post" action="/" id="answer-form">
 								<div class="row">
 									<div class="col-md-12">
 										<div class="input">
 											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false"></textarea>
+                                            <div class="diff-check-result clearfix" style="white-space:pre;display:none"></div>
+											<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))): ?>
+                                            <input type="submit" id="comment-submit" class="diff-check submit-input grad-btn ln-tr" value="检查" disabled="disabled">
+                                            <input type="submit" id="comment-submit" class="resume-input submit-input grad-btn ln-tr" value="返回" style="display:none">
+											<?php endif; ?>
 										</div>
 									</div>
 								</div>
@@ -51,7 +59,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                             <div class="addcomment-title" style="margin-bottom:20px">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
                                 <span class="text">参考答案</span>
-                                <a href="#" class="toggle grad-btn ln-tr pull-right">显示</a>
+                                <a href="#" class="toggle grad-btn ln-tr pull-right<?=in_array($question_type->slug, array('write-from-dictation', 'intensive-listening')) ? ' disabled' : ''?>">显示</a>
                             </div><!-- End Title -->
                             <div class="row" style="margin-top:20px">
                                 <div class="col-md-12">
@@ -258,6 +266,11 @@ jQuery(function($) {
     // toggle answer display
     $('.comments-list.answer .toggle').click(function(e) {
         e.preventDefault();
+
+        if ($(this).hasClass('disabled')) {
+            return;
+        }
+
         if ($(this).text() === '显示') {
             $(this).text('隐藏');
             $('.comments-list.answer .content').show(300);
@@ -364,9 +377,21 @@ jQuery(function($) {
         $(this).trigger('time-up');
     });
 
-    // answer word count
-    $('#answer-area').on('keyup', function() {
-        var wordCountElement = $(this).parents('.comment-form').find('.word-count>.count');
+    var answerContentElement = $('.answer.entry .content');
+    var answerToggleButton = $('.answer.entry .toggle');
+    var answer = answerContentElement.text().replace(/答案/, '').trim();
+    var answerWordCount = answer.split(/\s+/).length;
+
+    var answerForm = $('.comment-form.answer-form');
+    var wordCountElement = answerForm.find('.word-count>.count');
+    var wordDiffCountElement = answerForm.find('.word-diff-count>.diff-percentage');
+    var answerArea = answerForm.find('#answer-area');
+    var answerCheckButton = answerForm.find('.diff-check');
+    var answerResumeButton = answerForm.find('.resume-input');
+
+    answerArea.on('keyup', function() {
+
+        // answer word count
         var wordCount = $(this).val().trim().split(/\s+/).length;
         wordCountElement.text(wordCount);
 
@@ -377,6 +402,64 @@ jQuery(function($) {
             wordCountElement.removeClass(('over-words'));
         }
 
+        // answer diff rate
+        var diffWords = JsDiff.diffWords(answer, $(this).val()).reduce(function (stat, current) {
+            var diffWordCount = current.value.trim().split(/\s+/).length;
+
+            if (current.added && !stat.modified) {
+                stat.diff += diffWordCount;
+            }
+            else if (current.removed) {
+                stat.diff += diffWordCount;
+                stat.modified += diffWordCount;
+            }
+            else if (current.added && stat.modified) {
+                stat.modified = 0;
+            }
+
+            return stat;
+
+        }, {diff:0, modified:0}).diff;
+
+        var diffRate = diffWords / answerWordCount;
+
+        if (diffRate < 0.3) {
+            wordDiffCountElement.text((100 - diffRate * 100).toFixed(0) + '%');
+            answerCheckButton.prop('disabled', false);
+            answerToggleButton.removeClass('disabled');
+        }
+        else {
+            wordDiffCountElement.text('-');
+            answerCheckButton.prop('disabled', true);
+            answerToggleButton.addClass('disabled');
+        }
+    });
+
+    answerCheckButton.on('click', function (e) {
+        e.preventDefault();
+
+        var diff = JsDiff.diffWords(answer, answerArea.val());
+
+        var resultContainer = answerForm.find('.diff-check-result').html('').show();
+
+        diff.forEach(function (part) {
+            var word = $('<span/>').text(part.value);
+            if (part.removed) {
+                word.addClass('removed');
+            }
+            if (part.added) {
+                word.addClass('added');
+            }
+            resultContainer.append(word);
+        });
+
+        answerArea.hide(); answerCheckButton.hide(); answerResumeButton.show();
+    });
+
+    answerResumeButton.on('click', function (e) {
+        e.preventDefault();
+        answerForm.find('.diff-check-result').hide();
+        answerArea.show(); answerCheckButton.show(); answerResumeButton.hide();
     });
 
     // highlight on click
