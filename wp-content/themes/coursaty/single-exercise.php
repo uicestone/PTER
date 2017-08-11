@@ -214,6 +214,14 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                                 <div class="skillbar-bar"></div>
                             </div>
 							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('intensive-listening'))): ?>
+                                <div class="skillbar timer clearfix" data-duration="2400">
+                                    <div class="skillbar-title">
+                                        <span>时间 <span class="seconds-left">40:00</span></span>
+                                    </div>
+                                    <div class="skillbar-bar"></div>
+                                </div>
+							<?php endif; ?>
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
                     </div>
