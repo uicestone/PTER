@@ -2507,6 +2507,9 @@ h6.head-title {
     box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.13), inset 0 -2px 0 0 rgba(0, 0, 0, 0.12);
     overflow: hidden;
 }
+.comment-form .addcomment-title {
+    padding: 10px 0 20px;
+}
 .comment-form .addcomment-title .icon {
     margin-bottom: 0;
 }
@@ -2569,10 +2572,9 @@ h6.head-title {
     resize: vertical;
 }
 .comment-form .input .submit-input, .contact-form .input .submit-input {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    padding: 0 32px;
+    padding: 0 15px;
+    float: right;
+    margin-top: 10px;
 }
 /* 18 - Isotope & Portfolio */
 .portfolio-grid {

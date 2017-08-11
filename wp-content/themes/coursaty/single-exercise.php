@@ -28,7 +28,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 						</div><!-- End Entry -->
                         <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening'))): ?>
 						<div class="clearfix" style="margin-top:30px"></div>
-						<div class="comment-form answer-form">
+						<div class="comment-form answer-form entry">
 							<div class="addcomment-title">
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
 								<span class="text">你的回答</span>
@@ -44,7 +44,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 									<div class="col-md-12">
 										<div class="input">
 											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false"></textarea>
-                                            <div class="diff-check-result clearfix" style="white-space:pre;display:none"></div>
+                                            <div class="diff-check-result content clearfix" style="white-space:pre-line;display:none"></div>
 											<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))): ?>
                                             <input type="submit" id="comment-submit" class="diff-check submit-input grad-btn ln-tr" value="检查" disabled="disabled">
                                             <input type="submit" id="comment-submit" class="resume-input submit-input grad-btn ln-tr" value="返回" style="display:none">
@@ -423,7 +423,7 @@ jQuery(function($) {
 
         var diffRate = diffWords / answerWordCount;
 
-        if (diffRate < 0.3) {
+        if (diffRate <= 0.1) {
             wordDiffCountElement.text((100 - diffRate * 100).toFixed(0) + '%');
             answerCheckButton.prop('disabled', false);
             answerToggleButton.removeClass('disabled');
@@ -452,6 +452,8 @@ jQuery(function($) {
             }
             resultContainer.append(word);
         });
+
+        resultContainer.html(resultContainer.html().replace(/\n{2,}/g, "\n"));
 
         answerArea.hide(); answerCheckButton.hide(); answerResumeButton.show();
     });
