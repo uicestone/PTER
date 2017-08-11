@@ -22,7 +22,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 								<a href="#" class="ln-tr"><?php the_title(); ?></a>
 							</h3><!-- End Title -->
 							<div class="clearfix"></div>
-							<div class="question content<?php if($question_type->slug === 'highlight-incorrect-words'): ?> highlightable <?php endif; ?>">
+							<div class="question content<?=$question_type->slug === 'highlight-incorrect-words' ? ' highlightable' : ''?>">
 								<?php the_content(); ?>
 							</div>
 						</div><!-- End Entry -->
@@ -55,7 +55,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                             </div><!-- End Title -->
                             <div class="row" style="margin-top:20px">
                                 <div class="col-md-12">
-                                    <div class="input content" style="display:none">
+                                    <div class="input content<?=$question_type->slug === 'highlight-incorrect-words' ? ' highlightable' : ''?>" style="display:none">
                                         <?=wpautop(do_shortcode(get_post_meta(get_the_ID(), 'answer', true)))?>
                                     </div>
                                 </div>

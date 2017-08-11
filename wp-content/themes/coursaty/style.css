@@ -1128,6 +1128,9 @@ header.alt .mobile-navigation .mobile-btn span:after {
 .post .entry .content del, .post .entry .content del span {
     text-decoration: none;
 }
+.post .entry .content.highlightable del, .post .entry .content.highlightable del span {
+    text-decoration: line-through;
+}
 .add-courses .add-courses-icon {
     width: 65px;
     margin-right: 35px;
