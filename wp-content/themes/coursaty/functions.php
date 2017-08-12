@@ -186,7 +186,7 @@ add_action('init', function () {
 	});
 
 	add_action('post_submitbox_minor_actions', function ($post){
-	    if ($post->post_type === 'member_order' && get_post_meta($post->ID, 'no', true) && get_post_meta($post->ID, 'status', true) === 'pending_payment') {
+	    if ($post->post_type === 'member_order' && get_post_meta($post->ID, 'status', true) === 'pending_payment') {
 			echo '<div id="save-action">
                 <input type="submit" name="set_paid" id="set_paid" value="手动授权" class="button" style="float:right">
             </div>';
