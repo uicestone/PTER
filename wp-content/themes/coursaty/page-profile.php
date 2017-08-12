@@ -3,10 +3,6 @@
 redirect_login();
 $user = wp_get_current_user();
 
-if (get_current_user_id() === 1) {
-    order_paid('recover-003');
-}
-
 if (isset($_POST['submit'])) {
 	if ($_POST['email']) {
 		$user->user_email = $_POST['email'];

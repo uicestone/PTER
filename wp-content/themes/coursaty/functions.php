@@ -185,6 +185,40 @@ add_action('init', function () {
 		}
 	});
 
+	add_action('post_submitbox_minor_actions', function ($post){
+	    if ($post->post_type === 'member_order' && get_post_meta($post->ID, 'no', true) && get_post_meta($post->ID, 'status', true) === 'pending_payment') {
+			echo '<div id="save-action">
+                <input type="submit" name="set_paid" id="set_paid" value="手动授权" class="button" style="float:right">
+            </div>';
+        }
+	});
+
+	add_action('save_post_member_order', function ($order_id) {
+
+	    $order_no = get_post_meta($order_id, 'no', true);
+	    $status = get_post_meta($order_id, 'status', true);
+
+	    $order = get_post($order_id);
+
+	    if (!$order_no) {
+	        update_post_meta($order_id, 'no', 'manual.' . $order_id);
+        }
+
+		if ($order->post_name !== sanitize_title($order_no)) {
+			$order->post_name = sanitize_title($order_no);
+			wp_update_post($order);
+		}
+
+		if ($order->post_status === 'publish') {
+			$order->post_status = 'private';
+			wp_update_post($order);
+        }
+
+	    if ($order_no && $status === 'pending_payment' && $_POST['set_paid']) {
+			order_paid($order_no);
+        }
+    });
+
 	register_post_type('promotion_code', array(
 		'label' => '优惠码',
 		'labels' => array(
