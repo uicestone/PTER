@@ -431,7 +431,7 @@ jQuery(function($) {
 
         var diffRate = diffWords / answerWordCount;
 
-        if (diffRate <= 0.1) {
+        if (diffRate <= 0.2) {
             wordDiffCountElement.text((100 - diffRate * 100).toFixed(0) + '%');
             answerCheckButton.prop('disabled', false);
             answerToggleButton.removeClass('disabled');
