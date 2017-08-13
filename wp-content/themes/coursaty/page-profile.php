@@ -114,6 +114,14 @@ get_header(); the_post(); ?>
                                 </div>
                             </div><!-- end invitation_code -->
                             <?php endif; ?>
+                            <?php if ($_SERVER['HTTP_X_FORWARDED_FOR']): ?>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="static">
+                                    <label>中转服务器：</label>
+									香港
+                                </div>
+                            </div><!-- end username -->
+                            <?php endif; ?>
 							<div class="col-md-12">
 								<div class="input clearfix">
 									<input type="submit" id="reg_submit" name="submit" value="修改" class="submit-input grad-btn ln-tr">
