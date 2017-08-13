@@ -118,7 +118,7 @@ get_header(); the_post(); ?>
                             <div class="col-md-6 col-sm-6">
                                 <div class="static">
                                     <label>中转服务器：</label>
-									香港
+                                    <?=$_SERVER['HTTP_X_FORWARDED_FOR']?>
                                 </div>
                             </div><!-- end username -->
                             <?php endif; ?>
