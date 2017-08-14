@@ -195,6 +195,10 @@ add_action('init', function () {
 
 	add_action('save_post_member_order', function ($order_id) {
 
+	    if (!is_admin()) {
+	        return;
+        }
+
 	    $order_no = get_post_meta($order_id, 'no', true);
 	    $status = get_post_meta($order_id, 'status', true);
 
