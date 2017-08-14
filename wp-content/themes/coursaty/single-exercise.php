@@ -438,7 +438,6 @@ jQuery(function($) {
             answerToggleButton.removeClass('disabled');
         }
         else {
-            wordDiffCountElement.text('-');
             answerCheckButton.prop('disabled', true);
             answerToggleButton.addClass('disabled');
         }
