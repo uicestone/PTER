@@ -1,5 +1,7 @@
 <?php
 
+require_once(ABSPATH . 'wp-admin/includes/user.php');
+
 if(isset($_POST['submit'])){
 
     if ($_POST['password'] !== $_POST['confirm_password']) {
@@ -21,6 +23,11 @@ if(isset($_POST['submit'])){
 
 	if(is_a($user_id, 'WP_Error')){
 		exit(array_values($user_id->errors)[0][0]);
+	}
+
+	if (!get_user_by('ID', $user_id)->user_email) {
+		wp_delete_user($user_id);
+		exit('Invalid email address: ' . $_POST['email'] . '.');
 	}
 
 	if ($_POST['invitation_code']) {
