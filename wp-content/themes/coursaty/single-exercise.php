@@ -59,7 +59,7 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                             <div class="addcomment-title" style="margin-bottom:20px">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
                                 <span class="text">参考答案</span>
-                                <a href="#" class="toggle grad-btn ln-tr pull-right<?=in_array($question_type->slug, array('write-from-dictation', 'intensive-listening')) ? ' disabled' : ''?>">显示</a>
+                                <a href="#" class="toggle grad-btn ln-tr pull-right<?=in_array($question_type->slug, array('intensive-listening')) ? ' disabled' : ''?>">显示</a>
                             </div><!-- End Title -->
                             <div class="row" style="margin-top:20px">
                                 <div class="col-md-12">
