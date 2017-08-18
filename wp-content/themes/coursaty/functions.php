@@ -849,6 +849,8 @@ function send_template_mail ($template_slug, $to, $args = array()) {
 		$headers->addSubstitution('[%' . $key . '%]', array($value));
     }
 
+    error_log('[Bingo] Template email "' . $template_slug . '"" sent to ' . $to . ' ' . json_encode($args, JSON_UNESCAPED_UNICODE));
+	
     $result =  wp_mail($to, '', '', $headers);
 
 	if (!$result) {
