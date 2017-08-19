@@ -152,11 +152,11 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-                                    <i id="rewind-control" class="fa fa-fast-backward"></i>
 									<?php if (in_array($question_type->slug, array('intensive-listening'))): ?>
+                                    <i id="rewind-control" class="fa fa-fast-backward"></i>
                                     <i id="fast-forward-control" class="fa fa-fast-forward"></i>
+									<?php endif; ?>
                                     <i id="play-control" class="fa fa-play" style="display:none;"></i>
-                                    <?php endif; ?>
                                     <i id="pause-control" class="fa fa-pause" style="display:none"></i>
                                     <i id="replay-control" class="fa fa-refresh"></i>
                                 </div>
