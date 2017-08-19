@@ -20,6 +20,13 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 							<h3 class="single-title fl">
 								<span class="post-type-icon"><i class="fa fa-pencil"></i></span>
 								<a href="#" class="ln-tr"><?php the_title(); ?></a>
+                                <?php if ($rating = (int)get_post_meta(get_the_ID(), 'rating', true)): ?>
+                                <div class="rating fr">
+                                    <?php $star_full = 5; for ($star_index = 0; $star_index < $star_full; $star_index++): ?>
+                                    <span class="star<?=$rating === ($star_full - $star_index) ? ' rated' : ''?>"></span>
+                                    <?php endfor; ?>
+                                </div>
+                                <?php endif; ?>
 							</h3><!-- End Title -->
 							<div class="clearfix"></div>
 							<div class="question content<?=$question_type->slug === 'highlight-incorrect-words' ? ' highlightable' : ''?>">

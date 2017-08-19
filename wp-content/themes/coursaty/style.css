@@ -872,8 +872,7 @@ header.alt .mobile-navigation .mobile-btn span:after {
     background: #383c4b;
     color: #fff;
 }
-.instructor.alt .details .rating {
-    background: #c8c9cc;
+.rating {
     border-radius: 3px;
     padding: 0 10px;
     unicode-bidi: bidi-override;
@@ -882,25 +881,27 @@ header.alt .mobile-navigation .mobile-btn span:after {
     height: 29px;
     line-height: 29px;
 }
-.instructor.alt .details .rating span.star {
+.rating span.star {
     font-family: "FontAwesome";
     font-weight: normal;
     font-style: normal;
     display: inline-block;
 }
-.instructor.alt .details .rating span.star:hover {
+.rating.rateable span.star:hover {
     cursor: pointer;
 }
-.instructor.alt .details .rating span.star:before {
+.rating span.star:before {
     content: "\f005";
-    color: #383c4b;
+    color: #d8d8da;
     padding-right: 1px;
     transition: all .2s ease-out;
 }
-.instructor.alt .details .rating span.star:hover:before,
-.instructor.alt .details .rating span.star:hover ~ span.star:before {
+.rating.rateable span.star:hover:before,
+.rating.rateable span.star:hover ~ span.star:before,
+.rating span.star.rated:before,
+.rating span.star.rated ~ span.star:before{
     content: "\f005";
-    color: #fff;
+    color: #2997ab;
 }
 .instructor.alt .details .rating .result {
     color: #fff;
