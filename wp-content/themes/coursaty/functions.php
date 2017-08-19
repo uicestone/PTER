@@ -50,6 +50,10 @@ add_action('after_switch_theme', function () {
 	if (! wp_next_scheduled ( 'bingo_subscription_remind' )) {
 		wp_schedule_event(strtotime('next monday 20:00') - get_option( 'gmt_offset' ) * HOUR_IN_SECONDS, 'daily', 'bingo_subscription_remind');
 	}
+
+	if (! wp_next_scheduled ( 'bingo_refresh_apnic_cn_ip_range' )) {
+		wp_schedule_event(time(), 'daily', 'bingo_refresh_apnic_cn_ip_range');
+	}
 });
 
 add_action('after_setup_theme', function () {
@@ -809,6 +813,12 @@ add_filter('wpjam_cdn_host', function ($host) {
     }
     return $host;
 }, 11);
+
+add_action('bingo_refresh_apnic_cn_ip_range', 'bingo_refresh_apnic_cn_ip_range');
+
+function bingo_refresh_apnic_cn_ip_range () {
+	shell_exec(ABSPATH . '/ispip.sh');
+}
 
 // Display User IP in WordPress
 function get_the_user_ip() {
