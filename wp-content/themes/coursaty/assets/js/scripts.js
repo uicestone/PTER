@@ -236,11 +236,4 @@
         }
     });
 
-    /********** Disable Context Menu in Content ***********/
-    $('.entry .content, video').on('contextmenu', function (e) {
-        e.preventDefault();
-    });
-
-    $('.entry .content img').wrap('<div class="watermark"/>');
-
 })(jQuery);

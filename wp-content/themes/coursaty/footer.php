@@ -43,6 +43,15 @@
 </footer><!-- End Footer -->
 </div><!-- End Entire Wrap -->
 
+<script type="text/javascript">
+/********** Disable Context Menu in Content ***********/
+jQuery('.entry .content, video, audio').on('contextmenu', function (e) {
+    e.preventDefault();
+});
+
+jQuery('.entry .content img').wrap('<div class="watermark"/>');
+</script>
+
 <?php wp_footer(); ?>
 </body>
 </html>
