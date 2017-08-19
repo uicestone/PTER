@@ -1512,6 +1512,7 @@ h6.head-title {
 }
 .home-skills .controls i {
     margin-left: 10px;
+    text-shadow: 0 0 4px #868686;
 }
 /* home 3 */
 .tp-banner-container.has-btns .slider-btns a {
