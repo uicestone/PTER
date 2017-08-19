@@ -171,9 +171,9 @@
 <script type="text/javascript">
 jQuery(function ($) {
     var courseDetail = $('.course-details').sticky({topSpacing:0});
-    var heightDiff = $('.entry').height() + 40 - 342;
+    var heightDiff = $('.entry').height() - $('.course-details').height();
     $(window).on('scroll load', function () {
-        endSticky(courseDetail, 227, heightDiff);
+        endSticky(courseDetail, 286, heightDiff);
     });
     function endSticky(element, heightTop, heightDiff) {
         if ($(window).scrollTop() > heightTop + heightDiff) {
