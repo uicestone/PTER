@@ -336,6 +336,9 @@ add_action('init', function () {
 			}
         }
 	});
+
+    global $is_cn_ip;
+	$is_cn_ip = is_cn_ip();
 });
 
 add_filter('nav_menu_link_attributes', function($attrs, $item) {
@@ -808,7 +811,8 @@ function remind_unsubscribed_users () {
 }
 
 add_filter('wpjam_cdn_host', function ($host) {
-    if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
+    global $is_cn_ip;
+    if ($is_cn_ip) {
         return defined('CDN_CN') ? CDN_CN : site_url() . '/';
     }
     return $host;
@@ -827,11 +831,38 @@ function get_the_user_ip() {
 		$ip = $_SERVER['HTTP_CLIENT_IP'];
 	} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
         //to check ip is pass from proxy
-		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		$ip = explode(', ', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
 	} else {
 		$ip = $_SERVER['REMOTE_ADDR'];
 	}
 	return $ip;
+}
+
+function is_cn_ip ($ip = null) {
+
+    if (!$ip) {
+        $ip = get_the_user_ip();
+    }
+
+    $ranges = explode("\n", file_get_contents(wp_get_upload_dir()['basedir'] . '/../cache/ispip/apnic_all_ip'));
+
+    foreach ($ranges as $range) {
+        if ($range && cidr_match($ip, $range)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function cidr_match($ip, $range)
+{
+	list ($subnet, $bits) = explode('/', $range);
+	$ip = ip2long($ip);
+	$subnet = ip2long($subnet);
+	$mask = -1 << (32 - $bits);
+	$subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+	return ($ip & $mask) == $subnet;
 }
 
 /**
@@ -859,7 +890,7 @@ function send_template_mail ($template_slug, $to, $args = array()) {
 		$headers->addSubstitution('[%' . $key . '%]', array($value));
     }
 
-    error_log('[Bingo] Template email "' . $template_slug . '"" sent to ' . $to . ' ' . json_encode($args, JSON_UNESCAPED_UNICODE));
+    error_log('[Bingo] Template email "' . $template_slug . '" sent to ' . $to . ' ' . json_encode($args));
 	
     $result =  wp_mail($to, '', '', $headers);
 

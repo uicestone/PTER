@@ -114,11 +114,10 @@ get_header(); the_post(); ?>
                                 </div>
                             </div><!-- end invitation_code -->
                             <?php endif; ?>
-                            <?php if ($_SERVER['HTTP_X_FORWARDED_FOR']): ?>
+                            <?php global $is_cn_ip; if ($is_cn_ip): ?>
                             <div class="col-md-6 col-sm-6">
                                 <div class="static">
-                                    <label>中转服务器：</label>
-                                    <?=$_SERVER['HTTP_X_FORWARDED_FOR']?>
+                                    <label>中国大陆网络</label>
                                 </div>
                             </div><!-- end username -->
                             <?php endif; ?>
