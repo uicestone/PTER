@@ -38,9 +38,6 @@ add_action('wp_enqueue_scripts', function(){
 	wp_enqueue_script('waypoints');
 	wp_enqueue_script('sticky');
 	wp_enqueue_script('jsdiff');
-	wp_enqueue_script('waveform');
-	wp_enqueue_script('waveform-record');
-	wp_enqueue_script('waveform-emitter');
 	wp_enqueue_script('scripts');
 });
 

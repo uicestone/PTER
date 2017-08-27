@@ -555,4 +555,12 @@ jQuery(function($) {
 });
 </script>
 
-<?php get_footer(); ?>
+<?php
+
+if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'describe-images', 'retell-lecture'))) {
+	wp_enqueue_script('waveform');
+	wp_enqueue_script('waveform-record');
+	wp_enqueue_script('waveform-emitter');
+}
+
+get_footer();
