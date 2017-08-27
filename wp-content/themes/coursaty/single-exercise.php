@@ -62,6 +62,46 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 							</form><!-- End form -->
 						</div><!-- End comment form -->
                         <?php endif; ?>
+						<?php if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'describe-images', 'retell-lecture'))): ?>
+                            <div class="clearfix" style="margin-top:30px"></div>
+                            <div class="comment-form answer-form entry">
+                                <div class="addcomment-title">
+                                    <span class="icon"><i class="fa fa-comments-o"></i></span>
+                                    <span class="text">你的回答</span>
+                                </div><!-- End Title -->
+                                <form method="post" action="/" id="answer-form">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input">
+                                                <div class="post-content">
+
+                                                    <div id="top-bar" class="playlist-top-bar">
+                                                        <div class="playlist-toolbar">
+                                                            <div class="btn-group">
+                                                                <span class="btn-play btn btn-success">
+                                                                    <i class="fa fa-play"></i>
+                                                                </span>
+                                                                <span class="btn-stop btn btn-danger">
+                                                                    <i class="fa fa-stop"></i>
+                                                                </span>
+                                                                <span class="btn-record btn btn-danger disabled">
+                                                                    <i class="fa fa-microphone"></i>
+                                                                </span>
+                                                                <!--<span title="Download the current work as Wav file"
+                                                                      class="btn btn-download btn-primary">
+                                                                    <i class="fa fa-download"></i>
+                                                                </span>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="playlist"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form><!-- End form -->
+                            </div><!-- End comment form -->
+						<?php endif; ?>
                         <div class="comment-form comments-list entry answer">
                             <div class="addcomment-title" style="margin-bottom:20px">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
@@ -320,7 +360,9 @@ jQuery(function($) {
         }, 1000);
 
         if ($(this).data('is-answer')) {
+            var answerVoiceRecorder = document.querySelector('#answer-voice-record');
             $('#ding-sound').get(0).play();
+            $('.btn-record').trigger('click');
         }
 
         return interval;
@@ -393,6 +435,9 @@ jQuery(function($) {
             nextTimer.data('interval', nextTimer.startTimer());
         }
         $(this).find('.skip').remove();
+        if ($(this).data('is-answer')) {
+            $('.btn-stop').trigger('click');
+        }
     })
     .on('click', '.skip', function (e) {
         var self = e.delegateTarget;

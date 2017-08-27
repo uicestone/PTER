@@ -40,6 +40,7 @@
 @import url(assets/css/base.css);
 @import url(assets/css/components.css);
 @import url(assets/css/font-awesome.min.css);
+@import url(assets/css/waveform.css);
 
 /* 01 - General & Basic Styles */
 html {
@@ -2524,6 +2525,22 @@ h6.head-title {
     color: #de0a0a;
     font-weight: bold;
 }
+.comment-form .playlist-top-bar {
+    margin-bottom: 10px;
+}
+.comment-form .playlist-top-bar .btn {
+    margin-right: 0;
+}
+.comment-form .playlist-tracks .btn-group {
+    margin-top: 25px;
+}
+.comment-form .playlist-tracks .btn-group .btn {
+    margin: 0 5px;
+    font-size: 12px;
+    padding: 0 10px;
+    height: 25px;
+    line-height: 25px;
+}
 .comment-form .input, .contact-form .input {
     position: relative;
 }
@@ -2534,8 +2551,8 @@ h6.head-title {
 .comment-form .diff-check-result .removed {
     color: green;
 }
-.comment-form .input input:not([type=submit]), .comment-form .input textarea,
-.contact-form .input input:not([type=submit]), .contact-form .input textarea,
+.comment-form .input input:not([type=submit]):not([type=range]), .comment-form .input textarea,
+.contact-form .input input:not([type=submit]):not([type=range]), .contact-form .input textarea,
 .login-page .login-form .input input, .login-page .login-form .input-with-label,
 .invitation_code-form .invitation_code-input {
     display: block;
