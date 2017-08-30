@@ -163,7 +163,7 @@ get_header(); the_post(); ?>
                             <div class="expires-at">
                                 剩余天数：<?=round(($service_valid_before - time()) / 86400, 1)?>
 								<?php if ($service_valid_before - time() < 86400 * 10): ?>
-                                <a href="<?=site_url()?>/pricig-table/" class="active btn btn-sm ln-tr">续费</a>
+                                <a href="<?=site_url()?>/pricing-table/" class="active btn btn-sm ln-tr">续费</a>
 								<?php endif; ?>
                             </div>
 						</div>
