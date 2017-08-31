@@ -48,7 +48,7 @@ get_header(); the_post(); ?>
 <?php if (in_array($post->post_name, array('pte-reading', 'pte-writing')) && current_user_can(str_replace('pte-', 'view_', $post->post_name))): ?>
 <article class="post single">
     <div class="container" style="padding:0">
-		<?=do_shortcode('[video width="1280" height="720" mp4="' . site_url() . '/wp-content/uploads/' . $post->post_name . '.mp4"][/video]')?>
+		<?=do_shortcode('[video width="1280" height="720" mp4="' . site_url() . '/wp-content/uploads/videos/' . $post->post_name . '.mp4"][/video]')?>
     </div><!-- End container -->
 </article><!-- End Single Article -->
 <?php endif; ?>
