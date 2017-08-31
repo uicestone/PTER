@@ -182,8 +182,11 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
 									);
 								}
 
-                                foreach(get_posts($all_query) as $exercise): ?>
-                                <option value="<?=get_the_permalink($exercise)?>"<?=$exercise->ID === get_the_ID() ? ' selected' : ''?>><?=get_the_title($exercise)?></option>
+                                foreach (get_posts($all_query) as $exercise): $rating = (int)get_post_meta($exercise->ID, 'rating', true); ?>
+                                <option value="<?=get_the_permalink($exercise)?>"<?=$exercise->ID === get_the_ID() ? ' selected' : ''?>>
+                                    <?=get_the_title($exercise)?>
+                                    <?=str_repeat('★', $rating)?>
+                                </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
