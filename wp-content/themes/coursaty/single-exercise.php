@@ -4,7 +4,15 @@ if(!has_tag('free-trial')) {
     redirect_pricing_table('view_exercises');
 }
 
-get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1]; ?>
+the_post();
+
+if (isset($_POST['save_audio_time_point'])) {
+    $audio_time_points = implode(',', $_POST['audio_time_point']);
+    update_post_meta(get_the_ID(), 'audio_time_points', $audio_time_points);
+    header('Location: ' . $_SERVER['HTTP_REFERER']); exit;
+}
+
+get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1]; ?>
 
 <div class="copyright-header">
     <p>All Rights Reserved &copy; Bingo Training Pty. Ltd. ABN 64 618 887 951, ACN 618 887 951</p>
@@ -210,6 +218,17 @@ get_header(); the_post(); $question_types = wp_get_object_terms(get_the_ID(), 'q
                                     <i id="pause-control" class="fa fa-pause" style="display:none"></i>
                                     <i id="replay-control" class="fa fa-refresh"></i>
                                 </div>
+                                <div class="audio-navigation">
+                                    <form method="post">
+                                        <?php if (current_user_can('edit_post')): ?>
+                                        <a class="btn" id="mark-audio-time-point">断句</a> <button type="submit" class="btn" id="save-audio-time-point" name="save_audio_time_point">保存</button>
+                                        <hr>
+                                        <?php endif; ?>
+                                        <?php $audio_time_points = get_post_meta(get_the_ID(), 'audio_time_points', true); if ($audio_time_points): $audio_time_points = explode(',', $audio_time_points); foreach ($audio_time_points as $index => $audio_time_point): ?>
+                                        <a class="btn jump-to-time-point saved" data-time-point="<?=$audio_time_point?>"><?=$index + 1?></a>
+                                        <?php endforeach; endif; ?>
+                                    </form>
+                                </div>
                             </div>
                             <?php if(in_array($question_type->slug, array('read-aloud'))): ?>
                             <div class="skillbar timer clearfix" data-duration="40">
@@ -391,7 +410,20 @@ jQuery(function($) {
         })
         .on('click', '#fast-forward-control', function () {
             self.currentTime += 5;
+        })
+        .on('click', '.jump-to-time-point', function () {
+            self.currentTime = Number($(this).data('time-point'));
+        })
+        .on('click', '#mark-audio-time-point', function () {
+            audioProgress.find('.audio-navigation>form')
+                .find('.btn.saved').remove().end()
+
+                .append($('<a class="btn unsaved jump-to-time-point" data-time-point="' + self.currentTime - 0.15 + '">' +
+                    (audioProgress.find('.audio-navigation').find('.btn.unsaved').length + 1) +
+                    '<input type="hidden" name="audio_time_point[]" value="' + self.currentTime - 0.15 + '"></a>'
+                ));
         });
+
         setTimeout(function () {
             self.play();
         }, 3000);

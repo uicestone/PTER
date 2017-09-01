@@ -1504,6 +1504,21 @@ h6.head-title {
     background: #2997ab;
     border-radius: 2px;
 }
+.home-skills .audio-progress {
+    height: auto;
+}
+.home-skills .audio-progress .audio-navigation {
+    background: white;
+    padding-top: 5px;
+}
+.home-skills .audio-progress .audio-navigation .btn {
+    margin-right: 5px;
+}
+.home-skills .audio-progress .audio-navigation button.btn {
+    border: none;
+    font-size: 16px;
+    vertical-align: baseline;
+}
 .home-skills .controls {
     position: absolute;
     right: 14px;

@@ -843,11 +843,17 @@ function get_the_user_ip() {
 
 function is_cn_ip ($ip = null) {
 
-    if (!$ip) {
+	$apnic_all_ip_file = wp_get_upload_dir()['basedir'] . '/../cache/ispip/apnic_all_ip';
+
+	if (!file_exists($apnic_all_ip_file)) {
+	    return false;
+    }
+
+	if (!$ip) {
         $ip = get_the_user_ip();
     }
 
-    $ranges = explode("\n", file_get_contents(wp_get_upload_dir()['basedir'] . '/../cache/ispip/apnic_all_ip'));
+    $ranges = explode("\n", file_get_contents($apnic_all_ip_file));
 
     foreach ($ranges as $range) {
         if ($range && cidr_match($ip, $range)) {
