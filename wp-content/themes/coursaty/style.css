@@ -1510,6 +1510,7 @@ h6.head-title {
 .home-skills .audio-progress .audio-navigation {
     background: white;
     padding-top: 5px;
+    line-height: 2.3;
 }
 .home-skills .audio-progress .audio-navigation .btn {
     margin-right: 5px;

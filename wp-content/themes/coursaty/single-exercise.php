@@ -222,7 +222,6 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                                     <form method="post">
                                         <?php if (current_user_can('edit_post')): ?>
                                         <a class="btn" id="mark-audio-time-point">断句</a> <button type="submit" class="btn" id="save-audio-time-point" name="save_audio_time_point">保存</button>
-                                        <hr>
                                         <?php endif; ?>
                                         <?php $audio_time_points = get_post_meta(get_the_ID(), 'audio_time_points', true); if ($audio_time_points): $audio_time_points = explode(',', $audio_time_points); foreach ($audio_time_points as $index => $audio_time_point): ?>
                                         <a class="btn jump-to-time-point saved" data-time-point="<?=$audio_time_point?>"><?=$index + 1?></a>
@@ -418,9 +417,9 @@ jQuery(function($) {
             audioProgress.find('.audio-navigation>form')
                 .find('.btn.saved').remove().end()
 
-                .append($('<a class="btn unsaved jump-to-time-point" data-time-point="' + self.currentTime - 0.15 + '">' +
+                .append($('<a class="btn unsaved jump-to-time-point" data-time-point="' + (self.currentTime - 0.15) + '">' +
                     (audioProgress.find('.audio-navigation').find('.btn.unsaved').length + 1) +
-                    '<input type="hidden" name="audio_time_point[]" value="' + self.currentTime - 0.15 + '"></a>'
+                    '<input type="hidden" name="audio_time_point[]" value="' + (self.currentTime - 0.15) + '"></a>'
                 ));
         });
 
