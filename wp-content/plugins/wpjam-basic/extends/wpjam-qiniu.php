@@ -266,7 +266,7 @@ function wpjam_qiniu_default_thumbnail_uri($default_thumbnail_uri)
 }
 
 // add_action('admin_enqueue_scripts', 'wpjam_qiniu_enqueue_scripts', 1 );
-add_action('wp_enqueue_scripts', 'wpjam_qiniu_enqueue_scripts', 1);
+// add_action('wp_enqueue_scripts', 'wpjam_qiniu_enqueue_scripts', 1);
 function wpjam_qiniu_enqueue_scripts()
 {
 
