@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html lang="zh-cmn-Hans" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="zh-cmn-Hans" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="zh-cmn-Hans" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="zh-cmn-Hans" class="no-js"> <!--<![endif]-->
 <head>
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
-	<title><?php bloginfo('sitename'); ?></title>
-	<meta name="description" content="">
-	<meta name="author" content="Uice Lu">
+	<title><?php wp_title('-', true, 'right'); bloginfo('name'); echo ' - '; bloginfo('description') ?></title>
+	<meta name="description" content="<?php bloginfo('description'); ?>">
+	<meta name="author" content="Bingo Training Pty Ltd, Uice Lu">
 	<!-- Mobile Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 
@@ -29,7 +29,7 @@
         <?php endif; ?>
     </style>
 </head>
-<body id="home">
+<body id="home" class="<?php body_class(); ?>">
 <div id="entire">
     <?php if (is_home()): ?>
 	<div class="loader"></div>
