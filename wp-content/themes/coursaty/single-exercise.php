@@ -411,15 +411,25 @@ jQuery(function($) {
             self.currentTime += 5;
         })
         .on('click', '.jump-to-time-point', function () {
-            self.currentTime = Number($(this).data('time-point'));
+            var timePoint = Number($(this).data('time-point'));
+            var nextTimePoint = Number($(this).next('.jump-to-time-point').data('time-point'));
+
+            self.currentTime = timePoint; self.play();
+
+            if (nextTimePoint && nextTimePoint > timePoint) {
+                setTimeout(function () {
+                    self.stop();
+                }, (nextTimePoint - timePoint) * 1000);
+            }
         })
         .on('click', '#mark-audio-time-point', function () {
+            var timePoint = Number(Math.max(0, self.currentTime - 0.15).toFixed(2));
             audioProgress.find('.audio-navigation>form')
                 .find('.btn.saved').remove().end()
 
-                .append($('<a class="btn unsaved jump-to-time-point" data-time-point="' + (self.currentTime - 0.15) + '">' +
+                .append($('<a class="btn unsaved jump-to-time-point" data-time-point="' + timePoint + '">' +
                     (audioProgress.find('.audio-navigation').find('.btn.unsaved').length + 1) +
-                    '<input type="hidden" name="audio_time_point[]" value="' + (self.currentTime - 0.15) + '"></a>'
+                    '<input type="hidden" name="audio_time_point[]" value="' + timePoint + '"></a>'
                 ));
         });
 
