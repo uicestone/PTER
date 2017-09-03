@@ -70,7 +70,7 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
 							</form><!-- End form -->
 						</div><!-- End comment form -->
                         <?php endif; ?>
-						<?php if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'describe-image', 'retell-lecture'))): ?>
+						<?php if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))): ?>
                             <div class="clearfix" style="margin-top:30px"></div>
                             <div class="comment-form answer-form entry">
                                 <div class="addcomment-title">
@@ -601,7 +601,7 @@ jQuery(function($) {
 
 <?php
 
-if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'describe-image', 'retell-lecture'))) {
+if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');
