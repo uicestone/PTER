@@ -1,6 +1,6 @@
 <?php
-
-if(!has_tag('free-trial')) {
+global $post;
+if(!has_tag('free-trial') && !in_array($post->post_name, ['pte-reading', 'pte-writing'])) {
     redirect_pricing_table('view_tips');
 }
 
