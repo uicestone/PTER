@@ -2557,11 +2557,17 @@ h6.head-title {
     height: 25px;
     line-height: 25px;
 }
-.comment-form .playlist-tracks .btn-group .btn.active {
+.comment-form .playlist-toolbar .btn-group .btn.disabled {
+    background-color: #d1d1d1;
+}
+.comment-form .playlist-tracks .btn-group .btn.active, .comment-form .playlist-toolbar .btn-group .btn.active {
     background-color: #2997ab;
 }
 .comment-form .playlist-toolbar .btn-group .btn.hover {
     background-color: #2997ab;
+}
+.comment-form .playlist-tracks .playlist-overlay {
+    border-right: 1px black solid;
 }
 .comment-form .input, .contact-form .input {
     position: relative;

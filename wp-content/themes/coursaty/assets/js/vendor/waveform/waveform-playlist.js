@@ -2364,12 +2364,12 @@ var WaveformPlaylist =
 	      var playoutPromises = [];
 	      this.mediaRecorder.start(300);
 	
-	      this.tracks.forEach(function (track) {
-	        track.setState('none');
-	        playoutPromises.push(track.schedulePlay(_this12.ac.currentTime, 0, undefined, {
-	          shouldPlay: _this12.shouldTrackPlay(track)
-	        }));
-	      });
+	      // this.tracks.forEach(function (track) {
+	      //   track.setState('none');
+	      //   playoutPromises.push(track.schedulePlay(_this12.ac.currentTime, 0, undefined, {
+	      //     shouldPlay: _this12.shouldTrackPlay(track)
+	      //   }));
+	      // });
 	
 	      this.playoutPromises = playoutPromises;
 	    }
@@ -5834,7 +5834,7 @@ var WaveformPlaylist =
 	        onclick: function onclick() {
 	          _this2.ee.emit('solo', _this2);
 	        }
-	      }, ['独轨'])]), (0, _h2.default)('label', [(0, _h2.default)('input.volume-slider', {
+	      }, ['独播'])]), (0, _h2.default)('label', [(0, _h2.default)('input.volume-slider', {
 	        attributes: {
 	          type: 'range',
 	          min: 0,

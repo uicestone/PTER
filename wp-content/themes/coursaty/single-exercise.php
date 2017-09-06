@@ -95,6 +95,9 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                                                                 <span class="btn-record btn btn-danger disabled">
                                                                     <i class="fa fa-microphone"></i>
                                                                 </span>
+                                                                <span class="btn-clear btn btn-danger">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </span>
                                                                 <!--<span title="Download the current work as Wav file"
                                                                       class="btn btn-download btn-primary">
                                                                     <i class="fa fa-download"></i>
@@ -601,6 +604,12 @@ jQuery(function($) {
         $(this).addClass('hover');
     }).on('mouseleave', '.btn', function () {
         $(this).removeClass('hover');
+    }).on('click', '.btn-record', function () {
+        $(this).addClass('active');
+    }).on('click', '.btn-play', function () {
+        $(this).addClass('active');
+    }).on('click', '.btn-stop', function () {
+        $(this).siblings('.btn').removeClass('active');
     });
 });
 </script>
