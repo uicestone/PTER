@@ -596,6 +596,12 @@ jQuery(function($) {
     $('.go-to-exercise').change(function () {
         window.location.href = $(this).val();
     });
+
+    $('.playlist-toolbar').on('mouseenter', '.btn', function () {
+        $(this).addClass('hover');
+    }).on('mouseleave', '.btn', function () {
+        $(this).removeClass('hover');
+    });
 });
 </script>
 

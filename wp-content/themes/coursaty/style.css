@@ -2557,6 +2557,12 @@ h6.head-title {
     height: 25px;
     line-height: 25px;
 }
+.comment-form .playlist-tracks .btn-group .btn.active {
+    background-color: #2997ab;
+}
+.comment-form .playlist-toolbar .btn-group .btn.hover {
+    background-color: #2997ab;
+}
 .comment-form .input, .contact-form .input {
     position: relative;
 }
