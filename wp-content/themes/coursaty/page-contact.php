@@ -46,9 +46,15 @@
                             </p>
                         </div><!-- end text info -->
                         <div class="call">
-                            <?php $email = get_post_meta(get_the_ID(), 'email', true); ?>
+                            <?php
+                                $email = get_post_meta(get_the_ID(), 'email', true);
+                                $facebook = get_post_meta(get_the_ID(), 'facebook', true);
+							    $weibo = get_post_meta(get_the_ID(), 'weibo', true);
+                            ?>
                             <p>咨询：<a href="mailto:<?=$email?>"><?=$email?></a></p>
                             <p>合作：<a href="mailto:cooperation@bingotraining.com">cooperation@bingotraining.com</a></p>
+                            <?php if ($facebook): ?><p><i class="fa fa-facebook" style="width:2em;text-align:center"></i>：<a href="<?=$facebook?>" target="_blank">@BingoTraining</a></p><?php endif; ?>
+                            <?php if ($weibo): ?><p><i class="fa fa-weibo" style="width:2em;text-align:center"></i>：<a href="<?=$weibo?>">@BingoTraining</a></p><?php endif; ?>
                         </div><!-- end call info -->
                     </div><!-- end 1st block -->
                 </div><!-- End contact right -->
