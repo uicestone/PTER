@@ -543,15 +543,30 @@ function order_paid ($order_no, $gateway = null) {
 	}
 
 	if (in_array($service, array('base', 'full'))) {
-	    $service_tips_valid_after = get_user_meta($user->ID, 'service_tips_valid_before', true) ?: time();
-		$service_exercises_valid_after = get_user_meta($user->ID, 'service_exercises_valid_before', true) ?: time();
+	    $service_tips_valid_after = get_user_meta($user->ID, 'service_tips_valid_before', true);
+		$service_exercises_valid_after = get_user_meta($user->ID, 'service_exercises_valid_before', true);
+
+		if (!$service_tips_valid_after || $service_tips_valid_after < time()) {
+		    $service_tips_valid_after = time();
+        }
+
+		if (!$service_exercises_valid_after || $service_exercises_valid_after < time()) {
+			$service_exercises_valid_after = time();
+		}
+
 		update_user_meta($user->ID, 'service_tips_valid_before', $service_tips_valid_after + 86400 * 30);
 		update_user_meta($user->ID, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * 30);
     }
 
 	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {
-		$service_valid_after = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true) ?: time();
+		$service_valid_after = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
+
+		if (!$service_valid_after || $service_valid_after < time()) {
+		    $service_valid_after = time();
+        }
+
 		$service_expires_at = $service_valid_after + 86400 * 30;
+
 		update_user_meta($user->ID, 'service_' . $service . '_valid_before', $service_expires_at);
 	}
 
