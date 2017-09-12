@@ -842,6 +842,29 @@ function bingo_refresh_apnic_cn_ip_range () {
 	shell_exec(ABSPATH . '/ispip.sh');
 }
 
+add_shortcode('blank', function ($attrs) {
+
+    $options = [];
+
+    if (isset($attrs['options'])){
+		$options = explode(',', $attrs['options']);
+    }
+
+    return '<span class="blank' . ($options ? ' has-options' : '') . '"></span>' . ($options ? ('<select><option></option>' . implode(' ', array_map(function ($option) {
+        return '<option>' . $option . '</option>';
+    }, $options)) . '</select>') : '');
+});
+
+add_shortcode('options', function ($attr) {
+    if (empty($attr['options'])) {
+        return 'Error: no options were set.';
+    }
+
+    $options = explode(',', $attr['options']);
+
+    return '<div class="options"><hr>' . implode(' ', array_map(function ($option) { return '<span class="option">' . $option . '</span>'; }, $options)) . '</div>';
+});
+
 // Display User IP in WordPress
 function get_the_user_ip() {
 	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {

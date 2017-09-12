@@ -297,6 +297,14 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                                     <div class="skillbar-bar"></div>
                                 </div>
 							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('fill-in-the-blanks-i', 'fill-in-the-blanks-ii', 'reorder-paragraph'))): ?>
+                                <div class="skillbar timer clearfix" data-duration="180">
+                                    <div class="skillbar-title">
+                                        <span>时间 <span class="seconds-left">03:00</span></span>
+                                    </div>
+                                    <div class="skillbar-bar"></div>
+                                </div>
+							<?php endif; ?>
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
                     </div>
@@ -611,6 +619,46 @@ jQuery(function($) {
     }).on('click', '.btn-stop', function () {
         $(this).siblings('.btn').removeClass('active');
     });
+
+    // Reading - Fill in the Blanks I
+    var contentElem = $('.post .entry .content').on('click', '.options .option', function () {
+        $(this).parents('.content').find('.option').removeClass('selected');
+        $(this).toggleClass('selected');
+    }).on('click', '.blank', function () {
+        if ($(this).is('.has-options')) {
+            $(this).next('select').show().trigger('click');
+            $(this).hide();
+        }
+        else if ($(this).is('.option')) {
+            $(this).clone().removeClass('blank').appendTo('.options');
+            $(this).removeClass('option').text('');
+        }
+        else {
+            var optionElem = $(this).parents('.content').find('.options>.option.selected');
+            var text = optionElem.text();
+            if (!text) {
+                return;
+            }
+            optionElem.remove();
+            $(this).addClass('option').text(text);
+        }
+    }).on('change', '.blank+select', function () {
+        $(this).prev('.blank').addClass('option').text($(this).val()).show();
+        $(this).hide();
+    });
+
+    <?php if ($question_type->slug === 'reorder-paragraph'): ?>
+    var parasHtml = contentElem.html();
+    contentElem.html('');
+    contentElem.html($('<div class="reorderable" />').html(parasHtml));
+    contentElem.append($('<div class="reordered" />'));
+    contentElem.on('click', '.reorderable p', function () {
+        contentElem.find('.reordered').append($(this));
+    });
+    contentElem.on('click', '.reordered p', function () {
+        contentElem.find('.reorderable').append($(this));
+    });
+    <?php endif; ?>
 });
 </script>
 
