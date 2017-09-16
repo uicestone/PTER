@@ -621,7 +621,7 @@ jQuery(function($) {
     });
 
     // Reading - Fill in the Blanks I
-    var contentElem = $('.post .entry .content').on('click', '.options .option', function () {
+    var contentElem = $('.post .entry:not(.comment-form) .content').on('click', '.options .option', function () {
         $(this).parents('.content').find('.option').removeClass('selected');
         $(this).toggleClass('selected');
     }).on('click', '.blank', function () {
