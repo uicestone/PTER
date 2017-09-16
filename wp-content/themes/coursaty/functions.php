@@ -883,7 +883,7 @@ function is_cn_ip ($ip = null) {
 
 	$apnic_all_ip_file = wp_get_upload_dir()['basedir'] . '/../cache/ispip/apnic_all_ip';
 
-	if (!file_exists($apnic_all_ip_file)) {
+	if (!$ip || strpos($ip, '.') === -1 || !file_exists($apnic_all_ip_file)) {
 	    return false;
     }
 
