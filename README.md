@@ -1,5 +1,6 @@
 # 总体架构
-![bingo training](https://user-images.githubusercontent.com/2181611/29739562-222a8c68-8a73-11e7-8d9e-ffa712a85a90.png)
+![bingo training](https://user-images.githubusercontent.com/2181611/30770226-89d069d2-a05d-11e7-8e2d-7dd594f590fc.png)
+
 
 站点资产包括：域名、服务器和CDN、程序代码、配置文件，上传文件和数据库，下面依次介绍：
 
