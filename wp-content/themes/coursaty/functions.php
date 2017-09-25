@@ -891,7 +891,7 @@ function is_cn_ip ($ip = null) {
         $ip = get_the_user_ip();
     }
 
-    if (strpos($ip, '.') === -1) {
+    if (strpos($ip, '.') === false) {
 	    return false;
     }
 
