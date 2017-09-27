@@ -54,6 +54,10 @@ add_action('after_switch_theme', function () {
 		wp_schedule_event(strtotime('next monday 20:00') - get_option( 'gmt_offset' ) * HOUR_IN_SECONDS, 'daily', 'bingo_subscription_remind');
 	}
 
+	if (! wp_next_scheduled ( 'bingo_expiring_remind' )) {
+		wp_schedule_event(strtotime('today 20:30') - get_option( 'gmt_offset' ) * HOUR_IN_SECONDS, 'daily', 'bingo_expiring_remind');
+	}
+
 	if (! wp_next_scheduled ( 'bingo_refresh_apnic_cn_ip_range' )) {
 		wp_schedule_event(time(), 'daily', 'bingo_refresh_apnic_cn_ip_range');
 	}
@@ -826,6 +830,25 @@ function remind_unsubscribed_users () {
             send_template_mail('subscription-reminder-email', $user->user_email, array('user_name' => $user->display_name));
         }
     }
+}
+
+add_action('bingo_expiring_remind', 'remind_expiring_users');
+
+function remind_expiring_users () {
+    foreach (array('exercises', 'tips') as $section) {
+        $meta_key = 'service_' . $section . '_valid_before';
+
+        $users = get_users(array(
+            'meta_key' => $meta_key,
+            'meta_value' => time() + 86400 * 7,
+            'meta_compare' => '<='
+        ));
+
+        foreach ($users as $user) {
+			send_template_mail('expiring-reminder-email', $user->user_email, array('user_name' => $user->display_name));
+		}
+    }
+
 }
 
 add_filter('wpjam_cdn_host', function ($host) {
