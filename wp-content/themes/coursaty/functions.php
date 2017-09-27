@@ -909,6 +909,11 @@ function is_cn_ip ($ip = null) {
 function cidr_match($ip, $range)
 {
 	list ($subnet, $bits) = explode('/', $range);
+
+	if ($bits > 32) {
+	    return false;
+    }
+
 	$ip = ip2long($ip);
 	$subnet = ip2long($subnet);
 	$mask = -1 << (32 - $bits);
