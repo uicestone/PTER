@@ -888,6 +888,10 @@ add_shortcode('options', function ($attr) {
     return '<div class="options"><hr>' . implode(' ', array_map(function ($option) { return '<span class="option">' . $option . '</span>'; }, $options)) . '</div>';
 });
 
+add_shortcode('sup', function ($attrs, $content) {
+    return '<sup><i class="fa fa-info-circle"></i><span>' . $content . '</span></sup>';
+});
+
 // Display User IP in WordPress
 function get_the_user_ip() {
 	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {

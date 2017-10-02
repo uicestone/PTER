@@ -236,4 +236,12 @@
         }
     });
 
+    /**************** Super text toggling *****************/
+
+    $('.post .entry .content sup').on('mouseenter', function () {
+        $(this).find('span').css({display: 'inline'});
+    }).on('mouseleave', function () {
+        $(this).find('span').css({display: 'none'});
+    });
+
 })(jQuery);

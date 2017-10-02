@@ -1994,6 +1994,19 @@ h6.head-title {
     text-align: justify;
     float: right;
 }
+.post .entry .content sup {
+    font-size: 0.7em;
+    vertical-align: super;
+    margin-right: 3px;
+}
+.post .entry .content sup span {
+    position: absolute;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 2px 2px 5px grey;
+    border-radius: 3px;
+    padding: 0 3px;
+    display: none;
+}
 .post .entry .share-post, .follow-icons, .share-icons {
     background: rgba(41, 151, 171, .25);
     border-radius: 4px;
