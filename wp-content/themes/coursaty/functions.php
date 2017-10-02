@@ -46,6 +46,31 @@ add_action('after_switch_theme', function () {
 	$administrator->add_cap('view_tips');
 	$administrator->add_cap('view_exercises');
 
+	$administrator->add_cap('edit_question_type_desc');
+	$administrator->add_cap('read_question_type_desc');
+	$administrator->add_cap('delete_question_type_desc');
+	$administrator->add_cap('edit_question_type_descs');
+	$administrator->add_cap('edit_others_question_type_descs');
+	$administrator->add_cap('publish_question_type_descs');
+	$administrator->add_cap('read_private_question_type_descs');
+	$administrator->add_cap('edit_question_type_descs');
+	$administrator->add_cap('edit_member_order');
+	$administrator->add_cap('read_member_order');
+	$administrator->add_cap('delete_member_order');
+	$administrator->add_cap('edit_member_orders');
+	$administrator->add_cap('edit_others_member_orders');
+	$administrator->add_cap('publish_member_orders');
+	$administrator->add_cap('read_private_member_orders');
+	$administrator->add_cap('edit_member_orders');
+	$administrator->add_cap('edit_promotion_code');
+	$administrator->add_cap('read_promotion_code');
+	$administrator->add_cap('delete_promotion_code');
+	$administrator->add_cap('edit_promotion_codes');
+	$administrator->add_cap('edit_others_promotion_codes');
+	$administrator->add_cap('publish_promotion_codes');
+	$administrator->add_cap('read_private_promotion_codes');
+	$administrator->add_cap('edit_promotion_codes');
+
 	if (! wp_next_scheduled ( 'bingo_caps_clean' )) {
 		wp_schedule_event(strtotime('+1 hour') - time() % 3600, 'hourly', 'bingo_caps_clean');
 	}
@@ -99,7 +124,8 @@ add_action('init', function () {
 		'supports' => array('title', 'editor', 'revisions', 'thumbnail', 'page-attributes'),
 		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-feedback',
-		'has_archive' => true
+		'has_archive' => true,
+        'capability_type' => 'question_type_desc'
 	));
 
 	add_post_type_support('question_type_desc', 'wps_subtitle');
@@ -152,6 +178,7 @@ add_action('init', function () {
 		'supports' => array('title'),
 		'taxonomies' => array('post_tag'),
 		'menu_icon' => 'dashicons-cart',
+        'capability_type' => 'member_order'
 	));
 
 	add_filter('manage_member_order_posts_columns', function($columns) {
@@ -248,6 +275,7 @@ add_action('init', function () {
 		'supports' => array('title'),
 		'taxonomies' => array('post_tag'),
 		'menu_icon' => 'dashicons-megaphone',
+        'capability_type' => 'promotion_code'
 	));
 
 	add_filter('manage_promotion_code_posts_columns', function($columns) {
