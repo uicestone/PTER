@@ -229,7 +229,7 @@ function the_subtitle( $before = '', $after = '', $echo = true ) {
  * @param   bool        $echo    Output if true, return if false.
  * @return  string               The subtitle string.
  */
-function get_the_subtitle( $post = 0, $before = '', $after = '', $echo = true ) {
+function get_the_subtitle( $post = 0, $before = '', $after = '', $echo = false ) {
 
 	$subtitle = new WP_Subtitle( $post );
 
