@@ -1999,8 +1999,13 @@ h6.head-title {
     vertical-align: super;
     margin-right: 3px;
 }
-.post .entry .content sup span {
+.post .entry .content sup>i {
+    z-index: 0;
+    position: relative;
+}
+.post .entry .content sup>span {
     position: absolute;
+    z-index: 1;
     background: rgba(255,255,255,0.9);
     box-shadow: 2px 2px 5px grey;
     border-radius: 3px;
