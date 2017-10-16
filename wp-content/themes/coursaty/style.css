@@ -1995,7 +1995,9 @@ h6.head-title {
     float: right;
 }
 .post .entry .content sup {
+    color: #1565C0;
     font-size: 0.7em;
+    font-weight: bold;
     vertical-align: super;
     margin-right: 3px;
 }
