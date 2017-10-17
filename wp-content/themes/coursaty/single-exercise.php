@@ -651,6 +651,9 @@ jQuery(function($) {
     var parasHtml = contentElem.html();
     contentElem.html('');
     contentElem.html($('<div class="reorderable" />').html(parasHtml));
+    $('.reorderable>p').each(function(index, el) {
+        $(el).text((index + 1 + '. ') + $(el).text());
+    });
     contentElem.append($('<div class="reordered" />'));
     contentElem.on('click', '.reorderable p', function () {
         contentElem.find('.reordered').append($(this));
