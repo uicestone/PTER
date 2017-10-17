@@ -1994,6 +1994,11 @@ h6.head-title {
     text-align: justify;
     float: right;
 }
+.post .entry .content em {
+    font-style: italic;
+    font-weight: lighter;
+    color: #1565c0;
+}
 .post .entry .content sup {
     color: #1565C0;
     font-size: 0.7em;
