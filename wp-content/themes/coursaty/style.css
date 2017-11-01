@@ -2017,6 +2017,7 @@ h6.head-title {
     padding: 0 3px;
     display: none;
     text-align: left;
+    min-width: 35%;
 }
 .post .entry .share-post, .follow-icons, .share-icons {
     background: rgba(41, 151, 171, .25);
