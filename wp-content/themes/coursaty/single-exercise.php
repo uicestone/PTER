@@ -528,8 +528,6 @@ jQuery(function($) {
         }
 
         // answer diff rate
-        console.log(answer);
-        console.log($(this).val().replace(/\,\.\'\?\!\-\<\>/g, ''));
         var diffWords = JsDiff.diffWords(answer, $(this).val().replace(/[\,\.\'\?\!\-\<\>]/g, '')).reduce(function (stat, current) {
             var diffWordCount = current.value.trim().split(/\s+/).length;
 
