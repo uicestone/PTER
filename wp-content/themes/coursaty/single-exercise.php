@@ -504,7 +504,7 @@ jQuery(function($) {
 
     var answerContentElement = $('.answer.entry .content');
     var answerToggleButton = $('.answer.entry .toggle');
-    var answer = $(answerContentElement.html().replace(/<sup.*?>[\s\S]*?<\/sup>/g, '')).text().replace(/答案/, '').replace(/[\,\.\'\?\!\-\<\>]/g, '').trim();
+    var answer = $(answerContentElement.html().replace(/<sup.*?>[\s\S]*?<\/sup>/g, '')).text().replace(/答案/, '').trim().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
     var answerWordCount = answer.split(/\s+/).length;
 
     var answerForm = $('.comment-form.answer-form');
@@ -527,8 +527,10 @@ jQuery(function($) {
             wordCountElement.removeClass(('over-words'));
         }
 
+        // console.log(answer);console.log($(this).val().trim().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, ''));
+
         // answer diff rate
-        var diffWords = JsDiff.diffWords(answer, $(this).val().replace(/[\,\.\'\?\!\-\<\>]/g, '')).reduce(function (stat, current) {
+        var diffWords = JsDiff.diffWords(answer, $(this).val().trim().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '')).reduce(function (stat, current) {
             var diffWordCount = current.value.trim().split(/\s+/).length;
 
             if (current.added && !stat.modified) {
