@@ -3466,11 +3466,11 @@ blockquote.blockquote-4 .story {
 }
 .pricing-tables .table-3 .table .table-header {
     background: none;
-    padding: 44px 0;
+    padding: 47px 0;
     border-bottom: 1px solid #2c2e39;
 }
 .pricing-tables .table-3 .table .table-header .text {
-    font-size: 28px;
+    font-size: 25px;
 }
 .pricing-tables .table-3 .table .table-header .price {
     margin-top: 17px;
@@ -3479,7 +3479,7 @@ blockquote.blockquote-4 .story {
     font-size: 16px;
 }
 .pricing-tables .table-3 .table .table-body {
-    padding: 3px 0 2px;
+    padding: 3px 0;
 }
 .pricing-tables .table-3 .table .table-body .features {
     height: 226px;

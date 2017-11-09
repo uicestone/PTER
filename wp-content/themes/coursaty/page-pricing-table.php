@@ -87,20 +87,19 @@ get_header(); the_post() ?>
         </div><!-- End main content row -->
 
 		<div class="row table-row fadeInDown-animation">
-            <div class="col-md-offset-2 col-md-4 col-sm-6 table-3 recommended">
+            <div class="col-md-4 col-sm-6 table-3 recommended">
                 <div class="table">
 
                     <div class="table-header grad-btn">
-                        <p class="text">听说读写大礼包</p><!-- end text -->
+                        <p class="text">听说读写四项全能（3个月）</p><!-- end text -->
                         <p class="price">
-                            （价值1600澳币）<br>
-							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if ($discount): ?>
+							<?php $price = get_post_meta(get_the_ID(), 'price_full_3', true); if ($discount): ?>
                                 <del><?=$price?></del>
                                 <span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
 							<?php else: ?>
                                 <span class="price-amount"><?=$price?></span>
 							<?php endif; ?>
-                            $ / 月
+                            $ / 90天
                         </p><!-- end price -->
                     </div><!-- end table header -->
 
@@ -118,7 +117,7 @@ get_header(); the_post() ?>
 
                     <div class="table-footer">
                         <div class="order-btn clearfix">
-                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
+                            <a href="#payment" data-service="full" data-amount="3" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
                         </div><!-- end order button -->
                     </div><!-- end table footer -->
 
@@ -129,158 +128,75 @@ get_header(); the_post() ?>
                 <div class="table">
 
                     <div class="table-header grad-btn">
-                        <p class="text">听力口语技巧+练习包</p><!-- end text -->
+                        <p class="text">听说读写四项全能（2个月）</p><!-- end text -->
                         <p class="price">
-                            （价值1200澳币）<br>
-							<?php $price = get_post_meta(get_the_ID(), 'price_base', true); if ($discount): ?>
+							<?php $price = get_post_meta(get_the_ID(), 'price_full_2', true); if ($discount): ?>
                                 <del><?=$price?></del>
                                 <span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
 							<?php else: ?>
                                 <span class="price-amount"><?=$price?></span>
 							<?php endif; ?>
-                            $ / 月
+                            $ / 60天
                         </p><!-- end price -->
                     </div><!-- end table header -->
 
                     <div class="table-body">
                         <ul class="features">
                             <li>全站听力口语技巧，模板详解</li>
+                            <li>PTE阅读技巧及备考建议</li>
+                            <li>PTE写作技巧，范文讲解</li>
                             <li>PTE题型详解+评分细则</li>
                             <li>全站近400道练习题+答案</li>
                             <li>参考笔记，答题要点</li>
                             <li>口语6，7，8分考生真实答案</li>
-                            <li>听力通用版+高阶版参考答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
                     <div class="table-footer">
                         <div class="order-btn">
-                            <a href="#payment" data-service="base" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
+                            <a href="#payment" data-service="full" data-amount="2" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
                         </div><!-- end order button -->
                     </div><!-- end table footer -->
 
                 </div><!-- end table -->
             </div><!-- end col-md-3 col-sm-6 -->
 
-            <div class="clearfix" style="margin:20px"></div>
-
-            <div class="col-md-3 col-sm-6 table-2">
+            <div class="col-md-4 col-sm-6 table-2 recommended">
                 <div class="table">
 
                     <div class="table-header grad-btn">
-                        <p class="text">听力口语技巧包</p><!-- end text -->
+                        <p class="text">听说读写四项全能（1个月）</p><!-- end text -->
                         <p class="price">
-                            <span class="price-amount"><?=get_post_meta(get_the_ID(), 'price_tips', true)?></span>
-                            $ / 月
+							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if ($discount): ?>
+                                <del><?=$price?></del>
+                                <span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
+							<?php else: ?>
+                                <span class="price-amount"><?=$price?></span>
+							<?php endif; ?>
+                            $ / 30天
                         </p><!-- end price -->
                     </div><!-- end table header -->
 
                     <div class="table-body">
                         <ul class="features">
-                            <li>全站听力技巧，模板详解</li>
-                            <li>全站口语技巧，模板详解</li>
+                            <li>全站听力口语技巧，模板详解</li>
+                            <li>PTE阅读技巧及备考建议</li>
+                            <li>PTE写作技巧，范文讲解</li>
                             <li>PTE题型详解+评分细则</li>
-                            <li>全站听力口语例题+参考答案</li>
-                        </ul><!-- end features list -->
-                    </div><!-- end table body -->
-
-                    <div class="table-footer">
-                        <div class="order-btn">
-                            <a href="#payment" data-service="tips" class="grad-btn ln-tr show-payment-method">订阅</a>
-                        </div><!-- end order button -->
-                    </div><!-- end table footer -->
-
-                </div><!-- end table -->
-            </div><!-- end col-md-3 col-sm-6 -->
-
-            <div class="col-md-3 col-sm-6 table-2">
-                <div class="table">
-
-                    <div class="table-header grad-btn">
-                        <p class="text">听力口语练习包</p><!-- end text -->
-                        <p class="price">
-                            <span class="price-amount"><?=get_post_meta(get_the_ID(), 'price_exercises', true)?></span>
-                            $ / 月
-                        </p><!-- end price -->
-                    </div><!-- end table header -->
-
-                    <div class="table-body">
-                        <ul class="features">
                             <li>全站近400道练习题+答案</li>
                             <li>参考笔记，答题要点</li>
                             <li>口语6，7，8分考生真实答案</li>
-                            <li>听力通用版+高阶版参考答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
                     <div class="table-footer">
                         <div class="order-btn">
-                            <a href="#payment" data-service="exercises" class="grad-btn ln-tr show-payment-method">订阅</a>
+                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
                         </div><!-- end order button -->
                     </div><!-- end table footer -->
 
                 </div><!-- end table -->
             </div><!-- end col-md-3 col-sm-6 -->
-
-            <div class="col-md-3 col-sm-6 table-1">
-				<div class="table">
-
-					<div class="table-header grad-btn">
-						<div class="icon ln-tr"><i class="fa fa-book"></i></div><!-- end icon -->
-						<p class="text">阅读技巧包</p><!-- end text -->
-					</div><!-- end table header -->
-
-					<div class="table-body">
-						<ul class="features">
-							<li>PTE阅读题型详解</li>
-							<li>PTE阅读技巧详解</li>
-							<li>PTE阅读例题详解</li>
-                            <li>句子精读详解</li>
-                            <li>推荐词汇讲解</li>
-						</ul><!-- end features list -->
-					</div><!-- end table body -->
-
-					<div class="table-footer">
-						<div class="order-btn">
-							<a href="#payment" data-service="reading" class="grad-btn ln-tr show-payment-method">
-                                <span class="price-amount"><?=get_post_meta(get_the_ID(), 'price_reading', true)?></span>
-                                <span class="currency">$ / 次</span>
-								<span class="icon fr ln-tr"><i class="fa fa-angle-right"></i></span>
-							</a>
-						</div><!-- end order button -->
-					</div><!-- end table footer -->
-
-				</div><!-- end table -->
-			</div><!-- end col-md-3 col-sm-6 -->
-
-			<div class="col-md-3 col-sm-6 table-1">
-				<div class="table">
-
-					<div class="table-header grad-btn">
-						<div class="icon ln-tr"><i class="fa fa-pencil"></i></div><!-- end icon -->
-						<p class="text">写作技巧包</p><!-- end text -->
-					</div><!-- end table header -->
-
-					<div class="table-body">
-						<ul class="features">
-							<li>PTE写作题型详解</li>
-							<li>PTE写作技巧模板详解</li>
-							<li>PTE小作文例题</li>
-                            <li>PTE大作文范文</li>
-						</ul><!-- end features list -->
-					</div><!-- end table body -->
-
-					<div class="table-footer">
-						<div class="order-btn">
-							<a href="#payment" data-service="writing" class="grad-btn ln-tr show-payment-method">
-                                <span class="price-amount"><?=get_post_meta(get_the_ID(), 'price_writing', true)?></span> <span class="currency">$ / 次</span>
-								<span class="icon fr ln-tr"><i class="fa fa-angle-right"></i></span>
-							</a>
-						</div><!-- end order button -->
-					</div><!-- end table footer -->
-
-				</div><!-- end table -->
-			</div><!-- end col-md-3 col-sm-6 -->
 
         </div><!-- end 1st row -->
 
@@ -305,13 +221,14 @@ get_header(); the_post() ?>
 <script type="text/javascript">
 jQuery(function ($) {
 
-    var price, subject, service;
+    var price, subject, service, amount;
 
     $('.show-payment-method').on('click', function (e) {
         $('.payment-gateways').hide(300).show(300);
         price = $(this).parents('.table').find('.price-amount').text();
         subject = $(this).parents('.table').find('.table-header>.text').text();
         service = $(this).data('service');
+        amount = $(this).data('amount') || 1;
     });
 
     $('.payment-gateways .gateway').on('click', function (e) {
@@ -323,6 +240,7 @@ jQuery(function ($) {
         href = '/payment/' + gateway + '/?price='+ price
             + '&subject=' + (subject)
             + '&service=' + (service)
+            + '&amount=' + (amount)
             + '&intend=' + ('<?=$_GET['intend']?>')
             + '&promotion_code=' + ('<?=$_GET['promotion_code']?>');
 

@@ -31,6 +31,7 @@ $total_fee = max(round($total_fee, 2), 0.01);
 $currency = 'AUD';
 
 $service = $_GET['service'];
+$amount = $_GET['amount'] ?: 1;
 
 $promotion_code = $_GET['promotion_code'];
 
@@ -127,7 +128,7 @@ try {
 // method
 $approvalUrl = $payment->getApprovalLink();
 
-create_order($order_no, $subject, $total_fee, $currency, $service, $promotion_code, 'paypal');
+create_order($order_no, $subject, $total_fee, $currency, $service, $amount, $promotion_code, 'paypal');
 
 // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
 header('Location: ' . $approvalUrl);

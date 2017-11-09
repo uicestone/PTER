@@ -47,6 +47,7 @@ $currency = 'AUD';
 $total_fee = $_GET['price'];
 
 $service = $_GET['service'];
+$amount = $_GET['amount'] ?: 1;
 
 $promotion_code = $_GET['promotion_code'];
 
@@ -83,7 +84,7 @@ $parameter = array(
 
 );
 
-create_order($out_trade_no, $subject, $total_fee, $currency, $service, $promotion_code, 'alipay');
+create_order($out_trade_no, $subject, $total_fee, $currency, $service, $amount, $promotion_code, 'alipay');
 
 //建立请求
 $alipaySubmit = new AlipaySubmit($alipay_config);

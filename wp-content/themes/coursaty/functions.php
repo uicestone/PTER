@@ -555,6 +555,7 @@ function order_paid ($order_no, $gateway = null) {
     }
 
 	$service = get_post_meta($order->ID, 'service', true);
+	$amount = get_post_meta($order->ID, 'amount', true);
 
 	if (in_array($service, array('tips', 'base', 'full'))) {
 		$user->add_cap('view_tips');
@@ -586,8 +587,8 @@ function order_paid ($order_no, $gateway = null) {
 			$service_exercises_valid_after = time();
 		}
 
-		update_user_meta($user->ID, 'service_tips_valid_before', $service_tips_valid_after + 86400 * 30);
-		update_user_meta($user->ID, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * 30);
+		update_user_meta($user->ID, 'service_tips_valid_before', $service_tips_valid_after + 86400 * 30 * $amount);
+		update_user_meta($user->ID, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * 30 * $amount);
     }
 
 	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {
@@ -597,7 +598,7 @@ function order_paid ($order_no, $gateway = null) {
 		    $service_valid_after = time();
         }
 
-		$service_expires_at = $service_valid_after + 86400 * 30;
+		$service_expires_at = $service_valid_after + 86400 * 30 * $amount;
 
 		update_user_meta($user->ID, 'service_' . $service . '_valid_before', $service_expires_at);
 	}
@@ -679,10 +680,11 @@ function order_paid ($order_no, $gateway = null) {
  * @param $total_fee number a price in basic unit
  * @param $currency string
  * @param $service string base, full, tips, exercises, reading or writing
+ * @param $amount int count of service package
  * @param $promotion_code string promotion code
  * @param $gateway string alipay, wechatpay or paypal
  */
-function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $promotion_code, $gateway) {
+function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $amount, $promotion_code, $gateway) {
 	$order_id = wp_insert_post(array(
 		'post_type' => 'member_order',
 		'post_author' => get_current_user_id(),
@@ -696,6 +698,7 @@ function create_order ($out_trade_no, $subject, $total_fee, $currency, $service,
 	add_post_meta($order_id, 'no', $out_trade_no);
 	add_post_meta($order_id, 'user', get_current_user_id());
 	add_post_meta($order_id, 'service', $service);
+	add_post_meta($order_id, 'amount', $amount);
 	add_post_meta($order_id, 'status', 'pending_payment');
 
 	add_post_meta($order_id, 'gateway', $gateway);

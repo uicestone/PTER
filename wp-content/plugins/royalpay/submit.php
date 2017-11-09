@@ -27,6 +27,7 @@ $total_fee = max(round($total_fee, 2), 0.01);
 $currency = 'AUD';
 
 $service = $_GET['service'];
+$amount = $_GET['amount'] ?: 1;
 $expires_at = $_GET['expires_at'];
 $promotion_code = $_GET['promotion_code'];
 
@@ -41,7 +42,7 @@ $input->setOperator(get_current_user_id());
 
 $result = RoyalPayApi::qrOrder($input);
 
-create_order($order_no, $subject, $total_fee, $currency, $service, $promotion_code, 'wechatpay');
+create_order($order_no, $subject, $total_fee, $currency, $service, $amount, $promotion_code, 'wechatpay');
 
 //跳转
 $inputObj = new RoyalPayRedirect();
