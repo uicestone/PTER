@@ -105,13 +105,13 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
-                            <li>全站听力口语技巧，模板详解</li>
-                            <li>PTE阅读技巧及备考建议</li>
-                            <li>PTE写作技巧，范文讲解</li>
+                            <li>全站听力口语技巧，模板讲解</li>
+                            <li>全站写作阅读技巧，模板讲解</li>
+                            <li>听说读写海量练习题+满分答案</li>
+                            <li>PTE听说读写备考建议</li>
                             <li>PTE题型详解+评分细则</li>
-                            <li>全站近400道练习题+答案</li>
-                            <li>参考笔记，答题要点</li>
-                            <li>口语6，7，8分考生真实答案</li>
+                            <li>参考笔记+答题要点</li>
+                            <li>口语6, 7 ,8 分考生真实答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
@@ -142,13 +142,13 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
-                            <li>全站听力口语技巧，模板详解</li>
-                            <li>PTE阅读技巧及备考建议</li>
-                            <li>PTE写作技巧，范文讲解</li>
+                            <li>全站听力口语技巧，模板讲解</li>
+                            <li>全站写作阅读技巧，模板讲解</li>
+                            <li>听说读写海量练习题+满分答案</li>
+                            <li>PTE听说读写备考建议</li>
                             <li>PTE题型详解+评分细则</li>
-                            <li>全站近400道练习题+答案</li>
-                            <li>参考笔记，答题要点</li>
-                            <li>口语6，7，8分考生真实答案</li>
+                            <li>参考笔记+答题要点</li>
+                            <li>口语6, 7 ,8 分考生真实答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
@@ -179,13 +179,13 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
-                            <li>全站听力口语技巧，模板详解</li>
-                            <li>PTE阅读技巧及备考建议</li>
-                            <li>PTE写作技巧，范文讲解</li>
+                            <li>全站听力口语技巧，模板讲解</li>
+                            <li>全站写作阅读技巧，模板讲解</li>
+                            <li>听说读写海量练习题+满分答案</li>
+                            <li>PTE听说读写备考建议</li>
                             <li>PTE题型详解+评分细则</li>
-                            <li>全站近400道练习题+答案</li>
-                            <li>参考笔记，答题要点</li>
-                            <li>口语6，7，8分考生真实答案</li>
+                            <li>参考笔记+答题要点</li>
+                            <li>口语6, 7 ,8 分考生真实答案</li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
