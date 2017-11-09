@@ -48,8 +48,6 @@
 jQuery('.entry .content, video, audio').on('contextmenu', function (e) {
     e.preventDefault();
 });
-
-jQuery('.entry .content img').wrap('<div class="watermark"/>');
 </script>
 
 <?php wp_footer(); ?>

@@ -1915,20 +1915,11 @@ h6.head-title {
 .post .entry .content img {
     max-width: 100%;
     height: auto;
-    opacity: 0;
 }
-.post .entry .content .watermark img {
-    opacity: 1;
-}
-.post .entry .content .watermark {
-    margin: auto;
-    display: table;
-    position: relative;
-}
-.post .entry .content .watermark:after {
+.watermark:after {
     content: '';
     background-image: url(assets/img/logo.png);
-    opacity: 0.025;
+    opacity: 0.035;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -2499,6 +2490,7 @@ h6.head-title {
     clear: both;
     /*margin-top: 10px;*/
     font-size: 18px;
+    position: relative;
 }
 .entry .content {
     -webkit-touch-callout: none; /* iOS Safari */
