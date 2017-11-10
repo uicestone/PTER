@@ -555,7 +555,7 @@ function order_paid ($order_no, $gateway = null) {
     }
 
 	$service = get_post_meta($order->ID, 'service', true);
-	$amount = get_post_meta($order->ID, 'amount', true);
+	$amount = get_post_meta($order->ID, 'amount', true) ?: 1;
 
 	if (in_array($service, array('tips', 'base', 'full'))) {
 		$user->add_cap('view_tips');
