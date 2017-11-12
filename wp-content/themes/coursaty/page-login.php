@@ -30,7 +30,7 @@ if(isset($_POST['submit'])){
 	    header('Location: ' . $_GET['intend']); exit;
     }
     else {
-		header('Location: ' . site_url()); exit;
+		header('Location: ' . site_url('profile')); exit;
     }
 }
 
