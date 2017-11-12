@@ -154,7 +154,7 @@ get_header(); the_post() ?>
 
                     <div class="table-footer">
                         <div class="order-btn">
-                            <a href="#payment" data-service="full" data-amount="2" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
+                            <a href="#payment" data-service="full" data-amount="2" class="grad-btn ln-tr show-payment-method">订阅</a>
                         </div><!-- end order button -->
                     </div><!-- end table footer -->
 
@@ -191,7 +191,7 @@ get_header(); the_post() ?>
 
                     <div class="table-footer">
                         <div class="order-btn">
-                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
+                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">订阅</a>
                         </div><!-- end order button -->
                     </div><!-- end table footer -->
 

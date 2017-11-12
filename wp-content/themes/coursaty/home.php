@@ -80,6 +80,12 @@
 <div class="clearfix"></div>
 <?php endforeach; ?>
 
+<section class="full-section features-section fancy-shadow">
+    <div class="container">
+        <a href="<?=site_url('pricing-table')?>"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/pricing-table.png"></a>
+    </div>
+</section><!-- End Features Section -->
+
 <?php $welcome_pages = get_posts(array('post_type' => 'page', 'name' => 'welcome')); if ($welcome_pages): $welcome_page = $welcome_pages[0]; ?>
 <section class="full-section features-section fancy-shadow">
     <div class="container">
