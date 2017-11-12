@@ -1926,6 +1926,7 @@ h6.head-title {
     left: 0;
     right: 0;
     background-size: 67%;
+    pointer-events: none;
 }
 .post .entry .content ul, .post .entry .content ol {
     margin-bottom: 12px;
