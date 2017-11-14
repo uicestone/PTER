@@ -41,13 +41,13 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
 								<?php the_content(); ?>
 							</div>
 						</div><!-- End Entry -->
-                        <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening'))): ?>
+                        <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening', 'write-essay', 'swt'))): ?>
 						<div class="clearfix" style="margin-top:30px"></div>
 						<div class="comment-form answer-form entry">
 							<div class="addcomment-title">
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
 								<span class="text">你的回答</span>
-                                <?php if (in_array($question_type->slug, array('summarise-spoken-text'))): ?>
+                                <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-essay', 'swt'))): ?>
                                 <span class="pull-right word-count">词数：<span class="count">0</span></span>
                                 <?php endif; ?>
 								<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))): ?>
