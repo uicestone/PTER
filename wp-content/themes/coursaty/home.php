@@ -82,7 +82,7 @@
 
 <section class="full-section features-section fancy-shadow">
     <div class="container">
-        <a href="<?=site_url('pricing-table')?>"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/pricing-table.png"></a>
+        <a href="<?=site_url('pricing-table')?>"><img style="max-width:100%" src="<?=get_stylesheet_directory_uri()?>/assets/img/pricing-table.png"></a>
     </div>
 </section><!-- End Features Section -->
 
