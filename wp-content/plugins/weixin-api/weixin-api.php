@@ -3,28 +3,26 @@
  * Plugin Name: Weixin API
  * Plugin URI: 
  * Description: 在WordPress中调用微信公众账号API，实现用户鉴权，微信支付，菜单更新等功能
- * Version: 0.3
+ * Version: 0.4
  * Author: Uice Lu
  * Author URI: https://cecilia.uice.lu/
  * License: 
  */
 class WeixinAPI {
 	
-	private $token; // 微信公众账号后台 / 高级功能 / 开发模式 / 服务器配置
-	private $app_id; // 开发模式 / 开发者凭据
-	private $app_secret; // 同上
-	private $partner_id; // 微信支付接口中，财付通提供的合作ID
-	private $partner_key; // 和密钥
-	private $pay_sign_key; // 开通微信支付接口时，由微信方面邮件提供的一个仅用于支付的密钥
+	private $token, // 微信公众账号后台 / 高级功能 / 开发模式 / 服务器配置
+			$app_id, // 开发模式 / 开发者凭据
+			$app_secret, // 同上
+			$mch_id, // 微信商户ID
+			$mch_key; // 微信商户Key
 	
 	function __construct() {
 		// 从WordPress配置中获取这些公众账号身份信息
 		foreach(array(
-			'partner_id',
-			'partner_key',
-			'pay_sign_key',
 			'app_id',
 			'app_secret',
+			'mch_id',
+			'mch_key',
 			'token'
 		) as $item){
 			$this->$item = get_option('wx_' . $item);
@@ -56,7 +54,7 @@ class WeixinAPI {
 	}
 	
 	function call($url){
-		error_log('Weixin API called: ' . $url);
+//		error_log('Weixin API called: ' . $url);
 		return file_get_contents($url);
 	}
 	
@@ -307,6 +305,53 @@ class WeixinAPI {
 		return $user_info;
 	}
 	
+	function generate_pay_sign(array $data){
+		$data = array_filter($data);
+		ksort($data, SORT_STRING);
+		$string1 = urldecode(http_build_query($data));
+		return strtoupper(md5($string1 . '&key=' . $this->mch_key));
+	}
+	
+	/**
+	 * 统一支付接口,可接受 JSAPI/NATIVE/APP下预支付订单,返回预支付订单号。 NATIVE支付返回二维码 code_url。
+	 * @param string $order_id
+	 * @param float $total_price
+	 * @param string $order_name
+	 * @param string $attach
+	 */
+	function unified_order($order_id, $total_price, $openid, $notify_url, $order_name, $trade_type = 'JSAPI', $attach = ' '){
+		
+		$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder?';
+		
+		$args = array(
+			'appid'=>$this->app_id,
+			'mch_id'=>$this->mch_id,
+			'nonce_str'=>rand(1E15, 1E16-1),
+			'body'=>$order_name,
+			'attach'=>$attach,
+			'out_trade_no'=>$order_id,
+			'total_fee'=>$total_price * 100,
+			'spbill_create_ip'=>$_SERVER['REMOTE_ADDR'],
+			'time_start'=>date('YmdHis'),
+			'notify_url'=>$notify_url,
+			'trade_type'=>$trade_type,
+			'openid'=>$openid
+		);
+		
+		$args['sign'] = $this->generate_pay_sign($args);
+		
+		$query_data = array_map(function($value){return (string) $value;}, $args);
+		
+		$response = json_decode($this->call($url . http_build_query($query_data)));
+		
+		if($response->return_code === 'SUCCESS' && $response->result_code === 'SUCCESS'){
+			return $trade_type === 'JSAPI' ? $response->prepay_id : $response->code_url;
+		}
+		else{
+			return $response;
+		}
+	}
+	
 	/**
 	 * 生成支付接口参数，供前端调用
 	 * @param string $notify_url 支付结果通知url
@@ -316,54 +361,19 @@ class WeixinAPI {
 	 * @param string $attach 附加信息，将在支付结果通知时原样返回
 	 * @return array
 	 */
-	function generate_js_pay_args($notify_url, $order_id, $total_price, $order_name, $attach = ' '){
+	function generate_js_pay_args($prepay_id){
 		
-		$package_data = array(
-			'bank_type'=>'WX',
-			'body'=>$order_name,
-			'attach'=>$attach,
-			'partner'=>$this->partner_id,
-			'out_trade_no'=>$order_id,
-			'total_fee'=>(string)(int) ($total_price * 100),
-			'fee_type'=>'1',
-			'notify_url'=>$notify_url,
-			'spbill_create_ip'=>$_SERVER['REMOTE_ADDR'],
-			'input_charset'=>'UTF-8'
-		);
-
-		ksort($package_data, SORT_STRING);
-
-		$string1 = urldecode(http_build_query($package_data));
-		$stringSignTemp = $string1 . '&key=' . $this->partner_key;
-		$signValue = strtoupper(md5($stringSignTemp));
-		$string2 = http_build_query($package_data, null, null, PHP_QUERY_RFC3986);
-		$package = $string1 . '&sign=' . $signValue;
-
-		$nonce_str = (string) rand(1E15, 1E16-1);
-		$timestamp = time();
-
-		$pay_sign_data = array(
-			'appid'=>get_option('wx_app_id'),
-			'timestamp'=>$timestamp,
-			'noncestr'=>$nonce_str,
-			'package'=>$package,
-			'appkey'=>$this->pay_sign_key
-		);
-
-		ksort($pay_sign_data, SORT_STRING);
-		$string1 = urldecode(http_build_query($pay_sign_data));
-		$pay_sign = sha1($string1);
-
-		$pay_request_args = array(
-			'appId'=>(string) get_option('wx_app_id'),
-			'timeStamp'=>(string) $timestamp,
-			'nonceStr'=>(string) $nonce_str,
-			'package'=>$package,
-			'signType'=>'SHA1',
-			'paySign'=>$pay_sign,
+		$args = array(
+			'appId'=>$this->app_id,
+			'timeStamp'=>time(),
+			'nonceStr'=>rand(1E15, 1E16-1),
+			'package'=>'prepay_id=' . $prepay_id,
+			'signType'=>'MD5'
 		);
 		
-		return $pay_request_args;
+		$args['paySign'] = $this->generate_pay_sign($args);
+		
+		return array_map(function($value){return (string) $value;}, $args);
 	}
 	
 	/**
