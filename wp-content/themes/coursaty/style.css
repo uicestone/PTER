@@ -2656,6 +2656,7 @@ h6.head-title {
     font-weight: bold;
     margin-top: 20px;
     color: #5a5e6a;
+    text-align: center;
 }
 .login-page .login-form .input-with-label input {
     font-size: 100%;

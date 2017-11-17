@@ -372,7 +372,9 @@ add_action('init', function () {
         }
 	});
 
-    global $is_cn_ip;
+//	remove_filter('template_redirect','redirect_canonical');
+
+	global $is_cn_ip;
 	$is_cn_ip = is_cn_ip();
 });
 

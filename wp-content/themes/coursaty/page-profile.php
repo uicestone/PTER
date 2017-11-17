@@ -47,6 +47,12 @@ foreach (array('reading', 'writing') as $service) {
 	}
 }
 
+$wx = new WeixinAPI();
+
+if ($oauth_info = $wx->get_oauth_info()) {
+    print_r($oauth_info);exit;
+}
+
 get_header(); the_post(); ?>
 
 <div class="inner-head">
@@ -125,6 +131,11 @@ get_header(); the_post(); ?>
 								<div class="input clearfix">
 									<input type="submit" id="reg_submit" name="submit" value="修改" class="submit-input grad-btn ln-tr">
 								</div>
+                                <?php if (isset($_GET['test'])): ?>
+                                <div class="input clearfix">
+                                    <a href="<?=$wx->generate_oauth_url()?>" class="submit-input grad-btn ln-tr input-with-label">绑定微信</a>
+                                </div>
+                                <?php endif; ?>
 							</div><!-- end submit -->
 						</div><!-- end row -->
 					</form><!-- End form -->

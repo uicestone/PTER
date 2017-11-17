@@ -159,7 +159,7 @@ class WeixinAPI {
 		
 		$query_args = array(
 			'appid'=>$this->app_id,
-			'redirect_uri'=>is_null($redirect_uri) ? site_url() : $redirect_uri,
+			'redirect_uri'=>is_null($redirect_uri) ? site_url($_SERVER['REQUEST_URI']) : $redirect_uri,
 			'response_type'=>'code',
 			'scope'=>$scope,
 			'state'=>$state
@@ -191,7 +191,7 @@ class WeixinAPI {
 	 * 根据一个OAuth授权请求中的code，获得并存储用户授权信息
 	 * 通常不应直接调用此方法，而应调用get_oauth_info()
 	 */
-	function get_oauth_token($code = null){
+	function get_oauth_token($code = null, $force = false){
 		
 		if(is_user_logged_in() && $auth_result = get_user_meta(get_current_user_id(), 'oauth_info', true)){
 			if(json_decode($auth_result)->expires_at >= time()){
@@ -201,6 +201,12 @@ class WeixinAPI {
 		
 		if(is_null($code)){
 			if(empty($_GET['code'])){
+
+				// 非强制微信网页授权，跳过
+				if (!$force) {
+					return null;
+				}
+
 				header('Location: ' . $this->generate_oauth_url(site_url() . $_SERVER['REQUEST_URI']));
 				exit;
 			}
@@ -260,7 +266,7 @@ class WeixinAPI {
 	 * 所谓OAuth信息，是用户和站点交互的凭据，里面包含了用户的openid，access token等
 	 * 并不包含用户的信息，我们需要根据OAuth信息，通过oauth_get_user_info()去获得
 	 */
-	function get_oauth_info($access_token = null){
+	function get_oauth_info($access_token = null, $force = false){
 		
 		// 尝试从请求中获得access token
 		if(is_null($access_token) && isset($_GET['access_token'])){
@@ -269,7 +275,7 @@ class WeixinAPI {
 		
 		// 如果没能获得access token，我们猜这是一个OAuth授权请求，直接根据code获得OAuth信息
 		if (empty($access_token)) {
-			return $this->get_oauth_token();
+			return $this->get_oauth_token(null, $force);
 		}
 
 		$auth_info = json_decode(get_option('wx_oauth_token_' . $access_token));
