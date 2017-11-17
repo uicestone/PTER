@@ -281,7 +281,7 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                                 <div class="skillbar-bar"></div>
                             </div>
 							<?php endif; ?>
-							<?php if(in_array($question_type->slug, array('summarise-spoken-text'))): ?>
+							<?php if(in_array($question_type->slug, array('summarise-spoken-text', 'swt'))): ?>
                             <div class="skillbar timer clearfix" data-duration="600">
                                 <div class="skillbar-title">
                                     <span>时间 <span class="seconds-left">10:00</span></span>
