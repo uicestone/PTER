@@ -1,13 +1,13 @@
 <?php
 
-require './includes/admin.php';
-require './includes/cap.php';
-require './includes/cron.php';
-require './includes/enqueue.php';
-require './includes/nav.php';
-require './includes/order.php';
-require './includes/post_type.php';
-require './includes/shortcode.php';
+require __DIR__ . '/includes/admin.php';
+require __DIR__ . '/includes/cap.php';
+require __DIR__ . '/includes/cron.php';
+require __DIR__ . '/includes/enqueue.php';
+require __DIR__ . '/includes/nav.php';
+require __DIR__ . '/includes/order.php';
+require __DIR__ . '/includes/post_type.php';
+require __DIR__ . '/includes/shortcode.php';
 
 add_action('init', function () {
 
