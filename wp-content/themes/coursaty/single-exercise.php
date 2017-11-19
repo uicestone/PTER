@@ -526,6 +526,7 @@ jQuery(function($) {
 
         // answer word count
         var wordCount = $(this).val().trim().split(/\s+/).length;
+        var _self = this;
         wordCountElement.text(wordCount);
 
         if (wordCount > 70) {
@@ -538,38 +539,48 @@ jQuery(function($) {
         // console.log(answer);console.log($(this).val().trim().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, ''));
 
         // answer diff rate
-        var diffWords = JsDiff.diffWords(answer, $(this).val().trim().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '')).reduce(function (stat, current) {
-            var diffWordCount = current.value.trim().split(/\s+/).length;
+        setTimeout(function () {
 
-            if (current.added && !stat.modified) {
-                stat.diff += diffWordCount;
-            }
-            else if (current.removed) {
-                stat.diff += diffWordCount;
-                stat.modified += diffWordCount;
-            }
-            else if (current.added && stat.modified) {
-                stat.modified = 0;
+            var diffWords, diffRate;
+
+            if (!wordDiffCountElement.length) {
+                return;
             }
 
-            return stat;
+            diffWords = JsDiff.diffWords(answer, $(_self).val().trim().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '')).reduce(function (stat, current) {
+                var diffWordCount = current.value.trim().split(/\s+/).length;
 
-        }, {diff:0, modified:0}).diff;
+                if (current.added && !stat.modified) {
+                    stat.diff += diffWordCount;
+                }
+                else if (current.removed) {
+                    stat.diff += diffWordCount;
+                    stat.modified += diffWordCount;
+                }
+                else if (current.added && stat.modified) {
+                    stat.modified = 0;
+                }
 
-        var diffRate = diffWords / answerWordCount;
+                return stat;
 
-        wordDiffCountElement.text((100 - diffRate * 100).toFixed(0) + '%');
+            }, {diff:0, modified:0}).diff;
 
-        if (diffRate <= 0.2 || ($('.rating').data('rating') >= 4 && diffRate <= 0.3)) {
-            answerCheckButton.prop('disabled', false);
-            answerToggleButton.removeClass('disabled');
-        }
-        else {
-            answerCheckButton.prop('disabled', true);
-            if (answerToggleButton.hasClass('disable-on-high-diff')) {
-                answerToggleButton.addClass('disabled');
+            diffRate = diffWords / answerWordCount;
+
+            wordDiffCountElement.text((100 - diffRate * 100).toFixed(0) + '%');
+
+            if (diffRate <= 0.2 || ($('.rating').data('rating') >= 4 && diffRate <= 0.3)) {
+                answerCheckButton.prop('disabled', false);
+                answerToggleButton.removeClass('disabled');
             }
-        }
+            else {
+                answerCheckButton.prop('disabled', true);
+                if (answerToggleButton.hasClass('disable-on-high-diff')) {
+                    answerToggleButton.addClass('disabled');
+                }
+            }
+        });
+
     });
 
     answerCheckButton.on('click', function (e) {
