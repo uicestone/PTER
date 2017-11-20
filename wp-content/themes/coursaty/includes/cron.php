@@ -7,7 +7,11 @@ add_action('after_switch_theme', function () {
 	}
 
 	if (!wp_next_scheduled('bingo_subscription_remind')) {
-		wp_schedule_event(strtotime('next monday 20:00') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_subscription_remind');
+		wp_schedule_event(strtotime('today 20:00') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_subscription_remind');
+	}
+
+	if (!wp_next_scheduled('bingo_member_scoop')) {
+		wp_schedule_event(strtotime('today 20:00') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_member_scoop');
 	}
 
 	if (!wp_next_scheduled('bingo_expiring_remind')) {
@@ -44,6 +48,22 @@ function remind_unsubscribed_users () {
 		if (!$user->can('view_tips') && !$user->can('view_exercises')) {
 			send_template_mail('subscription-reminder-email', $user->user_email, array('user_name' => $user->display_name));
 		}
+	}
+}
+
+add_action('bingo_member_scoop', 'send_member_scoop');
+
+function send_member_scoop () {
+	$users = get_users(array(
+		'meta_query' => array (
+			'relation' => 'OR',
+			array('key' => 'service_tips_valid_before', 'value' => time(), 'compare' => '>='),
+			array('key' => 'service_exercises_valid_before', 'value' => time(), 'compare' => '>=')
+		))
+	);
+
+	foreach ($users as $user) {
+		send_template_mail('member-scoop-email', $user->user_email, array('user_name' => $user->display_name));
 	}
 }
 
