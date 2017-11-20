@@ -38,14 +38,14 @@ function clean_expired_user_caps () {
 add_action('bingo_subscription_remind', 'remind_unsubscribed_users');
 
 function remind_unsubscribed_users () {
-	$users = get_users(array(
-			'date_query' => array (
-				'after' => date('Y-m-d H:i:s', time() - 8 * 86400),
-				'before' => date('Y-m-d H:i:s', time() - 7 * 86400),
-			))
-	);
+	$users = get_users();
 	foreach ($users as $user) {
-		if (!$user->can('view_tips') && !$user->can('view_exercises')) {
+
+		if ($user->can('view_tips') || $user->can('view_exercises')) {
+			return;
+		}
+
+		if ((time() - strtotime($user->user_registered)) / (86400 * 7) % 3 === 0) {
 			send_template_mail('subscription-reminder-email', $user->user_email, array('user_name' => $user->display_name));
 		}
 	}
