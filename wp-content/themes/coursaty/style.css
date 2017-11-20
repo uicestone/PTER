@@ -2656,6 +2656,8 @@ h6.head-title {
     font-weight: bold;
     margin-top: 20px;
     color: #5a5e6a;
+}
+.login-page .login-form .input-with-label {
     text-align: center;
 }
 .login-page .login-form .input-with-label input {
@@ -2680,7 +2682,6 @@ h6.head-title {
 .comment-form .input textarea, .contact-form .input textarea {
     min-height: 120px;
     resize: vertical;
-    text-align: left;
 }
 .comment-form .input .submit-input, .contact-form .input .submit-input {
     padding: 0 15px;
