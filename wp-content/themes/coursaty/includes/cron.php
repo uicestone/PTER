@@ -54,6 +54,11 @@ function remind_unsubscribed_users () {
 add_action('bingo_member_scoop', 'send_member_scoop');
 
 function send_member_scoop () {
+
+	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== 1) {
+		return;
+	}
+
 	$users = get_users(array(
 		'meta_query' => array (
 			'relation' => 'OR',
