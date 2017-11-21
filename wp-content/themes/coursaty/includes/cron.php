@@ -38,13 +38,22 @@ function clean_expired_user_caps () {
 add_action('bingo_subscription_remind', 'remind_unsubscribed_users');
 
 function remind_unsubscribed_users () {
+
+	// 只在周一发送
+	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== 1) {
+		return;
+	}
+
 	$users = get_users();
+
 	foreach ($users as $user) {
 
+		// 有权限的不发送
 		if ($user->can('view_tips') || $user->can('view_exercises')) {
 			return;
 		}
 
+		// 注册后每三周发送
 		if ((time() - strtotime($user->user_registered)) / (86400 * 7) % 3 === 0) {
 			send_template_mail('subscription-reminder-email', $user->user_email, array('user_name' => $user->display_name));
 		}
@@ -55,6 +64,7 @@ add_action('bingo_member_scoop', 'send_member_scoop');
 
 function send_member_scoop () {
 
+	// 只在周一发送
 	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== 1) {
 		return;
 	}
@@ -68,7 +78,10 @@ function send_member_scoop () {
 	);
 
 	foreach ($users as $user) {
-		send_template_mail('member-scoop-email', $user->user_email, array('user_name' => $user->display_name));
+		// 注册后每三周发送
+		if ((time() - strtotime($user->user_registered)) / (86400 * 7) % 3 === 0) {
+			send_template_mail('member-scoop-email', $user->user_email, array('user_name' => $user->display_name));
+		}
 	}
 }
 
