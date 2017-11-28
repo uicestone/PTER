@@ -61,7 +61,7 @@ add_action('init', function () {
 			'not_found' => '未找到练习'
 		),
 		'public' => true,
-		'supports' => array('title', 'editor', 'revisions', 'thumbnail', 'page-attributes'),
+		'supports' => array('title', 'editor', 'revisions', 'thumbnail', 'page-attributes', 'comments'),
 		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-editor-spellcheck',
 		'has_archive' => true

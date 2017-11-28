@@ -2523,10 +2523,15 @@ h6.head-title {
 }
 .comments-list li .avatar {
     overflow: hidden;
-    border: 3px solid #f87a46;
+    border: 3px solid #267284;
     border-radius: 50%;
     margin-right: 20px;
 }
+.comments-list li .avatar img {
+    width: 72px;
+    height: 72px;
+    background: white;
+    object-fit: contain;}
 .comments-list li .content {
     overflow: hidden;
 }

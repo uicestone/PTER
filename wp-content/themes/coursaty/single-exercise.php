@@ -12,6 +12,23 @@ if (isset($_POST['save_audio_time_point'])) {
     header('Location: ' . $_SERVER['HTTP_REFERER']); exit;
 }
 
+if ($_POST['comment']) {
+
+	redirect_login();
+
+    $comment_author = wp_get_current_user();
+
+	wp_handle_comment_submission(array(
+		'comment_post_ID' => get_the_ID(),
+		'author' => $comment_author->display_name,
+		'email' => $comment_author->user_email,
+        'comment' => $_POST['comment']
+    ));
+
+	header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+	exit;
+}
+
 get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1]; ?>
 
 <div class="copyright-header">
@@ -127,6 +144,23 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                                 </div>
                             </div>
                         </div><!-- End comment form -->
+                        <?php comments_template('/comments-exercise.php', true); ?>
+                        <div class="comment-form">
+                            <div class="addcomment-title">
+                                <span class="icon"><i class="fa fa-comments-o"></i></span>
+                                <span class="text">留下你的评论</span>
+                            </div><!-- End Title -->
+                            <form method="post" id="comment-form">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input">
+                                            <textarea name="comment" id="comment-area"></textarea>
+                                            <input type="submit" id="comment-submit" class="submit-input grad-btn ln-tr" value="提交审核">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form><!-- End form -->
+                        </div>
 					</div><!-- End col-md-12 -->
 				</div><!-- End main content row -->
 			</div><!-- End Main Content - LEFT -->
