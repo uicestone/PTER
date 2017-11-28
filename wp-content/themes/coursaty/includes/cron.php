@@ -39,8 +39,8 @@ add_action('bingo_subscription_remind', 'remind_unsubscribed_users');
 
 function remind_unsubscribed_users () {
 
-	// 只在周一发送
-	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== 1) {
+	// 只在周二发送
+	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== 2) {
 		return;
 	}
 
@@ -53,10 +53,7 @@ function remind_unsubscribed_users () {
 			return;
 		}
 
-		// 注册后每三周发送
-		if ((time() - strtotime($user->user_registered)) / (86400 * 7) % 3 === 0) {
-			send_template_mail('subscription-reminder-email', $user->user_email, array('user_name' => $user->display_name));
-		}
+		send_template_mail('subscription-reminder-email', $user->user_email, array('user_name' => $user->display_name));
 	}
 }
 
