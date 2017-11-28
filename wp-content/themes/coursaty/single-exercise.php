@@ -145,6 +145,7 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                             </div>
                         </div><!-- End comment form -->
                         <?php comments_template('/comments-exercise.php', true); ?>
+                        <?php if (comments_open()): ?>
                         <div class="comment-form">
                             <div class="addcomment-title">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
@@ -161,6 +162,7 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                                 </div>
                             </form><!-- End form -->
                         </div>
+                        <?php endif; ?>
 					</div><!-- End col-md-12 -->
 				</div><!-- End main content row -->
 			</div><!-- End Main Content - LEFT -->
