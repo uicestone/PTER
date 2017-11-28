@@ -7,19 +7,19 @@ add_action('after_switch_theme', function () {
 	}
 
 	if (!wp_next_scheduled('bingo_subscription_remind')) {
-		wp_schedule_event(strtotime('today 20:00') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_subscription_remind');
+		wp_schedule_event(strtotime('today 09:00') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_subscription_remind');
 	}
 
 	if (!wp_next_scheduled('bingo_member_scoop')) {
-		wp_schedule_event(strtotime('today 20:00') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_member_scoop');
+		wp_schedule_event(strtotime('today 09:00') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_member_scoop');
 	}
 
 	if (!wp_next_scheduled('bingo_expiring_remind')) {
-		wp_schedule_event(strtotime('today 20:30') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_expiring_remind');
+		wp_schedule_event(strtotime('today 09:30') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_expiring_remind');
 	}
 
 	if (!wp_next_scheduled('bingo_refresh_apnic_cn_ip_range')) {
-		wp_schedule_event(time(), 'daily', 'bingo_refresh_apnic_cn_ip_range');
+		wp_schedule_event('today 04:00', 'daily', 'bingo_refresh_apnic_cn_ip_range');
 	}
 
 });
@@ -39,8 +39,8 @@ add_action('bingo_subscription_remind', 'remind_unsubscribed_users');
 
 function remind_unsubscribed_users () {
 
-	// 只在周二发送
-	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== 2) {
+	// 只在周三发送
+	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== '3') {
 		return;
 	}
 
@@ -61,8 +61,8 @@ add_action('bingo_member_scoop', 'send_member_scoop');
 
 function send_member_scoop () {
 
-	// 只在周一发送
-	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== 1) {
+	// 只在周三发送
+	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== '3') {
 		return;
 	}
 
@@ -85,6 +85,12 @@ function send_member_scoop () {
 add_action('bingo_expiring_remind', 'remind_expiring_users');
 
 function remind_expiring_users () {
+
+	// 只在周五发送
+	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== '5') {
+		return;
+	}
+
 	foreach (array('exercises', 'tips') as $section) {
 		$meta_key = 'service_' . $section . '_valid_before';
 
