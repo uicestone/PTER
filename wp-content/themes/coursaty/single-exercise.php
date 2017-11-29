@@ -149,7 +149,7 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                         <div class="comment-form">
                             <div class="addcomment-title">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
-                                <span class="text">留下你的评论</span>
+                                <span class="text">留下你的提问</span>
                             </div><!-- End Title -->
                             <form method="post" id="comment-form">
                                 <div class="row">
