@@ -6,13 +6,13 @@
 			<div class="col-md-3 col-sm-6">
 				<div class="widget about-widget">
 					<h6 class="widget-title">微信客服号</h6>
-					<img src="<?=get_stylesheet_directory_uri()?>/assets/img/qrcode_mp_co.jpg">
+					<img src="<?=get_stylesheet_directory_uri()?>/assets/img/qrcode_cs.jpg">
 				</div><!-- End About Widget -->
 			</div><!-- End col-md3 -->
 			<div class="col-md-3 col-sm-6">
 				<div class="widget about-widget">
 					<h6 class="widget-title">微信公众号</h6>
-                    <img src="<?=get_stylesheet_directory_uri()?>/assets/img/qrcode_mp.jpg">
+                    <img src="<?=get_stylesheet_directory_uri()?>/assets/img/qrcode_mp_co.jpg">
 				</div><!-- End Courses Widget -->
 			</div><!-- End col-md4 -->
 			<div class="col-md-6">
