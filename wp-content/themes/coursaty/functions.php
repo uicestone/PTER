@@ -176,3 +176,28 @@ function send_template_mail ($template_slug, $to, $args = array()) {
 
 	return $result;
 }
+
+/**
+ *
+ * Synchronize a set of user meta value.
+ * Will only add and remove the difference.
+ *
+ * @param int $user_id
+ * @param string $meta_key
+ * @param array $new_values
+ * @param array $old_values optional
+ */
+function sync_user_meta($user_id, $meta_key, array $new_values, $old_values = null){
+
+	if(is_null($old_values)){
+		$old_values = get_user_meta($user_id, $meta_key);
+	}
+
+	foreach(array_diff($new_values, $old_values) as $value_to_add){
+		add_user_meta($user_id, $meta_key, $value_to_add);
+	}
+	foreach(array_diff($old_values, $new_values) as $value_to_delete){
+		delete_user_meta($user_id, $meta_key, $value_to_delete);
+	}
+
+}

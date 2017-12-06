@@ -29,6 +29,27 @@ if ($_POST['comment']) {
 	exit;
 }
 
+$user = wp_get_current_user();
+
+$marked_exercises = get_user_meta($user->ID, 'marked_exercises');
+$current_exercise_marked = in_array(get_the_ID(), $marked_exercises);
+
+if (isset($_POST['marked'])) {
+
+    $new_marked_exercises = $marked_exercises;
+
+    if ($_POST['marked'] && !$current_exercise_marked) {
+        array_push($new_marked_exercises, get_the_ID());
+    } elseif (!$_POST['marked'] && $current_exercise_marked) {
+        unset($new_marked_exercises[array_search(get_the_ID(), $new_marked_exercises)]);
+    }
+
+    sync_user_meta($user->ID, 'marked_exercises', $new_marked_exercises, $marked_exercises);
+
+	header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+	exit;
+}
+
 get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1]; ?>
 
 <div class="copyright-header">
@@ -197,11 +218,20 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                     <?php $previous_exercise = get_adjacent_post(true, '', true, $_GET['tag'] ? 'post_tag' : 'question_type');?>
 					<?php $next_exercise = get_adjacent_post(true, '', false, $_GET['tag'] ? 'post_tag' : 'question_type');?>
                     <div class="row">
-                        <div class="col-md-6">
-							<?php if ($previous_exercise): ?><a class="btn primary-btn " href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
+                        <div class="col-md-4" style="padding-right:5px">
+							<?php if ($previous_exercise): ?><a class="btn primary-btn" href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4" style="padding-left:5px;padding-right:5px">
 							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
+                        </div>
+                        <div class="col-md-4" style="padding-left:5px">
+                            <form method="post">
+                                <?php if ($current_exercise_marked): ?>
+                                <button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
+                                <?php else: ?>
+                                <button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> 已学</button>
+                                <?php endif; ?>
+                            </form>
                         </div>
                     </div>
                     <div class="row">
