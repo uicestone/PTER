@@ -67,6 +67,22 @@ add_action('init', function () {
 		'has_archive' => true
 	));
 
+	register_post_type('exercise_pack', array(
+		'label' => '打卡',
+		'labels' => array(
+			'all_items' => '所有打卡',
+			'add_new' => '添加打卡',
+			'add_new_item' => '新打卡',
+			'edit_item' => '编辑打卡',
+			'not_found' => '未找到打卡'
+		),
+		'public' => true,
+		'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
+		'taxonomies' => array('question_type', 'post_tag'),
+		'menu_icon' => 'dashicons-editor-ol',
+		'has_archive' => true
+	));
+
 	register_post_type('member_order', array(
 		'label' => '订单',
 		'labels' => array(
