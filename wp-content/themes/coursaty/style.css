@@ -1101,7 +1101,7 @@ header.alt .mobile-navigation .mobile-btn span:after {
     text-align: justify;
 }
 .latest-courses-content.listview .course .details {
-    width: 50%;
+    /*width: 50%;*/
     background: #efefef;
     border-radius: 3px;
     height: 29px;
@@ -1464,6 +1464,9 @@ h6.head-title {
 }
 .details .date, .details .place {
     margin-right: 27px;
+}
+.details .date:last-child {
+    margin-right: 0;
 }
 .details .icon i {
     font-size: 15px;

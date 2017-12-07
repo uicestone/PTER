@@ -83,6 +83,8 @@ add_action('init', function () {
 		'has_archive' => true
 	));
 
+	add_post_type_support('exercise_pack', 'wps_subtitle');
+
 	register_post_type('member_order', array(
 		'label' => '订单',
 		'labels' => array(
