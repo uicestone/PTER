@@ -51,7 +51,7 @@ get_header(); the_post(); ?>
                     <div class="featured-badge"><span>&nbsp;&nbsp;已学</span></div>
                     <?php endif; ?>
                     <div class="course-info">
-                        <h3 class="course-title"><a href="<?=get_the_permalink($exercise->ID)?>" class="ln-tr"><?=get_the_title($exercise->ID)?></a></h3>
+                        <h3 class="course-title"><a href="<?=get_the_permalink($exercise->ID)?>" target="_blank" class="ln-tr"><?=get_the_title($exercise->ID)?></a></h3>
                         <div class="details fl">
                             <?php $question_types = wp_get_object_terms($exercise->ID, 'question_type', array('orderby' => 'id')); foreach ($question_types as $question_type): ?>
                             <div class="date ib">
@@ -61,7 +61,7 @@ get_header(); the_post(); ?>
                             <?php endforeach; ?>
                         </div><!-- End Details Box -->
                         <div class="buttons fr">
-                            <a href="<?=get_the_permalink($exercise->ID)?>" class="btn grad-btn orange-btn read-btn">前往练习</a>
+                            <a href="<?=get_the_permalink($exercise->ID)?>" target="_blank" class="btn grad-btn orange-btn read-btn">前往练习</a>
                         </div>
                     </div>
                 </div><!-- End Course -->
