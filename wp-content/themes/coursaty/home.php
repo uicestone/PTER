@@ -68,7 +68,7 @@
         </p><!-- End Section Description -->
         <div class="banner-actions">
 			<?php if ($index === 0): ?>
-            <a href="<?=site_url()?>/tip/?tag=free-trial" class="btn">Free trial</a>
+            <a href="<?=site_url()?>/tip/?tag=free-trial" class="btn">免费体验</a>
 			<?php elseif ($index === 1): ?>
             <a href="<?=site_url()?>/tip/how-to-use/" class="btn">使用指南</a>
 			<?php elseif ($index === 2): ?>
