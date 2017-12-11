@@ -41,7 +41,7 @@ foreach (array('reading', 'writing') as $service) {
 		}
 
 		update_user_meta($user->ID, 'service_' . $service . '_inactivated', --$service_inactivated);
-		update_user_meta($user->ID, 'service_' . $service . '_valid_before', time() + 86400 - 1);
+		update_user_meta($user->ID, 'service_' . $service . '_valid_before', time() + 86400 * 2 - 1);
 		$user->add_cap('view_' . $service);
 		header('Location: ' . site_url() . $_SERVER['REQUEST_URI']); exit;
 	}
