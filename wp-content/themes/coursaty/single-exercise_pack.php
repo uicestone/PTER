@@ -27,7 +27,7 @@ get_header(); the_post(); ?>
                 <div class="add-courses top-margin" style="padding:40px;">
                     <img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/addcourse-icon.png" alt="" class="fl add-courses-icon">
                     <a class="add-courses-title ln-tr" style="margin-bottom:15px"><?php the_title(); ?></a>
-                    <?php the_content(); ?>
+                    <div style="margin-left:100px"><?php the_content(); ?></div>
                 </div><!-- End Add Courses -->
                 <div class="home-skills">
                     <div class="skillbar clearfix" data-percent="<?=$complete_rate * 100?>%">
