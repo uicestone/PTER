@@ -30,6 +30,10 @@ if(isset($_POST['submit'])){
 		exit('Invalid email address: ' . $_POST['email'] . '.');
 	}
 
+	if ($_POST['mobile']) {
+	    add_user_meta($user_id, 'mobile', $_POST['mobile']);
+    }
+
 	if ($_POST['invitation_code']) {
 	    $invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
 	    if (count($invited_by_users) !== 1) {
@@ -86,6 +90,11 @@ get_header(); the_post(); ?>
                                     <input type="text" id="reg_username" name="username" class="username-input" placeholder="用户名*" required>
                                 </div>
                             </div><!-- end username -->
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input">
+                                    <input type="email" id="reg_mobile" name="mobile" class="mobile-input" placeholder="手机*" required>
+                                </div>
+                            </div><!-- end email -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
                                     <input type="email" id="reg_email" name="email" class="email-input" placeholder="电子邮箱*" required>

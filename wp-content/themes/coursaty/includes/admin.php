@@ -127,3 +127,26 @@ add_action('login_enqueue_scripts', function () { ?>
 	<?php
 });
 
+add_filter( 'user_contactmethods', function ( $contactmethods ) {
+	$contactmethods['mobile'] = '手机号';
+	return $contactmethods;
+}, 10, 1 );
+
+add_filter( 'manage_users_columns', function ( $column ) {
+	$column['posts'] = '发布内容';
+	$column = array_slice($column, 0, 4, true) +
+		['mobile' => '手机号'] +
+		array_slice($column, 4, null, true);
+
+	return $column;
+} );
+
+add_filter( 'manage_users_custom_column', function ( $val, $column_name, $user_id ) {
+	switch ($column_name) {
+		case 'mobile' :
+			return get_the_author_meta( 'mobile', $user_id );
+			break;
+		default:
+	}
+	return $val;
+}, 10, 3 );

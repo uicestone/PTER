@@ -15,6 +15,10 @@ if (isset($_POST['submit'])) {
 		wp_set_password($_POST['password'], $user->ID);
 		redirect_login(true);
 	}
+	if ($_POST['mobile']) {
+	    update_user_meta($user->ID, 'mobile', $_POST['mobile']);
+    }
+
 	if ($_POST['invitation_code']) {
 		$invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
 		if (count($invited_by_users) !== 1) {
@@ -25,6 +29,8 @@ if (isset($_POST['submit'])) {
         }
 		add_user_meta($user->ID, 'invited_by_user', $invited_by_users[0]->ID);
 	}
+
+	header('Location: ' . $_SERVER['HTTP_REFERER'], true, 303); exit;
 }
 
 foreach (array('reading', 'writing') as $service) {
@@ -95,6 +101,12 @@ get_header(); the_post(); ?>
 									<input type="text" id="reg_name" name="display_name" class="name-input" placeholder="对外显示的我的名称" value="<?=$user->display_name?>">
 								</div>
 							</div><!-- end display_name -->
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input-with-label">
+                                    <label>手机：</label>
+                                    <input type="text" id="reg_mobile" name="mobile" class="mobile-input" placeholder="<?=is_cn_ip() ? '+86 13612345678' : '+61 412345678'?>" value="<?=get_user_meta($user->ID, 'mobile', true)?>">
+                                </div>
+                            </div><!-- end email -->
 							<div class="col-md-6 col-sm-6">
 								<div class="input-with-label">
 									<label>电子邮箱：</label>
