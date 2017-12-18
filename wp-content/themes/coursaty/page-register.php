@@ -92,7 +92,7 @@ get_header(); the_post(); ?>
                             </div><!-- end username -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="email" id="reg_mobile" name="mobile" class="mobile-input" placeholder="手机*" required>
+                                    <input type="text" id="reg_mobile" name="mobile" class="mobile-input" placeholder="手机*" required>
                                 </div>
                             </div><!-- end email -->
                             <div class="col-md-6 col-sm-6">
