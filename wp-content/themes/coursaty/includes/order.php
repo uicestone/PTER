@@ -18,22 +18,11 @@ if (class_exists('WeixinAPI') && $_GET['code']) {
 	}
 
 	if (!$openid_before && $user_info) {
+		add_limited_free($user->ID, 3);
+	}
 
-		$service_tips_valid_after = get_user_meta($user->ID, 'service_tips_valid_before', true);
-		$service_exercises_valid_after = get_user_meta($user->ID, 'service_exercises_valid_before', true);
-
-		if (!$service_tips_valid_after || $service_tips_valid_after < time()) {
-			$service_tips_valid_after = time();
-			update_user_meta($user->id, 'limited_free', 'yes');
-		}
-
-		if (!$service_exercises_valid_after || $service_exercises_valid_after < time()) {
-			$service_exercises_valid_after = time();
-			update_user_meta($user->id, 'limited_free', 'yes');
-		}
-
-		update_user_meta($user->ID, 'service_tips_valid_before', $service_tips_valid_after + 86400 * 3);
-		update_user_meta($user->ID, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * 3);
+	if (get_user_meta($user->ID, 'invited_by_user')) {
+		add_limited_free($user->ID, 2);
 	}
 
 	$redirect_query = parse_url(site_url($_SERVER['REQUEST_URI']), PHP_URL_QUERY);
@@ -41,6 +30,24 @@ if (class_exists('WeixinAPI') && $_GET['code']) {
 	parse_str($redirect_query, $redirect_query_object);
 	unset($redirect_query_object['code']);
 	header('Location: ' . site_url($redirect_path . '?' . http_build_query($redirect_query_object))); exit;
+}
+
+function add_limited_free ($user_id, $days) {
+	$service_tips_valid_after = get_user_meta($user_id, 'service_tips_valid_before', true);
+	$service_exercises_valid_after = get_user_meta($user_id, 'service_exercises_valid_before', true);
+
+	if (!$service_tips_valid_after || $service_tips_valid_after < time()) {
+		$service_tips_valid_after = time();
+		update_user_meta($user_id, 'limited_free', 'yes');
+	}
+
+	if (!$service_exercises_valid_after || $service_exercises_valid_after < time()) {
+		$service_exercises_valid_after = time();
+		update_user_meta($user_id, 'limited_free', 'yes');
+	}
+
+	update_user_meta($user_id, 'service_tips_valid_before', $service_tips_valid_after + 86400 * $days);
+	update_user_meta($user_id, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * $days);
 }
 
 function order_paid ($order_no, $gateway = null) {
