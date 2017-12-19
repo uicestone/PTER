@@ -25,7 +25,12 @@ class WeixinAPI {
 			'mch_key',
 			'token'
 		) as $item){
-			$this->$item = get_option('wx_' . $item);
+			if (self::in_wx()) {
+				$this->$item = get_option('wx_' . $item);
+			}
+			else {
+				$this->$item = get_option('wx_' . $item . '_web');
+			}
 		}
 
 	}
@@ -153,8 +158,12 @@ class WeixinAPI {
 	/**
 	 * 生成OAuth授权地址
 	 */
-	function generate_oauth_url($redirect_uri = null, $state = '', $scope = 'snsapi_base'){
-		
+	function generate_oauth_url($redirect_uri = null, $state = '', $scope = 'snsapi_userinfo'){
+
+		if (!self::in_wx()) {
+			return $this->generate_web_qr_oauth_url($redirect_uri);
+		}
+
 		$url = 'https://open.weixin.qq.com/connect/oauth2/authorize?';
 		
 		$query_args = array(
@@ -169,6 +178,24 @@ class WeixinAPI {
 		
 		return $url;
 		
+	}
+
+	function generate_web_qr_oauth_url($redirect_uri = null, $state = '', $scope = 'snsapi_login'){
+
+		$url = 'https://open.weixin.qq.com/connect/qrconnect?';
+
+		$query_args = array(
+			'appid'=>$this->app_id,
+			'redirect_uri'=>is_null($redirect_uri) ? site_url($_SERVER['REQUEST_URI']) : $redirect_uri,
+			'response_type'=>'code',
+			'scope'=>$scope,
+			'state'=>$state
+		);
+
+		$url .= http_build_query($query_args) . '#wechat_redirect';
+
+		return $url;
+
 	}
 	
 	/**
@@ -226,13 +253,14 @@ class WeixinAPI {
 
 		if(!isset($auth_result->openid)){
 			error_log('Get OAuth token failed. ' . json_encode($auth_result));
-			exit;
+			return false;
 		}
 		
 		$auth_result->expires_at = $auth_result->expires_in + time();
 		
 		if(is_user_logged_in()){
-			update_user_meta(get_current_user_id(), 'oauth_info', json_encode($auth_result));
+			update_user_meta(get_current_user_id(), 'wx_openid', $auth_result->openid);
+			update_user_meta(get_current_user_id(), 'wx_oauth_info', json_encode($auth_result));
 		}else{
 			update_option('wx_oauth_token_' . $auth_result->access_token, json_encode($auth_result));
 		}
@@ -272,7 +300,7 @@ class WeixinAPI {
 		if(is_null($access_token) && isset($_GET['access_token'])){
 			$access_token = $_GET['access_token'];
 		}
-		
+
 		// 如果没能获得access token，我们猜这是一个OAuth授权请求，直接根据code获得OAuth信息
 		if (empty($access_token)) {
 			return $this->get_oauth_token(null, $force);
@@ -297,7 +325,11 @@ class WeixinAPI {
 		$url = 'https://api.weixin.qq.com/sns/userinfo?';
 		
 		$auth_info = $this->get_oauth_info();
-		
+
+		if (!$auth_info) {
+			return false;
+		}
+
 		$query_vars = array(
 			'access_token'=>$auth_info->access_token,
 			'openid'=>$auth_info->openid,
@@ -549,5 +581,9 @@ class WeixinAPI {
 	function transfer_customer_service($received_message){
 		require plugin_dir_path(__FILE__) . 'template/transfer_customer_service.php';
 	}
-	
+
+	static function in_wx() {
+		return strpos($_SERVER['HTTP_USER_AGENT'], ' MicroMessenger/') !== false;
+	}
+
 }

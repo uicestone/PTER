@@ -1,5 +1,48 @@
 <?php
 
+if (class_exists('WeixinAPI') && $_GET['code']) {
+
+	$wx = new WeixinAPI();
+
+	$user = wp_get_current_user();
+
+	$openid_before = get_user_meta($user->ID, 'wx_openid', true);
+
+	if ($user_info = $wx->oauth_get_user_info()) {
+		update_user_meta($user_id, 'sex', $user_info->sex);
+		update_user_meta($user_id, 'country', $user_info->country);
+		update_user_meta($user_id, 'province', $user_info->province);
+		update_user_meta($user_id, 'language', $user_info->language);
+		update_user_meta($user_id, 'headimgurl', $user_info->headimgurl);
+		update_user_meta($user_id, 'subscribe_time', $user_info->subscribe_time);
+	}
+
+	if (!$openid_before && $user_info) {
+
+		$service_tips_valid_after = get_user_meta($user->ID, 'service_tips_valid_before', true);
+		$service_exercises_valid_after = get_user_meta($user->ID, 'service_exercises_valid_before', true);
+
+		if (!$service_tips_valid_after || $service_tips_valid_after < time()) {
+			$service_tips_valid_after = time();
+			update_user_meta($user->id, 'limited_free', 'yes');
+		}
+
+		if (!$service_exercises_valid_after || $service_exercises_valid_after < time()) {
+			$service_exercises_valid_after = time();
+			update_user_meta($user->id, 'limited_free', 'yes');
+		}
+
+		update_user_meta($user->ID, 'service_tips_valid_before', $service_tips_valid_after + 86400 * 3);
+		update_user_meta($user->ID, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * 3);
+	}
+
+	$redirect_query = parse_url(site_url($_SERVER['REQUEST_URI']), PHP_URL_QUERY);
+	$redirect_path = parse_url(site_url($_SERVER['REQUEST_URI']), PHP_URL_PATH);
+	parse_str($redirect_query, $redirect_query_object);
+	unset($redirect_query_object['code']);
+	header('Location: ' . site_url($redirect_path . '?' . http_build_query($redirect_query_object))); exit;
+}
+
 function order_paid ($order_no, $gateway = null) {
 	// find the order
 	$order = get_posts(array('name' => sanitize_title($order_no), 'post_type' => 'member_order', 'post_status' => 'private'))[0];
@@ -62,6 +105,7 @@ function order_paid ($order_no, $gateway = null) {
 
 		update_user_meta($user->ID, 'service_tips_valid_before', $service_tips_valid_after + 86400 * 30 * $amount);
 		update_user_meta($user->ID, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * 30 * $amount);
+		delete_user_meta($user->id, 'limited_free');
 	}
 
 	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {

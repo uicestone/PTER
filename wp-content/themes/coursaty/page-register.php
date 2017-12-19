@@ -47,12 +47,9 @@ if(isset($_POST['submit'])){
 
 	send_template_mail('welcome-email', wp_get_current_user()->user_email);
 
-	if ($_GET['intend']) {
-		header('Location: ' . $_GET['intend']); exit;
-	}
-	else {
-		header('Location: ' . site_url('profile')); exit;
-	}
+	$wx = new WeixinAPI();
+
+	header('Location: ' . $wx->generate_oauth_url(site_url($_GET['intend'] ?: 'profile'))); exit;
 }
 
 get_header(); the_post(); ?>
@@ -130,7 +127,7 @@ get_header(); the_post(); ?>
                             </div><!-- end submit -->
                             <div class="col-md-12">
                                 <div class="input clearfix">
-                                    <input type="submit" id="reg_submit" name="submit" class="submit-input grad-btn ln-tr" value="注册">
+                                    <input type="submit" id="reg_submit" name="submit" class="submit-input grad-btn ln-tr" value="注册并绑定微信">
                                 </div>
                             </div><!-- end submit -->
                             <div class="col-md-6 col-sm-6 col-sm-offset-6 clearfix">
