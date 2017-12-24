@@ -2,8 +2,11 @@
 
 $marked_exercises = get_user_meta(get_current_user_id(), 'marked_exercises') ?: [];
 $exercises = get_field('exercises');
+$exercises_exclude_tips = array_filter($exercises, function ($exercise) {
+    return $exercise->post_type === 'exercise';
+});
 
-$complete_rate = 1 - count(array_diff(array_column($exercises, 'ID'), $marked_exercises)) / count($exercises);
+$complete_rate = 1 - count(array_diff(array_column($exercises, 'ID'), $marked_exercises)) / count($exercises_exclude_tips);
 
 get_header(); the_post(); ?>
 
@@ -24,10 +27,10 @@ get_header(); the_post(); ?>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <div class="add-courses top-margin" style="padding:40px;">
+                <div class="add-courses top-margin" style="padding:30px;">
                     <img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/addcourse-icon.png" alt="" class="fl add-courses-icon">
                     <a class="add-courses-title ln-tr" style="margin-bottom:15px"><?php the_title(); ?></a>
-                    <div style="margin-left:100px"><?php the_content(); ?></div>
+                    <div style="margin-left:10px"><?php the_content(); ?></div>
                 </div><!-- End Add Courses -->
                 <div class="home-skills">
                     <div class="skillbar clearfix" data-percent="<?=$complete_rate * 100?>%">
