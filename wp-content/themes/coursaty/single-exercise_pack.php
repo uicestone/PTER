@@ -30,6 +30,9 @@ get_header(); the_post(); ?>
                 <div class="add-courses top-margin" style="padding:30px;">
                     <img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/addcourse-icon.png" alt="" class="fl add-courses-icon">
                     <a class="add-courses-title ln-tr" style="margin-bottom:15px"><?php the_title(); ?></a>
+                    <?php if ($last_exercise_packs = get_posts(array('post_type'=>'exercise_pack', 'meta_key'=>'next_pack', 'meta_value'=>get_the_ID()))): ?>
+                    <a href="<?=get_the_permalink($last_exercise_packs[0]->ID)?>" class="pull-right"><i class="fa fa-undo"></i> 上一个打卡</a>
+                    <?php endif; ?>
                     <div style="margin-left:10px"><?php the_content(); ?></div>
                 </div><!-- End Add Courses -->
                 <div class="home-skills">
