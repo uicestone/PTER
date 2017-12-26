@@ -51,7 +51,7 @@
                      data-endspeed="500" style="z-index:99">
                     <a href="<?=site_url()?>/tip/?tag=free-trial" class="btn">免费体验</a>
                     <a href="<?=site_url()?>/tip/how-to-use/" class="btn">使用指南</a>
-                    <a href="<?=site_url()?>/promotion/" class="btn">限时优惠</a>
+                    <a href="<?=site_url()?>/exercise_pack/课程1/" class="btn">宾果23天课</a>
                 </div>
             </li>
             <?php endforeach; ?>
@@ -72,7 +72,7 @@
 			<?php elseif ($index === 1): ?>
             <a href="<?=site_url()?>/tip/how-to-use/" class="btn">使用指南</a>
 			<?php elseif ($index === 2): ?>
-            <a href="<?=site_url()?>/promotion/" class="btn">限时免费</a>
+            <a href="<?=site_url()?>/exercise_pack/课程1/" class="btn">宾果23天课</a>
             <?php endif; ?>
         </div>
     </div>
