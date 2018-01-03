@@ -503,7 +503,7 @@ jQuery(function($) {
 
             if (nextTimePoint && nextTimePoint > timePoint) {
                 setTimeout(function () {
-                    self.stop();
+                    self.pause();
                 }, (nextTimePoint - timePoint) * 1000);
             }
         })
