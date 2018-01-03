@@ -635,7 +635,7 @@ jQuery(function($) {
 
             wordDiffCountElement.text((100 - diffRate * 100).toFixed(0) + '%');
 
-            if (diffRate <= 0.2 || ($('.rating').data('rating') >= 4 && diffRate <= 0.3)) {
+            if (diffRate <= 0.25 || ($('.rating').data('rating') >= 4 && diffRate <= 0.3)) {
                 answerCheckButton.prop('disabled', false);
                 answerToggleButton.removeClass('disabled');
             }
