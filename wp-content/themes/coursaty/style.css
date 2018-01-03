@@ -1160,6 +1160,10 @@ header.alt .mobile-navigation .mobile-btn span:after {
     font-weight: 600;
     color: #5a5e6a;
 }
+.add-courses iframe {
+    width: 100%;
+    height: auto;
+}
 /* 07 - Categories */
 .categories-section {
     background: #eee;
