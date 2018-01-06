@@ -139,7 +139,7 @@ get_header(); the_post(); ?>
 								<div class="input clearfix">
 									<input type="submit" id="reg_submit" name="submit" value="修改" class="submit-input grad-btn ln-tr">
                                     <?php if (!get_user_meta($user->ID, 'wx_openid', true)): ?>
-                                    <a href="<?=$wx->generate_oauth_url()?>" class="submit-input grad-btn ln-tr input-with-label" style="background:#00c44e">绑定微信，立即获得3天限时免费订阅</a>
+                                    <a href="<?=$wx->generate_oauth_url()?>" class="submit-input grad-btn ln-tr input-with-label" style="background:#00c44e">绑定微信，立即获得3天限时课程试用</a>
                                     <?php endif; ?>
 								</div>
 							</div><!-- end submit -->
