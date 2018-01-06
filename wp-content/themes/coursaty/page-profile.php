@@ -169,7 +169,7 @@ get_header(); the_post(); ?>
                         $active_services = array();
                         foreach (array ('tips' => '听力口语技巧', 'exercises' => '听力口语练习') as $service => $service_name):
                             $service_valid_before = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
-                            if ($service_valid_before && $service_valid_before >= time()): $active_services[] = $service; ?>
+                            if ($service_valid_before && $service_valid_before >= time() && !is_limited_free($user->ID)): $active_services[] = $service; ?>
                         <div class="add-courses box base-pack additional-pack">
 							<?php $percent = ($service_valid_before - time()) / (30 * 86400) * 100 ?>
 							<a href="#" class="add-courses-title ln-tr"><?=$service_name?></a>
@@ -215,7 +215,11 @@ get_header(); the_post(); ?>
 
 						<?php if (!$active_services): ?>
 						<div class="subscribe">
+                            <?php if (is_limited_free($user->ID)): ?>
+                                <a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您正在试用限时课程，点击订阅完整技巧和学习包</a>
+                            <?php else: ?>
 							<a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您目前没有任何服务，点击订阅</a>
+                            <?php endif; ?>
 						</div>
 						<?php endif; ?>
 					</div>

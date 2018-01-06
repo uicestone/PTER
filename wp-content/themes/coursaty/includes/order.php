@@ -50,6 +50,10 @@ function add_limited_free ($user_id, $days) {
 	update_user_meta($user_id, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * $days);
 }
 
+function is_limited_free ($user_id) {
+	return 'yes' === get_user_meta($user_id, 'limited_free', true);
+}
+
 function order_paid ($order_no, $gateway = null) {
 	// find the order
 	$order = get_posts(array('name' => sanitize_title($order_no), 'post_type' => 'member_order', 'post_status' => 'private'))[0];
