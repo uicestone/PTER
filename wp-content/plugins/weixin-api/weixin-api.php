@@ -259,6 +259,12 @@ class WeixinAPI {
 		$auth_result->expires_at = $auth_result->expires_in + time();
 		
 		if(is_user_logged_in()){
+			$existing_users = get_users(['meta_key' => 'wx_openid', 'meta_value' => $auth_result->openid]);
+
+			if ($existing_users & $existing_users[0]->ID !== wp_get_current_user()->ID) {
+				exit('此微信号已经绑定到其他账号。<a href=' . site_url() . '>返回首页</a>');
+			}
+
 			update_user_meta(get_current_user_id(), 'wx_openid', $auth_result->openid);
 			update_user_meta(get_current_user_id(), 'wx_oauth_info', json_encode($auth_result));
 		}else{
