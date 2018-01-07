@@ -3344,7 +3344,7 @@ blockquote.blockquote-4 .story {
     margin: 0;
     vertical-align: bottom;
 }
-.pricing-tables .invitation_code-submit {
+.pricing-tables .invitation_code-submit, .pricing-tables .limit-free {
     background: #2997ab;
     padding: 0 15px;
     margin: 0;
@@ -3353,6 +3353,13 @@ blockquote.blockquote-4 .story {
     border-radius: 2px;
     font-size: 100%;
     color: #fff;
+}
+.pricing-tables .invitation_code-submit:hover, .pricing-tables .limit-free:hover {
+    background: black;
+}
+.pricing-tables .limit-free {
+    display: inline-block;
+    float: right;
 }
 .pricing-tables .table-row {
     margin-bottom: 70px;

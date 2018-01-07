@@ -72,7 +72,7 @@ get_header(); the_post() ?>
             <div class="col-sm-4">
                 <form method="post" class="invitation_code-form">
                     <input type="text" id="invitation_code-input" name="invitation_code" class="invitation_code-input" placeholder="输入邀请码，获得优惠价格">
-                    <input type="submit" id="invitation_code-submit" name="invitation_code_submit" class="invitation_code-submit" value="保存">
+                    <input type="submit" id="invitation_code-submit" name="invitation_code_submit" class="invitation_code-submit ln-tr" value="保存">
                 </form>
             </div>
 			<?php endif; ?>
@@ -80,9 +80,10 @@ get_header(); the_post() ?>
             <div class="col-sm-4">
                 <form method="get" class="invitation_code-form">
                     <input type="text" id="promotion_code-input" name="promotion_code" value="<?=$_GET['promotion_code']?>" class="invitation_code-input" placeholder="输入优惠码，获得优惠价格">
-                    <input type="submit" id="promotion_code-submit" class="invitation_code-submit" value="使用">
+                    <input type="submit" id="promotion_code-submit" class="invitation_code-submit ln-tr" value="使用">
                 </form>
             </div>
+            <a href="<?=site_url('exercise_pack/课程1/')?>" class="limit-free ln-tr">限时免费课程试用</a>
             <?php endif; ?>
         </div><!-- End main content row -->
 
