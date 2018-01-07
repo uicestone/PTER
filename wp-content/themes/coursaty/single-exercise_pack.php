@@ -64,15 +64,19 @@ get_header(); the_post(); ?>
                     <div class="course-info">
                         <h3 class="course-title"><a href="<?=get_the_permalink($exercise->ID)?>" target="_blank" class="ln-tr"><?=get_the_title($exercise->ID)?></a></h3>
                         <div class="details fl">
+                            <div class="date ib">
+                                <span class="icon"><i class="fa fa-pencil"></i></span>
+                                <span class="text"><?=get_post_type_object($exercise->post_type)->label?></span>
+                            </div><!-- date icon -->
                             <?php $question_types = wp_get_object_terms($exercise->ID, 'question_type', array('orderby' => 'id')); foreach ($question_types as $question_type): ?>
                             <div class="date ib">
-                                <span class="icon"><i class="fa fa-clock-o"></i></span>
+                                <span class="icon"><i class="fa fa-tags"></i></span>
                                 <span class="text"><?=$question_type->name?></span>
                             </div><!-- date icon -->
                             <?php endforeach; ?>
                         </div><!-- End Details Box -->
                         <div class="buttons fr">
-                            <a href="<?=get_the_permalink($exercise->ID)?>" target="_blank" class="btn grad-btn orange-btn read-btn">前往练习</a>
+                            <a href="<?=get_the_permalink($exercise->ID)?>" target="_blank" class="btn grad-btn orange-btn read-btn">前往<?=get_post_type_object($exercise->post_type)->label?></a>
                         </div>
                     </div>
                 </div><!-- End Course -->
