@@ -114,7 +114,7 @@ get_header(); the_post(); ?>
                             </div><!-- end username -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="text" id="reg_invitation_code" name="invitation_code" class="invitation_code-input" placeholder="邀请码（可选，也可稍后绑定）">
+                                    <input type="<?=$_GET['invitation_code']?'hidden':'text'?>" id="reg_invitation_code" name="invitation_code" value="<?=$_GET['invitation_code']?>" class="invitation_code-input" placeholder="邀请码（可选，也可稍后绑定）">
                                 </div>
                             </div><!-- end username -->
                             <div class="col-md-12">

@@ -19,6 +19,7 @@ add_action('wp', function() {
 	wp_register_script('waveform', get_stylesheet_directory_uri() . '/assets/js/vendor/waveform/waveform-playlist.js', array(), '3.0.4', true);
 	wp_register_script('waveform-record', get_stylesheet_directory_uri() . '/assets/js/vendor/waveform/record.js', array(), '3.0.4', true);
 	wp_register_script('waveform-emitter', get_stylesheet_directory_uri() . '/assets/js/vendor/waveform/emitter.js', array(), '3.0.4', true);
+	wp_register_script('clipboard', get_stylesheet_directory_uri() . '/assets/js/vendor/clipboard.min.js', array(), '1,7,1', true);
 	wp_register_script('scripts', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array('jquery'), '1.0.2', true);
 
 });
@@ -38,5 +39,6 @@ add_action('wp_enqueue_scripts', function(){
 	wp_enqueue_script('waypoints');
 	wp_enqueue_script('sticky');
 	wp_enqueue_script('jsdiff');
+	wp_enqueue_script('clipboard');
 	wp_enqueue_script('scripts');
 });

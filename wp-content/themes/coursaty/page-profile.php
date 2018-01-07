@@ -161,6 +161,7 @@ get_header(); the_post(); ?>
 							}
                             ?>
                             <span>邀请码：<?=substr($invitation_code, 0, 6)?></span>
+                            <a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url('register?invitation_code=' . substr($invitation_code, 0, 6))?>">复制邀请链接</a>
                         </div>
 					</div><!-- End Title -->
                     <div class="clearfix"></div>
@@ -228,5 +229,15 @@ get_header(); the_post(); ?>
 		</div><!-- end row -->
 	</div><!-- end container -->
 </section><!-- End Register Page -->
+
+<script type="text/javascript">
+jQuery(function($) {
+    new Clipboard('.copy-invitation-link');
+    $('.copy-invitation-link').click(function (e) {
+        e.preventDefault();
+        alert('邀请注册链接已复制，发送给好友邀请他们注册吧！');
+    });
+});
+</script>
 
 <?php get_footer(); ?>
