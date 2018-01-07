@@ -55,6 +55,13 @@ foreach (array('reading', 'writing') as $service) {
 
 $wx = new WeixinAPI();
 
+$invitation_code = get_user_meta($user->ID, 'invitation_code', true);
+if (!$invitation_code) {
+	$invitation_code = sha1('Bingo' . $user->ID);
+	add_user_meta($user->ID, 'invitation_code', $invitation_code);
+}
+$invitation_code = substr($invitation_code, 0, 6);
+
 get_header(); the_post(); ?>
 
 <div class="inner-head">
@@ -78,6 +85,20 @@ get_header(); the_post(); ?>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
+                <div class="alert alert-info">
+                    <h3 class="course-title">优惠活动一 （未付费用户）</h3>
+                    <ol>
+                        <li>邀请好友通过<a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url('register?invitation_code=' . $invitation_code)?>">您的专属链接</a>或您的优惠码<?=$invitation_code?>，登录并注册试用网站</li>
+                        <li>好友注册成功, 您便可增多2天宾果课程试用</li>
+                    </ol>
+                </div>
+                <div class="alert alert-info">
+                    <h3 class="course-title">优惠活动二 （已付费用户）</h3>
+                    <ol>
+                        <li>邀请好友通过<a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url('register?invitation_code=' . $invitation_code)?>">您的专属链接</a>或您的优惠码<?=$invitation_code?>订阅学习，TA可获得<strong>八五折</strong>优惠。</li>
+                        <li>好友购买成功后，您会<strong>立即获得$4返现</strong>，现金会自动返回到您当时支付课程时使用的账户</li>
+                    </ol>
+                </div>
 				<div class="login-form register">
 					<div class="login-title">
 						<span class="icon"><i class="fa fa-group"></i></span>
@@ -153,15 +174,8 @@ get_header(); the_post(); ?>
                         <div class="ib fr">
                             <span>付款：$<?=get_user_meta($user->ID, 'total_paid', true) ?: 0?></span>，
                             <span>奖励：$<?=get_user_meta($user->ID, 'total_awarded', true) ?: 0?></span>，
-                            <?php
-							$invitation_code = get_user_meta($user->ID, 'invitation_code', true);
-							if (!$invitation_code) {
-								$invitation_code = sha1('Bingo' . $user->ID);
-								add_user_meta($user->ID, 'invitation_code', $invitation_code);
-							}
-                            ?>
-                            <span>邀请码：<?=substr($invitation_code, 0, 6)?></span>
-                            <a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url('register?invitation_code=' . substr($invitation_code, 0, 6))?>">复制邀请链接</a>
+                            <span>邀请码：<?=$invitation_code?></span>
+                            <a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url('register?invitation_code=' . $invitation_code)?>">复制邀请链接</a>
                         </div>
 					</div><!-- End Title -->
                     <div class="clearfix"></div>

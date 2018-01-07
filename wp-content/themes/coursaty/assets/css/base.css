@@ -18,8 +18,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 body {
 	line-height: 1;
 }
-ol, ul {
+ul {
 	list-style: none;
+}
+ol {
+	list-style-position: inside;
 }
 ul>li>ul {
 	margin-left: 1em;

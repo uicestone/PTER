@@ -56,7 +56,7 @@ add_filter('nav_menu_css_class', function($classes, $item) {
  * @param int $parent - the item's parent item
  * @return \stdClass
  */
-function custom_nav_menu_item( $title, $url, $order, $parent = 0 ){
+function custom_nav_menu_item( $title, $url, $order, $parent = 0, $classes = array() ){
 	$item = new stdClass();
 	$item->ID = 1000000 + $order + parent;
 	$item->db_id = $item->ID;
@@ -67,7 +67,7 @@ function custom_nav_menu_item( $title, $url, $order, $parent = 0 ){
 	$item->type = '';
 	$item->object = '';
 	$item->object_id = '';
-	$item->classes = array();
+	$item->classes = $classes;
 	$item->target = '';
 	$item->attr_title = '';
 	$item->description = '';
@@ -84,10 +84,10 @@ add_filter('wp_get_nav_menu_items', function ($items, $menu) {
 
 			// only add profile link if user is logged in
 			if ( get_current_user_id() ){
-				$top = custom_nav_menu_item( '我的账户', get_author_posts_url( get_current_user_id() ), 100 );
+				$top = custom_nav_menu_item( '我的账户', get_author_posts_url( get_current_user_id() ), 100, 0, ['account'] );
 				$items[] = $top;
 				$items[] = custom_nav_menu_item( wp_get_current_user()->display_name, null, 101, $top->ID );
-				$items[] = custom_nav_menu_item( '个人中心', site_url() . '/profile/', 103, $top->ID );
+				$items[] = custom_nav_menu_item( '个人中心', site_url() . '/profile/', 103, $top->ID, ['profile'] );
 				$items[] = custom_nav_menu_item( '退出登录', site_url() . '/login/?logout=true', 102, $top->ID );
 			}
 		}

@@ -121,6 +121,17 @@ body {
 a.btn:hover {
     opacity: .7;
 }
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
 /* 02 - Typography */
 p {
 
@@ -447,6 +458,16 @@ header .main-navigation li.parent-item ul.sub-menu li.haschild:hover>ul {
     opacity: 1;
     visibility: visible;
     transform: scaleY(1);
+}
+header .main-navigation li a.unread::after {
+    content: '优惠';
+    background: #ef7648;
+    border-radius: 3px;
+    margin-left: 4px;
+    color: white;
+    font-size: 12px;
+    padding: 2px;
+    font-weight: bold;
 }
 /* Courses MENU */
 header .main-navigation > ul > li.courses-menu:after {

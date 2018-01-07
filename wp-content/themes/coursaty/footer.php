@@ -48,6 +48,9 @@
 jQuery('.entry .content, video, audio').on('contextmenu', function (e) {
     e.preventDefault();
 });
+if (!localStorage.getItem('promotionRead')) {
+    jQuery('.main-navigation li.account>a, .main-navigation li.profile>a').addClass('unread');
+}
 </script>
 
 <?php wp_footer(); ?>
