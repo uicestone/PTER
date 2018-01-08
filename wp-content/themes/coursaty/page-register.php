@@ -127,7 +127,7 @@ get_header(); the_post(); ?>
                             </div><!-- end submit -->
                             <div class="col-md-12">
                                 <div class="input clearfix">
-                                    <input type="submit" id="reg_submit" name="submit" class="submit-input grad-btn ln-tr" value="注册并绑定微信">
+                                    <input type="submit" id="reg_submit" name="submit" class="submit-input grad-btn ln-tr" value="注册并绑定微信，立即获得3天课程试用">
                                 </div>
                             </div><!-- end submit -->
                             <div class="col-md-6 col-sm-6 col-sm-offset-6 clearfix">
