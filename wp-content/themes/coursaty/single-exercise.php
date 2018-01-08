@@ -342,6 +342,14 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                                 </div>
                             </div>
 							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('repeat-sentence'))): ?>
+                                <div class="skillbar timer clearfix" data-wait="previous" data-duration="10" data-is-answer="true">
+                                    <div class="skillbar-title">
+                                        <span>复述 <span class="seconds-left">00:10</span></span>
+                                    </div>
+                                    <div class="skillbar-bar"></div>
+                                </div>
+							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('read-aloud', 'describe-image'))): ?>
                             <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
                                 <div class="skillbar-title">
