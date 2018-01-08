@@ -83,7 +83,7 @@ get_header(); the_post() ?>
                     <input type="submit" id="promotion_code-submit" class="invitation_code-submit ln-tr" value="使用">
                 </form>
             </div>
-            <a href="<?=site_url('exercise_pack/课程1/')?>" class="limit-free ln-tr">限时免费课程试用</a>
+            <a href="<?=site_url('exercise/repeat-sentence-%E7%BB%83%E4%B9%A01/?tag=free-trial')?>" class="limit-free ln-tr">限时免费课程试用</a>
             <?php endif; ?>
         </div><!-- End main content row -->
 

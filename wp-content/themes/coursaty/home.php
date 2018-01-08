@@ -49,9 +49,9 @@
                      data-elementdelay="0.1"
                      data-endelementdelay="0.1"
                      data-endspeed="500" style="z-index:99">
-                    <a href="<?=site_url()?>/tip/?tag=free-trial" class="btn">免费体验</a>
-                    <a href="<?=site_url()?>/tip/how-to-use/" class="btn">使用指南</a>
-                    <a href="<?=site_url()?>/exercise_pack/课程1/" class="btn">宾果23天课</a>
+                    <a href="<?=site_url('exercise/repeat-sentence-%E7%BB%83%E4%B9%A01/?tag=free-trial')?>/tip/?tag=free-trial" class="btn">免费体验</a>
+                    <a href="<?=site_url('tip/how-to-use')?>" class="btn">使用指南</a>
+                    <a href="<?=site_url('exercise_pack/课程1')?>" class="btn">宾果23天课</a>
                 </div>
             </li>
             <?php endforeach; ?>
