@@ -21,7 +21,7 @@ if ( post_password_required() ) {
 ?>
 
 <?php if (have_comments()): ?>
-<ol class="comments-list">
+<ul class="comments-list">
 	<?php while (have_comments()): the_comment(); $replies = get_comments(array('status' => 'approve', 'number' => 5, 'post_id' => get_the_ID(), 'parent' => get_comment_ID())); ?>
 		<li class="comment<?=$replies ? ' haschild' : ''?>">
 			<div class="comment-body clearfix">
@@ -66,5 +66,5 @@ if ( post_password_required() ) {
 			<?php endif; ?>
 		</li><!-- End Comment item/tree -->
 	<?php endwhile; ?>
-</ol>
+</ul>
 <?php endif; ?>
