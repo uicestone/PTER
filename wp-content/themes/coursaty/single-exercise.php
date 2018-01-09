@@ -222,8 +222,33 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
 							);
                         }
 
+                        if ($_GET['marked'] === 'no') {
+                            $random_query['meta_query'] = [
+                                [
+                                    'key' => 'marked',
+                                    'compare' => 'NOT EXISTS'
+                                ]
+                            ];
+                        }
+
                         $random_exercises = get_posts($random_query); if ($random_exercises && $random_exercise = $random_exercises[0]): ?>
-                        <a href="<?=get_the_permalink($random_exercise) . '?random=yes' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 换一题</a>
+                        <div class="row">
+                            <div class="col-md-4" style="padding-right:5px">
+                                <a href="<?=get_the_permalink($random_exercise) . '?random=yes' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 换一题</a>
+                            </div>
+                            <div class="col-md-4" style="padding-left:5px;padding-right:5px">
+                                <a href="<?=get_the_permalink($random_exercise) . '?random=yes&marked=no' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 没做过的</a>
+                            </div>
+                            <div class="col-md-4" style="padding-left:5px">
+                                <form method="post">
+                                    <?php if ($current_exercise_marked): ?>
+                                        <button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
+                                    <?php else: ?>
+                                        <button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> 已学</button>
+                                    <?php endif; ?>
+                                </form>
+                            </div>
+                        </div>
                         <?php endif; ?>
                     <?php else: ?>
                     <?php $previous_exercise = get_adjacent_post(true, '', true, $_GET['tag'] ? 'post_tag' : 'question_type');?>
