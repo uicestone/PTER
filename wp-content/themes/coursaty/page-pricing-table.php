@@ -106,6 +106,7 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
+                            <li>宾果23天课程包</li>
                             <li>全站听力口语技巧，模板讲解</li>
                             <li>全站写作阅读技巧，模板讲解</li>
                             <li>听说读写海量练习题+满分答案</li>
@@ -143,6 +144,7 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
+                            <li>宾果23天课程包</li>
                             <li>全站听力口语技巧，模板讲解</li>
                             <li>全站写作阅读技巧，模板讲解</li>
                             <li>听说读写海量练习题+满分答案</li>
@@ -180,6 +182,7 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
+                            <li>宾果23天课程包</li>
                             <li>全站听力口语技巧，模板讲解</li>
                             <li>全站写作阅读技巧，模板讲解</li>
                             <li>听说读写海量练习题+满分答案</li>
