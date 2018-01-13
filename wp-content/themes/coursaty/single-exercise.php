@@ -622,8 +622,9 @@ jQuery(function($) {
 
     var answerContentElement = $('.answer.entry .content');
     var answerToggleButton = $('.answer.entry .toggle');
-    var answer = $(answerContentElement.html().replace(/<sup.*?>[\s\S]*?<\/sup>/g, '')).text().replace(/答案/, '').trim().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
-    var answerWordCount = answer.split(/\s+/).length;
+    var answer = $(answerContentElement.html().replace(/<sup.*?>[\s\S]*?<\/sup>/g, '')).text().replace(/答案/, '').trim();
+    var answerTrimmed = answer.replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
+    var answerWordCount = answerTrimmed.split(/\s+/).length;
 
     var answerForm = $('.comment-form.answer-form');
     var wordCountElement = answerForm.find('.word-count>.count');
@@ -635,7 +636,9 @@ jQuery(function($) {
     answerArea.on('keyup', function() {
 
         // answer word count
-        var wordCount = $(this).val().trim().split(/\s+/).length;
+        var answerInputValue = $(this).val().trim();
+        var answerInputValueTrimmed = answerInputValue.replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
+        var wordCount = answerInputValue.split(/\s+/).length;
         var _self = this;
         wordCountElement.text(wordCount);
 
@@ -646,7 +649,7 @@ jQuery(function($) {
             wordCountElement.removeClass(('over-words'));
         }
 
-        // console.log(answer);console.log($(this).val().trim().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, ''));
+        // console.log(answer); console.log(answerInputValue);
 
         // answer diff rate
         setTimeout(function () {
@@ -657,7 +660,7 @@ jQuery(function($) {
                 return;
             }
 
-            diffWords = JsDiff.diffWords(answer, $(_self).val().trim().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '')).reduce(function (stat, current) {
+            diffWords = JsDiff.diffWords(answerTrimmed, answerInputValueTrimmed).reduce(function (stat, current) {
                 var diffWordCount = current.value.trim().split(/\s+/).length;
 
                 if (current.added && !stat.modified) {
@@ -696,7 +699,8 @@ jQuery(function($) {
     answerCheckButton.on('click', function (e) {
         e.preventDefault();
 
-        var diff = JsDiff.diffWords(answer, answerArea.val());
+        var answerInputValue = answerArea.val().trim();
+        var diff = JsDiff.diffWords(answer, answerInputValue);
 
         var resultContainer = answerForm.find('.diff-check-result').html('').show();
 
