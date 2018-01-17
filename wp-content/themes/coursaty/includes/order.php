@@ -94,12 +94,12 @@ function order_paid ($order_no, $gateway = null) {
 
 	if (in_array($service, array('full', 'reading'))) {
 		$inactivated_readings = get_user_meta($user->ID, 'service_reading_inactivated', true) ?: 0;
-		update_user_meta($user->ID, 'service_reading_inactivated', ++$inactivated_readings);
+		update_user_meta($user->ID, 'service_reading_inactivated', $inactivated_readings + 3);
 	}
 
 	if (in_array($service, array('full', 'writing'))) {
 		$inactivated_writings = get_user_meta($user->ID, 'service_writing_inactivated', true) ?: 0;
-		update_user_meta($user->ID, 'service_writing_inactivated', ++$inactivated_writings);
+		update_user_meta($user->ID, 'service_writing_inactivated', $inactivated_readings + 3);
 	}
 
 	if (in_array($service, array('base', 'full'))) {
