@@ -22,6 +22,10 @@ if ($_GET['start'] === 'speaking') {
 	header('Location: ' . get_the_permalink($exercises[0]->ID) . '?exam_id=' . get_the_ID()); exit;
 }
 
+wp_enqueue_script('waveform');
+wp_enqueue_script('waveform-record');
+wp_enqueue_script('waveform-emitter');
+
 get_header(); the_post(); ?>
 
 <div class="inner-head">
@@ -59,7 +63,7 @@ get_header(); the_post(); ?>
 
 <div class="clearfix"></div>
 
-<article class="post single<?=has_tag('free-trial') ? ' free-trial' : ''?>">
+<article class="post<?=has_tag('free-trial') ? ' free-trial' : ''?>">
     <div class="container">
         <div class="row">
             <div class="add-courses box entry">
@@ -73,17 +77,51 @@ get_header(); the_post(); ?>
     </div><!-- End container -->
 </article><!-- End Single Article -->
 
-<div class="features-section">
-    <div class="container">
-        <h1>试音</h1>
-    </div>
-</div>
-<section class="full-section features-section fancy-shadow" style="padding-top:0">
-    <div class="section-content features-content fadeInDown-animation">
-        <div class="container">
-            <h1><a href="<?php the_permalink(); ?>?start=speaking">开始考试</a></h1>
-        </div>
-    </div><!-- End Features Section Content -->
-</section><!-- End Features Section -->
+<section class="post" style="padding-top:20px">
+	<div class="container">
+		<div class="row comment-form answer-form entry">
+			<div class="addcomment-title">
+				<span class="icon"><i class="fa fa-comments-o"></i></span>
+				<span class="text">试音</span>
+			</div><!-- End Title -->
+			<form method="post" action="/" id="answer-form">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input">
+							<div class="post-content">
+								<div id="top-bar" class="playlist-top-bar">
+									<div class="playlist-toolbar">
+										<div class="btn-group">
+											<span class="btn-record btn btn-info disabled">
+												<i class="fa fa-microphone"></i>
+											</span>
+											<span class="btn-play btn btn-success">
+												<i class="fa fa-play"></i>
+											</span>
+											<span class="btn-stop btn">
+												<i class="fa fa-stop"></i>
+											</span>
+											<span class="btn-clear btn btn-danger">
+												<i class="fa fa-trash"></i>
+											</span>
+											<!--<span title="Download the current work as Wav file"
+												  class="btn btn-download btn-primary">
+												<i class="fa fa-download"></i>
+											</span>-->
+										</div>
+									</div>
+								</div>
+								<div id="playlist"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form><!-- End form -->
+		</div><!-- End comment form -->
+		<div class="row">
+			<a href="<?php the_permalink(); ?>?start=speaking" class="btn btn-block primary-btn orange-btn">开始考试</a>
+		</div>
+	</div>
+</section>
 
 <?php get_footer(); ?>

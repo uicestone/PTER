@@ -192,47 +192,46 @@ get_header(); ?>
 						</div><!-- End comment form -->
                         <?php endif; ?>
 						<?php if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))): ?>
-                            <div class="clearfix" style="margin-top:30px"></div>
-                            <div class="comment-form answer-form entry">
-                                <div class="addcomment-title">
-                                    <span class="icon"><i class="fa fa-comments-o"></i></span>
-                                    <span class="text">你的回答</span>
-                                </div><!-- End Title -->
-                                <form method="post" action="/" id="answer-form">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input">
-                                                <div class="post-content">
-
-                                                    <div id="top-bar" class="playlist-top-bar">
-                                                        <div class="playlist-toolbar">
-                                                            <div class="btn-group">
-                                                                <span class="btn-play btn btn-success">
-                                                                    <i class="fa fa-play"></i>
-                                                                </span>
-                                                                <span class="btn-stop btn btn-danger">
-                                                                    <i class="fa fa-stop"></i>
-                                                                </span>
-                                                                <span class="btn-record btn btn-danger disabled">
-                                                                    <i class="fa fa-microphone"></i>
-                                                                </span>
-                                                                <span class="btn-clear btn btn-danger">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </span>
-                                                                <!--<span title="Download the current work as Wav file"
-                                                                      class="btn btn-download btn-primary">
-                                                                    <i class="fa fa-download"></i>
-                                                                </span>-->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="playlist"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form><!-- End form -->
-                            </div><!-- End comment form -->
+						<div class="clearfix" style="margin-top:30px"></div>
+						<div class="comment-form answer-form entry">
+							<div class="addcomment-title">
+								<span class="icon"><i class="fa fa-comments-o"></i></span>
+								<span class="text">你的回答</span>
+							</div><!-- End Title -->
+							<form method="post" action="/" id="answer-form">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="input">
+											<div class="post-content">
+												<div id="top-bar" class="playlist-top-bar">
+													<div class="playlist-toolbar">
+														<div class="btn-group">
+															<span class="btn-record btn btn-info disabled">
+																<i class="fa fa-microphone"></i>
+															</span>
+															<span class="btn-play btn btn-success">
+																<i class="fa fa-play"></i>
+															</span>
+															<span class="btn-stop btn">
+																<i class="fa fa-stop"></i>
+															</span>
+															<span class="btn-clear btn btn-danger">
+																<i class="fa fa-trash"></i>
+															</span>
+															<!--<span title="Download the current work as Wav file"
+																  class="btn btn-download btn-primary">
+																<i class="fa fa-download"></i>
+															</span>-->
+														</div>
+													</div>
+												</div>
+												<div id="playlist"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form><!-- End form -->
+						</div><!-- End comment form -->
 						<?php endif; ?>
 						<?php if (empty($exam)): ?>
                         <div class="comment-form comments-list entry answer">
