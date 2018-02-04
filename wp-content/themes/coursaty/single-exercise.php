@@ -32,7 +32,7 @@ if ($_POST['comment']) {
 
 $user = wp_get_current_user();
 
-$marked_exercises = get_user_meta($user->ID, 'marked_exercises');
+$marked_exercises = get_user_meta($user->ID, 'marked_exercises') ?: array();
 $current_exercise_marked = in_array(get_the_ID(), $marked_exercises);
 
 if (isset($_POST['marked'])) {
@@ -51,7 +51,79 @@ if (isset($_POST['marked'])) {
 	exit;
 }
 
-get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1]; ?>
+$question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1];
+
+if ($_GET['random']) {
+
+	$random_query = array(
+		'post_type' => 'exercise',
+		'posts_per_page' => 1,
+		'orderby' => 'rand',
+		'post__not_in' => array(get_the_ID())
+	);
+
+	if ($_GET['tag']) {
+		$random_query['tag'] = $_GET['tag'];
+	} else {
+		$random_query['tax_query'] = array(
+			array(
+				'taxonomy' => 'question_type',
+				'field' => 'slug',
+				'terms' => $question_type->slug
+			)
+		);
+	}
+
+	if ($_GET['marked'] === 'no') {
+		$random_query['meta_query'] = [
+			[
+				'key' => 'marked',
+				'compare' => 'NOT EXISTS'
+			]
+		];
+	}
+
+	$random_exercises = get_posts($random_query);
+
+	if ($random_exercises) {
+		$random_exercise = $random_exercises[0];
+	}
+}
+elseif (isset($_GET['exam_id'])) {
+    $exam = get_post($_GET['exam_id']);
+	$exam_section = str_replace('pte-', '', get_term(wp_get_term_taxonomy_parent_id($question_type, 'question_type'))->slug);
+	$exam_section_exercises = get_field($exam_section, $exam->ID);
+	$exam_section_exercise_ids = array_column($exam_section_exercises, 'ID');
+    $current_exercise_exam_section_index = array_search(get_the_ID(), $exam_section_exercise_ids);
+
+	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'any', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
+	if (!$paper) {
+		exit('Exam was not started. Go back to <a href="' . get_the_permalink($exam->ID) . '">exam front page</a>.');
+	}
+
+    $sections_time_limit = array('speaking'=>1800, 'writing'=>1800, 'reading'=>2400, 'listening'=>3300);
+	$section_time_left = $sections_time_limit[$exam_section] - time() + get_post_meta($paper->ID, 'time_start_' . $exam_section, true);
+	if ($section_time_left < 0) {
+		// expired paper
+	}
+    if ($current_exercise_exam_section_index > 0) {
+    	$previous_exercise = $exam_section_exercises[$current_exercise_exam_section_index - 1];
+	}
+
+    if (count($exam_section_exercise_ids) > $current_exercise_exam_section_index + 1) {
+        // find next exercise
+		$next_exercise = $exam_section_exercises[$current_exercise_exam_section_index + 1];
+    }
+    else {
+        // next section
+    }
+}
+else {
+	$previous_exercise = get_adjacent_post(true, '', true, $_GET['tag'] ? 'post_tag' : 'question_type');
+	$next_exercise = get_adjacent_post(true, '', false, $_GET['tag'] ? 'post_tag' : 'question_type');
+}
+
+get_header(); ?>
 
 <div class="copyright-header container">
     <p>All Rights Reserved &copy; Bingo Training Pty. Ltd. ABN 64 618 887 951, ACN 618 887 951</p>
@@ -162,6 +234,7 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                                 </form><!-- End form -->
                             </div><!-- End comment form -->
 						<?php endif; ?>
+						<?php if (empty($exam)): ?>
                         <div class="comment-form comments-list entry answer">
                             <div class="addcomment-title" style="margin-bottom:20px">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
@@ -176,6 +249,7 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                                 </div>
                             </div>
                         </div><!-- End comment form -->
+						<?php endif; ?>
                         <?php comments_template('/comments-exercise.php', true); ?>
                         <?php if (comments_open()): ?>
                         <div class="comment-form">
@@ -200,69 +274,37 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
 			</div><!-- End Main Content - LEFT -->
 			<div class="col-md-4">
                 <div class="sidebar">
-                    <?php if ($_GET['random']): ?>
-                        <?php
-                        $random_query = array(
-							'post_type' => 'exercise',
-							'posts_per_page' => 1,
-							'orderby' => 'rand',
-							'post__not_in' => array(get_the_ID())
-						);
-
-                        if ($_GET['tag']) {
-                            $random_query['tag'] = $_GET['tag'];
-                        }
-                        else {
-							$random_query['tax_query'] = array(
-								array(
-									'taxonomy' => 'question_type',
-									'field' => 'slug',
-									'terms' => $question_type->slug
-								)
-							);
-                        }
-
-                        if ($_GET['marked'] === 'no') {
-                            $random_query['meta_query'] = [
-                                [
-                                    'key' => 'marked',
-                                    'compare' => 'NOT EXISTS'
-                                ]
-                            ];
-                        }
-
-                        $random_exercises = get_posts($random_query); if ($random_exercises && $random_exercise = $random_exercises[0]): ?>
-                        <div class="row">
-                            <div class="col-md-4" style="padding-right:5px">
-                                <a href="<?=get_the_permalink($random_exercise) . '?random=yes' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 换一题</a>
-                            </div>
-                            <div class="col-md-4" style="padding-left:5px;padding-right:5px">
-                                <a href="<?=get_the_permalink($random_exercise) . '?random=yes&marked=no' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 没做过的</a>
-                            </div>
-                            <div class="col-md-4" style="padding-left:5px">
-                                <form method="post">
-                                    <?php if ($current_exercise_marked): ?>
-                                        <button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
-                                    <?php else: ?>
-                                        <button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> 已学</button>
-                                    <?php endif; ?>
-                                </form>
-                            </div>
-                        </div>
-                        <?php endif; ?>
+                    <?php if (isset($random_exercise)): ?>
+					<div class="row">
+						<div class="col-md-4" style="padding-right:5px">
+							<a href="<?=get_the_permalink($random_exercise) . '?random=yes' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 换一题</a>
+						</div>
+						<div class="col-md-4" style="padding-left:5px;padding-right:5px">
+							<a href="<?=get_the_permalink($random_exercise) . '?random=yes&marked=no' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 没做过的</a>
+						</div>
+						<div class="col-md-4" style="padding-left:5px">
+							<form method="post">
+								<?php if ($current_exercise_marked): ?>
+								<button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
+								<?php else: ?>
+								<button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> 已学</button>
+								<?php endif; ?>
+							</form>
+						</div>
+					</div>
                     <?php else: ?>
-                    <?php $previous_exercise = get_adjacent_post(true, '', true, $_GET['tag'] ? 'post_tag' : 'question_type');?>
-					<?php $next_exercise = get_adjacent_post(true, '', false, $_GET['tag'] ? 'post_tag' : 'question_type');?>
                     <div class="row">
                         <div class="col-md-4" style="padding-right:5px">
-							<?php if ($previous_exercise): ?><a class="btn primary-btn" href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
+							<?php if ($previous_exercise): ?><a class="btn primary-btn" href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '') . ($_GET['exam_id'] ? '?exam_id=' . $_GET['exam_id'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
                         </div>
                         <div class="col-md-4" style="padding-left:5px;padding-right:5px">
-							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
+							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '') . ($_GET['exam_id'] ? '?exam_id=' . $_GET['exam_id'] : '')?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
                         </div>
                         <div class="col-md-4" style="padding-left:5px">
                             <form method="post">
-                                <?php if ($current_exercise_marked): ?>
+								<?php if (isset($exam)): ?>
+									<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-clock-o"></i> <span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span></button>
+								<?php elseif ($current_exercise_marked): ?>
                                 <button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
                                 <?php else: ?>
                                 <button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> 已学</button>
@@ -270,6 +312,7 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                             </form>
                         </div>
                     </div>
+					<?php if (empty($exam)): ?>
                     <div class="row">
                         <div class="col-md-12">
                             <select class="go-to-exercise" style="width:100%;height:40px;font-size:16px;margin-bottom:10px;background:none">
@@ -304,6 +347,7 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                             </select>
                         </div>
                     </div>
+					<?php endif; ?>
                     <?php endif; ?>
                     <div class="sidebar-widget">
                         <span class="widget-icon"><i class="fa fa-clock-o"></i></span>
@@ -426,11 +470,12 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
                         </div>
                     </div>
-					<?php
+					<?php if (empty($exam)):
 					$uri = $_GET['random'] ? remove_query_arg(array('random'), $wp->request . '/') : add_query_arg(array('random' => 'yes'), $wp->request . '/');
 					$uri = $_GET['tag'] ? add_query_arg(array('tag' => $_GET['tag']), $uri) : $uri;
 					?>
                     <a class="btn primary-btn" href="<?=home_url($uri);?>">切换到<?=$_GET['random'] ? '顺序练习' : '随机练习'?></a>
+					<?php endif; ?>
                     <?php $question_type_desc = get_posts(array('post_type' => 'question_type_desc', 'posts_per_page' => 1, 'tax_query' => array(
 						array(
 							'taxonomy' => 'question_type',
@@ -471,6 +516,16 @@ get_header(); $question_types = wp_get_object_terms(get_the_ID(), 'question_type
 
 <script type="text/javascript">
 jQuery(function($) {
+
+    // exam seciton timer
+	var sectionTimer = $('.section-timer');
+	if (sectionTimer.length && sectionTimer.text().match(/:/)) {
+	    var timeLeft = moment('1970-01-01 00:' + sectionTimer.text().trim());
+		setInterval(function () {
+		    timeLeft = timeLeft.subtract(1, 'second');
+            sectionTimer.text(timeLeft.format('mm:ss'));
+		}, 1000);
+	}
 
     // toggle answer display
     $('.comments-list.answer .toggle').click(function(e) {
@@ -622,9 +677,11 @@ jQuery(function($) {
 
     var answerContentElement = $('.answer.entry .content');
     var answerToggleButton = $('.answer.entry .toggle');
-    var answer = $(answerContentElement.html().replace(/<sup.*?>[\s\S]*?<\/sup>/g, '')).text().replace(/答案/, '').trim();
-    var answerTrimmed = answer.replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
-    var answerWordCount = answerTrimmed.split(/\s+/).length;
+    if (answerContentElement.length) {
+        var answer = $(answerContentElement.html().replace(/<sup.*?>[\s\S]*?<\/sup>/g, '')).text().replace(/答案/, '').trim();
+        var answerTrimmed = answer.replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
+        var answerWordCount = answerTrimmed.split(/\s+/).length;
+	}
 
     var answerForm = $('.comment-form.answer-form');
     var wordCountElement = answerForm.find('.word-count>.count');
