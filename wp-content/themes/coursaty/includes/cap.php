@@ -21,6 +21,14 @@ add_action('after_switch_theme', function () {
 	$administrator->add_cap('publish_member_orders');
 	$administrator->add_cap('read_private_member_orders');
 	$administrator->add_cap('edit_member_orders');
+	$administrator->add_cap('edit_paper');
+	$administrator->add_cap('read_paper');
+	$administrator->add_cap('delete_paper');
+	$administrator->add_cap('edit_papers');
+	$administrator->add_cap('edit_others_papers');
+	$administrator->add_cap('publish_papers');
+	$administrator->add_cap('read_private_papers');
+	$administrator->add_cap('edit_papers');
 	$administrator->add_cap('edit_promotion_code');
 	$administrator->add_cap('read_promotion_code');
 	$administrator->add_cap('delete_promotion_code');

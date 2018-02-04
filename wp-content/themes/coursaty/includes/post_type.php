@@ -83,7 +83,42 @@ add_action('init', function () {
 		'has_archive' => true
 	));
 
-	add_post_type_support('exercise_pack', 'wps_subtitle');
+	add_post_type_support('exam', 'wps_subtitle');
+
+	register_post_type('exam', array(
+		'label' => '考试',
+		'labels' => array(
+			'all_items' => '所有考试',
+			'add_new' => '添加考试',
+			'add_new_item' => '新考试',
+			'edit_item' => '编辑考试',
+			'not_found' => '未找到考试'
+		),
+		'public' => true,
+		'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
+		'taxonomies' => array('post_tag'),
+		'menu_icon' => 'dashicons-edit',
+		'has_archive' => true
+	));
+
+	add_post_type_support('exam', 'wps_subtitle');
+
+	register_post_type('paper', array(
+		'label' => '试卷',
+		'labels' => array(
+			'all_items' => '所有试卷',
+			'add_new' => '手动添加试卷',
+			'add_new_item' => '新试卷',
+			'edit_item' => '编辑试卷',
+			'not_found' => '未找到试卷'
+		),
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'supports' => array('title', 'author', 'custom-fields'),
+		'taxonomies' => array('post_tag'),
+		'menu_icon' => 'dashicons-paperclip',
+		'capability_type' => 'paper'
+	));
 
 	register_post_type('member_order', array(
 		'label' => '订单',
