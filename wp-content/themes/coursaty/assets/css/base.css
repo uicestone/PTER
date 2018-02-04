@@ -63,6 +63,9 @@ table {
 .hide {
 	opacity: 0;
 }
+.hidden {
+	display: none !important;
+}
 .show {
 	opacity: 1;
 }

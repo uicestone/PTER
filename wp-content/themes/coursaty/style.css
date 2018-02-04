@@ -2298,10 +2298,6 @@ h6.head-title {
     width: 100%;
     line-height: 40px;
 }
-.sidebar .search .submit-btn:hover, .sidebar .primary-btn:hover {
-    background: #383c4b;
-}
-
 .sidebar .sidebar-widget {
     padding: 20px;
     background: #fff;
@@ -2687,9 +2683,6 @@ h6.head-title {
     background-color: #d1d1d1;
 }
 .comment-form .playlist-tracks .btn-group .btn.active, .comment-form .playlist-toolbar .btn-group .btn.active {
-    background-color: #2997ab;
-}
-.comment-form .playlist-toolbar .btn-group .btn.hover {
     background-color: #2997ab;
 }
 .comment-form .playlist-tracks .playlist-overlay {

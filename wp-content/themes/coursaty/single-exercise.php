@@ -206,7 +206,7 @@ get_header(); ?>
 												<div id="top-bar" class="playlist-top-bar">
 													<div class="playlist-toolbar">
 														<div class="btn-group">
-															<span class="btn-record btn btn-info disabled">
+															<span class="btn-record btn btn-info disabled<?=(empty($exam) || isset($manual_record)) ? '' : ' hidden' ?>">
 																<i class="fa fa-microphone"></i>
 															</span>
 															<span class="btn-play btn btn-success">
@@ -215,7 +215,7 @@ get_header(); ?>
 															<span class="btn-stop btn">
 																<i class="fa fa-stop"></i>
 															</span>
-															<span class="btn-clear btn btn-danger">
+															<span class="btn-clear btn btn-danger<?=(empty($exam) || isset($manual_record)) ? '' : ' hidden' ?>">
 																<i class="fa fa-trash"></i>
 															</span>
 															<!--<span title="Download the current work as Wav file"
@@ -302,7 +302,7 @@ get_header(); ?>
                         <div class="col-md-4" style="padding-left:5px">
                             <form method="post">
 								<?php if (isset($exam)): ?>
-									<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-clock-o"></i> <span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span></button>
+									<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress"><i class="fa fa-clock-o"></i> <span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span></button>
 								<?php elseif ($current_exercise_marked): ?>
                                 <button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
                                 <?php else: ?>
