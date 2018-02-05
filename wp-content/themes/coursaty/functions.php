@@ -85,6 +85,24 @@ add_filter('wpjam_cdn_host', function ($host) {
     return $host;
 }, 11);
 
+// Remove '私密：' from private post titles
+add_filter('the_title', function ($title) {
+
+	$title = esc_attr($title);
+
+	$findthese = array(
+		'#私密：#'
+	);
+
+	$replacewith = array(
+		'', // What to replace "Protected:" with
+		'' // What to replace "Private:" with
+	);
+
+	$title = preg_replace($findthese, $replacewith, $title);
+	return $title;
+});
+
 // Display User IP in WordPress
 function get_the_user_ip() {
 	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
