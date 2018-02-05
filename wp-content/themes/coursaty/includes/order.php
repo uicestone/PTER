@@ -163,15 +163,15 @@ function order_paid ($order_no, $gateway = null) {
 		if  ($award_amount > 0) {
 			// get oldest refundable orders
 			$refundable_orders = get_posts(array(
-					'post_type' => 'member_order',
-					'post_status' => 'private',
-					'author' => $inviter_id,
-					'date_query' => array('after' => '-3 months'),
-					'order' => 'asc',
-					'posts_per_page' => '-1',
-					'meta_key' => 'refundable_amount',
-					'meta_compare' => '>',
-					'meta_value' => '0')
+				'post_type' => 'member_order',
+				'post_status' => 'private',
+				'author' => $inviter_id,
+				'date_query' => array('after' => '-3 months'),
+				'order' => 'asc',
+				'posts_per_page' => '-1',
+				'meta_key' => 'refundable_amount',
+				'meta_compare' => '>',
+				'meta_value' => '0')
 			);
 
 			foreach ($refundable_orders as $refundable_order) {
