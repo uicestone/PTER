@@ -2698,8 +2698,8 @@ h6.head-title {
 .comment-form .diff-check-result .removed {
     color: green;
 }
-.comment-form .input input:not([type=submit]):not([type=range]), .comment-form .input textarea,
-.contact-form .input input:not([type=submit]):not([type=range]), .contact-form .input textarea,
+.comment-form .input input:not([type=submit]):not([type=range]):not([type=radio]):not([type=checkbox]), .comment-form .input textarea,
+.contact-form .input input:not([type=submit]):not([type=range]):not([type=radio]):not([type=checkbox]), .contact-form .input textarea,
 .login-page .login-form .input input, .login-page .login-form .input-with-label,
 .invitation_code-form .invitation_code-input {
     display: block;
