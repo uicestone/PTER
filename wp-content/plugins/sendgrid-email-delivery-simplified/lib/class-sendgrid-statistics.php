@@ -57,7 +57,7 @@ class Sendgrid_Statistics
       return;
     }
 
-    add_meta_box( 'sendgrid_statistics_widget', 'SendGrid Wordpress Statistics', array( __CLASS__, 'show_dashboard_widget' ),
+    add_meta_box( 'sendgrid_statistics_widget', 'SendGrid Wordpress 统计', array( __CLASS__, 'show_dashboard_widget' ),
       'dashboard', 'normal', 'high' );
   }
 
@@ -83,7 +83,7 @@ class Sendgrid_Statistics
       return;
     }
 
-    add_dashboard_page( "SendGrid Statistics", "SendGrid Statistics", "manage_options", "sendgrid-statistics",
+    add_dashboard_page( "SendGrid 统计", "SendGrid 统计", "manage_options", "sendgrid-statistics",
       array( __CLASS__, "show_statistics_page" ) );
   }
 
