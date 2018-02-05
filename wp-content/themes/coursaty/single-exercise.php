@@ -5,7 +5,9 @@ if(!has_tag('free-trial')
     redirect_pricing_table('view_exercises');
 }
 
-// the_post();
+if (!get_the_content()) {
+	the_post();
+}
 
 if (isset($_POST['save_audio_time_point'])) {
     $audio_time_points = implode(',', $_POST['audio_time_point']);
