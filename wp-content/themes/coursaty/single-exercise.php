@@ -165,7 +165,7 @@ get_header(); ?>
 							</form><!-- End form -->
 						</div><!-- End comment form -->
                         <?php endif; ?>
-						<?php if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))): ?>
+						<?php if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))): ?>
 						<div class="clearfix" style="margin-top:30px"></div>
 						<div class="comment-form answer-form entry">
 							<div class="addcomment-title">
@@ -391,6 +391,14 @@ get_header(); ?>
                                     </div>
                                     <div class="skillbar-bar"></div>
                                 </div>
+							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('answer-short-question'))): ?>
+								<div class="skillbar timer clearfix" data-wait="previous" data-duration="10" data-is-answer="true">
+									<div class="skillbar-title">
+										<span>回答 <span class="seconds-left">00:10</span></span>
+									</div>
+									<div class="skillbar-bar"></div>
+								</div>
 							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('read-aloud', 'describe-image'))): ?>
                             <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
@@ -832,7 +840,7 @@ jQuery(function($) {
 
 <?php
 
-if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
+if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');
