@@ -99,3 +99,11 @@ add_filter('wp_get_nav_menu_items', function ($items, $menu) {
 }, 10, 2);
 
 show_admin_bar( false );
+
+add_filter( 'status_header', function ($header) {
+	global $wp_query;
+
+	if (is_404()) {
+		unset( $wp_query->query_vars['name'] );
+	}
+} );
