@@ -28,7 +28,8 @@ add_action('init', function () {
 		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-feedback',
 		'has_archive' => true,
-		'capability_type' => 'question_type_desc'
+		'capability_type' => 'question_type_desc',
+		'capabilities' => array('delete_posts' => 'delete_question_type_descs')
 	));
 
 	add_post_type_support('question_type_desc', 'wps_subtitle');
@@ -117,7 +118,8 @@ add_action('init', function () {
 		'supports' => array('title', 'author', 'custom-fields'),
 		'taxonomies' => array('post_tag'),
 		'menu_icon' => 'dashicons-paperclip',
-		'capability_type' => 'paper'
+		'capability_type' => 'paper',
+		'capabilities' => array('delete_posts' => 'delete_papers')
 	));
 
 	register_post_type('member_order', array(
@@ -134,7 +136,8 @@ add_action('init', function () {
 		'supports' => array('title'),
 		'taxonomies' => array('post_tag'),
 		'menu_icon' => 'dashicons-cart',
-		'capability_type' => 'member_order'
+		'capability_type' => 'member_order',
+		'capabilities' => array('delete_posts' => 'delete_orders')
 	));
 
 	add_filter('manage_member_order_posts_columns', function($columns) {
@@ -231,7 +234,8 @@ add_action('init', function () {
 		'supports' => array('title'),
 		'taxonomies' => array('post_tag'),
 		'menu_icon' => 'dashicons-megaphone',
-		'capability_type' => 'promotion_code'
+		'capability_type' => 'promotion_code',
+		'capabilities' => array('delete_posts' => 'delete_promotion_codes')
 	));
 
 	add_filter('manage_promotion_code_posts_columns', function($columns) {

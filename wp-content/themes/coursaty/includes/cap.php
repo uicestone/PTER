@@ -1,6 +1,11 @@
 <?php
 
 add_action('after_switch_theme', function () {
+	// if ( !function_exists( 'populate_roles' ) ) {
+	// 	require_once( ABSPATH . 'wp-admin/includes/schema.php' );
+	// }
+	// populate_roles();
+
 	$administrator = get_role('administrator');
 	$administrator->add_cap('view_tips');
 	$administrator->add_cap('view_exercises');
