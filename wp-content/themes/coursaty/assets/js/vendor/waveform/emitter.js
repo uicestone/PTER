@@ -138,6 +138,7 @@
     $container.on("click", ".btn-stop", function() {
         isLooping = false;
         ee.emit("stop");
+        ee.emit('startaudiorendering', 'wav');
     });
 
     $container.on("click", ".btn-rewind", function() {
@@ -295,7 +296,7 @@
         $(".loading-data").append(info);
     }
 
-    function displayDownloadLink(link) {
+    function displayDownloadLink(link, data) {
         var dateString = (new Date()).toISOString();
         var $link = $("<a/>", {
             'href': link,
@@ -305,7 +306,30 @@
         });
 
         $('.btn-download-link').remove();
-        $('.btn-download').after($link);
+        $('.btn-download').after(link);
+
+        uploadFile(data);
+
+    }
+
+    function uploadFile(data) {
+        var reader = new FileReader();
+        var formData = new FormData();
+
+        formData.append('file', data, 'record.wav');
+
+        $.ajax({
+            url: '/upload',
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function (res) {
+            console.log(res);
+        }).fail(function (res) {
+            console.error(res);
+        });
     }
 
 
@@ -370,7 +394,7 @@
             }
 
             downloadUrl = window.URL.createObjectURL(data);
-            displayDownloadLink(downloadUrl);
+            displayDownloadLink(downloadUrl, data);
         }
     });
 
