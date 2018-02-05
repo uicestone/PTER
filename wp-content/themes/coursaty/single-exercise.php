@@ -5,7 +5,7 @@ if(!has_tag('free-trial')
     redirect_pricing_table('view_exercises');
 }
 
-the_post();
+// the_post();
 
 if (isset($_POST['save_audio_time_point'])) {
     $audio_time_points = implode(',', $_POST['audio_time_point']);
@@ -89,34 +89,8 @@ if ($_GET['random']) {
 		$random_exercise = $random_exercises[0];
 	}
 }
-elseif (isset($_GET['exam_id'])) {
-    $exam = get_post($_GET['exam_id']);
-	$exam_section = str_replace('pte-', '', get_term(wp_get_term_taxonomy_parent_id($question_type, 'question_type'))->slug);
-	$exam_section_exercises = get_field($exam_section, $exam->ID);
-	$exam_section_exercise_ids = array_column($exam_section_exercises, 'ID');
-    $current_exercise_exam_section_index = array_search(get_the_ID(), $exam_section_exercise_ids);
+elseif (isset($_GET['section'])) {
 
-	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'any', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
-	if (!$paper) {
-		exit('Exam was not started. Go back to <a href="' . get_the_permalink($exam->ID) . '">exam front page</a>.');
-	}
-
-    $sections_time_limit = array('speaking'=>1800, 'writing'=>1800, 'reading'=>2400, 'listening'=>3300);
-	$section_time_left = $sections_time_limit[$exam_section] - time() + get_post_meta($paper->ID, 'time_start_' . $exam_section, true);
-	if ($section_time_left < 0) {
-		// expired paper
-	}
-    if ($current_exercise_exam_section_index > 0) {
-    	$previous_exercise = $exam_section_exercises[$current_exercise_exam_section_index - 1];
-	}
-
-    if (count($exam_section_exercise_ids) > $current_exercise_exam_section_index + 1) {
-        // find next exercise
-		$next_exercise = $exam_section_exercises[$current_exercise_exam_section_index + 1];
-    }
-    else {
-        // next section
-    }
 }
 else {
 	$previous_exercise = get_adjacent_post(true, '', true, $_GET['tag'] ? 'post_tag' : 'question_type');

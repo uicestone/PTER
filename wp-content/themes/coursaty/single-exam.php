@@ -1,26 +1,63 @@
 <?php
-global $post;
 if(!has_tag('free-trial') && !in_array($post->post_name, ['pte-reading', 'pte-writing'])
     && !(is_limited_free(get_current_user_id()) && has_tag('limited-free'))) {
     redirect_pricing_table('view_exercises');
 }
 
-if ($_GET['start'] === 'speaking') {
-    $user = wp_get_current_user();
+$user = wp_get_current_user();
+$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'any', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
 
-    // create a paper, set speaking start time
-    $paper_id = wp_insert_post(array(
-        'post_type' => 'paper',
-        'post_title' => $user->display_name . '的' . get_the_title() . '试卷',
-        'post_status' => 'private'
-    ));
-	add_post_meta($paper_id, 'exam_id', get_the_ID());
-    add_post_meta($paper_id, 'time_start_speaking', time());
+if (isset($_POST['start'])) {
 
-    // find out first exercise in speaking of this exam
-	$exercises = get_field('speaking');
-	header('Location: ' . get_the_permalink($exercises[0]->ID) . '?exam_id=' . get_the_ID()); exit;
+	if (!$paper) {
+		// create a paper, set speaking start time
+		$paper_id = wp_insert_post(array(
+			'post_type' => 'paper',
+			'post_title' => $user->display_name . '的' . get_the_title() . '试卷',
+			'post_status' => 'private'
+		));
+		add_post_meta($paper_id, 'exam_id', get_the_ID());
+		add_post_meta($paper_id, 'time_start_speaking', time());
+
+	}
+
+	header('Location: ' . $_SERVER['HTTP_REFERER'] . '?section=speaking'); exit;
 }
+
+if ($_GET['section']) {
+	$exam = get_post();
+	$section = $_GET['section'];
+	$section_exercises = get_field($section);
+	$exercise_index = isset($_GET['exercise_index']) ? $_GET['exercise_index'] : 0;
+	$exercise = $section_exercises[$exercise_index];
+
+	if (!$paper) {
+		exit('Exam was not started. Go back to <a href="' . get_the_permalink() . '">exam front page</a>.');
+	}
+
+	$sections_time_limit = array('speaking'=>1800, 'writing'=>1800, 'reading'=>2400, 'listening'=>3300);
+	$section_time_left = $sections_time_limit[$section] - time() + get_post_meta($paper->ID, 'time_start_' . $section, true);
+	if ($section_time_left < 0) {
+		// expired paper
+	}
+	if ($exercise_index > 0) {
+		$previous_exercise = $section_exercises[$exercise_index - 1];
+	}
+
+	if (count($section_exercises) > $exercise_index + 1) {
+		// find next exercise
+		$next_exercise = $section_exercises[$exercise_index + 1];
+	}
+	else {
+		// next section
+	}
+
+	global $post; $post = $exercise;
+	setup_postdata($exercise);
+	include(locate_template('single-exercise.php'));
+
+}
+else {
 
 wp_enqueue_script('waveform');
 wp_enqueue_script('waveform-record');
@@ -119,9 +156,11 @@ get_header(); the_post(); ?>
 			</form><!-- End form -->
 		</div><!-- End comment form -->
 		<div class="row">
-			<a href="<?php the_permalink(); ?>?start=speaking" class="btn btn-block primary-btn orange-btn">开始考试</a>
+			<form method="post">
+				<button type="submit" name="start" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;">开始考试</button>
+			</form>
 		</div>
 	</div>
 </section>
 
-<?php get_footer(); ?>
+<?php } get_footer(); ?>
