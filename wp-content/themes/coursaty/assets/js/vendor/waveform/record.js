@@ -56,7 +56,7 @@
   });
 
   //initialize the WAV exporter.
-  // playlist.initExporter();
+  playlist.initExporter();
 
   window.playlist = playlist;
 

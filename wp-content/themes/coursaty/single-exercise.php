@@ -193,10 +193,10 @@ get_header(); ?>
 															<span class="btn-clear btn btn-danger<?=(empty($exam) || isset($manual_record)) ? '' : ' hidden' ?>">
 																<i class="fa fa-trash"></i>
 															</span>
-															<!--<span title="Download the current work as Wav file"
-																  class="btn btn-download btn-primary">
+															<span title="Download the current work as Wav file"
+																  class="btn btn-download btn-primary hidden">
 																<i class="fa fa-download"></i>
-															</span>-->
+															</span>
 														</div>
 													</div>
 												</div>

@@ -296,7 +296,7 @@
         $(".loading-data").append(info);
     }
 
-    function displayDownloadLink(link, data) {
+    function displayDownloadLink(link) {
         var dateString = (new Date()).toISOString();
         var $link = $("<a/>", {
             'href': link,
@@ -308,15 +308,13 @@
         $('.btn-download-link').remove();
         $('.btn-download').after(link);
 
-        uploadFile(data);
-
     }
 
     function uploadFile(data) {
         var reader = new FileReader();
         var formData = new FormData();
 
-        formData.append('file', data, 'record.wav');
+        formData.append('file', data, 'exercise-record.wav');
 
         $.ajax({
             url: '/upload',
@@ -394,7 +392,8 @@
             }
 
             downloadUrl = window.URL.createObjectURL(data);
-            displayDownloadLink(downloadUrl, data);
+            // displayDownloadLink(downloadUrl);
+            uploadFile(data);
         }
     });
 
