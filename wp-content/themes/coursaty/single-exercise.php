@@ -217,17 +217,15 @@ get_header(); ?>
 									<span class="text">你的选择</span>
 								</div><!-- End Title -->
 								<form method="post" action="/" id="answer-form">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="input row">
-												<?php foreach(explode("\n", get_field('choices')) as $index => $choice): ?>
-												<label class="col-sm-2" style="cursor:pointer">
-													<input name="answer" value="<?=$choice?>" type="<?=get_field('multiple')?'checkbox':'radio'?>">
-													<?=$index+1?>: <?=$choice?>
+									<div class="input content">
+										<?php foreach(explode("\n", get_field('choices')) as $index => $choice): ?>
+											<p>
+												<label style="cursor:pointer">
+													<input name="answer" value="<?=$choice?>" type="<?=get_field('multiple')?'checkbox':'radio'?>" style="font-size:16px;vertical-align:text-bottom">
+													<?=$index+1?>. <?=$choice?>
 												</label>
-												<?php endforeach; ?>
-											</div>
-										</div>
+											</p>
+										<?php endforeach; ?>
 									</div>
 								</form><!-- End form -->
 							</div><!-- End comment form -->
