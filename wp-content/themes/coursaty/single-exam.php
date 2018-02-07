@@ -25,6 +25,7 @@ if (isset($_POST['start'])) {
 }
 
 if ($_GET['section']) {
+	$sections = ['speaking', 'writing', 'reading', 'break', 'listening'];
 	$exam = get_post();
 	$section = $_GET['section'];
 	$section_exercises = get_field($section);
@@ -35,14 +36,23 @@ if ($_GET['section']) {
 		exit('Exam was not started. Go back to <a href="' . get_the_permalink() . '">exam front page</a>.');
 	}
 
+	// roll back rejection
+	$previous_section = get_post_meta($paper->ID, 'section', true);
+	$previous_exercise_index = get_post_meta($paper->ID, 'exercise_index', true);
+
+	if (array_search($previous_section, $sections) > array_search($section, $sections)
+		|| (array_search($previous_section, $sections) === array_search($section, $sections)
+			&& $previous_exercise_index > $exercise_index)) {
+		exit('Cannot roll back to previous question or section.');
+	}
+
+	update_post_meta($paper->ID, 'section', $section);
+	update_post_meta($paper->ID, 'exercise_index', $exercise_index);
+
 	$sections_time_limit = array('speaking'=>1800, 'writing'=>1800, 'reading'=>2400, 'listening'=>3300);
 	$section_time_left = $sections_time_limit[$section] - time() + get_post_meta($paper->ID, 'time_start_' . $section, true);
 	if ($section_time_left < 0) {
 		// expired paper
-	}
-	if ($exercise_index > 0) {
-		$previous_exercise = $section_exercises[$exercise_index - 1];
-		$previous_exercise_url = get_the_permalink() . '?section=' . $section . '&exercise_index=' . ($exercise_index - 1);
 	}
 
 	if (count($section_exercises) > $exercise_index + 1) {
@@ -51,7 +61,12 @@ if ($_GET['section']) {
 		$next_exercise_url = get_the_permalink() . '?section=' . $section . '&exercise_index=' . ($exercise_index + 1);
 	}
 	else {
-		// next section
+		$next_section_index = array_search($section, $sections) + 1;
+		if ($next_section_index < count($sections)) {
+			$next_section_url = get_the_permalink() . '?section=' . $sections[$next_section_index];
+		} else {
+			// exam ends
+		}
 	}
 
 	global $post; $post = $exercise;

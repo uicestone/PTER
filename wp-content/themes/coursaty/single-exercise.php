@@ -290,19 +290,39 @@ get_header(); ?>
 							</form>
 						</div>
 					</div>
+					<?php elseif (isset($exam)): ?>
+					<div class="row">
+						<div class="col-md-4" style="padding-right:5px">
+							<form method="post">
+								<button type="submit" class="btn primary-btn">
+									提交本题
+								</button>
+							</form>
+						</div>
+						<div class="col-md-4" style="padding-left:5px;padding-right:5px">
+							<?php if ($next_exercise): ?>
+							<a class="btn primary-btn pull-right" href="<?=$next_exercise_url?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a>
+							<?php else: ?>
+							<a class="btn primary-btn pull-right" href="<?=$next_section_url?>">下一部分 &raquo;</a>
+							<?php endif; ?>
+						</div>
+						<div class="col-md-4" style="padding-left:5px">
+							<form method="post">
+								<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress"><i class="fa fa-clock-o"></i> <span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span></button>
+							</form>
+						</div>
+					</div>
                     <?php else: ?>
                     <div class="row">
                         <div class="col-md-4" style="padding-right:5px">
-							<?php if ($previous_exercise): ?><a class="btn primary-btn" href="<?=isset($previous_exercise_url) ? $previous_exercise_url : (get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : ''))?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
+							<?php if ($previous_exercise): ?><a class="btn primary-btn" href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
                         </div>
                         <div class="col-md-4" style="padding-left:5px;padding-right:5px">
-							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=isset($next_exercise_url) ? $next_exercise_url : (get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : ''))?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
+							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
                         </div>
                         <div class="col-md-4" style="padding-left:5px">
                             <form method="post">
-								<?php if (isset($exam)): ?>
-								<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress"><i class="fa fa-clock-o"></i> <span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span></button>
-								<?php elseif ($current_exercise_marked): ?>
+								<?php if ($current_exercise_marked): ?>
                                 <button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
                                 <?php else: ?>
                                 <button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> 已学</button>
@@ -310,7 +330,6 @@ get_header(); ?>
                             </form>
                         </div>
                     </div>
-					<?php if (empty($exam)): ?>
                     <div class="row">
                         <div class="col-md-12">
                             <select class="go-to-exercise" style="width:100%;height:40px;font-size:16px;margin-bottom:10px;background:none">
@@ -345,7 +364,6 @@ get_header(); ?>
                             </select>
                         </div>
                     </div>
-					<?php endif; ?>
                     <?php endif; ?>
                     <div class="sidebar-widget">
                         <span class="widget-icon"><i class="fa fa-clock-o"></i></span>
@@ -376,6 +394,17 @@ get_header(); ?>
                                     </form>
                                 </div>
                             </div>
+							<?php if(isset($exam) && $_GET['section'] === 'break'): ?>
+								<div class="skillbar timer clearfix" data-duration="600">
+									<div class="skillbar-title">
+										<span>休息 <span class="seconds-left">10:00</span></span>
+									</div>
+									<div class="skillbar-bar"></div>
+									<div class="controls">
+										<i class="skip fa fa-step-forward"></i>
+									</div>
+								</div>
+							<?php endif; ?>
                             <?php if(in_array($question_type->slug, array('read-aloud'))): ?>
                             <div class="skillbar timer clearfix" data-duration="40">
                                 <div class="skillbar-title">
