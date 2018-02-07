@@ -208,7 +208,7 @@ get_header(); ?>
 							</form><!-- End form -->
 						</div><!-- End comment form -->
 						<?php endif; ?>
-						<?php if (in_array($question_type->slug, array('multiple-choice-reading', 'multiple-choice-listening'))): ?>
+						<?php if (in_array($question_type->slug, array('multiple-choice-reading', 'multiple-choice-listening', 'select-missing-word', 'highlight-correct-summary'))): ?>
 							<div class="clearfix" style="margin-top:30px"></div>
 							<div class="comment-form answer-form entry">
 								<div class="addcomment-title">
@@ -217,7 +217,7 @@ get_header(); ?>
 								</div><!-- End Title -->
 								<form method="post" action="/" id="answer-form">
 									<div class="input content">
-										<?php foreach(explode("\n", get_field('choices')) as $index => $choice): ?>
+										<?php foreach(explode("\n", get_field('choices')) as $index => $choice): if (!$choice) continue; ?>
 											<p>
 												<label style="cursor:pointer">
 													<input name="answer" value="<?=$choice?>" type="<?=get_field('multiple')?'checkbox':'radio'?>" style="font-size:16px;vertical-align:text-bottom">
