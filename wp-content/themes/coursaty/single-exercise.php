@@ -832,18 +832,6 @@ jQuery(function($) {
         window.location.href = $(this).val();
     });
 
-    $('.playlist-toolbar').on('mouseenter', '.btn', function () {
-        $(this).addClass('hover');
-    }).on('mouseleave', '.btn', function () {
-        $(this).removeClass('hover');
-    }).on('click', '.btn-record', function () {
-        $(this).addClass('active');
-    }).on('click', '.btn-play', function () {
-        $(this).addClass('active');
-    }).on('click', '.btn-stop', function () {
-        $(this).siblings('.btn').removeClass('active');
-    });
-
     // Reading - Fill in the Blanks I
     var contentElem = $('.post .entry:not(.comment-form) .content').on('click', '.options .option', function () {
         $(this).parents('.content').find('.option').removeClass('selected');

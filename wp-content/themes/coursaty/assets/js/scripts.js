@@ -244,4 +244,20 @@
         $(this).find('span').css({display: 'none'});
     });
 
+    /***************** Playlist buttons *******************/
+
+    $('.playlist-toolbar').on('mouseenter', '.btn', function () {
+        $(this).addClass('hover');
+    }).on('mouseleave', '.btn', function () {
+        $(this).removeClass('hover');
+    }).on('click', '.btn-record', function () {
+        $(this).addClass('active');
+    }).on('click', '.btn-play', function () {
+        $(this).addClass('active');
+    }).on('click', '.btn-stop', function () {
+        $(this).siblings('.btn').removeClass('active');
+    });
+
+
+
 })(jQuery);
