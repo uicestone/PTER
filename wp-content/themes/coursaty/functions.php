@@ -88,7 +88,7 @@ add_filter('wpjam_cdn_host', function ($host) {
 // Remove '私密：' from private post titles
 add_filter('the_title', function ($title) {
 
-	$title = esc_attr($title);
+	// $title = esc_attr($title);
 
 	$findthese = array(
 		'#私密：#'
