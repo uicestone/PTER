@@ -13,6 +13,10 @@ add_shortcode('blank', function ($attrs) {
 			}, $options)) . '</select>') : '');
 });
 
+add_shortcode('___', function ($attrs) {
+	return '<input type="text" name="blank[]" class="blank-fib-l">';
+});
+
 add_shortcode('options', function ($attr) {
 	if (empty($attr['options'])) {
 		return 'Error: no options were set.';

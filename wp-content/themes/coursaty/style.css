@@ -2026,6 +2026,13 @@ h6.head-title {
     background-color: #2997ab;
     color: white;
 }
+.post .entry .content .blank-fib-l {
+    border-bottom: 1px solid #353a48;
+    font: inherit;
+    color: inherit;
+    line-height: 1;
+    margin: 0 0.5em;
+}
 .post .entry .content .reorderable {
     display: inline-block;
     width: calc(50% - 20px);
