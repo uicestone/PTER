@@ -2304,8 +2304,12 @@ h6.head-title {
 .sidebar .primary-btn {
     margin-right: 0;
     margin-bottom: 15px;
+    margin-top: -15px;
     width: 100%;
     line-height: 40px;
+}
+.sidebar .primary-btn:first-child {
+    margin-top: 0;
 }
 .sidebar .sidebar-widget {
     padding: 20px;
@@ -2654,7 +2658,7 @@ h6.head-title {
     box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.13), inset 0 -2px 0 0 rgba(0, 0, 0, 0.12);
     overflow: hidden;
 }
-.comment-form.answer-form {
+.single.exercise.post .main-content .entry {
     margin-bottom: 20px;
 }
 .comment-form .addcomment-title {

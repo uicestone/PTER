@@ -115,7 +115,7 @@ get_header(); ?>
 	<?php endif; ?>
 </div>
 
-<article class="post single">
+<article class="post single exercise">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 main-content">
@@ -139,7 +139,6 @@ get_header(); ?>
 							</div>
 						</div><!-- End Entry -->
                         <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening', 'write-essay', 'swt'))): ?>
-						<div class="clearfix" style="margin-top:30px"></div>
 						<div class="comment-form answer-form entry">
 							<div class="addcomment-title">
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
