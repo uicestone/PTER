@@ -42,11 +42,13 @@ if ($_GET['section']) {
 	}
 	if ($exercise_index > 0) {
 		$previous_exercise = $section_exercises[$exercise_index - 1];
+		$previous_exercise_url = get_the_permalink() . '?section=' . $section . '&exercise_index=' . ($exercise_index - 1);
 	}
 
 	if (count($section_exercises) > $exercise_index + 1) {
 		// find next exercise
 		$next_exercise = $section_exercises[$exercise_index + 1];
+		$next_exercise_url = get_the_permalink() . '?section=' . $section . '&exercise_index=' . ($exercise_index + 1);
 	}
 	else {
 		// next section

@@ -92,7 +92,7 @@ if ($_GET['random']) {
 	}
 }
 elseif (isset($_GET['section'])) {
-
+	// did everything in single-exam.php
 }
 else {
 	$previous_exercise = get_adjacent_post(true, '', true, $_GET['tag'] ? 'post_tag' : 'question_type');
@@ -293,15 +293,15 @@ get_header(); ?>
                     <?php else: ?>
                     <div class="row">
                         <div class="col-md-4" style="padding-right:5px">
-							<?php if ($previous_exercise): ?><a class="btn primary-btn" href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '') . ($_GET['exam_id'] ? '?exam_id=' . $_GET['exam_id'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
+							<?php if ($previous_exercise): ?><a class="btn primary-btn" href="<?=isset($previous_exercise_url) ? $previous_exercise_url : (get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : ''))?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
                         </div>
                         <div class="col-md-4" style="padding-left:5px;padding-right:5px">
-							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '') . ($_GET['exam_id'] ? '?exam_id=' . $_GET['exam_id'] : '')?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
+							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=isset($next_exercise_url) ? $next_exercise_url : (get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : ''))?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
                         </div>
                         <div class="col-md-4" style="padding-left:5px">
                             <form method="post">
 								<?php if (isset($exam)): ?>
-									<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress"><i class="fa fa-clock-o"></i> <span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span></button>
+								<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress"><i class="fa fa-clock-o"></i> <span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span></button>
 								<?php elseif ($current_exercise_marked): ?>
                                 <button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
                                 <?php else: ?>
