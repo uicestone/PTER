@@ -109,7 +109,7 @@ get_header(); the_post(); ?>
                             </div><!-- end confirm password -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="text" id="reg_username" name="display_name" class="display_name-input" placeholder="显示名">
+                                    <input type="text" id="display_name" name="display_name" class="display_name-input" placeholder="显示名">
                                 </div>
                             </div><!-- end username -->
                             <div class="col-md-6 col-sm-6">
