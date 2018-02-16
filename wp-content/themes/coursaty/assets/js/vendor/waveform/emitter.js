@@ -313,6 +313,9 @@
     function uploadFile(data) {
         var reader = new FileReader();
         var formData = new FormData();
+        var paperId = window.location.search.match(/paper_id=(\d+)/)[1];
+        var section = window.location.search.match(/section=(\w+)/)[1];
+        var execiseIndex = window.location.search.match(/exercise_index=(\d+)/)[1] || 0;
 
         formData.append('file', data, 'exercise-record.wav');
 

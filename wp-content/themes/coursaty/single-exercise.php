@@ -291,7 +291,7 @@ get_header(); ?>
 					<div class="row">
 						<div class="col-md-4" style="padding-right:5px">
 							<form method="post">
-								<button type="submit" class="btn primary-btn">
+								<button type="submit" name="submit" class="btn primary-btn">
 									提交本题
 								</button>
 							</form>

@@ -5,9 +5,10 @@ if(!has_tag('free-trial') && !in_array($post->post_name, ['pte-reading', 'pte-wr
 }
 
 $user = wp_get_current_user();
-$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'any', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
 
 if (isset($_POST['start'])) {
+
+	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'any', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
 
 	if (!$paper) {
 		// create a paper, set speaking start time
@@ -17,12 +18,12 @@ if (isset($_POST['start'])) {
 			'post_status' => 'private'
 		));
 		add_post_meta($paper_id, 'exam_id', get_the_ID());
-		add_post_meta($paper_id, 'time_start_speaking', time());
-
 	}
 
-	header('Location: ' . $_SERVER['HTTP_REFERER'] . '?section=speaking'); exit;
+	header('Location: ' . $_SERVER['HTTP_REFERER'] . '?paper_id=' . $paper_id . '&section=speaking'); exit;
 }
+
+$paper = get_post($_GET['paper_id']);
 
 if ($_GET['section']) {
 	$sections = ['speaking', 'writing', 'reading', 'break', 'listening'];
@@ -31,8 +32,7 @@ if ($_GET['section']) {
 	$section_exercises = get_field($section);
 	$exercise_index = isset($_GET['exercise_index']) ? $_GET['exercise_index'] : 0;
 	$exercise = $section_exercises[$exercise_index];
-
-	if (!$paper) {
+	if (!$paper || $paper->post_status !== 'private') {
 		exit('Exam was not started. Go back to <a href="' . get_the_permalink() . '">exam front page</a>.');
 	}
 
@@ -49,8 +49,13 @@ if ($_GET['section']) {
 	update_post_meta($paper->ID, 'section', $section);
 	update_post_meta($paper->ID, 'exercise_index', $exercise_index);
 
+	if (!$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true)) {
+		$section_start_time = time();
+		add_post_meta($paper->ID, 'time_start_speaking', $section_start_time);
+	}
+
 	$sections_time_limit = array('speaking'=>1800, 'writing'=>1800, 'reading'=>2400, 'listening'=>3300);
-	$section_time_left = $sections_time_limit[$section] - time() + get_post_meta($paper->ID, 'time_start_' . $section, true);
+	$section_time_left = $sections_time_limit[$section] - time() + $section_start_time;
 	if ($section_time_left < 0) {
 		// expired paper
 	}
@@ -58,12 +63,12 @@ if ($_GET['section']) {
 	if (count($section_exercises) > $exercise_index + 1) {
 		// find next exercise
 		$next_exercise = $section_exercises[$exercise_index + 1];
-		$next_exercise_url = get_the_permalink() . '?section=' . $section . '&exercise_index=' . ($exercise_index + 1);
+		$next_exercise_url = get_the_permalink() . '?&paper_id=' . $paper->ID . '&section=' . $section . '&exercise_index=' . ($exercise_index + 1);
 	}
 	else {
 		$next_section_index = array_search($section, $sections) + 1;
 		if ($next_section_index < count($sections)) {
-			$next_section_url = get_the_permalink() . '?section=' . $sections[$next_section_index];
+			$next_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$next_section_index];
 		} else {
 			// exam ends
 		}
