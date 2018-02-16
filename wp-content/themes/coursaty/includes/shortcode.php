@@ -8,7 +8,7 @@ add_shortcode('blank', function ($attrs) {
 		$options = explode(',', $attrs['options']);
 	}
 
-	return '<span class="blank' . ($options ? ' has-options' : '') . '"></span>' . ($options ? ('<select><option></option>' . implode(' ', array_map(function ($option) {
+	return '<span class="answer-input blank' . ($options ? ' has-options' : '') . '"></span>' . ($options ? ('<select><option></option>' . implode(' ', array_map(function ($option) {
 				return '<option>' . $option . '</option>';
 			}, $options)) . '</select>') : '');
 });

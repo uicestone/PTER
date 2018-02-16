@@ -154,7 +154,7 @@ get_header(); ?>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="input">
-											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false"></textarea>
+											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" class="answer-input"></textarea>
                                             <div class="diff-check-result content clearfix" style="white-space:pre-line;display:none"></div>
 											<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))): ?>
                                             <input type="submit" id="comment-submit" class="diff-check submit-input grad-btn ln-tr" value="检查" disabled="disabled">
@@ -220,7 +220,7 @@ get_header(); ?>
 										<?php foreach(explode("\n", get_field('choices')) as $index => $choice): if (!$choice) continue; ?>
 											<p>
 												<label style="cursor:pointer">
-													<input name="answer" value="<?=$choice?>" type="<?=get_field('multiple')?'checkbox':'radio'?>" style="font-size:16px;vertical-align:text-bottom">
+													<input name="answer" value="<?=$choice?>" type="<?=get_field('multiple')?'checkbox':'radio'?>" class="answer-input" style="font-size:16px;vertical-align:text-bottom">
 													<?=$index+1?>. <?=$choice?>
 												</label>
 											</p>
@@ -290,11 +290,7 @@ get_header(); ?>
 					<?php elseif (isset($exam)): ?>
 					<div class="row">
 						<div class="col-md-4" style="padding-right:5px">
-							<form method="post">
-								<button type="submit" name="submit" class="btn primary-btn">
-									提交本题
-								</button>
-							</form>
+							<button type="submit" class="btn primary-btn submit-answer">提交本题</button>
 						</div>
 						<div class="col-md-4" style="padding-left:5px;padding-right:5px">
 							<?php if ($next_exercise): ?>
@@ -817,15 +813,15 @@ jQuery(function($) {
 
     // highlight on click
     $('.question.content.highlightable blockquote p').each(function () {
-        $(this).html($(this).html().split(/\s+/).map(function (word) {
-            return '<span>' + word + '</span>';
+        $(this).html($(this).html().split(/\s+/).map(function (word, index) {
+            return '<span data-word-index="' + index + '">' + word + '</span>';
         }).join(' '));
     })
     .on('click', 'span', function () {
-        $(this).replaceWith('<del>' + $(this).html() + '</del>');
+        $(this).replaceWith('<del class="answer-input" data-answer-value="' + $(this).data('word-index') + '">' + $(this).html() + '</del>');
     })
     .on('click', 'del', function () {
-        $(this).replaceWith('<span>' + $(this).html() + '</span>');
+        $(this).replaceWith('<span data-answer-value="' + $(this).data('word-index') + '">' + $(this).html() + '</span>');
     });
 
     $('.go-to-exercise').change(function () {
@@ -874,6 +870,19 @@ jQuery(function($) {
         contentElem.find('.reorderable').append($(this));
     });
     <?php endif; ?>
+
+	// submit answer in exam
+	<?php if (isset ($exam)): ?>
+	$('.submit-answer').on('click', function () {
+        var answerInputs = $('.answer-input');
+        var answers = $.map(answerInputs, function (answerInput) {
+            return $(answerInput).val() || $(answerInput).data('answer-value') || $(answerInput).text().trim();
+		});
+        $.post(window.location.href, {
+            answer: answers
+		});
+	});
+	<?php endif; ?>
 });
 </script>
 

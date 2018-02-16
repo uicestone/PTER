@@ -8,7 +8,7 @@ $user = wp_get_current_user();
 
 if (isset($_POST['start'])) {
 
-	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'any', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
+	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
 
 	if (!$paper) {
 		// create a paper, set speaking start time
@@ -18,9 +18,10 @@ if (isset($_POST['start'])) {
 			'post_status' => 'private'
 		));
 		add_post_meta($paper_id, 'exam_id', get_the_ID());
+		$paper = get_post($paper_id);
 	}
 
-	header('Location: ' . $_SERVER['HTTP_REFERER'] . '?paper_id=' . $paper_id . '&section=speaking'); exit;
+	header('Location: ' . $_SERVER['HTTP_REFERER'] . '?paper_id=' . $paper->ID . '&section=speaking'); exit;
 }
 
 $paper = get_post($_GET['paper_id']);
@@ -34,6 +35,13 @@ if ($_GET['section']) {
 	$exercise = $section_exercises[$exercise_index];
 	if (!$paper || $paper->post_status !== 'private') {
 		exit('Exam was not started. Go back to <a href="' . get_the_permalink() . '">exam front page</a>.');
+	}
+
+	if (isset($_POST['answer'])) {
+		// save answer to paper
+		update_post_meta($exam->ID, 'answer_' . $section . '_' . $exercise_index, $_POST['answer']);
+		echo json_encode(get_post_meta($exam->ID, 'answer_' . $section . '_' . $exercise_index, true));
+		exit;
 	}
 
 	// roll back rejection
