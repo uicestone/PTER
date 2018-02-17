@@ -154,7 +154,11 @@ get_header(); ?>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="input">
+											<?php if (empty($_GET['finish'])): ?>
 											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" class="answer-input"></textarea>
+											<?php elseif (isset($exam) && $answer = get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true)): ?>
+											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" disabled><?=$answer[0]?></textarea>
+											<?php endif; ?>
                                             <div class="diff-check-result content clearfix" style="white-space:pre-line;display:none"></div>
 											<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))): ?>
                                             <input type="submit" id="comment-submit" class="diff-check submit-input grad-btn ln-tr" value="检查" disabled="disabled">
@@ -173,6 +177,9 @@ get_header(); ?>
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
 								<span class="text">你的回答</span>
 							</div><!-- End Title -->
+							<?php if (isset($exam) && $answer = get_post_meta($paper->ID, 'answer_' . $section  . '_' . $exercise_index, true)): ?>
+							<audio controls src="<?=$answer[0]?>" style="width:100%;"></audio>
+							<?php else: ?>
 							<form method="post" action="/" id="answer-form">
 								<div class="row">
 									<div class="col-md-12">
@@ -206,6 +213,7 @@ get_header(); ?>
 									</div>
 								</div>
 							</form><!-- End form -->
+							<?php endif; ?>
 						</div><!-- End comment form -->
 						<?php endif; ?>
 						<?php if (in_array($question_type->slug, array('multiple-choice-reading', 'multiple-choice-listening', 'select-missing-word', 'highlight-correct-summary'))): ?>
@@ -217,10 +225,17 @@ get_header(); ?>
 								</div><!-- End Title -->
 								<form method="post" action="/" id="answer-form">
 									<div class="input content">
-										<?php foreach(explode("\n", get_field('choices')) as $index => $choice): if (!$choice) continue; ?>
+										<?php foreach(explode("\n", get_field('choices')) as $index => $choice): $choice = trim($choice); if (!$choice) continue; ?>
 											<p>
 												<label style="cursor:pointer">
-													<input name="answer" value="<?=$choice?>" type="<?=get_field('multiple')?'checkbox':'radio'?>" class="answer-input" style="font-size:16px;vertical-align:text-bottom">
+													<?php if (isset($exam) &&
+														$answer_choices = get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true)
+													) { $answer_choices = array_map('trim', $answer_choices); } ?>
+													<input name="answer" value="<?=$choice?>"
+														type="<?=get_field('multiple')?'checkbox':'radio'?>"
+														<?=(isset($answer_choices) && in_array($choice, $answer_choices)) ? ' checked' : ''?>
+														<?=isset($answer_choices) ? ' disabled' : ''?>
+														class="answer-input" style="font-size:16px;vertical-align:text-bottom">
 													<?=$index+1?>. <?=$choice?>
 												</label>
 											</p>
@@ -229,7 +244,7 @@ get_header(); ?>
 								</form><!-- End form -->
 							</div><!-- End comment form -->
 						<?php endif; ?>
-						<?php if (empty($exam)): ?>
+						<?php if (empty($exam) || isset($_GET['finish'])): ?>
                         <div class="comment-form comments-list entry answer">
                             <div class="addcomment-title" style="margin-bottom:20px">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
@@ -290,20 +305,28 @@ get_header(); ?>
 					<?php elseif (isset($exam)): ?>
 					<div class="row">
 						<div class="col-md-4" style="padding-right:5px">
-							<button type="submit" class="btn primary-btn submit-answer">提交本题</button>
+							<button type="submit" class="btn primary-btn submit-answer<?=isset($_GET['finish']) ? ' disabled' : ''?>">提交本题</button>
 						</div>
 						<div class="col-md-4" style="padding-left:5px;padding-right:5px">
 							<?php if (isset($next_exercise_url)): ?>
-							<a class="btn primary-btn next next-exercise disabled pull-right" href="<?=$next_exercise_url?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a>
+							<a class="btn primary-btn next next-exercise pull-right<?=empty($_GET['finish']) ? ' disabled' : ''?>" href="<?=$next_exercise_url?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a>
 							<?php elseif (isset($next_section_url)): ?>
-							<a class="btn primary-btn next next-section disabled pull-right" href="<?=$next_section_url?>">下一部分 &raquo;</a>
+							<a class="btn primary-btn next next-section pull-right<?=empty($_GET['finish']) ? ' disabled' : ''?>" href="<?=$next_section_url?>">下一部分 &raquo;</a>
 							<?php elseif (isset($submit_paper_url)): ?>
 							<a class="btn primary-btn next next-section disabled pull-right" href="<?=$submit_paper_url?>">提交试卷 &raquo;</a>
 							<?php endif; ?>
 						</div>
 						<div class="col-md-4" style="padding-left:5px">
 							<form method="post">
-								<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress"><i class="fa fa-clock-o"></i> <span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span></button>
+								<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress">
+									<?php if (empty($_GET['finish'])): ?>
+									<i class="fa fa-clock-o"></i>
+									<span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span>
+									<?php else: ?>
+									<i class="fa fa-check"></i>
+									<span>核对</span>
+									<?php endif; ?>
+								</button>
 							</form>
 						</div>
 					</div>
@@ -558,7 +581,7 @@ jQuery(function($) {
 	}
 
     // toggle answer display
-    $('.comments-list.answer .toggle').click(function(e) {
+    var answerToggler = $('.comments-list.answer .toggle').click(function(e) {
         e.preventDefault();
 
         if ($(this).hasClass('disabled')) {
@@ -598,6 +621,9 @@ jQuery(function($) {
             var answerVoiceRecorder = document.querySelector('#answer-voice-record');
             $('#ding-sound').get(0).play();
             $('.btn-record').trigger('click');
+            $('.answer-form audio').each(function () {
+                this.play();
+			});
         }
 
         return interval;
@@ -725,7 +751,7 @@ jQuery(function($) {
         // answer word count
         var answerInputValue = $(this).val().trim();
         var answerInputValueTrimmed = answerInputValue.replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
-        var wordCount = answerInputValue.split(/\s+/).length;
+        var wordCount = answerInputValue.split(/\s+/).filter(function(w){ return w; }).length;
         var _self = this;
         wordCountElement.text(wordCount);
 
@@ -783,6 +809,8 @@ jQuery(function($) {
 
     });
 
+    answerArea.trigger('keyup');
+
     answerCheckButton.on('click', function (e) {
         e.preventDefault();
 
@@ -814,6 +842,7 @@ jQuery(function($) {
     });
 
     // highlight on click
+	<?php if (in_array($question_type->slug, array('highlight-incorrect-words'))): ?>
     $('.question.content.highlightable blockquote p').each(function () {
         $(this).html($(this).html().split(/\s+/).map(function (word, index) {
             return '<span data-word-index="' + index + '">' + word + '</span>';
@@ -830,7 +859,18 @@ jQuery(function($) {
         window.location.href = $(this).val();
     });
 
+    <?php	if (isset($exam)): ?>
+    var answerHighLighted = <?=json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true))?>;
+    answerHighLighted.forEach(function (index) {
+        var wordSpan = $('[data-word-index="' + index + '"]');
+        wordSpan.replaceWith('<del class="answer-input" data-answer-value="' + wordSpan.data('word-index') + '">' + wordSpan.html() + '</del>');
+	});
+    <?php 	endif; ?>
+    <?php endif; ?>
+
+
     // Reading - Fill in the Blanks I
+	<?php if (in_array($question_type->slug, array('fill-in-the-blanks-i', 'fill-in-the-blanks-ii'))): ?>
     var contentElem = $('.post .entry:not(.comment-form) .content').on('click', '.options .option', function () {
         $(this).parents('.content').find('.option').removeClass('selected');
         $(this).toggleClass('selected');
@@ -857,6 +897,15 @@ jQuery(function($) {
         $(this).hide();
     });
 
+    var answerFilledBlanks = <?=json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true))?>;
+    answerFilledBlanks.forEach(function (filledValue, index) {
+        if (filledValue) {
+            $('.blank:eq(' + index + ')').text(filledValue).addClass('option');
+            $('.options>[data-option="' + filledValue + '"]').remove();
+        }
+    });
+    <?php endif; ?>
+
     <?php if ($question_type->slug === 'reorder-paragraph'): ?>
     var parasHtml = contentElem.html();
     contentElem.html('');
@@ -874,6 +923,16 @@ jQuery(function($) {
         contentElem.find('.reorderable').append($(this));
         $(this).removeClass('.answer-input');
     });
+    <?php 	if (isset($exam) && $answer = get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true)): ?>
+	var answerReorderd = <?=json_encode($answer)?>;
+    var reorderedElem = answerReorderd.map(function (order) {
+        return contentElem.find('.reorderable>:eq(' + (order - 1) + ')');
+	});
+    reorderedElem.forEach(function (el) {
+        contentElem.find('.reordered').append($(el));
+        $(this).addClass('answer-input');
+	});
+	<?php 	endif; ?>
     <?php endif; ?>
 
 	// submit answer in exam
@@ -908,13 +967,16 @@ jQuery(function($) {
             	.parent().parent().find('.next.disabled').removeClass('disabled');
 		});
 	});
+	<?php 	if (isset($_GET['finish'])): ?>
+    answerToggler.trigger('click');
+	<?php 	endif; ?>
 	<?php endif; ?>
 });
 </script>
 
 <?php
 
-if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
+if (empty($_GET['finish']) && in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');

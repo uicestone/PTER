@@ -21,7 +21,7 @@ if (isset($_POST['start'])) {
 		$paper = get_post($paper_id);
 	}
 
-	header('Location: ' . $_SERVER['HTTP_REFERER'] . '?paper_id=' . $paper->ID . '&section=speaking'); exit;
+	header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=speaking' . (isset($_GET['finish']) ? '&finish=true' : '')); exit;
 }
 
 $paper = get_post($_GET['paper_id']);
@@ -48,7 +48,7 @@ if ($_GET['section']) {
 	$previous_section = get_post_meta($paper->ID, 'section', true);
 	$previous_exercise_index = get_post_meta($paper->ID, 'exercise_index', true);
 
-	if (array_search($previous_section, $sections) > array_search($section, $sections)
+	if (empty($_GET['finish']) && array_search($previous_section, $sections) > array_search($section, $sections)
 		|| (array_search($previous_section, $sections) === array_search($section, $sections)
 			&& $previous_exercise_index > $exercise_index)) {
 		exit('Cannot roll back to previous question or section.');
@@ -71,12 +71,12 @@ if ($_GET['section']) {
 	if (count($section_exercises) > $exercise_index + 1) {
 		// find next exercise
 		$next_exercise = $section_exercises[$exercise_index + 1];
-		$next_exercise_url = get_the_permalink() . '?&paper_id=' . $paper->ID . '&section=' . $section . '&exercise_index=' . ($exercise_index + 1);
+		$next_exercise_url = get_the_permalink() . '?&paper_id=' . $paper->ID . '&section=' . $section . '&exercise_index=' . ($exercise_index + 1) . (isset($_GET['finish']) ? '&finish=true' : '');
 	}
 	else {
 		$next_section_index = array_search($section, $sections) + 1;
 		if ($next_section_index < count($sections)) {
-			$next_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$next_section_index];
+			$next_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$next_section_index] . (isset($_GET['finish']) ? '&finish=true' : '');
 		} else {
 			$submit_paper_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true';
 		}

@@ -14,7 +14,7 @@ add_shortcode('blank', function ($attrs) {
 });
 
 add_shortcode('___', function ($attrs) {
-	return '<input type="text" name="blank[]" class="blank-fib-l">';
+	return '<input type="text" name="blank[]" class="blank-fib-l answer-input">';
 });
 
 add_shortcode('options', function ($attr) {
@@ -24,7 +24,7 @@ add_shortcode('options', function ($attr) {
 
 	$options = explode(',', $attr['options']);
 
-	return '<div class="options"><hr>' . implode(' ', array_map(function ($option) { return '<span class="option">' . $option . '</span>'; }, $options)) . '</div>';
+	return '<div class="options"><hr>' . implode(' ', array_map(function ($option) { return '<span class="option" data-option="' . trim($option) . '"">' . trim($option) . '</span>'; }, $options)) . '</div>';
 });
 
 add_shortcode('sup', function ($attrs, $content) {
