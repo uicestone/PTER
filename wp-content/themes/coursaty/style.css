@@ -2301,6 +2301,13 @@ h6.head-title {
     vertical-align: middle;
     background: #2997ab;
 }
+.sidebar .primary-btn.disabled {
+    background: #a7d2dc;
+    cursor: not-allowed;
+}
+.sidebar .primary-btn.disabled:hover {
+    background: #a7d2dc;
+}
 .sidebar .primary-btn {
     margin-right: 0;
     margin-bottom: 15px;

@@ -293,10 +293,12 @@ get_header(); ?>
 							<button type="submit" class="btn primary-btn submit-answer">提交本题</button>
 						</div>
 						<div class="col-md-4" style="padding-left:5px;padding-right:5px">
-							<?php if ($next_exercise): ?>
-							<a class="btn primary-btn pull-right" href="<?=$next_exercise_url?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a>
-							<?php else: ?>
-							<a class="btn primary-btn pull-right" href="<?=$next_section_url?>">下一部分 &raquo;</a>
+							<?php if (isset($next_exercise_url)): ?>
+							<a class="btn primary-btn next next-exercise disabled pull-right" href="<?=$next_exercise_url?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a>
+							<?php elseif (isset($next_section_url)): ?>
+							<a class="btn primary-btn next next-section disabled pull-right" href="<?=$next_section_url?>">下一部分 &raquo;</a>
+							<?php elseif (isset($submit_paper_url)): ?>
+							<a class="btn primary-btn next next-section disabled pull-right" href="<?=$submit_paper_url?>">提交试卷 &raquo;</a>
 							<?php endif; ?>
 						</div>
 						<div class="col-md-4" style="padding-left:5px">
@@ -861,25 +863,49 @@ jQuery(function($) {
     contentElem.html($('<div class="reorderable" />').html(parasHtml));
     $('.reorderable>p').each(function(index, el) {
         $(el).text((index + 1 + '. ') + $(el).text());
+        $(el).data('answer-value', index + 1);
     });
     contentElem.append($('<div class="reordered" />'));
     contentElem.on('click', '.reorderable p', function () {
         contentElem.find('.reordered').append($(this));
+        $(this).addClass('answer-input');
     });
     contentElem.on('click', '.reordered p', function () {
         contentElem.find('.reorderable').append($(this));
+        $(this).removeClass('.answer-input');
     });
     <?php endif; ?>
 
 	// submit answer in exam
 	<?php if (isset ($exam)): ?>
 	$('.submit-answer').on('click', function () {
+	    var self = this;
+
+        // stop timer
+
+		// stop recorder if any
+        if ($('.btn-stop').click().length) {
+            // hide submit button, and enable next button
+            $(self).addClass('disabled')
+                .parent().parent().find('.next.disabled').removeClass('disabled');
+
+            // answer save should be down along with upload handling script
+            return;
+		}
+
         var answerInputs = $('.answer-input');
-        var answers = $.map(answerInputs, function (answerInput) {
+        var answers = $.map(answerInputs.filter(function () {
+            return !$(this).is('[type="checkbox"],[type="radio"]') || $(this).is(':checked');
+		}), function (answerInput) {
             return $(answerInput).val() || $(answerInput).data('answer-value') || $(answerInput).text().trim();
-		});
+        });
+
         $.post(window.location.href, {
             answer: answers
+		}, function () {
+            // hide submit button and enable next button
+			$(self).addClass('disabled')
+            	.parent().parent().find('.next.disabled').removeClass('disabled');
 		});
 	});
 	<?php endif; ?>

@@ -315,12 +315,12 @@
         var formData = new FormData();
         var paperId = window.location.search.match(/paper_id=(\d+)/)[1];
         var section = window.location.search.match(/section=(\w+)/)[1];
-        var execiseIndex = window.location.search.match(/exercise_index=(\d+)/)[1] || 0;
+        var execiseIndex = (window.location.search.match(/exercise_index=(\d+)/) || [])[1];
 
         formData.append('file', data, 'exercise-record.wav');
 
         $.ajax({
-            url: '/upload',
+            url: '/upload/' + window.location.search,
             type: 'POST',
             cache: false,
             data: formData,

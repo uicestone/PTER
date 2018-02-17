@@ -258,6 +258,11 @@
         $(this).siblings('.btn').removeClass('active');
     });
 
+    /************ Disabled links and buttons **************/
+    $(document).on('click', 'a.disabled,button.disabled', function (e) {
+        e.preventDefault();
+    });
+
 
 
 })(jQuery);

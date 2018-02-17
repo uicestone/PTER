@@ -39,8 +39,8 @@ if ($_GET['section']) {
 
 	if (isset($_POST['answer'])) {
 		// save answer to paper
-		update_post_meta($exam->ID, 'answer_' . $section . '_' . $exercise_index, $_POST['answer']);
-		echo json_encode(get_post_meta($exam->ID, 'answer_' . $section . '_' . $exercise_index, true));
+		update_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, $_POST['answer']);
+		echo json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true));
 		exit;
 	}
 
@@ -59,7 +59,7 @@ if ($_GET['section']) {
 
 	if (!$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true)) {
 		$section_start_time = time();
-		add_post_meta($paper->ID, 'time_start_speaking', $section_start_time);
+		add_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
 	}
 
 	$sections_time_limit = array('speaking'=>1800, 'writing'=>1800, 'reading'=>2400, 'listening'=>3300);
@@ -78,7 +78,7 @@ if ($_GET['section']) {
 		if ($next_section_index < count($sections)) {
 			$next_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$next_section_index];
 		} else {
-			// exam ends
+			$submit_paper_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true';
 		}
 	}
 
@@ -89,9 +89,11 @@ if ($_GET['section']) {
 }
 else {
 
-wp_enqueue_script('waveform');
-wp_enqueue_script('waveform-record');
-wp_enqueue_script('waveform-emitter');
+if (empty($_GET['finish'])) {
+	wp_enqueue_script('waveform');
+	wp_enqueue_script('waveform-record');
+	wp_enqueue_script('waveform-emitter');
+}
 
 get_header(); the_post(); ?>
 
@@ -146,6 +148,7 @@ get_header(); the_post(); ?>
 
 <section class="post" style="padding-top:20px">
 	<div class="container">
+		<?php if (empty($_GET['finish'])): ?>
 		<div class="row comment-form answer-form entry">
 			<div class="addcomment-title">
 				<span class="icon"><i class="fa fa-comments-o"></i></span>
@@ -190,6 +193,13 @@ get_header(); the_post(); ?>
 				<button type="submit" name="start" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;">开始考试</button>
 			</form>
 		</div>
+		<?php else: ?>
+		<div class="row">
+			<form method="post">
+				<button type="submit" name="start" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;">检查答案</button>
+			</form>
+		</div>
+		<?php endif; ?>
 	</div>
 </section>
 

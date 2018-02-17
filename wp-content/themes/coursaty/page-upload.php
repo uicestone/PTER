@@ -6,7 +6,7 @@ if ( ! function_exists( 'wp_handle_upload' ) ) {
 
 $file = wp_handle_upload($_FILES['file'], array('test_form' => false));
 
-if ( $file && ! isset( $movefile['error'] ) ) {
+if ( $file && ! isset( $file['error'] ) ) {
 	// echo $file['url'];
 	// get exercise
 	$paper_id = $_GET['paper_id'];
@@ -17,7 +17,8 @@ if ( $file && ! isset( $movefile['error'] ) ) {
 	$exercise = $section_exercises[$exercise_index];
 
 	// save record url to paper
-	update_post_meta($paper_id, 'answer_' . $section . '_' . $exercise_index, $file['url']);
+	update_post_meta($paper_id, 'answer_' . $section . '_' . $exercise_index, array($file['url']));
+	echo json_encode(get_post_meta($paper_id, 'answer_' . $section . '_' . $exercise_index, true));
 
 } else {
 	/**
