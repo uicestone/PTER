@@ -397,9 +397,11 @@ get_header(); ?>
                                     <i id="rewind-control" class="fa fa-fast-backward"></i>
                                     <i id="fast-forward-control" class="fa fa-fast-forward"></i>
 									<?php endif; ?>
+									<?php if (empty($exam) || $_GET['finish']): ?>
                                     <i id="play-control" class="fa fa-play" style="display:none;"></i>
                                     <i id="pause-control" class="fa fa-pause" style="display:none"></i>
                                     <i id="replay-control" class="fa fa-refresh"></i>
+									<?php endif; ?>
                                 </div>
                                 <div class="audio-navigation">
                                     <form method="post">
