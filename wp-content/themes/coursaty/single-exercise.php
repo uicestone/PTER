@@ -430,7 +430,9 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
+									<?php if (empty($exam) || $_GET['finish']): ?>
                                     <i class="skip fa fa-step-forward"></i>
+									<?php endif; ?>
                                 </div>
                             </div>
                             <?php endif; ?>
@@ -441,7 +443,9 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-                                    <i class="skip fa fa-step-forward"></i>
+									<?php if (empty($exam) || $_GET['finish']): ?>
+										<i class="skip fa fa-step-forward"></i>
+									<?php endif; ?>
                                 </div>
                             </div>
 							<?php endif; ?>
@@ -452,7 +456,9 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-                                    <i class="skip fa fa-step-forward"></i>
+									<?php if (empty($exam) || $_GET['finish']): ?>
+										<i class="skip fa fa-step-forward"></i>
+									<?php endif; ?>
                                 </div>
                             </div>
 							<?php endif; ?>
@@ -940,6 +946,10 @@ jQuery(function($) {
 	<?php if (isset ($exam)): ?>
 	$('.submit-answer').on('click', function () {
 	    var self = this;
+
+	    if (!confirm ('提交后将无法修改答案，确认提交吗？')) {
+	        return;
+		}
 
         // stop timer
 
