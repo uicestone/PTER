@@ -191,10 +191,10 @@ get_header(); ?>
 															<span class="btn-record btn btn-info disabled<?=(empty($exam) || isset($manual_record)) ? '' : ' hidden' ?>">
 																<i class="fa fa-microphone"></i>
 															</span>
-															<span class="btn-play btn btn-success">
+															<span class="btn-play btn btn-success<?=(empty($exam) || isset($manual_record)) ? '' : ' hidden' ?>">
 																<i class="fa fa-play"></i>
 															</span>
-															<span class="btn-stop btn">
+															<span class="btn-stop btn<?=(empty($exam) || isset($manual_record)) ? '' : ' hidden' ?>">
 																<i class="fa fa-stop"></i>
 															</span>
 															<span class="btn-clear btn btn-danger<?=(empty($exam) || isset($manual_record)) ? '' : ' hidden' ?>">
