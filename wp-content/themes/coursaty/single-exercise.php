@@ -233,8 +233,8 @@ get_header(); ?>
 													) { $answer_choices = array_map('trim', $answer_choices); } ?>
 													<input name="answer" value="<?=$choice?>"
 														type="<?=get_field('multiple')?'checkbox':'radio'?>"
-														<?=(isset($answer_choices) && in_array($choice, $answer_choices)) ? ' checked' : ''?>
-														<?=isset($answer_choices) ? ' disabled' : ''?>
+														<?=(isset($answer_choices) && in_array($choice, $answer_choices ?: [])) ? ' checked' : ''?>
+														<?=$answer_choices ? ' disabled' : ''?>
 														class="answer-input" style="font-size:16px;vertical-align:text-bottom">
 													<?=$index+1?>. <?=$choice?>
 												</label>
@@ -897,7 +897,7 @@ jQuery(function($) {
         $(this).hide();
     });
 
-    var answerFilledBlanks = <?=json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true))?>;
+    var answerFilledBlanks = <?=json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true))?> || [];
     answerFilledBlanks.forEach(function (filledValue, index) {
         if (filledValue) {
             $('.blank:eq(' + index + ')').text(filledValue).addClass('option');
@@ -907,6 +907,7 @@ jQuery(function($) {
     <?php endif; ?>
 
     <?php if ($question_type->slug === 'reorder-paragraph'): ?>
+    var contentElem = $('.post .entry:not(.comment-form) .content');
     var parasHtml = contentElem.html();
     contentElem.html('');
     contentElem.html($('<div class="reorderable" />').html(parasHtml));
