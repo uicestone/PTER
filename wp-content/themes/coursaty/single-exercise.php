@@ -777,7 +777,7 @@ jQuery(function($) {
 
             var diffWords, diffRate;
 
-            if (!wordDiffCountElement.length) {
+            if (!wordDiffCountElement.length || !answerTrimmed) {
                 return;
             }
 
