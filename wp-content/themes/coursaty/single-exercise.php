@@ -868,7 +868,7 @@ jQuery(function($) {
     });
 
     <?php	if (isset($exam)): ?>
-    var answerHighLighted = <?=json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true))?>;
+    var answerHighLighted = <?=json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true))?> || [];
     answerHighLighted.forEach(function (index) {
         var wordSpan = $('[data-word-index="' + index + '"]');
         wordSpan.replaceWith('<del class="answer-input" data-answer-value="' + wordSpan.data('word-index') + '">' + wordSpan.html() + '</del>');
