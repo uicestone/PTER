@@ -156,7 +156,7 @@ get_header(); ?>
 										<div class="input">
 											<?php if (empty($_GET['finish'])): ?>
 											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" class="answer-input"></textarea>
-											<?php elseif (isset($exam) && $answer = get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true)): ?>
+											<?php elseif (isset($exam) && isset($answer)): ?>
 											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" disabled><?=$answer[0]?></textarea>
 											<?php endif; ?>
                                             <div class="diff-check-result content clearfix" style="white-space:pre-line;display:none"></div>
@@ -177,7 +177,7 @@ get_header(); ?>
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
 								<span class="text">你的回答</span>
 							</div><!-- End Title -->
-							<?php if (isset($exam) && $answer = get_post_meta($paper->ID, 'answer_' . $section  . '_' . $exercise_index, true)): ?>
+							<?php if (isset($exam) && isset($answer)): ?>
 							<audio controls src="<?=$answer[0]?>" style="width:100%;"></audio>
 							<?php else: ?>
 							<form method="post" action="/" id="answer-form">
@@ -228,8 +228,8 @@ get_header(); ?>
 										<?php foreach(explode("\n", get_field('choices')) as $index => $choice): $choice = trim($choice); if (!$choice) continue; ?>
 											<p>
 												<label style="cursor:pointer">
-													<?php if (isset($exam) &&
-														$answer_choices = get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true)
+													<?php if (isset($exam) && isset($answer) &&
+														$answer_choices = $answer
 													) { $answer_choices = array_map('trim', $answer_choices); } ?>
 													<input name="answer" value="<?=$choice?>"
 														type="<?=get_field('multiple')?'checkbox':'radio'?>"
@@ -867,8 +867,8 @@ jQuery(function($) {
         window.location.href = $(this).val();
     });
 
-    <?php	if (isset($exam)): ?>
-    var answerHighLighted = <?=json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true))?> || [];
+    <?php	if (isset($exam) && isset($answer)): ?>
+    var answerHighLighted = <?=json_encode($answer)?> || [];
     answerHighLighted.forEach(function (index) {
         var wordSpan = $('[data-word-index="' + index + '"]');
         wordSpan.replaceWith('<del class="answer-input" data-answer-value="' + wordSpan.data('word-index') + '">' + wordSpan.html() + '</del>');
@@ -905,7 +905,7 @@ jQuery(function($) {
         $(this).hide();
     });
 
-    var answerFilledBlanks = <?=json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true))?> || [];
+    var answerFilledBlanks = <?=json_encode($answer)?> || [];
     answerFilledBlanks.forEach(function (filledValue, index) {
         if (filledValue) {
             $('.blank:eq(' + index + ')').text(filledValue).addClass('option');
@@ -932,7 +932,7 @@ jQuery(function($) {
         contentElem.find('.reorderable').append($(this));
         $(this).removeClass('.answer-input');
     });
-    <?php 	if (isset($exam) && $answer = get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true)): ?>
+    <?php 	if (isset($exam) && isset($answer)): ?>
 	var answerReorderd = <?=json_encode($answer)?>;
     var reorderedElem = answerReorderd.map(function (order) {
         return contentElem.find('.reorderable>:eq(' + (order - 1) + ')');
@@ -989,7 +989,7 @@ jQuery(function($) {
 
 <?php
 
-if (empty($_GET['finish']) && in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
+if (empty($exam) && in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');

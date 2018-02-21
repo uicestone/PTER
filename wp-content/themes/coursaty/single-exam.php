@@ -44,6 +44,8 @@ if ($_GET['section']) {
 		exit;
 	}
 
+	$answer = get_post_meta(get_the_ID(), 'answer_' . $section . '_' . $exercise_index, true);
+
 	// roll back rejection
 	$previous_section = get_post_meta($paper->ID, 'section', true);
 	$previous_exercise_index = get_post_meta($paper->ID, 'exercise_index', true);
@@ -51,7 +53,7 @@ if ($_GET['section']) {
 	if (empty($_GET['finish']) && array_search($previous_section, $sections) > array_search($section, $sections)
 		|| (array_search($previous_section, $sections) === array_search($section, $sections)
 			&& $previous_exercise_index > $exercise_index)) {
-		exit('Cannot roll back to previous question or section.');
+		exit('Cannot roll back to previous question or section. <a href="' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $previous_section . '&exercise_index=' . $previous_exercise_index . '">Proceed exam &raquo;</a>');
 	}
 
 	update_post_meta($paper->ID, 'section', $section);
@@ -89,7 +91,7 @@ if ($_GET['section']) {
 }
 else {
 
-if (empty($_GET['finish'])) {
+if (empty($_GET['finish']) && empty($answer)) {
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');
