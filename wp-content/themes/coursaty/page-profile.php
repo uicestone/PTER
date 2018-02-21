@@ -226,7 +226,7 @@ get_header(); the_post(); ?>
 								<div class="icon"><i class="fa fa-book"></i></div>
 								<a href="#" class="add-courses-title ln-tr"><?=$service_name?></a>
 								<p class="add-courses-description">
-									你可以在激活后24小时内完整学习1次视频
+									你可以在激活后24小时内完整学习3次视频
 								</p>
                                 <hr>
 	    						<?php if ($service_valid_before < time()): ?>
