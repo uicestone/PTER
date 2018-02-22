@@ -5,9 +5,15 @@ if(!has_tag('free-trial')
     redirect_pricing_table('view_exercises');
 }
 
+// fix when required from single-exam.php
 if (!get_the_content()) {
 	the_post();
 }
+
+$user = wp_get_current_user();
+$question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1];
+$marked_exercises = get_user_meta($user->ID, 'marked_exercises') ?: array();
+$current_exercise_marked = in_array(get_the_ID(), $marked_exercises);
 
 if (isset($_POST['save_audio_time_point'])) {
     $audio_time_points = implode(',', $_POST['audio_time_point']);
@@ -19,7 +25,7 @@ if ($_POST['comment']) {
 
 	redirect_login();
 
-    $comment_author = wp_get_current_user();
+    $comment_author = $user;
 
 	wp_handle_comment_submission(array(
 		'comment_post_ID' => get_the_ID(),
@@ -31,11 +37,6 @@ if ($_POST['comment']) {
 	header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
 	exit;
 }
-
-$user = wp_get_current_user();
-
-$marked_exercises = get_user_meta($user->ID, 'marked_exercises') ?: array();
-$current_exercise_marked = in_array(get_the_ID(), $marked_exercises);
 
 if (isset($_POST['marked'])) {
 
@@ -52,8 +53,6 @@ if (isset($_POST['marked'])) {
 	header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
 	exit;
 }
-
-$question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1];
 
 if ($_GET['random']) {
 
@@ -135,7 +134,7 @@ get_header(); ?>
 							</h3><!-- End Title -->
 							<div class="clearfix"></div>
 							<div class="question watermark content<?=$question_type->slug === 'highlight-incorrect-words' ? ' highlightable' : ''?>">
-								<?php the_content(); ?>
+								<?php if (isset($exam) && $section === 'break') { echo wpautop(get_post_meta(get_the_ID(), 'break_content', true)); } else { the_content(); } ?>
 							</div>
 						</div><!-- End Entry -->
                         <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening', 'write-essay', 'swt'))): ?>
@@ -154,10 +153,10 @@ get_header(); ?>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="input">
-											<?php if (empty($_GET['finish'])): ?>
-											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" class="answer-input"></textarea>
-											<?php elseif (isset($exam) && isset($answer)): ?>
+											<?php if (isset($exam) && $answer): ?>
 											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" disabled><?=$answer[0]?></textarea>
+											<?php else: ?>
+											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" class="answer-input"></textarea>
 											<?php endif; ?>
                                             <div class="diff-check-result content clearfix" style="white-space:pre-line;display:none"></div>
 											<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))): ?>
@@ -177,7 +176,7 @@ get_header(); ?>
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
 								<span class="text">你的回答</span>
 							</div><!-- End Title -->
-							<?php if (isset($exam) && isset($answer)): ?>
+							<?php if (isset($exam) && $answer): ?>
 							<audio controls src="<?=$answer[0]?>" style="width:100%;"></audio>
 							<?php else: ?>
 							<form method="post" action="/" id="answer-form">
@@ -228,8 +227,7 @@ get_header(); ?>
 										<?php foreach(explode("\n", get_field('choices')) as $index => $choice): $choice = trim($choice); if (!$choice) continue; ?>
 											<p>
 												<label style="cursor:pointer">
-													<?php if (isset($exam) && isset($answer) &&
-														$answer_choices = $answer
+													<?php if (isset($exam) && $answer_choices = $answer
 													) { $answer_choices = array_map('trim', $answer_choices); } ?>
 													<input name="answer" value="<?=$choice?>"
 														type="<?=get_field('multiple')?'checkbox':'radio'?>"
@@ -304,30 +302,41 @@ get_header(); ?>
 					</div>
 					<?php elseif (isset($exam)): ?>
 					<div class="row">
-						<div class="col-md-4" style="padding-right:5px">
-							<button type="submit" class="btn primary-btn submit-answer<?=isset($_GET['finish']) ? ' disabled' : ''?>">提交本题</button>
-						</div>
-						<div class="col-md-4" style="padding-left:5px;padding-right:5px">
-							<?php if (isset($next_exercise_url)): ?>
-							<a class="btn primary-btn next next-exercise pull-right<?=empty($_GET['finish']) ? ' disabled' : ''?>" href="<?=$next_exercise_url?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a>
-							<?php elseif (isset($next_section_url)): ?>
-							<a class="btn primary-btn next next-section pull-right<?=empty($_GET['finish']) ? ' disabled' : ''?>" href="<?=$next_section_url?>">下一部分 &raquo;</a>
-							<?php elseif (isset($submit_paper_url)): ?>
-							<a class="btn primary-btn next next-section disabled pull-right" href="<?=$submit_paper_url?>">提交试卷 &raquo;</a>
-							<?php endif; ?>
-						</div>
-						<div class="col-md-4" style="padding-left:5px">
+						<?php if (empty($_GET['finish'])): ?>
+						<div class="col-md-6" style="padding-left:15px;padding-right:5px">
 							<form method="post">
 								<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress">
-									<?php if (empty($_GET['finish'])): ?>
 									<i class="fa fa-clock-o"></i>
 									<span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span>
-									<?php else: ?>
-									<i class="fa fa-check"></i>
-									<span>核对</span>
-									<?php endif; ?>
+									<span style="font-size:10px"><?=ucfirst($section)?></span>
 								</button>
 							</form>
+						</div>
+						<?php endif; ?>
+						<?php if (empty($_GET['finish']) && $section !== 'break'): ?>
+						<div class="col-md-6" style="padding-right:15px;padding-left:5px;<?=$answer ? 'display:none;' : ''?>">
+							<button type="submit" class="btn primary-btn submit-answer">
+								<i class="fa fa-hand-paper-o"></i>
+								<span>提交本题</span>
+							</button>
+						</div>
+						<?php elseif ($section !== 'break'): ?>
+						<div class="col-md-6" style="padding-left:15px;padding-right:5px">
+							<?php if (isset($previous_exercise_url)): ?>
+							<a class="btn primary-btn next-exercise pull-right" href="<?=$previous_exercise_url?>" title="<?=get_the_title($next_exercise)?>">上一题 &raquo;</a>
+							<?php elseif (isset($previous_section_url)): ?>
+							<a class="btn primary-btn next-section pull-right" href="<?=$previous_section_url?>">上一部分 &raquo;</a>
+							<?php endif; ?>
+						</div>
+						<?php endif; ?>
+						<div class="col-md-6 next" style="padding-right:15px;padding-left:5px;<?=(!$_GET['finish'] && !$answer && $section !== 'break') ? 'display:none;' : ''?>">
+							<?php if (isset($next_exercise_url)): ?>
+							<a class="btn primary-btn next-exercise pull-right" href="<?=$next_exercise_url?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a>
+							<?php elseif (isset($next_section_url)): ?>
+							<a class="btn primary-btn next-section pull-right" href="<?=$next_section_url?>">下一部分 &raquo;</a>
+							<?php elseif (isset($submit_paper_url)): ?>
+							<a class="btn primary-btn next-section pull-right" href="<?=$submit_paper_url?>">提交试卷 &raquo;</a>
+							<?php endif; ?>
 						</div>
 					</div>
                     <?php else: ?>
@@ -432,7 +441,7 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-									<?php if (empty($exam) || $_GET['finish']): ?>
+									<?php if (empty($exam) || $_GET['finish'] || current_user_can('edit_posts')): ?>
                                     <i class="skip fa fa-step-forward"></i>
 									<?php endif; ?>
                                 </div>
@@ -445,7 +454,7 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-									<?php if (empty($exam) || $_GET['finish']): ?>
+									<?php if (empty($exam) || $_GET['finish'] || current_user_can('edit_posts')): ?>
 										<i class="skip fa fa-step-forward"></i>
 									<?php endif; ?>
                                 </div>
@@ -458,7 +467,7 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-									<?php if (empty($exam) || $_GET['finish']): ?>
+									<?php if (empty($exam) || $_GET['finish'] || current_user_can('edit_posts')): ?>
 										<i class="skip fa fa-step-forward"></i>
 									<?php endif; ?>
                                 </div>
@@ -739,6 +748,7 @@ jQuery(function($) {
         $(this).trigger('time-up');
     });
 
+    var contentElem = $('.post .entry:not(.comment-form) .content');
     var answerContentElement = $('.answer.entry .content');
     var answerToggleButton = $('.answer.entry .toggle');
     if (answerContentElement.length) {
@@ -867,7 +877,7 @@ jQuery(function($) {
         window.location.href = $(this).val();
     });
 
-    <?php	if (isset($exam) && isset($answer)): ?>
+    <?php	if (isset($exam) && $answer): ?>
     var answerHighLighted = <?=json_encode($answer)?> || [];
     answerHighLighted.forEach(function (index) {
         var wordSpan = $('[data-word-index="' + index + '"]');
@@ -879,7 +889,7 @@ jQuery(function($) {
 
     // Reading - Fill in the Blanks I
 	<?php if (in_array($question_type->slug, array('fill-in-the-blanks-i', 'fill-in-the-blanks-ii'))): ?>
-    var contentElem = $('.post .entry:not(.comment-form) .content').on('click', '.options .option', function () {
+    contentElem.on('click', '.options .option', function () {
         $(this).parents('.content').find('.option').removeClass('selected');
         $(this).toggleClass('selected');
     }).on('click', '.blank', function () {
@@ -915,7 +925,6 @@ jQuery(function($) {
     <?php endif; ?>
 
     <?php if ($question_type->slug === 'reorder-paragraph'): ?>
-    var contentElem = $('.post .entry:not(.comment-form) .content');
     var parasHtml = contentElem.html();
     contentElem.html('');
     contentElem.html($('<div class="reorderable" />').html(parasHtml));
@@ -932,7 +941,7 @@ jQuery(function($) {
         contentElem.find('.reorderable').append($(this));
         $(this).removeClass('.answer-input');
     });
-    <?php 	if (isset($exam) && isset($answer)): ?>
+    <?php 	if (isset($exam) && $answer): ?>
 	var answerReorderd = <?=json_encode($answer)?>;
     var reorderedElem = answerReorderd.map(function (order) {
         return contentElem.find('.reorderable>:eq(' + (order - 1) + ')');
@@ -957,9 +966,9 @@ jQuery(function($) {
 
 		// stop recorder if any
         if ($('.btn-stop').click().length) {
-            // hide submit button, and enable next button
-            $(self).addClass('disabled')
-                .parent().parent().find('.next.disabled').removeClass('disabled');
+            // hide submit button, and show next button
+            $(self).parent().hide()
+                .siblings('.next').show();
 
             // answer save should be down along with upload handling script
             return;
@@ -975,9 +984,9 @@ jQuery(function($) {
         $.post(window.location.href, {
             answer: answers
 		}, function () {
-            // hide submit button and enable next button
-			$(self).addClass('disabled')
-            	.parent().parent().find('.next.disabled').removeClass('disabled');
+            // hide submit button and show next button
+            $(self).parent().hide()
+                .siblings('.next').show();
 		});
 	});
 	<?php 	if (isset($_GET['finish'])): ?>
@@ -989,7 +998,7 @@ jQuery(function($) {
 
 <?php
 
-if (empty($exam) && in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
+if (!(isset($exam) && $answer) && in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');
