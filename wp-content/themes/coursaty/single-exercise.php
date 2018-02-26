@@ -873,10 +873,6 @@ jQuery(function($) {
         $(this).replaceWith('<span data-answer-value="' + $(this).data('word-index') + '">' + $(this).html() + '</span>');
     });
 
-    $('.go-to-exercise').change(function () {
-        window.location.href = $(this).val();
-    });
-
     <?php	if (isset($exam) && $answer): ?>
     var answerHighLighted = <?=json_encode($answer)?> || [];
     answerHighLighted.forEach(function (index) {
@@ -886,7 +882,11 @@ jQuery(function($) {
     <?php 	endif; ?>
     <?php endif; ?>
 
-
+    $('.go-to-exercise').on('change', function () {
+        console.log($(this).val());
+        window.location.href = $(this).val();
+    });
+	
     // Reading - Fill in the Blanks I
 	<?php if (in_array($question_type->slug, array('fill-in-the-blanks-i', 'fill-in-the-blanks-ii'))): ?>
     contentElem.on('click', '.options .option', function () {
