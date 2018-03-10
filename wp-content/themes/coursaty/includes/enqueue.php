@@ -29,7 +29,10 @@ add_action('wp_enqueue_scripts', function(){
 	wp_enqueue_style('style');
 	wp_enqueue_style('responsive');
 
-	wp_enqueue_script('jquery');
+	// wp_enqueue_script('jquery');
+	wp_deregister_script( 'jquery-core' );
+	wp_register_script( 'jquery-core', get_stylesheet_directory_uri() . '/assets/js/jquery.min.js', array(), '3.3.1' );
+
 	wp_enqueue_script('bootstrap');
 	wp_enqueue_script('easydropdown');
 	wp_enqueue_script('flexslider');
@@ -44,3 +47,10 @@ add_action('wp_enqueue_scripts', function(){
 	wp_enqueue_script('moment');
 	wp_enqueue_script('scripts');
 });
+
+// disable jquery-migrate
+add_action( 'wp_default_scripts', function( $scripts ) {
+	if ( ! empty( $scripts->registered['jquery'] ) ) {
+		$scripts->registered['jquery']->deps = array_diff( $scripts->registered['jquery']->deps, array( 'jquery-migrate' ) );
+	}
+} );
