@@ -111,6 +111,7 @@ if (empty($_GET['finish'])) {
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');
+	wp_enqueue_script('mp3-lame-encoder');
 }
 
 get_header(); the_post(); ?>

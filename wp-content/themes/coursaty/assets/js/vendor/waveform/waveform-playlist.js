@@ -2062,6 +2062,16 @@ var WaveformPlaylist =
 	          _this4.isRendering = false;
 	          return;
 	        }
+
+	        if (type === 'mp3') {
+                var mp3LameEncoder, blob;
+                mp3LameEncoder = new Mp3LameEncoder(44100, 64, 1);
+                mp3LameEncoder.encode([audioBuffer.getChannelData(0)]);
+                blob = mp3LameEncoder.finish();
+                _this4.ee.emit('audiorenderingfinished', type, blob);
+                _this4.isRendering = false;
+                return;
+			}
 	
 	        if (type === 'wav') {
 	          _this4.exportWorker.postMessage({

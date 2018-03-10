@@ -21,6 +21,13 @@
 	<script>window.html5 || document.write('<script src="assets/js/vendor/html5shiv.js"><\/script>')</script>
 	<![endif]-->
 
+	<script>
+        // default path is on the same directory as this HTML
+        var Mp3LameEncoderConfig = {
+            memoryInitializerPrefixURL: "<?=get_stylesheet_directory_uri()?>/assets/js/vendor/mp3-lame-encoder/"
+        };
+	</script>
+
     <style type="text/css">
         <?php if (is_user_logged_in()): ?>
         .main-navigation .login, .mobile-navigation .login {
