@@ -1002,6 +1002,7 @@ if (!(isset($exam) && $answer) && in_array($question_type->slug, array('read-alo
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');
+	wp_enqueue_script('mp3-lame-encoder');
 }
 
 get_footer();
