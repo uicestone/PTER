@@ -403,7 +403,7 @@ get_header(); ?>
                         <span class="widget-icon"><i class="fa fa-clock-o"></i></span>
                         <h5 class="sidebar-widget-title ib">计时器</h5>
                         <div class="home-skills">
-							<?php if($time_prepare_exam = get_field('time_prepare_exam', 'question_type_' . $question_type->term_id)): ?>
+							<?php if(isset($exam) && $time_prepare_exam = get_field('time_prepare_exam', 'question_type_' . $question_type->term_id)): ?>
 								<div class="skillbar timer clearfix" data-duration="<?=$time_prepare_exam?>">
 									<div class="skillbar-title">
 										<span>准备 <span class="seconds-left"><?=date('i:s', $time_prepare_exam)?></span></span>
