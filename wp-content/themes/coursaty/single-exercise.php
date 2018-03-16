@@ -12,6 +12,13 @@ if (!get_the_content()) {
 
 $user = wp_get_current_user();
 $question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1];
+$question_type_desc = get_posts(array('post_type' => 'question_type_desc', 'posts_per_page' => 1, 'tax_query' => array(
+	array(
+		'taxonomy' => 'question_type',
+		'field' => 'slug',
+		'terms' => $question_type->slug
+	)
+)))[0];
 $marked_exercises = get_user_meta($user->ID, 'marked_exercises') ?: array();
 $current_exercise_marked = in_array(get_the_ID(), $marked_exercises);
 
@@ -396,6 +403,17 @@ get_header(); ?>
                         <span class="widget-icon"><i class="fa fa-clock-o"></i></span>
                         <h5 class="sidebar-widget-title ib">计时器</h5>
                         <div class="home-skills">
+							<?php if(isset($exam) && $time_prepare_exam = get_post_meta($question_type_desc->ID, 'time_prepare_exam', true)): ?>
+								<div class="skillbar timer clearfix" data-duration="<?=$time_prepare_exam?>">
+									<div class="skillbar-title">
+										<span>准备 <span class="seconds-left"><?=date('i:s', $time_prepare_exam)?></span></span>
+									</div>
+									<div class="skillbar-bar"></div>
+									<div class="controls">
+										<i class="skip fa fa-step-forward"></i>
+									</div>
+								</div>
+							<?php endif; ?>
                             <div class="skillbar audio-progress clearfix" style="display:none">
                                 <div class="skillbar-title">
                                     <span>音频</span>
@@ -546,13 +564,6 @@ get_header(); ?>
 					?>
                     <a class="btn primary-btn" href="<?=home_url($uri);?>">切换到<?=$_GET['random'] ? '顺序练习' : '随机练习'?></a>
 					<?php endif; ?>
-                    <?php $question_type_desc = get_posts(array('post_type' => 'question_type_desc', 'posts_per_page' => 1, 'tax_query' => array(
-						array(
-							'taxonomy' => 'question_type',
-							'field' => 'slug',
-							'terms' => $question_type->slug
-						)
-					)))[0]; ?>
                     <?php if ($tips = get_post_meta($question_type_desc->ID, 'tips', true)): ?>
                     <div class="sidebar-widget">
                         <span class="widget-icon"><i class="fa fa-info-circle"></i></span>
@@ -648,7 +659,7 @@ jQuery(function($) {
 
     // auto plays audio in question and show audio timer
     var audioProgress = $('.audio-progress');
-    $('.question.content audio').each(function() {
+    var contentAudio = $('.question.content audio').each(function() {
         var self = this;
         audioProgress.show()
         .on('click', '#pause-control', function () {
@@ -690,9 +701,11 @@ jQuery(function($) {
                 ));
         });
 
-        setTimeout(function () {
-            self.play();
-        }, 3000);
+        if (!audioProgress.prev('.timer').length) {
+            setTimeout(function () {
+                self.play();
+            }, 3000);
+		}
     })
     .on('play', function() {
         audioProgress.find('#play-control').hide();
@@ -732,6 +745,10 @@ jQuery(function($) {
     // trigger next timer on time up
     .on('time-up', function () {
         var nextTimer = $(this).next('.timer');
+        var nextAudioProgress = $(this).next('.audio-progress');
+        if (nextAudioProgress.length && contentAudio.length) {
+            contentAudio.get(0).play();
+		}
         if (nextTimer.data('wait') === 'previous') {
             nextTimer.data('interval', nextTimer.startTimer());
         }
