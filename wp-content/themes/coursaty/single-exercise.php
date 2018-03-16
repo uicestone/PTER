@@ -510,7 +510,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('read-aloud', 'describe-image'))): ?>
                             <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
                                 <div class="skillbar-title">
-                                    <span>说话 <span class="seconds-left">00:40</span></span>
+                                    <span>说话</span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                             </div>
