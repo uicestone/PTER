@@ -17,13 +17,25 @@ add_action('init', function () {
 	$is_cn_ip = is_cn_ip();
 });
 
-function pter_adjacent_post_where ($where) {
+function pter_adjacent_post_where ($where, $in_same_term, $excluded_terms, $taxonomy, $post) {
 
-	global $post;
+	global $post, $wpdb;
+
+	$question_types = wp_get_object_terms($post->ID, 'question_type', array('orderby' => 'id'));
 
 	if ($post->post_type === 'exercise' && $_GET['tag'] !== 'free-trial') {
 		$where = str_replace('p.post_date', 'p.ID', $where);
 		$where = preg_replace('/\'\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}\'/', $post->ID, $where);
+
+		if (count($question_types) > 1 && $question_sub_type = $question_types[count($question_types)-1]) {
+			$where .= " AND ID IN (
+                        SELECT p.ID FROM {$wpdb->posts} AS p 
+                        JOIN {$wpdb->term_relationships} AS tr ON tr.object_id=p.ID 
+                        JOIN {$wpdb->term_taxonomy} AS tt ON tt.term_taxonomy_id = tr.term_taxonomy_id 
+                        JOIN {$wpdb->terms} AS t ON t.term_id = tt.term_id 
+                        WHERE t.slug='{$question_sub_type->slug}' )";
+		}
+
 		return $where;
 	}
 
@@ -52,7 +64,7 @@ function pter_next_post_sort ($orderby) {
 	return $orderby;
 }
 
-add_filter('get_previous_post_where', 'pter_adjacent_post_where');
+add_filter('get_previous_post_where', 'pter_adjacent_post_where', 10, 5);
 add_filter('get_next_post_where', 'pter_adjacent_post_where');
 add_filter('get_previous_post_sort', 'pter_previous_post_sort');
 add_filter('get_next_post_sort', 'pter_next_post_sort');

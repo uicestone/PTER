@@ -101,8 +101,8 @@ elseif (isset($_GET['section'])) {
 	// did everything in single-exam.php
 }
 else {
-	$previous_exercise = get_adjacent_post(true, '', true, $_GET['tag'] ? 'post_tag' : 'question_type');
-	$next_exercise = get_adjacent_post(true, '', false, $_GET['tag'] ? 'post_tag' : 'question_type');
+	$previous_exercise = get_previous_post(true, '', $_GET['tag'] ? 'post_tag' : 'question_type');
+	$next_exercise = get_next_post(true, '', $_GET['tag'] ? 'post_tag' : 'question_type');
 }
 
 get_header(); ?>
