@@ -65,7 +65,7 @@ function pter_next_post_sort ($orderby) {
 }
 
 add_filter('get_previous_post_where', 'pter_adjacent_post_where', 10, 5);
-add_filter('get_next_post_where', 'pter_adjacent_post_where');
+add_filter('get_next_post_where', 'pter_adjacent_post_where', 10, 5);
 add_filter('get_previous_post_sort', 'pter_previous_post_sort');
 add_filter('get_next_post_sort', 'pter_next_post_sort');
 

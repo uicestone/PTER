@@ -942,14 +942,16 @@ jQuery(function($) {
     <?php endif; ?>
 
     <?php if ($question_type->slug === 'reorder-paragraph'): ?>
-    var parasHtml = contentElem.html();
-    contentElem.html('');
-    contentElem.html($('<div class="reorderable" />').html(parasHtml));
-    $('.reorderable>p').each(function(index, el) {
+    var paras = contentElem.children('p');
+	var reorderableElem = $('<div class="reorderable" />').appendTo(contentElem);
+	var reorderedElem = $('<div class="reordered" />').appendTo(contentElem);
+    paras.appendTo(reorderableElem);
+
+    paras.each(function(index, el) {
         $(el).text((index + 1 + '. ') + $(el).text());
         $(el).data('answer-value', index + 1);
     });
-    contentElem.append($('<div class="reordered" />'));
+
     contentElem.on('click', '.reorderable p', function () {
         contentElem.find('.reordered').append($(this));
         $(this).addClass('answer-input');
@@ -960,7 +962,7 @@ jQuery(function($) {
     });
     <?php 	if (isset($exam) && $answer): ?>
 	var answerReorderd = <?=json_encode($answer)?>;
-    var reorderedElem = answerReorderd.map(function (order) {
+    reorderedElem = answerReorderd.map(function (order) {
         return contentElem.find('.reorderable>:eq(' + (order - 1) + ')');
 	});
     reorderedElem.forEach(function (el) {
