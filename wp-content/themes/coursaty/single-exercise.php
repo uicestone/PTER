@@ -600,10 +600,15 @@ jQuery(function($) {
     // exam seciton timer
 	var sectionTimer = $('.section-timer');
 	if (sectionTimer.length && sectionTimer.text().match(/:/)) {
-	    var timeLeft = moment('1970-01-01 00:' + sectionTimer.text().trim());
-		setInterval(function () {
+	    var timeLeft = moment.duration('00:' + sectionTimer.text().trim());
+		var timerInterval = setInterval(function () {
 		    timeLeft = timeLeft.subtract(1, 'second');
-            sectionTimer.text(timeLeft.format('mm:ss'));
+		    if (timeLeft.seconds() >= 0) {
+                sectionTimer.text(moment().startOf('day').add(timeLeft).format('mm:ss'));
+			} else {
+		        clearInterval(timerInterval);
+		        $('.submit-answer').trigger('click', {force: true});
+			}
 		}, 1000);
 	}
 
@@ -779,8 +784,9 @@ jQuery(function($) {
     var answerArea = answerForm.find('#answer-area');
     var answerCheckButton = answerForm.find('.diff-check');
     var answerResumeButton = answerForm.find('.resume-input');
+    var userAnswer = [];
 	<?php if ($answer): ?>
-    var userAnswer = JSON.parse('<?=json_encode($answer)?>') || [];
+    userAnswer = JSON.parse('<?=json_encode($answer)?>');
 	<?php endif; ?>
 
     answerArea.on('keyup', function() {
@@ -981,12 +987,20 @@ jQuery(function($) {
 
 	// submit answer in exam
 	<?php if (isset ($exam)): ?>
-	$('.submit-answer').on('click', function () {
+	$('.submit-answer').on('click', function (e, data) {
 	    var self = this;
 
-	    if (!confirm ('提交后将无法修改答案，确认提交吗？')) {
+	    if (typeof data === 'undefined') {
+		    data = {};
+		}
+		
+	    if (!data.force && !confirm ('提交后将无法修改答案，确认提交吗？')) {
 	        return;
 		}
+
+		if (data.force) {
+            alert ('您已超时，即将转入下一部分');
+        }
 
         // stop timer
 
