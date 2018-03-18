@@ -54,6 +54,9 @@ function redirect_login ($force = false) {
 }
 
 function redirect_pricing_table ($cap) {
+
+	redirect_login();
+	
 	if (current_user_can($cap)) {
 		return;
 	}
