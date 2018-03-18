@@ -493,7 +493,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('repeat-sentence'))): ?>
                                 <div class="skillbar timer clearfix" data-wait="previous" data-duration="10" data-is-answer="true">
                                     <div class="skillbar-title">
-                                        <span>复述 <span class="seconds-left">00:10</span></span>
+                                        <span>复述 <span class="seconds-left">00:15</span></span>
                                     </div>
                                     <div class="skillbar-bar"></div>
                                 </div>
