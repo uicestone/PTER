@@ -327,7 +327,7 @@ get_header(); ?>
 								<span>提交本题</span>
 							</button>
 						</div>
-						<?php elseif ($section !== 'break'): ?>
+						<?php else: ?>
 						<div class="col-md-6" style="padding-left:15px;padding-right:5px">
 							<?php if (isset($previous_exercise_url)): ?>
 							<a class="btn primary-btn next-exercise pull-right" href="<?=$previous_exercise_url?>" title="<?=get_the_title($next_exercise)?>">上一题 &raquo;</a>
@@ -779,6 +779,9 @@ jQuery(function($) {
     var answerArea = answerForm.find('#answer-area');
     var answerCheckButton = answerForm.find('.diff-check');
     var answerResumeButton = answerForm.find('.resume-input');
+	<?php if ($answer): ?>
+    var userAnswer = JSON.parse('<?=json_encode($answer)?>') || [];
+	<?php endif; ?>
 
     answerArea.on('keyup', function() {
 
@@ -890,8 +893,7 @@ jQuery(function($) {
     });
 
     <?php	if (isset($exam) && $answer): ?>
-    var answerHighLighted = <?=json_encode($answer)?> || [];
-    answerHighLighted.forEach(function (index) {
+    userAnswer.forEach(function (index) {
         var wordSpan = $('[data-word-index="' + index + '"]');
         wordSpan.replaceWith('<del class="answer-input" data-answer-value="' + wordSpan.data('word-index') + '">' + wordSpan.html() + '</del>');
 	});
@@ -931,14 +933,21 @@ jQuery(function($) {
         $(this).hide();
     });
 
-    var answerFilledBlanks = <?=json_encode($answer)?> || [];
-    answerFilledBlanks.forEach(function (filledValue, index) {
+    userAnswer && userAnswer.forEach(function (filledValue, index) {
         if (filledValue) {
             $('.blank:eq(' + index + ')').text(filledValue).addClass('option');
             $('.options>[data-option="' + filledValue + '"]').remove();
         }
     });
     <?php endif; ?>
+
+	<?php if ($question_type->slug === 'fill-in-the-blanks-listening'): ?>
+	$('.blank-fib-l.answer-input').each(function (index) {
+	    if (userAnswer && userAnswer[index]) {
+	        $(this).val(userAnswer[index]);
+        }
+	});
+	<?php endif; ?>
 
     <?php if ($question_type->slug === 'reorder-paragraph'): ?>
     var paras = contentElem.children('p');
@@ -960,8 +969,7 @@ jQuery(function($) {
         $(this).removeClass('.answer-input');
     });
     <?php 	if (isset($exam) && $answer): ?>
-	var answerReorderd = <?=json_encode($answer)?>;
-    reorderedElem = answerReorderd.map(function (order) {
+    reorderedElem = userAnswer.map(function (order) {
         return contentElem.find('.reorderable>:eq(' + (order - 1) + ')');
 	});
     reorderedElem.forEach(function (el) {
@@ -1003,8 +1011,11 @@ jQuery(function($) {
             answer: answers
 		}, function () {
             // hide submit button and show next button
-            $(self).parent().hide()
-                .siblings('.next').show();
+            // $(self).parent().hide()
+            //     .siblings('.next').show();
+
+			// jump to next
+            window.location.href = $(self).parent().siblings('.next').children('a').attr('href');
 		});
 	});
 	<?php 	if (isset($_GET['finish'])): ?>
