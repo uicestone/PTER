@@ -376,7 +376,6 @@ get_header(); ?>
 
 								if ($_GET['tag']) {
 									$all_query['tag'] = $_GET['tag'];
-									$all_query['order'] = 'desc';
 									$all_query['orderby'] = 'post_date';
 								}
 								else {
