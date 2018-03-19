@@ -65,7 +65,7 @@ if ($_GET['section']) {
 		add_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
 	}
 
-	$sections_time_limit = array('speaking'=>1800, 'writing'=>1800, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
+	$sections_time_limit = array('speaking'=>2100, 'writing'=>2400, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
 	$section_time_left = $sections_time_limit[$section] - time() + $section_start_time;
 	if ($section_time_left < 0) {
 		// expired paper
