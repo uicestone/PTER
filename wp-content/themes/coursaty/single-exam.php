@@ -1,4 +1,5 @@
 <?php
+
 if(!has_tag('free-trial') && !in_array($post->post_name, ['pte-reading', 'pte-writing'])
     && !(is_limited_free(get_current_user_id()) && has_tag('limited-free'))) {
     redirect_pricing_table('view_exercises');
@@ -6,38 +7,10 @@ if(!has_tag('free-trial') && !in_array($post->post_name, ['pte-reading', 'pte-wr
 
 $user = wp_get_current_user();
 
-if (isset($_POST['start'])) {
-
-	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
-
-	if (!$paper) {
-		// create a paper, set speaking start time
-		$paper_id = wp_insert_post(array(
-			'post_type' => 'paper',
-			'post_title' => $user->display_name . '的' . get_the_title() . '试卷',
-			'post_status' => 'private'
-		));
-		add_post_meta($paper_id, 'exam_id', get_the_ID());
-		$paper = get_post($paper_id);
-	}
-
-	header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=speaking' . (isset($_GET['finish']) ? '&finish=true' : '')); exit;
-}
-
-if (isset($_POST['restart'])) {
-	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID))[0];
-	wp_trash_post($paper->ID);
-	header('Location: ' . get_the_permalink()); exit;
-}
-
-if (isset($_GET['paper_id'])) {
-	$paper = get_post($_GET['paper_id']);
-} else {
-	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID))[0];
-}
-
 // exam exercises
-if ($_GET['section']) {
+if (isset($_GET['paper_id']) && isset($_GET['section'])):
+	
+	$paper = get_post($_GET['paper_id']);
 	$sections = ['speaking', 'writing', 'reading', 'break', 'listening'];
 	$exam = get_post();
 	$section = $_GET['section'];
@@ -90,9 +63,6 @@ if ($_GET['section']) {
 
 	$sections_time_limit = array('speaking'=>2100, 'writing'=>2400, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
 	$section_time_left = $sections_time_limit[$section] - time() + $section_start_time;
-	if ($section_time_left < 0) {
-		// expired paper
-	}
 
 	if ($section_exercises && count($section_exercises) > $exercise_index + 1) {
 		// find next exercise
@@ -101,7 +71,7 @@ if ($_GET['section']) {
 	}
 	else {
 		$next_section_index = array_search($section, $sections) + 1;
-		if ($next_section_index < count($sections)) {
+		if ($next_section_index < count($sections) || $section_time_left < 0) {
 			$next_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$next_section_index] . (isset($_GET['finish']) ? '&finish=true' : '');
 		} elseif (isset($_GET['finish'])) {
 			$return_url = get_the_permalink() . '?finish=true';
@@ -125,24 +95,51 @@ if ($_GET['section']) {
 	setup_postdata($exercise);
 	include(locate_template('single-exercise.php'));
 
-}
-
+else:
 // exam cover
-else {
 
-if (empty($_GET['finish'])) {
-	if (isset($paper) && $paper && $submitted_at = get_post_meta($paper->ID, 'submitted_at', true)) {
-		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true');
-	} else if ($paper && !$submitted_at) {
+	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID))[0];
+	$paper_submitted = get_post_meta($paper->ID, 'submitted_at', true);
+	
+	// resume a unsubmitted paper
+	if ($paper && !$paper_submitted) {
 		$paper_section = get_post_meta($paper->ID, 'section', true);
 		$paper_exercise_index = get_post_meta($paper->ID, 'exercise_index', true);
 		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $paper_section . '&exercise_index=' . $paper_exercise_index); exit;
 	}
-	wp_enqueue_script('waveform');
-	wp_enqueue_script('waveform-record');
-	wp_enqueue_script('waveform-emitter');
-	wp_enqueue_script('mp3-lame-encoder');
-}
+	
+	if (isset($_POST['start']) && !$paper) {
+		// start exam and create a paper
+		$paper_id = wp_insert_post(array(
+			'post_type' => 'paper',
+			'post_title' => $user->display_name . '的' . get_the_title() . '试卷',
+			'post_status' => 'private'
+		));
+		add_post_meta($paper_id, 'exam_id', get_the_ID());
+		$paper = get_post($paper_id);
+
+		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=speaking' . (isset($_GET['finish']) ? '&finish=true' : '')); exit;
+	}
+
+	// trash the paper and restart an exam
+	if (isset($_POST['restart']) && $paper) {
+		$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID))[0];
+		wp_trash_post($paper->ID);
+		header('Location: ' . get_the_permalink()); exit;
+	}
+
+	if ($paper && $paper_submitted) {
+		if (empty($_GET['finish'])) {
+			header('Location: ' . get_the_permalink() . '?finish=true'); exit;
+		}
+	}
+
+	if (!$paper) {
+		wp_enqueue_script('waveform');
+		wp_enqueue_script('waveform-record');
+		wp_enqueue_script('waveform-emitter');
+		wp_enqueue_script('mp3-lame-encoder');
+	}
 
 get_header(); the_post(); ?>
 
@@ -155,9 +152,6 @@ get_header(); the_post(); ?>
         <div class="breadcrumb">
             <ul class="clearfix">
                 <li class="ib"><a href="<?=site_url()?>">首页</a></li>
-                <?php if ($question_type): ?>
-                <li class="ib"><a href="<?=site_url()?>/question_type_desc/<?=$question_type->slug?>"><?=$question_type->name?></a></li>
-                <?php endif; ?>
                 <li class="ib current-page"><a href="">考试</a></li>
             </ul>
         </div>
@@ -242,4 +236,4 @@ get_header(); the_post(); ?>
 	</div>
 </section>
 
-<?php } get_footer(); ?>
+<?php endif; get_footer(); ?>
