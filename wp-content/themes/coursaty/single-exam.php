@@ -24,6 +24,12 @@ if (isset($_POST['start'])) {
 	header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=speaking' . (isset($_GET['finish']) ? '&finish=true' : '')); exit;
 }
 
+if (isset($_POST['restart'])) {
+	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
+	wp_delete_post($paper->ID);
+	header('Location: ' . get_the_permalink()); exit;
+}
+
 $paper = get_post($_GET['paper_id']);
 
 // exam exercises
@@ -222,9 +228,14 @@ get_header(); the_post(); ?>
 			</form>
 		</div>
 		<?php else: ?>
-		<div class="row">
-			<form method="post">
-				<button type="submit" name="start" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;">检查答案</button>
+		<div>
+			<form method="post" class="row">
+				<div class="col-sm-6" style="padding-left:0;padding-right:0.5vw">
+					<button type="submit" name="start" class=" btn btn-block primary-btn orange-btn" style="cursor:pointer;">检查答案</button>
+				</div>
+				<div class="col-sm-6" style="padding-right:0;padding-left:0.5vw">
+					<button type="submit" name="restart" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;">删除答案，重新考试</button>
+				</div>
 			</form>
 		</div>
 		<?php endif; ?>
