@@ -124,6 +124,9 @@ if ($_GET['section']) {
 else {
 
 if (empty($_GET['finish'])) {
+	if ($paper) {
+		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true');
+	}
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');
