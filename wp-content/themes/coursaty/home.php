@@ -50,7 +50,7 @@
                      data-endelementdelay="0.1"
                      data-endspeed="500" style="z-index:99">
                     <a href="<?=site_url('exercise/repeat-sentence-%E7%BB%83%E4%B9%A01/?tag=free-trial')?>/tip/?tag=free-trial" class="btn">免费体验</a>
-                    <a href="<?=site_url('tip/how-to-use')?>" class="btn">使用指南</a>
+                    <a href="<?=site_url('exam/模拟题1/')?>" class="btn">模考</a>
                     <a href="<?=site_url('exercise_pack/课程1')?>" class="btn">宾果23天课</a>
                 </div>
             </li>
@@ -68,11 +68,11 @@
         </p><!-- End Section Description -->
         <div class="banner-actions">
 			<?php if ($index === 0): ?>
-            <a href="<?=site_url()?>/tip/?tag=free-trial" class="btn">免费体验</a>
+            <a href="<?=site_url('tip/?tag=free-trial')?>" class="btn">免费体验</a>
 			<?php elseif ($index === 1): ?>
-            <a href="<?=site_url()?>/tip/how-to-use/" class="btn">使用指南</a>
+            <a href="<?=site_url('exam/模拟题1/')?>" class="btn">模考</a>
 			<?php elseif ($index === 2): ?>
-            <a href="<?=site_url()?>/exercise_pack/课程1/" class="btn">宾果23天课</a>
+            <a href="<?=site_url('exercise_pack/课程1/')?>" class="btn">宾果23天课</a>
             <?php endif; ?>
         </div>
     </div>
