@@ -88,82 +88,6 @@ get_header(); the_post() ?>
         </div><!-- End main content row -->
 
 		<div class="row table-row fadeInDown-animation">
-            <div class="col-md-4 col-sm-6 table-3 recommended">
-                <div class="table">
-
-                    <div class="table-header grad-btn">
-                        <p class="text">听说读写四项全能（3个月）</p><!-- end text -->
-                        <p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_full_3', true); if ($discount): ?>
-                                <del><?=$price?></del>
-                                <span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
-							<?php else: ?>
-                                <span class="price-amount"><?=$price?></span>
-							<?php endif; ?>
-                            $ / 90天
-                        </p><!-- end price -->
-                    </div><!-- end table header -->
-
-                    <div class="table-body">
-                        <ul class="features">
-                            <li>宾果23天课程包</li>
-                            <li>全站听力口语技巧，模板讲解</li>
-                            <li>全站写作阅读技巧，模板讲解</li>
-                            <li>听说读写海量练习题+满分答案</li>
-                            <li>PTE听说读写备考建议</li>
-                            <li>PTE题型详解+评分细则</li>
-                            <li>参考笔记+答题要点</li>
-                            <li>口语6, 7 ,8 分考生真实答案</li>
-                        </ul><!-- end features list -->
-                    </div><!-- end table body -->
-
-                    <div class="table-footer">
-                        <div class="order-btn clearfix">
-                            <a href="#payment" data-service="full" data-amount="3" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
-                        </div><!-- end order button -->
-                    </div><!-- end table footer -->
-
-                </div><!-- end table -->
-            </div><!-- end col-md-3 col-sm-6 -->
-
-            <div class="col-md-4 col-sm-6 table-2 recommended">
-                <div class="table">
-
-                    <div class="table-header grad-btn">
-                        <p class="text">听说读写四项全能（2个月）</p><!-- end text -->
-                        <p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_full_2', true); if ($discount): ?>
-                                <del><?=$price?></del>
-                                <span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
-							<?php else: ?>
-                                <span class="price-amount"><?=$price?></span>
-							<?php endif; ?>
-                            $ / 60天
-                        </p><!-- end price -->
-                    </div><!-- end table header -->
-
-                    <div class="table-body">
-                        <ul class="features">
-                            <li>宾果23天课程包</li>
-                            <li>全站听力口语技巧，模板讲解</li>
-                            <li>全站写作阅读技巧，模板讲解</li>
-                            <li>听说读写海量练习题+满分答案</li>
-                            <li>PTE听说读写备考建议</li>
-                            <li>PTE题型详解+评分细则</li>
-                            <li>参考笔记+答题要点</li>
-                            <li>口语6, 7 ,8 分考生真实答案</li>
-                        </ul><!-- end features list -->
-                    </div><!-- end table body -->
-
-                    <div class="table-footer">
-                        <div class="order-btn">
-                            <a href="#payment" data-service="full" data-amount="2" class="grad-btn ln-tr show-payment-method">订阅</a>
-                        </div><!-- end order button -->
-                    </div><!-- end table footer -->
-
-                </div><!-- end table -->
-            </div><!-- end col-md-3 col-sm-6 -->
-
             <div class="col-md-4 col-sm-6 table-2 recommended">
                 <div class="table">
 
@@ -182,6 +106,7 @@ get_header(); the_post() ?>
 
                     <div class="table-body">
                         <ul class="features">
+							<li>新增 Mock Test (2次)</li>
                             <li>宾果23天课程包</li>
                             <li>全站听力口语技巧，模板讲解</li>
                             <li>全站写作阅读技巧，模板讲解</li>
@@ -202,7 +127,85 @@ get_header(); the_post() ?>
                 </div><!-- end table -->
             </div><!-- end col-md-3 col-sm-6 -->
 
-        </div><!-- end 1st row -->
+			<div class="col-md-4 col-sm-6 table-3 recommended">
+				<div class="table">
+
+					<div class="table-header grad-btn">
+						<p class="text">听说读写四项全能（3个月）</p><!-- end text -->
+						<p class="price">
+							<?php $price = get_post_meta(get_the_ID(), 'price_full_3', true); if ($discount): ?>
+								<del><?=$price?></del>
+								<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
+							<?php else: ?>
+								<span class="price-amount"><?=$price?></span>
+							<?php endif; ?>
+							$ / 90天
+						</p><!-- end price -->
+					</div><!-- end table header -->
+
+					<div class="table-body">
+						<ul class="features">
+							<li>新增 Mock Test (2次)</li>
+							<li>宾果23天课程包</li>
+							<li>全站听力口语技巧，模板讲解</li>
+							<li>全站写作阅读技巧，模板讲解</li>
+							<li>听说读写海量练习题+满分答案</li>
+							<li>PTE听说读写备考建议</li>
+							<li>PTE题型详解+评分细则</li>
+							<li>参考笔记+答题要点</li>
+							<li>口语6, 7 ,8 分考生真实答案</li>
+						</ul><!-- end features list -->
+					</div><!-- end table body -->
+
+					<div class="table-footer">
+						<div class="order-btn clearfix">
+							<a href="#payment" data-service="full" data-amount="3" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
+						</div><!-- end order button -->
+					</div><!-- end table footer -->
+
+				</div><!-- end table -->
+			</div><!-- end col-md-3 col-sm-6 -->
+
+			<div class="col-md-4 col-sm-6 table-2 recommended">
+				<div class="table">
+
+					<div class="table-header grad-btn">
+						<p class="text">听说读写四项全能（2个月）</p><!-- end text -->
+						<p class="price">
+							<?php $price = get_post_meta(get_the_ID(), 'price_full_2', true); if ($discount): ?>
+								<del><?=$price?></del>
+								<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
+							<?php else: ?>
+								<span class="price-amount"><?=$price?></span>
+							<?php endif; ?>
+							$ / 60天
+						</p><!-- end price -->
+					</div><!-- end table header -->
+
+					<div class="table-body">
+						<ul class="features">
+							<li>新增 Mock Test (2次)</li>
+							<li>宾果23天课程包</li>
+							<li>全站听力口语技巧，模板讲解</li>
+							<li>全站写作阅读技巧，模板讲解</li>
+							<li>听说读写海量练习题+满分答案</li>
+							<li>PTE听说读写备考建议</li>
+							<li>PTE题型详解+评分细则</li>
+							<li>参考笔记+答题要点</li>
+							<li>口语6, 7 ,8 分考生真实答案</li>
+						</ul><!-- end features list -->
+					</div><!-- end table body -->
+
+					<div class="table-footer">
+						<div class="order-btn clearfix">
+							<a href="#payment" data-service="full" data-amount="2" class="grad-btn ln-tr show-payment-method">订阅</a>
+						</div><!-- end order button -->
+					</div><!-- end table footer -->
+
+				</div><!-- end table -->
+			</div><!-- end col-md-3 col-sm-6 -->
+
+		</div><!-- end 1st row -->
 
         <div id="payment"></div>
 
