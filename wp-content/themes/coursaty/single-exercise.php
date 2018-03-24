@@ -327,7 +327,7 @@ get_header(); ?>
 								<span>提交本题</span>
 							</button>
 						</div>
-						<?php else: ?>
+						<?php endif; if (!empty($_GET['finish'])): ?>
 						<div class="col-md-6" style="padding-left:15px;padding-right:5px">
 							<?php if (isset($previous_exercise_url)): ?>
 							<a class="btn primary-btn next-exercise pull-right" href="<?=$previous_exercise_url?>" title="<?=get_the_title($next_exercise)?>">上一题 &raquo;</a>
@@ -343,6 +343,8 @@ get_header(); ?>
 							<a class="btn primary-btn next-section pull-right" href="<?=$next_section_url?>">下一部分 &raquo;</a>
 							<?php elseif (isset($submit_paper_url)): ?>
 							<a class="btn primary-btn next-section pull-right" href="<?=$submit_paper_url?>">提交试卷 &raquo;</a>
+							<?php elseif (isset($return_url)): ?>
+							<a class="btn primary-btn next-section pull-right" href="<?=$return_url?>">返回 &raquo;</a>
 							<?php endif; ?>
 						</div>
 					</div>

@@ -88,8 +88,10 @@ if ($_GET['section']) {
 		$next_section_index = array_search($section, $sections) + 1;
 		if ($next_section_index < count($sections)) {
 			$next_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$next_section_index] . (isset($_GET['finish']) ? '&finish=true' : '');
-		} else {
+		} elseif (empty($_GET['finish'])) {
 			$submit_paper_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true';
+		} else {
+			$return_url = get_the_permalink() . '?finish=true';
 		}
 	}
 
