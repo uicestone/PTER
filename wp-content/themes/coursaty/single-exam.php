@@ -34,6 +34,9 @@ if ($_GET['section']) {
 	$section_exercises = get_field($section);
 	$exercise_index = isset($_GET['exercise_index']) ? $_GET['exercise_index'] : 0;
 	$exercise = $section_exercises[$exercise_index];
+
+	$question_type = wp_get_object_terms($exercise->ID, 'question_type')[0];
+
 	if (!$paper || $paper->post_status !== 'private') {
 		exit('Exam was not started. Go back to <a href="' . get_the_permalink() . '">exam front page</a>.');
 	}
@@ -41,6 +44,11 @@ if ($_GET['section']) {
 	if (isset($_POST['answer'])) {
 		// save answer to paper
 		update_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, $_POST['answer']);
+		if (isset($_POST['current_exercise_time_left']) && is_numeric($_POST['current_exercise_time_left']) && in_array($question_type->slug, array('summarise-spoken-text', 'swt'))) {
+			$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true);
+			$section_start_time -= $_POST['current_exercise_time_left'];
+			update_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
+		}
 		echo json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true));
 		exit;
 	}
@@ -60,7 +68,7 @@ if ($_GET['section']) {
 	update_post_meta($paper->ID, 'section', $section);
 	update_post_meta($paper->ID, 'exercise_index', $exercise_index);
 
-	if (!$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true)) {
+	if (empty($section_start_time) && !$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true)) {
 		$section_start_time = time();
 		add_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
 	}
@@ -123,7 +131,6 @@ get_header(); the_post(); ?>
             <?php the_subtitle(); ?>
         </p>
         <div class="breadcrumb">
-			<?php $question_type = wp_get_object_terms(get_the_ID(), 'question_type')[0]; ?>
             <ul class="clearfix">
                 <li class="ib"><a href="<?=site_url()?>">首页</a></li>
                 <?php if ($question_type): ?>

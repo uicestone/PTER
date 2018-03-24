@@ -603,7 +603,7 @@ jQuery(function($) {
 	    var timeLeft = moment.duration('00:' + sectionTimer.text().trim());
 		var timerInterval = setInterval(function () {
 		    timeLeft = timeLeft.subtract(1, 'second');
-		    if (timeLeft.seconds() >= 0) {
+		    if (timeLeft.asSeconds() >= 0) {
                 sectionTimer.text(moment().startOf('day').add(timeLeft).format('mm:ss'));
 			} else {
 		        clearInterval(timerInterval);
@@ -635,17 +635,16 @@ jQuery(function($) {
         var tick = 0;
         var self = this;
         var duration = $(this).data('duration');
-        var interval = setInterval(function() {
-            tick += 1;
-            var secondsLeft = duration - tick;
-            var minutesLeft = Math.floor(secondsLeft / 60);
-            var minuteSecondsLeft = secondsLeft % 60;
-            $(self).find('.seconds-left').text(('0' + minutesLeft).slice(-2) + ':' + ('0' + minuteSecondsLeft).slice(-2));
-            $(self).find('.skillbar-bar').css({width: tick / duration * 100 + '%'});
-            if (tick === duration) {
-                clearInterval(interval);
+
+        var timeLeft = moment.duration(duration, 'seconds');
+        var timerInterval = setInterval(function () {
+            timeLeft = timeLeft.subtract(1, 'second');
+            if (timeLeft.asSeconds() >= 0) {
+                $(self).data('time-left', timeLeft.asSeconds());
+                $(self).find('.seconds-left').text(moment().startOf('day').add(timeLeft).format('mm:ss'));
+            } else {
+                clearInterval(timerInterval);
                 $(self).trigger('time-up');
-                return false;
             }
         }, 1000);
 
@@ -658,7 +657,7 @@ jQuery(function($) {
 			});
         }
 
-        return interval;
+        return timerInterval;
     };
 
     // auto plays audio in question and show audio timer
@@ -1015,14 +1014,15 @@ jQuery(function($) {
 		}
 
         var answerInputs = $('.answer-input');
+	    var currentExerciseTimeLeft = $('.timer').data('time-left');
         var answers = $.map(answerInputs.filter(function () {
             return !$(this).is('[type="checkbox"],[type="radio"]') || $(this).is(':checked');
 		}), function (answerInput) {
             return $(answerInput).val() || $(answerInput).data('answer-value') || $(answerInput).text().trim();
         });
-
-        $.post(window.location.href, {
-            answer: answers
+		$.post(window.location.href, {
+            answer: answers,
+			current_exercise_time_left: currentExerciseTimeLeft
 		}, function () {
             // hide submit button and show next button
             // $(self).parent().hide()
