@@ -63,6 +63,11 @@ if ($_GET['section']) {
 		exit;
 	}
 
+	if (isset($_POST['submit_paper'])) {
+		update_post_meta($paper->ID, 'submitted_at', time());
+		header('Location:' . get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true');
+	}
+
 	$answer = get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true);
 
 	// roll back rejection
@@ -98,9 +103,7 @@ if ($_GET['section']) {
 		$next_section_index = array_search($section, $sections) + 1;
 		if ($next_section_index < count($sections)) {
 			$next_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$next_section_index] . (isset($_GET['finish']) ? '&finish=true' : '');
-		} elseif (empty($_GET['finish'])) {
-			$submit_paper_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true';
-		} else {
+		} elseif (isset($_GET['finish'])) {
 			$return_url = get_the_permalink() . '?finish=true';
 		}
 	}
@@ -130,7 +133,7 @@ else {
 if (empty($_GET['finish'])) {
 	if (isset($paper) && $paper && $submitted_at = get_post_meta($paper->ID, 'submitted_at', true)) {
 		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true');
-	} else {
+	} else if ($paper && !$submitted_at) {
 		$paper_section = get_post_meta($paper->ID, 'section', true);
 		$paper_exercise_index = get_post_meta($paper->ID, 'exercise_index', true);
 		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $paper_section . '&exercise_index=' . $paper_exercise_index); exit;

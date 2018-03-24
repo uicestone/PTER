@@ -341,8 +341,10 @@ get_header(); ?>
 							<a class="btn primary-btn next-exercise pull-right" href="<?=$next_exercise_url?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a>
 							<?php elseif (isset($next_section_url)): ?>
 							<a class="btn primary-btn next-section pull-right" href="<?=$next_section_url?>">下一部分 &raquo;</a>
-							<?php elseif (isset($submit_paper_url)): ?>
-							<a class="btn primary-btn next-section pull-right" href="<?=$submit_paper_url?>">提交试卷 &raquo;</a>
+							<?php elseif (empty($return_url)): ?>
+							<form method="post">
+								<button type="submit" name="submit_paper" class="btn primary-btn next-section pull-right">提交试卷 &raquo;</button>
+							</form>
 							<?php elseif (isset($return_url)): ?>
 							<a class="btn primary-btn next-section pull-right" href="<?=$return_url?>">返回 &raquo;</a>
 							<?php endif; ?>
