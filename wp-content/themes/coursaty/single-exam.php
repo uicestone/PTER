@@ -25,12 +25,16 @@ if (isset($_POST['start'])) {
 }
 
 if (isset($_POST['restart'])) {
-	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID, 'meta_key'=>'submitted_at', 'meta_compare'=>'NOT EXISTS'))[0];
-	wp_delete_post($paper->ID);
+	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID))[0];
+	wp_trash_post($paper->ID);
 	header('Location: ' . get_the_permalink()); exit;
 }
 
-$paper = get_post($_GET['paper_id']);
+if (isset($_GET['paper_id'])) {
+	$paper = get_post($_GET['paper_id']);
+} else {
+	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID))[0];
+}
 
 // exam exercises
 if ($_GET['section']) {
@@ -124,8 +128,12 @@ if ($_GET['section']) {
 else {
 
 if (empty($_GET['finish'])) {
-	if ($paper) {
+	if (isset($paper) && $paper && $submitted_at = get_post_meta($paper->ID, 'submitted_at', true)) {
 		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true');
+	} else {
+		$paper_section = get_post_meta($paper->ID, 'section', true);
+		$paper_exercise_index = get_post_meta($paper->ID, 'exercise_index', true);
+		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $paper_section . '&exercise_index=' . $paper_exercise_index); exit;
 	}
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
