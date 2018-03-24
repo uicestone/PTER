@@ -493,7 +493,7 @@ get_header(); ?>
                             </div>
 							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('repeat-sentence'))): ?>
-                                <div class="skillbar timer clearfix" data-wait="previous" data-duration="10" data-is-answer="true">
+                                <div class="skillbar timer clearfix" data-wait="previous" data-duration="15" data-is-answer="true">
                                     <div class="skillbar-title">
                                         <span>复述 <span class="seconds-left">00:15</span></span>
                                     </div>
@@ -556,7 +556,9 @@ get_header(); ?>
                                     <div class="skillbar-bar"></div>
                                 </div>
 							<?php endif; ?>
+							<?php if (empty($exam) || !in_array($question_type->slug, array('repeat-sentence', 'answer-short-question'))): ?>
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
+							<?php endif; ?>
                         </div>
                     </div>
 					<?php if (empty($exam)):
@@ -644,6 +646,7 @@ jQuery(function($) {
             if (timeLeft.asSeconds() >= 0) {
                 $(self).data('time-left', timeLeft.asSeconds());
                 $(self).find('.seconds-left').text(moment().startOf('day').add(timeLeft).format('mm:ss'));
+                $(self).find('.skillbar-bar').css({width: tick / duration * 100 + '%'});
             } else {
                 clearInterval(timerInterval);
                 $(self).trigger('time-up');
@@ -652,7 +655,10 @@ jQuery(function($) {
 
         if ($(this).data('is-answer')) {
             var answerVoiceRecorder = document.querySelector('#answer-voice-record');
-            $('#ding-sound').get(0).play();
+            var ding = $('#ding-sound').get(0);
+            if (ding) {
+                ding.play
+			}
             $('.btn-record').trigger('click');
             $('.answer-form audio').each(function () {
                 this.play();
