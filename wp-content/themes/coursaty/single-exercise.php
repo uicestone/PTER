@@ -643,6 +643,7 @@ jQuery(function($) {
         var timeLeft = moment.duration(duration, 'seconds');
         var timerInterval = setInterval(function () {
             timeLeft = timeLeft.subtract(1, 'second');
+            tick ++;
             if (timeLeft.asSeconds() >= 0) {
                 $(self).data('time-left', timeLeft.asSeconds());
                 $(self).find('.seconds-left').text(moment().startOf('day').add(timeLeft).format('mm:ss'));
