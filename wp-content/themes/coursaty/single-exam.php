@@ -78,7 +78,7 @@ if (isset($_GET['paper_id'])):
 		}
 
 		// calculate section time left
-		$sections_time_limit = array('speaking'=>2100, 'writing'=>3000, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
+		$sections_time_limit = array('speaking'=>3000, 'writing'=>3000, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
 		$section_time_left = $sections_time_limit[$section] - time() + $section_start_time;
 	}
 
