@@ -313,7 +313,7 @@ get_header(); ?>
 						<div class="col-md-6 next" style="padding-right:15px;padding-left:5px;<?=$section === 'break' || $section_time_left < 0 || $answer ? '': 'display:none;'?>">
 							<form method="post">
 								<button type="submit" name="submit" class="btn primary-btn">
-									<?php if (!$is_last_exercise_of_section): ?>
+									<?php if (!$is_last_exercise_of_section && $section_time_left >= 0): ?>
 									<span>下一题 &raquo;</span>
 									<?php elseif(!$is_last_section_of_exam): ?>
 									<span>下一部分 &raquo;</span>
@@ -1030,12 +1030,13 @@ jQuery(function($) {
 		}
 
         var answerInputs = $('.answer-input');
-	    var currentExerciseTimeLeft = timer.data('time-left');
-        var answers = $.map(answerInputs.filter(function () {
+	    var currentExerciseTimeLeft = $(timer[timer.length-1]).data('time-left');
+
+		var answers = $.map(answerInputs.filter(function () {
             return !$(this).is('[type="checkbox"],[type="radio"]') || $(this).is(':checked');
 		}), function (answerInput) {
             return $(answerInput).val() || $(answerInput).data('answer-value') || $(answerInput).text().trim();
-        });
+		});
 		$.post(window.location.href, {
             answer: answers,
 			current_exercise_time_left: currentExerciseTimeLeft
