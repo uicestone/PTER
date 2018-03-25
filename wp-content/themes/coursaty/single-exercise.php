@@ -326,9 +326,9 @@ get_header(); ?>
 						<?php else: ?>
 						<div class="col-md-6" style="padding-left:15px;padding-right:5px">
 							<?php if (isset($previous_exercise_url)): ?>
-							<a class="btn primary-btn next-exercise pull-right" href="<?=$previous_exercise_url?>" title="<?=get_the_title($next_exercise)?>">上一题 &raquo;</a>
+							<a class="btn primary-btn next-exercise pull-right" href="<?=$previous_exercise_url?>" title="<?=get_the_title($next_exercise)?>">&laquo; 上一题</a>
 							<?php elseif (isset($previous_section_url)): ?>
-							<a class="btn primary-btn next-section pull-right" href="<?=$previous_section_url?>">上一部分 &raquo;</a>
+							<a class="btn primary-btn next-section pull-right" href="<?=$previous_section_url?>">&laquo; 上一部分</a>
 							<?php endif; ?>
 						</div>
 						<div class="col-md-6 next" style="padding-right:15px;padding-left:5px">
@@ -519,7 +519,7 @@ get_header(); ?>
                             </div>
 							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('summarise-spoken-text', 'swt'))): ?>
-                            <div class="skillbar timer clearfix" data-duration="600">
+                            <div class="skillbar timer clearfix" data-duration="600" data-is-answer="true">
                                 <div class="skillbar-title">
                                     <span>时间 <span class="seconds-left">10:00</span></span>
                                 </div>
@@ -767,7 +767,14 @@ jQuery(function($) {
         }
         $(this).find('.skip').remove();
         if ($(this).data('is-answer')) {
-            $('.btn-stop').trigger('click');
+            var btnStop = $('.btn-stop');
+            var submitAnswer = $('.submit-answer');
+            if (btnStop.length) {
+                btnStop.trigger('click');
+			}
+			else {
+                submitAnswer.trigger('click', {force: true});
+			}
         }
     })
     .on('click', '.skip', function (e) {
@@ -1008,7 +1015,7 @@ jQuery(function($) {
 		}
 
 		if (data.force) {
-            alert ('您已超时，即将转入下一部分');
+            alert ('您已超时，即将强制提交并转入下一题/部分');
         }
 
         // stop timer
