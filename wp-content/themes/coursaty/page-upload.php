@@ -10,8 +10,8 @@ if ( $file && ! isset( $file['error'] ) ) {
 	// echo $file['url'];
 	// get exercise
 	$paper_id = $_GET['paper_id'];
-	$section = $_GET['section'];
-	$exercise_index = $_GET['exercise_index'] ?: 0;
+	$section = get_post_meta($paper_id, 'section', true);
+	$exercise_index = get_post_meta($paper_id, 'exercise_index', true) ?: 0;
 	$exam_id = get_post_meta($paper_id, 'exam', true);
 	$section_exercises = get_field($section, $exam_id);
 	$exercise = $section_exercises[$exercise_index];

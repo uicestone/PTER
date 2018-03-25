@@ -6,90 +6,110 @@ if(!has_tag('free-trial') && !in_array($post->post_name, ['pte-reading', 'pte-wr
 }
 
 $user = wp_get_current_user();
+$sections = ['speaking', 'writing', 'reading', 'break', 'listening'];
 
 // exam exercises
-if (isset($_GET['paper_id']) && isset($_GET['section'])):
+if (isset($_GET['paper_id'])):
 	
 	$paper = get_post($_GET['paper_id']);
-	$sections = ['speaking', 'writing', 'reading', 'break', 'listening'];
-	$exam = get_post();
-	$section = $_GET['section'];
-	$section_exercises = get_field($section);
-	$exercise_index = isset($_GET['exercise_index']) ? $_GET['exercise_index'] : 0;
-	$exercise = $section_exercises[$exercise_index];
-
-	$question_type = wp_get_object_terms($exercise->ID, 'question_type')[0];
+	$paper_submitted = get_post_meta($paper->ID, 'submitted_at', true);
 
 	if (!$paper || $paper->post_status !== 'private') {
-		exit('Exam was not started. Go back to <a href="' . get_the_permalink() . '">exam front page</a>.');
+		header('Location: ' . get_the_permalink()); exit;
 	}
 
-	if (isset($_POST['answer'])) {
-		// save answer to paper
-		update_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, $_POST['answer']);
-		if (isset($_POST['current_exercise_time_left']) && is_numeric($_POST['current_exercise_time_left']) && in_array($question_type->slug, array('summarise-spoken-text', 'swt'))) {
-			$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true);
-			$section_start_time -= $_POST['current_exercise_time_left'];
-			update_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
+	$exam = get_post();
+
+	$review = isset($_GET['finish']) && $_GET['finish'] && $paper_submitted; // view in review mode
+	// in review mode, read section and exercise_index from url,
+	// in test mode, read from paper post
+	$section = $review ? $_GET['section'] : get_post_meta($paper->ID, 'section', true);
+	$exercise_index = $review ? ($_GET['exercise_index'] ?: 0) : get_post_meta($paper->ID, 'exercise_index', true);
+	$section_exercises = get_field($section);
+	$exercise = $section_exercises[$exercise_index];
+	$question_type = wp_get_object_terms($exercise->ID, 'question_type')[0];
+	$is_last_exercise_of_section = !$section_exercises || count($section_exercises) === $exercise_index + 1;
+	$section_index = array_search($section, $sections);
+	$is_last_section_of_exam = count($sections) === $section_index + 1;
+
+	if (!$review) {
+		if (isset($_POST['answer'])) {
+			// save answer to paper
+			update_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, $_POST['answer']);
+
+			// individual timer question types
+			if (isset($_POST['current_exercise_time_left']) && is_numeric($_POST['current_exercise_time_left']) && in_array($question_type->slug, array('summarise-spoken-text', 'swt'))) {
+				$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true);
+				$section_start_time -= $_POST['current_exercise_time_left'];
+				update_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
+			}
+
+			echo json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true));
+			exit;
 		}
-		echo json_encode(get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true));
-		exit;
+
+		if (isset($_POST['submit'])) {
+			// if is not last exercise of the section, go to next exercise
+			if (!$is_last_exercise_of_section) {
+				update_post_meta($paper->ID, 'exercise_index', $exercise_index + 1);
+			}
+			// is last exercise of the section
+			elseif (!$is_last_section_of_exam) {
+				// is not last section, go to next section
+				$section_index = array_search($section, $sections);
+				$next_section = $sections[$section_index + 1];
+				update_post_meta($paper->ID, 'section', $next_section);
+				update_post_meta($paper->ID, 'exercise_index', 0);
+			}
+			// is last section, finish the exam
+			else {
+				delete_post_meta($paper->ID, 'section');
+				delete_post_meta($paper->ID, 'exercise_index');
+				update_post_meta($paper->ID, 'submitted_at', time());
+				header('Location:' . get_the_permalink() . '?&finish=true'); exit;
+			}
+			header('Location:' . get_the_permalink()); exit;
+		}
+
+		// set section start time
+		if (!$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true)) {
+			$section_start_time = time();
+			add_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
+		}
+
+		// calculate section time left
+		$sections_time_limit = array('speaking'=>2100, 'writing'=>3000, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
+		$section_time_left = $sections_time_limit[$section] - time() + $section_start_time;
 	}
 
-	if (isset($_POST['submit_paper'])) {
-		update_post_meta($paper->ID, 'submitted_at', time());
-		header('Location:' . get_the_permalink() . '?paper_id=' . $paper->ID . '&finish=true');
+	// in review mode, assign next and previous section and exercise links
+	else {
+		if (!$is_last_exercise_of_section) {
+			// find next exercise
+			$next_exercise = $section_exercises[$exercise_index++];
+			$next_exercise_url = get_the_permalink() . '?&paper_id=' . $paper->ID . '&section=' . $sections[$section] . '&exercise_index=' . $exercise_index++ . '&finish=true';
+		}
+		elseif (!$is_last_section_of_exam) {
+			$next_section_index = array_search($section, $sections) + 1;
+			$next_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$next_section_index] . '&finish=true';
+		} else {
+			$return_url = get_the_permalink() . '?finish=true';
+		}
+		if ($exercise_index === 0) {
+			$previous_section_index = array_search($section, $sections) - 1;
+			if ($previous_section_index >= 0) {
+				$previous_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$previous_section_index] . '&finish=true';
+			}
+		}
+		else {
+			$previous_exercise_index = $exercise_index - 1;
+			if ($previous_exercise_index >= 0) {
+				$previous_exercise_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $section . '&exercise_index=' . $previous_exercise_index . '&finish=true';
+			}
+		}
 	}
 
 	$answer = get_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, true);
-
-	// roll back rejection
-	$current_paper_section = get_post_meta($paper->ID, 'section', true);
-	$current_paper_exercise_index = get_post_meta($paper->ID, 'exercise_index', true);
-
-	if (empty($_GET['finish']) && (array_search($current_paper_section, $sections) > array_search($section, $sections)
-		|| (array_search($current_paper_section, $sections) === array_search($section, $sections)
-		&& $current_paper_exercise_index > $exercise_index))) {
-		exit('Cannot roll back to previous question or section. <a href="' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $current_paper_section . '&exercise_index=' . $current_paper_exercise_index . '">Proceed exam &raquo;</a>');
-	}
-
-	update_post_meta($paper->ID, 'section', $section);
-	update_post_meta($paper->ID, 'exercise_index', $exercise_index);
-
-	if (empty($section_start_time) && !$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true)) {
-		$section_start_time = time();
-		add_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
-	}
-
-	$sections_time_limit = array('speaking'=>2100, 'writing'=>2400, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
-	$section_time_left = $sections_time_limit[$section] - time() + $section_start_time;
-
-	if ($section_exercises && count($section_exercises) > $exercise_index + 1) {
-		// find next exercise
-		$next_exercise = $section_exercises[$exercise_index + 1];
-		$next_exercise_url = get_the_permalink() . '?&paper_id=' . $paper->ID . '&section=' . $section . '&exercise_index=' . ($exercise_index + 1) . (isset($_GET['finish']) ? '&finish=true' : '');
-	}
-	else {
-		$next_section_index = array_search($section, $sections) + 1;
-		if ($next_section_index < count($sections) || $section_time_left < 0) {
-			$next_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$next_section_index] . (isset($_GET['finish']) ? '&finish=true' : '');
-		} elseif (isset($_GET['finish'])) {
-			$return_url = get_the_permalink() . '?finish=true';
-		}
-	}
-
-	if ($exercise_index === 0) {
-		$previous_section_index = array_search($section, $sections) - 1;
-		if ($previous_section_index >= 0) {
-			$previous_section_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $sections[$previous_section_index] . (isset($_GET['finish']) ? '&finish=true' : '');
-		}
-	}
-	else {
-		$previous_exercise_index = $exercise_index - 1;
-		if ($previous_exercise_index >= 0) {
-			$previous_exercise_url = get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $section . '&exercise_index=' . $previous_exercise_index . (isset($_GET['finish']) ? '&finish=true' : '');
-		}
-	}
 
 	global $post; $post = $exercise;
 	setup_postdata($exercise);
@@ -105,7 +125,7 @@ else:
 	if ($paper && !$paper_submitted) {
 		$paper_section = get_post_meta($paper->ID, 'section', true);
 		$paper_exercise_index = get_post_meta($paper->ID, 'exercise_index', true);
-		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=' . $paper_section . '&exercise_index=' . $paper_exercise_index); exit;
+		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID); exit;
 	}
 	
 	if (isset($_POST['start']) && !$paper) {
@@ -116,9 +136,12 @@ else:
 			'post_status' => 'private'
 		));
 		add_post_meta($paper_id, 'exam_id', get_the_ID());
-		$paper = get_post($paper_id);
 
-		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper->ID . '&section=speaking' . (isset($_GET['finish']) ? '&finish=true' : '')); exit;
+		// set to first section, first exercise
+		add_post_meta($paper_id, 'section', $sections[0]);
+		add_post_meta($paper_id, 'exercise_index', 0);
+		// go to exam exercise
+		header('Location: ' . get_the_permalink() . '?paper_id=' . $paper_id); exit;
 	}
 
 	// trash the paper and restart an exam

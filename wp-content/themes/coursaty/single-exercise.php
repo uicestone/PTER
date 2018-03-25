@@ -234,7 +234,7 @@ get_header(); ?>
 								</form><!-- End form -->
 							</div><!-- End comment form -->
 						<?php endif; ?>
-						<?php if (empty($exam) || isset($_GET['finish'])): ?>
+						<?php if (empty($exam) || $review): ?>
                         <div class="comment-form comments-list entry answer">
                             <div class="addcomment-title" style="margin-bottom:20px">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
@@ -294,7 +294,7 @@ get_header(); ?>
 					</div>
 					<?php elseif (isset($exam)): ?>
 					<div class="row">
-						<?php if (empty($_GET['finish'])): ?>
+						<?php if (!$review): ?>
 						<div class="col-md-6" style="padding-left:15px;padding-right:5px">
 							<form method="post">
 								<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress">
@@ -304,15 +304,26 @@ get_header(); ?>
 								</button>
 							</form>
 						</div>
-						<?php endif; ?>
-						<?php if (empty($_GET['finish']) && $section !== 'break' && $section_time_left >= 0): ?>
-						<div class="col-md-6" style="padding-right:15px;padding-left:5px;<?=$answer ? 'display:none;' : ''?>">
+						<div class="col-md-6" style="padding-right:15px;padding-left:5px;<?=$section === 'break' || $section_time_left < 0 || $answer ? 'display:none;':''?>">
 							<button type="submit" class="btn primary-btn submit-answer">
 								<i class="fa fa-hand-paper-o"></i>
 								<span>提交本题</span>
 							</button>
 						</div>
-						<?php endif; if (!empty($_GET['finish'])): ?>
+						<div class="col-md-6 next" style="padding-right:15px;padding-left:5px;<?=$section === 'break' || $section_time_left < 0 || $answer ? '': 'display:none;'?>">
+							<form method="post">
+								<button type="submit" name="submit" class="btn primary-btn">
+									<?php if (!$is_last_exercise_of_section): ?>
+									<span>下一题 &raquo;</span>
+									<?php elseif(!$is_last_section_of_exam): ?>
+									<span>下一部分 &raquo;</span>
+									<?php else: ?>
+									<span>结束考试 &raquo;</span>
+									<?php endif; ?>
+								</button>
+							</form>
+						</div>
+						<?php else: ?>
 						<div class="col-md-6" style="padding-left:15px;padding-right:5px">
 							<?php if (isset($previous_exercise_url)): ?>
 							<a class="btn primary-btn next-exercise pull-right" href="<?=$previous_exercise_url?>" title="<?=get_the_title($next_exercise)?>">上一题 &raquo;</a>
@@ -320,20 +331,16 @@ get_header(); ?>
 							<a class="btn primary-btn next-section pull-right" href="<?=$previous_section_url?>">上一部分 &raquo;</a>
 							<?php endif; ?>
 						</div>
-						<?php endif; ?>
-						<div class="col-md-6 next" style="padding-right:15px;padding-left:5px;<?=(!$_GET['finish'] && !$answer && $section !== 'break') ? 'display:none;' : ''?>">
+						<div class="col-md-6 next" style="padding-right:15px;padding-left:5px">
 							<?php if (isset($next_exercise_url)): ?>
-							<a class="btn primary-btn next-exercise pull-right" href="<?=$next_exercise_url?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a>
+							<a class="btn primary-btn next-exercise pull-right" href="<?=$next_exercise_url?>">下一题 &raquo;</a>
 							<?php elseif (isset($next_section_url)): ?>
 							<a class="btn primary-btn next-section pull-right" href="<?=$next_section_url?>">下一部分 &raquo;</a>
-							<?php elseif (empty($return_url)): ?>
-							<form method="post">
-								<button type="submit" name="submit_paper" class="btn primary-btn next-section pull-right">提交试卷 &raquo;</button>
-							</form>
 							<?php elseif (isset($return_url)): ?>
 							<a class="btn primary-btn next-section pull-right" href="<?=$return_url?>">返回 &raquo;</a>
 							<?php endif; ?>
 						</div>
+						<?php endif; ?>
 					</div>
                     <?php else: ?>
                     <div class="row">
@@ -412,7 +419,7 @@ get_header(); ?>
                                     <i id="rewind-control" class="fa fa-fast-backward"></i>
                                     <i id="fast-forward-control" class="fa fa-fast-forward"></i>
 									<?php endif; ?>
-									<?php if (empty($exam) || $_GET['finish']): ?>
+									<?php if (empty($exam) || $review): ?>
                                     <i id="play-control" class="fa fa-play" style="display:none;"></i>
                                     <i id="pause-control" class="fa fa-pause" style="display:none"></i>
                                     <i id="replay-control" class="fa fa-refresh"></i>
@@ -447,7 +454,7 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-									<?php if (empty($exam) || $_GET['finish'] || current_user_can('edit_posts')): ?>
+									<?php if (empty($exam) || $review || current_user_can('edit_posts')): ?>
                                     <i class="skip fa fa-step-forward"></i>
 									<?php endif; ?>
                                 </div>
@@ -460,7 +467,7 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-									<?php if (empty($exam) || $_GET['finish'] || current_user_can('edit_posts')): ?>
+									<?php if (empty($exam) || $review || current_user_can('edit_posts')): ?>
 										<i class="skip fa fa-step-forward"></i>
 									<?php endif; ?>
                                 </div>
@@ -473,7 +480,7 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-									<?php if (empty($exam) || $_GET['finish'] || current_user_can('edit_posts')): ?>
+									<?php if (empty($exam) || $review || current_user_can('edit_posts')): ?>
 										<i class="skip fa fa-step-forward"></i>
 									<?php endif; ?>
                                 </div>
@@ -645,7 +652,7 @@ jQuery(function($) {
             var answerVoiceRecorder = document.querySelector('#answer-voice-record');
             var ding = $('#ding-sound').get(0);
             if (ding) {
-                ding.play
+                ding.play();
 			}
             $('.btn-record').trigger('click');
             $('.answer-form audio').each(function () {
@@ -653,8 +660,15 @@ jQuery(function($) {
 			});
         }
 
+        $(this).data('interval', timerInterval);
+
         return timerInterval;
     };
+
+    $.fn.stopTimer = function () {
+        var timerInterval = $(this).data('interval');
+        clearInterval(timerInterval);
+	};
 
     // auto plays audio in question and show audio timer
     var audioProgress = $('.audio-progress');
@@ -998,6 +1012,11 @@ jQuery(function($) {
         }
 
         // stop timer
+		var timer = $('.timer');
+
+	    timer.each(function () {
+	        $(this).stopTimer();
+		});
 
 		// stop recorder if any
         if ($('.btn-stop').click().length) {
@@ -1010,7 +1029,7 @@ jQuery(function($) {
 		}
 
         var answerInputs = $('.answer-input');
-	    var currentExerciseTimeLeft = $('.timer').data('time-left');
+	    var currentExerciseTimeLeft = timer.data('time-left');
         var answers = $.map(answerInputs.filter(function () {
             return !$(this).is('[type="checkbox"],[type="radio"]') || $(this).is(':checked');
 		}), function (answerInput) {
@@ -1025,10 +1044,11 @@ jQuery(function($) {
             //     .siblings('.next').show();
 
 			// jump to next
-            window.location.href = $(self).parent().siblings('.next').children('a').attr('href');
+            $(self).parent().siblings('.next').find('button').click();
+
 		});
 	});
-	<?php 	if (isset($_GET['finish'])): ?>
+	<?php 	if ($review): ?>
     answerToggler.trigger('click');
 	<?php 	endif; ?>
 	<?php endif; ?>
