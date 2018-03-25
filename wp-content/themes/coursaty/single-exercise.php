@@ -651,7 +651,7 @@ jQuery(function($) {
         if ($(this).data('is-answer')) {
             var answerVoiceRecorder = document.querySelector('#answer-voice-record');
             var ding = $('#ding-sound').get(0);
-            if (ding) {
+            if (answerVoiceRecorder && ding) {
                 ding.play();
 			}
             $('.btn-record').trigger('click');
