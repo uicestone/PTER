@@ -86,8 +86,8 @@ if (isset($_GET['paper_id'])):
 	else {
 		if (!$is_last_exercise_of_section) {
 			// find next exercise
-			$next_exercise = $section_exercises[$exercise_index++];
-			$next_exercise_url = get_the_permalink() . '?&paper_id=' . $paper->ID . '&section=' . $sections[$section] . '&exercise_index=' . $exercise_index++ . '&finish=true';
+			$next_exercise = $section_exercises[$exercise_index + 1];
+			$next_exercise_url = get_the_permalink() . '?&paper_id=' . $paper->ID . '&section=' . $section . '&exercise_index=' . ($exercise_index + 1) . '&finish=true';
 		}
 		elseif (!$is_last_section_of_exam) {
 			$next_section_index = array_search($section, $sections) + 1;
@@ -155,6 +155,10 @@ else:
 		if (empty($_GET['finish'])) {
 			header('Location: ' . get_the_permalink() . '?finish=true'); exit;
 		}
+	}
+
+	if ($paper && $paper_submitted && isset($_POST['review'])) {
+		header('Location: ' . get_the_permalink() . '?finish=true&paper_id=' . $paper->ID . '&section=' . $sections[0]); exit;
 	}
 
 	if (!$paper) {
@@ -248,7 +252,7 @@ get_header(); the_post(); ?>
 		<div>
 			<form method="post" class="row">
 				<div class="col-sm-6" style="padding-left:0;padding-right:0.5vw">
-					<button type="submit" name="start" class=" btn btn-block primary-btn orange-btn" style="cursor:pointer;">检查答案</button>
+					<button type="submit" name="review" class=" btn btn-block primary-btn orange-btn" style="cursor:pointer;">检查答案</button>
 				</div>
 				<div class="col-sm-6" style="padding-right:0;padding-left:0.5vw">
 					<button type="submit" name="restart" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;">删除答案，重新考试</button>
