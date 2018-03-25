@@ -767,14 +767,8 @@ jQuery(function($) {
         }
         $(this).find('.skip').remove();
         if ($(this).data('is-answer')) {
-            var btnStop = $('.btn-stop');
             var submitAnswer = $('.submit-answer');
-            if (btnStop.length) {
-                btnStop.trigger('click');
-			}
-			else {
-                submitAnswer.trigger('click', {force: true});
-			}
+            submitAnswer.trigger('click', {force: true});
         }
     })
     .on('click', '.skip', function (e) {
@@ -1015,7 +1009,7 @@ jQuery(function($) {
 		}
 
 		if (data.force) {
-            alert ('您已超时，即将强制提交并转入下一题/部分');
+            alert ('时间到，即将提交并转入下一题或下一部分');
         }
 
         // stop timer
@@ -1031,7 +1025,7 @@ jQuery(function($) {
             $(self).parent().hide()
                 .siblings('.next').show();
 
-            // answer save should be down along with upload handling script
+            // answer save should be done along with upload handling script
             return;
 		}
 
