@@ -175,7 +175,7 @@ get_header(); ?>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="input">
-											<div class="post-content">
+											<div id="answer-voice-record" class="post-content">
 												<div id="top-bar" class="playlist-top-bar">
 													<div class="playlist-toolbar">
 														<div class="btn-group">
@@ -493,6 +493,14 @@ get_header(); ?>
                                     </div>
                                     <div class="skillbar-bar"></div>
                                 </div>
+							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('dialogue-interpreting'))): ?>
+								<div class="skillbar timer clearfix" data-wait="previous" data-duration="60" data-is-answer="true">
+									<div class="skillbar-title">
+										<span>翻译 <span class="seconds-left">01:00</span></span>
+									</div>
+									<div class="skillbar-bar"></div>
+								</div>
 							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('answer-short-question'))): ?>
 								<div class="skillbar timer clearfix" data-wait="previous" data-duration="10" data-is-answer="true">
