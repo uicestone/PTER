@@ -1,6 +1,3 @@
-.htaccess
 .idea/
-coming-soon/
-wp-config.php
-wp-content/uploads/
-wp-content/cache/
+.env.json
+node_modules/
