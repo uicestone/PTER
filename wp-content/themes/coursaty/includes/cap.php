@@ -59,6 +59,9 @@ function redirect_login ($force = false) {
 
 function redirect_pricing_table ($cap) {
 
+	global $post_require_payment;
+	$post_require_payment = true;
+
 	redirect_login();
 
 	if (is_google_bot()) {

@@ -38,15 +38,23 @@
 	<?php if (is_single()): ?>
 	<script type="application/ld+json">
 	{
-	  "@context": "http://schema.org"
-	  , "@type": "NewsArticle"
-	  , "mainEntityOfPage": <?=json_encode(get_the_permalink())?>
-	  , "headline": "<?php the_title(); ?>"
-	  , "author": "<?php the_author(); ?>"
-	  , "datePublished": "<?php the_date('Y-m-d'); ?>"
-	  , "publisher": {"@type":"Organization", "name":"Bingo Training Pty. Ltd.", "logo": {"@type": "ImageObject", "url": <?=json_encode(site_url('wp-content/themes/coursaty/assets/img/logo.png'))?>}, "url": "<?=site_url()?>"}
-	  , "dateModified": "<?php the_modified_date('Y-m-d'); ?>"
-	  , "image": <?=json_encode(get_images_from_the_post())?>
+		"@context": "http://schema.org"
+		, "@type": "NewsArticle"
+		, "mainEntityOfPage": <?=json_encode(get_the_permalink())?>
+		, "headline": "<?php the_title(); ?>"
+		, "author": "<?php the_author(); ?>"
+		, "datePublished": "<?php the_date('Y-m-d'); ?>"
+		, "publisher": {"@type":"Organization", "name":"Bingo Training Pty. Ltd.", "logo": {"@type": "ImageObject", "url": <?=json_encode(site_url('wp-content/themes/coursaty/assets/img/logo.png'))?>}, "url": "<?=site_url()?>"}
+		, "dateModified": "<?php the_modified_date('Y-m-d'); ?>"
+		, "image": <?=json_encode(get_images_from_the_post())?>
+		<?php global $post_require_payment; if ($post_require_payment): ?>
+		, "isAccessibleForFree": "False"
+		, "hasPart": {
+			"@type": "WebPageElement",
+			"isAccessibleForFree": "False",
+			"cssSelector" : ".entry"
+		}
+		<?php endif; ?>
 	}
 	</script>
 	<?php endif; ?>
