@@ -269,3 +269,22 @@ add_action('init', function () {
 	});
 
 });
+
+function get_images_from_the_post () {
+	$content = get_the_content();
+	$images = [];
+	$thumbnail_url = get_the_post_thumbnail_url();
+
+	if ($thumbnail_url) {
+		$images[] = $thumbnail_url;
+	}
+
+	preg_match_all('/<img.*?src="(.*?)"/', $content, $matches);
+
+	if ($matches[0]) {
+		foreach ($matches[1] as $image_url) {
+			$images[] = $image_url;
+		}
+	}
+	return $images;
+}

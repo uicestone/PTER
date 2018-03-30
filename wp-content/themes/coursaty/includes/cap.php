@@ -50,17 +50,30 @@ function redirect_login ($force = false) {
 		return;
 	}
 
+	if (is_google_bot()) {
+		return;
+	}
+
 	header('Location: ' . site_url() . '/register/?intend=' . ($_SERVER['REQUEST_URI'])); exit;
 }
 
 function redirect_pricing_table ($cap) {
 
 	redirect_login();
-	
+
+	if (is_google_bot()) {
+		return;
+	}
+
 	if (current_user_can($cap)) {
 		return;
 	}
 	else {
 		header('Location: ' . site_url() . '/pricing-table/?intend=' . ($_SERVER['REQUEST_URI'])); exit;
 	}
+}
+
+function is_google_bot () {
+	$ua = $_SERVER['HTTP_USER_AGENT'];
+	return $ua === 'Googlebot' || isset($_GET['googlebot_test']);
 }
