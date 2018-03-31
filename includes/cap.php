@@ -78,5 +78,5 @@ function redirect_pricing_table ($cap) {
 
 function is_google_bot () {
 	$ua = $_SERVER['HTTP_USER_AGENT'];
-	return $ua === 'Googlebot' || isset($_GET['googlebot_test']);
+	return strpos($ua, 'Googlebot') !== false || isset($_GET['googlebot_test']);
 }
