@@ -6,7 +6,15 @@ if(!has_tag('free-trial') && !in_array($post->post_name, ['pte-reading', 'pte-wr
 }
 
 $user = wp_get_current_user();
-$sections = ['speaking', 'writing', 'reading', 'break', 'listening'];
+$exam_type = get_post_meta(get_the_ID(), 'type', true);
+
+if ($exam_type === 'ccl') {
+	$sections_time_limit = array('ccl'=>3000);
+} else {
+	$sections_time_limit = array('speaking'=>3000, 'writing'=>3000, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
+}
+
+$sections = array_keys($sections_time_limit);
 
 // exam exercises
 if (isset($_GET['paper_id'])):
@@ -78,7 +86,6 @@ if (isset($_GET['paper_id'])):
 		}
 
 		// calculate section time left
-		$sections_time_limit = array('speaking'=>3000, 'writing'=>3000, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
 		$section_time_left = $sections_time_limit[$section] - time() + $section_start_time;
 	}
 
