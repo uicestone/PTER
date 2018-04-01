@@ -60,7 +60,7 @@
 </div><!-- End Home Slider Container -->
 
 <?php foreach ($banners as $index => $banner): ?>
-<section class="full-section banner" style="background-image:url('<?=get_the_post_thumbnail_url($banner)?>')">
+<section class="full-section banner" style="background-image:url('<?=get_the_post_thumbnail_url($banner, 'large')?>')">
     <div class="container">
         <h3 class="section-title"><?=get_the_title($banner)?></h3>
         <p class="section-description">
@@ -80,9 +80,9 @@
 <div class="clearfix"></div>
 <?php endforeach; ?>
 
-<section class="full-section features-section fancy-shadow">
+<section class="full-section features-section fancy-shadow pricing-tables">
     <div class="container">
-        <a href="<?=site_url('pricing-table')?>"><img style="max-width:100%" src="<?=get_stylesheet_directory_uri()?>/assets/img/pricing-table-3.png"></a>
+        <a href="<?=site_url('pricing-table')?>"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/pricing-table-3.png"></a>
     </div>
 </section><!-- End Features Section -->
 

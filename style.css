@@ -520,6 +520,9 @@ header .main-navigation li.courses-menu ul {
     padding-bottom: 0;
     border-radius: 0;
 }
+#home .pricing-tables .container {
+    overflow-x: scroll;
+}
 header .main-navigation li.courses-menu li .single-item {
     background: #f3f3f3;
     border-radius: 2px;
