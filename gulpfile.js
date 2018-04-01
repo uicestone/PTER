@@ -72,7 +72,7 @@ gulp.task('images', () => {
 
 // CSS settings
 var css = {
-  src         : [dir.src + 'assets/css/**/*.css'],
+  src         : [dir.src + 'style.css', dir.src + 'assets/css/**/*.css'],
   watch       : [dir.src + 'style.css', dir.src + 'assets/css'],
   build       : dir.build + 'assets/css/',
   processors: [
