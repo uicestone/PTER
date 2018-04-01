@@ -270,6 +270,13 @@ add_action('init', function () {
 
 });
 
+add_filter('pre_get_posts', function (WP_Query $query) {
+	if (isset($_GET['type'])) {
+		$query->set('meta_key', 'type');
+		$query->set('meta_value', $_GET['type']);
+	}
+});
+
 function get_images_from_the_post () {
 	$content = get_the_content();
 	$images = [];

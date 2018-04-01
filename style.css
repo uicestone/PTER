@@ -1769,6 +1769,7 @@ h6.head-title {
 }
 .pagination li.arrow a,
 .dark .pagination li.arrow a,
+.pagination li .current,
 .pagination li a.next, .pagination li a.prev {
     background: #2997ab;
     font-size: 13px;
