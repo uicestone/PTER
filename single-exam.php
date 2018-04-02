@@ -9,7 +9,7 @@ $user = wp_get_current_user();
 $exam_type = get_post_meta(get_the_ID(), 'type', true);
 
 if ($exam_type === 'ccl') {
-	$sections_time_limit = array('ccl'=>3000);
+	$sections_time_limit = array('dialogue'=>3000);
 } else {
 	$sections_time_limit = array('speaking'=>3000, 'writing'=>3000, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
 }
