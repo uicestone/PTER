@@ -125,7 +125,7 @@ if (isset($_GET['paper_id'])):
 else:
 // exam cover
 
-	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID))[0];
+	$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID, 'meta_key'=>'exam_id', 'meta_value'=>get_the_ID()))[0];
 	$paper_submitted = get_post_meta($paper->ID, 'submitted_at', true);
 	
 	// resume a unsubmitted paper
@@ -153,7 +153,6 @@ else:
 
 	// trash the paper and restart an exam
 	if (isset($_POST['restart']) && $paper) {
-		$paper = get_posts(array('post_type'=>'paper', 'post_status'=>'private', 'author'=>$user->ID))[0];
 		wp_trash_post($paper->ID);
 		header('Location: ' . get_the_permalink()); exit;
 	}
