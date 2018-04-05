@@ -1074,4 +1074,8 @@ if (!(isset($exam) && $answer) && in_array($question_type->slug, array('read-alo
 	wp_enqueue_script('mp3-lame-encoder');
 }
 
+if (!(isset($exam) && $answer) && in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))) {
+	wp_enqueue_script('jsdiff');
+}
+
 get_footer();
