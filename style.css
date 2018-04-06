@@ -361,11 +361,11 @@ header .main-navigation > ul > li:last-child a {
 }
 header .main-navigation > ul > li > a {
     color: #fff;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: bold;
     text-shadow: 1px 1px 3px #4b4f5c;
     line-height: 100px;
-    padding: 0 8px;
+    padding: 0 5px;
     display: block;
     position: relative;
 }
@@ -460,7 +460,7 @@ header .main-navigation li.parent-item ul.sub-menu li a {
     color: #a9abb0;
     padding: 11px 20px;
     border-bottom: 1px solid #e6e6e7;
-    font-size: 17px;
+    font-size: 16px;
 }
 header .main-navigation li.parent-item ul.sub-menu li.haschild,
 header .mobile-navigation .mobile-container li.haschild {
