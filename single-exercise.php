@@ -550,6 +550,14 @@ get_header(); ?>
                                     <div class="skillbar-bar"></div>
                                 </div>
 							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('write-essay'))): ?>
+								<div class="skillbar timer clearfix" data-duration="1200">
+									<div class="skillbar-title">
+										<span>时间 <span class="seconds-left">20:00</span></span>
+									</div>
+									<div class="skillbar-bar"></div>
+								</div>
+							<?php endif; ?>
 							<?php if(empty($exam) && in_array($question_type->slug, array('fill-in-the-blanks-i', 'fill-in-the-blanks-ii', 'reorder-paragraph'))): ?>
                                 <div class="skillbar timer clearfix" data-duration="180">
                                     <div class="skillbar-title">
