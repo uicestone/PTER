@@ -800,7 +800,7 @@ jQuery(function($) {
     var answerToggleButton = $('.answer.entry .toggle');
     if (answerContentElement.length) {
         var answer = $(answerContentElement.html().replace(/<sup.*?>[\s\S]*?<\/sup>/g, '')).text().replace(/答案/, '').trim();
-        var answerTrimmed = answer.replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
+        var answerTrimmed = answer.toLowerCase().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
         var answerWordCount = answerTrimmed.split(/\s+/).length;
 	}
 
@@ -819,7 +819,7 @@ jQuery(function($) {
 
         // answer word count
         var answerInputValue = $(this).val().trim();
-        var answerInputValueTrimmed = answerInputValue.replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
+        var answerInputValueTrimmed = answerInputValue.toLowerCase().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
         var wordCount = answerInputValue.split(/\s+/).filter(function(w){ return w; }).length;
         var _self = this;
         wordCountElement.text(wordCount);
