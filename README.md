@@ -10,7 +10,7 @@
 - 域名续费费用目前由Bingo Training负担
 
 # 服务器和CDN
-- Google Cloud Platform：Bingo Training企业账号，目前由Uice Lu管理并负担费用，使用的主要服务包括一台服务器pter-au-1（包含一个固定IP），一个负载平衡器pter-cdn（包含一个固定IP）和一个存储pter-storage
+- Google Cloud Platform：Bingo Training企业账号，目前由Uice Lu管理，由Bin Xue负担费用，使用的主要服务包括一台服务器pter-au-1（包含一个固定IP），一个负载平衡器pter-cdn（包含一个固定IP）和一个存储pter-storage
 - 阿里云：Bingo Training企业账号，目前由Uice Lu管理，由Bingo Training负担费用，使用的主要服务为一台服务器pter-cn-1（包含一个固定IP）
 - 七牛云：Uice Lu个人账号，使用的主要服务为一个大陆CDN加速域名和一个CDN存储，由Uice Lu负担费用
 - 可以使用SSH的方式访问GCP和阿里云服务器（需在服务器上开设账号）：在终端输入 `ssh <username>@bingotraining.com` 或者 `ssh <username>@cn.bingotraining.com`
