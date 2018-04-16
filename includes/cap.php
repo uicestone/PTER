@@ -54,7 +54,7 @@ function redirect_login ($force = false) {
 		return;
 	}
 
-	header('Location: ' . site_url() . '/register/?intend=' . ($_SERVER['REQUEST_URI'])); exit;
+	header('Location: ' . site_url() . '/register/?intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
 }
 
 function redirect_pricing_table ($cap) {
@@ -72,7 +72,7 @@ function redirect_pricing_table ($cap) {
 		return;
 	}
 	else {
-		header('Location: ' . site_url() . '/pricing-table/?intend=' . ($_SERVER['REQUEST_URI'])); exit;
+		header('Location: ' . site_url() . '/pricing-table/?intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
 	}
 }
 
