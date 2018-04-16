@@ -132,7 +132,7 @@ get_header(); the_post(); ?>
                             </div><!-- end submit -->
                             <div class="col-md-6 col-sm-6 col-sm-offset-6 clearfix">
                                 <div class="forgot fr">
-                                    <a href="<?=site_url()?>/login/<?=(isset($_GET['intend']) ? '?intend=' . $_GET['intend'] : '')?>" class="new-user">已有账号？马上登录</a>
+                                    <a href="<?=site_url()?>/login/<?=(isset($_GET['intend']) ? '?intend=' . urlencode($_GET['intend']) : '')?>" class="new-user">已有账号？马上登录</a>
                                 </div>
                             </div><!-- end forgot password -->
                         </div><!-- end row -->
