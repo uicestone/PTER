@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<?php $banners = get_posts(array('tag' => 'headline')); if (!wp_is_mobile()): ?>
+<?php $banners = get_posts(array('tag' => 'headline')); ?>
 <div class="tp-banner-container">
     <div class="tp-banner">
         <ul>
@@ -58,7 +58,8 @@
         </ul><!-- end ul elements -->
     </div><!-- end tp-banner -->
 </div><!-- End Home Slider Container -->
-<?php else: foreach ($banners as $index => $banner): ?>
+
+<?php foreach ($banners as $index => $banner): ?>
 <section class="full-section banner" style="background-image:url('<?=get_the_post_thumbnail_url($banner, 'large')?>')">
     <div class="container">
         <h3 class="section-title"><?=get_the_title($banner)?></h3>
@@ -77,7 +78,7 @@
     </div>
 </section>
 <div class="clearfix"></div>
-<?php endforeach; endif; ?>
+<?php endforeach; ?>
 
 <section class="full-section features-section fancy-shadow pricing-tables">
     <div class="container">
