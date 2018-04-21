@@ -799,7 +799,7 @@ jQuery(function($) {
     var answerContentElement = $('.answer.entry .content');
     var answerToggleButton = $('.answer.entry .toggle');
     if (answerContentElement.length) {
-        var answer = $(answerContentElement.html().replace(/<sup.*?>[\s\S]*?<\/sup>/g, '')).text().replace(/答案/, '').trim();
+        var answer = $(answerContentElement).clone().find('sup').remove().end().find('p').map(function (i, p) { return $(p).text().replace(/答案/, ''); }).toArray().join(' ');
         var answerTrimmed = answer.toLowerCase().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
         var answerWordCount = answerTrimmed.split(/\s+/).length;
 	}
