@@ -497,7 +497,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('dialogue-interpreting'))): ?>
 								<div class="skillbar timer clearfix" data-wait="previous" data-duration="60" data-is-answer="true">
 									<div class="skillbar-title">
-										<span>翻译 <span class="seconds-left">01:00</span></span>
+										<span>翻译 <span class="seconds-left">00:40</span></span>
 									</div>
 									<div class="skillbar-bar"></div>
 								</div>
