@@ -92,6 +92,10 @@ function order_paid ($order_no, $gateway = null) {
 		$user->add_cap('view_exercises');
 	}
 
+	if (in_array($service, array('ccl'))) {
+		$user->add_cap('ccl');
+	}
+
 	if (in_array($service, array('full', 'reading'))) {
 		$inactivated_readings = get_user_meta($user->ID, 'service_reading_inactivated', true) ?: 0;
 		update_user_meta($user->ID, 'service_reading_inactivated', $inactivated_readings + 3);
@@ -119,7 +123,7 @@ function order_paid ($order_no, $gateway = null) {
 		delete_user_meta($user->id, 'limited_free');
 	}
 
-	if (in_array($service, array('tips', 'exercises', 'base', 'full'))) {
+	if (in_array($service, array('tips', 'exercises', 'base', 'full', 'ccl'))) {
 		$service_valid_after = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
 
 		if (!$service_valid_after || $service_valid_after < time()) {
@@ -250,6 +254,7 @@ function refund_order ($order_id, $amount) {
 
 	$amount = round($amount, 2);
 	$order_no = get_post_meta($order_id, 'no', true);
+	$service = get_post_meta($order_id, 'service', true);
 
 	if ($amount <= 0) {
 		return;
@@ -271,7 +276,7 @@ function refund_order ($order_id, $amount) {
 			break;
 		case 'paypal':
 			$sale_id = get_post_meta($order_id, 'sale_id', true);
-			paypal_sale_refund($sale_id, $amount);
+			paypal_sale_refund($sale_id, $amount, $service);
 			break;
 		case 'alipay':
 		default:
