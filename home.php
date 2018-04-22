@@ -1,6 +1,12 @@
-<?php get_header(); ?>
+<?php
+$banners = get_posts(array('category_name' => 'headline'));
+$banner_links = array_map(function ($banner) {
+	$text = get_post_meta($banner->ID, 'button_text', true);
+	$link = get_post_meta($banner->ID, 'button_link', true);
+	return compact('text', 'link');
+}, $banners);
+get_header(); ?>
 
-<?php $banners = get_posts(array('tag' => 'headline')); ?>
 <div class="tp-banner-container">
     <div class="tp-banner">
         <ul>
@@ -49,9 +55,9 @@
                      data-elementdelay="0.1"
                      data-endelementdelay="0.1"
                      data-endspeed="500" style="z-index:99">
-                    <a href="<?=site_url('exercise/repeat-sentence-%E7%BB%83%E4%B9%A01/?tag=free-trial')?>/tip/?tag=free-trial" class="btn">免费体验</a>
-                    <a href="<?=site_url('exam/模拟题1/')?>" class="btn">模考</a>
-                    <a href="<?=site_url('exercise_pack/课程1')?>" class="btn">宾果23天课</a>
+					<?php foreach ($banner_links as $banner_link): ?>
+					<a href="<?=$banner_link['link']?>" class="btn"><?=$banner_link['text']?></a>
+					<?php endforeach; ?>
                 </div>
             </li>
             <?php endforeach; ?>
@@ -67,13 +73,7 @@
 			<?=get_the_subtitle($banner)?>
         </p><!-- End Section Description -->
         <div class="banner-actions">
-			<?php if ($index === 0): ?>
-            <a href="<?=site_url('tip/?tag=free-trial')?>" class="btn">免费体验</a>
-			<?php elseif ($index === 1): ?>
-            <a href="<?=site_url('exam/模拟题1/')?>" class="btn">模考</a>
-			<?php elseif ($index === 2): ?>
-            <a href="<?=site_url('exercise_pack/课程1/')?>" class="btn">宾果23天课</a>
-            <?php endif; ?>
+            <a href="<?=$banner_links[$index]['link']?>" class="btn"><?=$banner_links[$index]['text']?></a>
         </div>
     </div>
 </section>
