@@ -72,7 +72,11 @@ function redirect_pricing_table ($cap) {
 		return;
 	}
 	else {
-		header('Location: ' . site_url() . '/pricing-table/?intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
+		$service_syntax = '';
+		if ($cap === 'view_ccl') {
+			$service_syntax = 'ccl&';
+		}
+		header('Location: ' . site_url() . '/pricing-table/?' . $service_syntax . 'intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
 	}
 }
 
