@@ -92,7 +92,7 @@ get_header(); the_post() ?>
 
 		<?php if (isset($_GET['ccl'])): ?>
 		<div class="row table-row fadeInDown-animation">
-			<div class="col-sm-6 table-2">
+			<div class="col-sm-4 table-2">
 				<div class="table">
 
 					<div class="table-header grad-btn">
@@ -127,9 +127,44 @@ get_header(); the_post() ?>
 					</div><!-- end table footer -->
 
 				</div><!-- end table -->
-			</div><!-- end col-md-3 col-sm-6 -->
+			</div>
+			<div class="col-sm-4 table-3 recommended">
+				<div class="table">
 
-			<div class="col-sm-6 table-3 recommended">
+					<div class="table-header grad-btn">
+						<p class="text">CCL 全真模拟练习（3个月）</p><!-- end text -->
+						<p class="price">
+							<?php $price = get_post_meta(get_the_ID(), 'price_ccl_3', true); if ($discount): ?>
+								<del><?=$price?></del>
+								<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
+							<?php else: ?>
+								<span class="price-amount"><?=$price?></span>
+							<?php endif; ?>
+							$ / 90天
+						</p><!-- end price -->
+					</div><!-- end table header -->
+
+					<div class="table-body">
+						<ul class="features">
+							<li>CCL全真模考题+答案</li>
+							<li>CCL考试题型介绍</li>
+							<li>CCL考试核心评分解析</li>
+							<li>CCL练习答疑</li>
+							<li>CCL精选必备词汇</li>
+							<li>CCL背景知识</li>
+							<li>CCL听力练习</li>
+						</ul><!-- end features list -->
+					</div><!-- end table body -->
+
+					<div class="table-footer">
+						<div class="order-btn clearfix">
+							<a href="#payment" data-service="ccl" data-amount="3" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
+						</div><!-- end order button -->
+					</div><!-- end table footer -->
+
+				</div><!-- end table -->
+			</div>
+			<div class="col-sm-4 table-2">
 				<div class="table">
 
 					<div class="table-header grad-btn">
@@ -164,7 +199,7 @@ get_header(); the_post() ?>
 					</div><!-- end table footer -->
 
 				</div><!-- end table -->
-			</div><!-- end col-md-3 col-sm-6 -->
+			</div>
 		</div><!-- end 1st row -->
 		<?php else: ?>
 		<div class="row table-row fadeInDown-animation">
