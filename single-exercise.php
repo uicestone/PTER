@@ -1038,6 +1038,8 @@ jQuery(function($) {
 		// stop recorder if any
         if ($('.btn-stop').click().length) {
             // hide submit button, and show next button
+            var nextButton = $(self).parent().siblings('.next').find('.btn');
+			nextButton.prop('disabled', true).addClass('disabled').data('text', nextButton.text()).text('上传中…');
             $(self).parent().hide()
                 .siblings('.next').show();
 

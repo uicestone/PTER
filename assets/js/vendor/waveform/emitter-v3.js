@@ -138,6 +138,7 @@
     $container.on("click", ".btn-stop", function() {
         isLooping = false;
         ee.emit("stop");
+        console.log('emit start rendering');
         ee.emit('startaudiorendering', 'mp3');
     });
 
@@ -327,9 +328,12 @@
             processData: false,
             contentType: false
         }).done(function (res) {
-            console.log(res);
+            console.log('file uploaded:', res);
+            // enable next button
+            var nextButton = $('.next .btn:disabled');
+            nextButton.prop('disabled', false).removeClass('disabled').text(nextButton.data('text'));
         }).fail(function (res) {
-            console.error(res);
+            console.error('file upload failed:', res);
         });
     }
 
@@ -389,13 +393,14 @@
     });
 
     ee.on('audiorenderingfinished', function (type, data) {
-        if (type == 'wav' || type == 'mp3'){
+        if (type === 'wav' || type === 'mp3'){
             if (downloadUrl) {
                 window.URL.revokeObjectURL(downloadUrl);
             }
 
             downloadUrl = window.URL.createObjectURL(data);
             // displayDownloadLink(downloadUrl);
+            console.log('upload file');
             uploadFile(data, type);
         }
     });
