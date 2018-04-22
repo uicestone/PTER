@@ -3,8 +3,8 @@
 	<?php if (is_limited_free(get_current_user_id())): ?>
 	<hr>
 	<p style="font-weight:normal">
-		您是限时免费订阅用户，将于
 		<?php $expires_at = get_user_meta(get_current_user_id(), 'service_tips_valid_before', true); ?>
+		您是限时免费订阅用户，<?=$expires_at>time()?'将':'已'?>于
 		<span class="count-down" data-expires-at="<?=$expires_at?>">
 			<?=date('Y-m-d H:i:s', $expires_at + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS)?>
 		</span>
