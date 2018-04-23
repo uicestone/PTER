@@ -278,6 +278,15 @@ add_filter('pre_get_posts', function (WP_Query $query) {
 	return $query;
 });
 
+add_filter('post_row_actions', function ($actions, $post) {
+	if ($post->post_type === 'paper') {
+		$exam_id = get_post_meta($post->ID, 'exam_id', true);
+		$exam_link = get_the_permalink($exam_id) . '?paper_id=' . $post->ID;
+		$actions['attend_users'] = '<a href="' . $exam_link . '" target="_blank">打开试卷</a>';
+	}
+	return $actions;
+}, 10, 2);
+
 function get_images_from_the_post () {
 	$content = get_the_content();
 	$images = [];
