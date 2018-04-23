@@ -93,7 +93,10 @@ get_header(); ?>
         <p class="section-description">
             <?=get_the_subtitle($welcome_page)?>
         </p><!-- End Section Description -->
-        <p><a href="<?=site_url()?>/pricing-table/" class="btn subscribe">立即订阅</a></p>
+        <p>
+			<a href="<?=site_url()?>/pricing-table/" class="btn subscribe">立即订阅PTE</a>
+			<a href="<?=site_url()?>/pricing-table/?ccl" class="btn subscribe">立即订阅CCL</a>
+		</p>
     </div>
     <div class="section-content features-content fadeInDown-animation">
         <div class="container">
