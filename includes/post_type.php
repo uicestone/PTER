@@ -275,6 +275,7 @@ add_filter('pre_get_posts', function (WP_Query $query) {
 		$query->set('meta_key', 'type');
 		$query->set('meta_value', $_GET['type']);
 	}
+	return $query;
 });
 
 function get_images_from_the_post () {
