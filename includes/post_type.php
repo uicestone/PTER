@@ -271,7 +271,7 @@ add_action('init', function () {
 });
 
 add_filter('pre_get_posts', function (WP_Query $query) {
-	if (isset($_GET['type'])) {
+	if ($query->query['post_type'] === 'exam' && isset($_GET['type'])) {
 		$query->set('meta_key', 'type');
 		$query->set('meta_value', $_GET['type']);
 	}
