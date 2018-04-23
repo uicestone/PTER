@@ -1,7 +1,6 @@
 <?php
-
+redirect_login();
 $exam_type = get_post_meta(get_the_ID(), 'type', true);
-
 if(!has_tag('free-trial') && !(is_limited_free(get_current_user_id()) && has_tag('limited-free'))) {
 	if ($exam_type === 'ccl') {
 		redirect_pricing_table('view_ccl');
