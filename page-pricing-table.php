@@ -96,7 +96,7 @@ get_header(); the_post() ?>
 				<div class="table">
 
 					<div class="table-header grad-btn">
-						<p class="text">CCL 全真模拟练习（1个月）</p><!-- end text -->
+						<p class="text">CCL 全真模拟练习<br>（1个月）</p><!-- end text -->
 						<p class="price">
 							<?php $price = get_post_meta(get_the_ID(), 'price_ccl', true); if ($discount): ?>
 								<del><?=$price?></del>
@@ -132,7 +132,7 @@ get_header(); the_post() ?>
 				<div class="table">
 
 					<div class="table-header grad-btn">
-						<p class="text">CCL 全真模拟练习（3个月）</p><!-- end text -->
+						<p class="text">CCL 全真模拟练习<br>（3个月）</p><!-- end text -->
 						<p class="price">
 							<?php $price = get_post_meta(get_the_ID(), 'price_ccl_3', true); if ($discount): ?>
 								<del><?=$price?></del>
@@ -168,7 +168,7 @@ get_header(); the_post() ?>
 				<div class="table">
 
 					<div class="table-header grad-btn">
-						<p class="text">CCL 全真模拟练习（2个月）</p><!-- end text -->
+						<p class="text">CCL 全真模拟练习<br>（2个月）</p><!-- end text -->
 						<p class="price">
 							<?php $price = get_post_meta(get_the_ID(), 'price_ccl_2', true); if ($discount): ?>
 								<del><?=$price?></del>
