@@ -129,7 +129,7 @@ get_header(); ?>
 								<?php if (isset($exam) && $section === 'break') { echo wpautop(get_post_meta(get_the_ID(), 'break_content', true)); } else { the_content(); } ?>
 							</div>
 						</div><!-- End Entry -->
-                        <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening', 'write-essay', 'swt'))): ?>
+                        <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening', 'ccl-intensive-listening', 'write-essay', 'swt'))): ?>
 						<div class="comment-form answer-form entry">
 							<div class="addcomment-title">
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
@@ -137,7 +137,7 @@ get_header(); ?>
                                 <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-essay', 'swt'))): ?>
                                 <span class="pull-right word-count">词数：<span class="count">0</span></span>
                                 <?php endif; ?>
-								<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))): ?>
+								<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening', 'ccl-intensive-listening'))): ?>
                                     <span class="pull-right word-diff-count">正确率：<span class="diff-percentage">-</span></span>
 								<?php endif; ?>
 							</div><!-- End Title -->
@@ -151,7 +151,7 @@ get_header(); ?>
 											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" class="answer-input"></textarea>
 											<?php endif; ?>
                                             <div class="diff-check-result content clearfix" style="white-space:pre-line;display:none"></div>
-											<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))): ?>
+											<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening', 'ccl-intensive-listening'))): ?>
                                             <input type="submit" id="comment-submit" class="diff-check submit-input grad-btn ln-tr" value="检查" disabled="disabled">
                                             <input type="submit" id="comment-submit" class="resume-input submit-input grad-btn ln-tr" value="返回" style="display:none">
 											<?php endif; ?>
@@ -161,7 +161,7 @@ get_header(); ?>
 							</form><!-- End form -->
 						</div><!-- End comment form -->
                         <?php endif; ?>
-						<?php if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))): ?>
+						<?php if (in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'ccl-vocabulary-primary', 'ccl-vocabulary-junior', 'ccl-vocabulary-senior', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))): ?>
 						<div class="clearfix" style="margin-top:30px"></div>
 						<div class="comment-form answer-form entry">
 							<div class="addcomment-title">
@@ -239,7 +239,7 @@ get_header(); ?>
                             <div class="addcomment-title" style="margin-bottom:20px">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
                                 <span class="text">参考答案</span>
-                                <a href="#" class="toggle grad-btn ln-tr pull-right<?=in_array($question_type->slug, array('intensive-listening')) ? ' disabled disable-on-high-diff' : ''?>">显示</a>
+                                <a href="#" class="toggle grad-btn ln-tr pull-right<?=in_array($question_type->slug, array('intensive-listening', 'ccl-intensive-listening')) ? ' disabled disable-on-high-diff' : ''?>">显示</a>
                             </div><!-- End Title -->
                             <div class="row" style="margin-top:20px">
                                 <div class="col-md-12">
@@ -415,7 +415,7 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-									<?php if (in_array($question_type->slug, array('intensive-listening'))): ?>
+									<?php if (in_array($question_type->slug, array('intensive-listening', 'ccl-intensive-listening'))): ?>
                                     <i id="rewind-control" class="fa fa-fast-backward"></i>
                                     <i id="fast-forward-control" class="fa fa-fast-forward"></i>
 									<?php endif; ?>
@@ -494,6 +494,14 @@ get_header(); ?>
                                     <div class="skillbar-bar"></div>
                                 </div>
 							<?php endif; ?>
+							<?php if(in_array($question_type->slug, array('ccl-vocabulary-primary', 'ccl-vocabulary-junior', 'ccl-vocabulary-senior'))): ?>
+								<div class="skillbar timer clearfix" data-wait="previous" data-duration="3" data-is-answer="true">
+									<div class="skillbar-title">
+										<span>翻译 <span class="seconds-left">00:03</span></span>
+									</div>
+									<div class="skillbar-bar"></div>
+								</div>
+							<?php endif; ?>
 							<?php if(in_array($question_type->slug, array('dialogue-interpreting'))): ?>
 								<div class="skillbar timer clearfix" data-wait="previous" data-duration="60" data-is-answer="true">
 									<div class="skillbar-title">
@@ -534,7 +542,7 @@ get_header(); ?>
                                 <div class="skillbar-bar"></div>
                             </div>
 							<?php endif; ?>
-							<?php if(in_array($question_type->slug, array('intensive-listening'))): ?>
+							<?php if(in_array($question_type->slug, array('intensive-listening', 'ccl-intensive-listening'))): ?>
                                 <div class="skillbar timer clearfix" data-duration="2400">
                                     <div class="skillbar-title">
                                         <span>时间 <span class="seconds-left">40:00</span></span>
@@ -566,7 +574,7 @@ get_header(); ?>
                                     <div class="skillbar-bar"></div>
                                 </div>
 							<?php endif; ?>
-							<?php if (empty($exam) || !in_array($question_type->slug, array('repeat-sentence', 'answer-short-question'))): ?>
+							<?php if (empty($exam) || !in_array($question_type->slug, array('repeat-sentence', 'answer-short-question', 'ccl-vocabulary-primary', 'ccl-vocabulary-junior', 'ccl-vocabulary-senior'))): ?>
                             <audio id="ding-sound" preload="auto" src="<?=get_stylesheet_directory_uri()?>/assets/audios/ding.wav" style="display:none"></audio>
 							<?php endif; ?>
                         </div>
@@ -1077,14 +1085,14 @@ jQuery(function($) {
 
 <?php
 
-if (!(isset($exam) && $answer) && in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
+if (!(isset($exam) && $answer) && in_array($question_type->slug, array('read-aloud', 'repeat-sentence', 'ccl-vocabulary-primary', 'ccl-vocabulary-junior', 'ccl-vocabulary-senior', 'answer-short-question', 'describe-image', 'retell-lecture', 'dialogue-interpreting'))) {
 	wp_enqueue_script('waveform');
 	wp_enqueue_script('waveform-record');
 	wp_enqueue_script('waveform-emitter');
 	wp_enqueue_script('mp3-lame-encoder');
 }
 
-if (!(isset($exam) && $answer) && in_array($question_type->slug, array('write-from-dictation', 'intensive-listening'))) {
+if (!(isset($exam) && $answer) && in_array($question_type->slug, array('write-from-dictation', 'intensive-listening', 'ccl-intensive-listening'))) {
 	wp_enqueue_script('jsdiff');
 }
 
