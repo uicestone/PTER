@@ -279,9 +279,16 @@ add_filter('pre_get_posts', function (WP_Query $query) {
 });
 
 add_filter('post_row_actions', function ($actions, $post) {
-	if ($post->post_type === 'paper') {
+	if ($post->post_type === 'paper' && $paper_submitted = get_post_meta($post->ID, 'submitted_at', true)) {
 		$exam_id = get_post_meta($post->ID, 'exam_id', true);
-		$exam_link = get_the_permalink($exam_id) . '?paper_id=' . $post->ID;
+		$exam_type = get_post_meta($exam_id, 'type', true);
+		if ($exam_type === 'ccl') {
+			$sections_time_limit = array('dialogue'=>600);
+		} else {
+			$sections_time_limit = array('speaking'=>3000, 'writing'=>3000, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
+		}
+		$sections = array_keys($sections_time_limit);
+		$exam_link = get_the_permalink($exam_id) . '?finish=true&paper_id=' . $post->ID . '&section=' . $sections[0];
 		$actions['attend_users'] = '<a href="' . $exam_link . '" target="_blank">打开试卷</a>';
 	}
 	return $actions;
