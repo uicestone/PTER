@@ -9,6 +9,7 @@ add_action('after_switch_theme', function () {
 	$administrator = get_role('administrator');
 	$administrator->add_cap('view_tips');
 	$administrator->add_cap('view_exercises');
+	$administrator->add_cap('view_ccl');
 
 	$administrator->add_cap('edit_question_type_desc');
 	$administrator->add_cap('read_question_type_desc');
