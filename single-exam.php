@@ -13,7 +13,7 @@ if(!has_tag('free-trial') && !(is_limited_free(get_current_user_id()) && has_tag
 $user = wp_get_current_user();
 
 if ($exam_type === 'ccl') {
-	$sections_time_limit = array('dialogue'=>600);
+	$sections_time_limit = array('dialogue'=>1080);
 } else {
 	$sections_time_limit = array('speaking'=>3000, 'writing'=>3000, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
 }

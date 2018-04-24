@@ -283,7 +283,7 @@ add_filter('post_row_actions', function ($actions, $post) {
 		$exam_id = get_post_meta($post->ID, 'exam_id', true);
 		$exam_type = get_post_meta($exam_id, 'type', true);
 		if ($exam_type === 'ccl') {
-			$sections_time_limit = array('dialogue'=>600);
+			$sections_time_limit = array('dialogue'=>1080);
 		} else {
 			$sections_time_limit = array('speaking'=>3000, 'writing'=>3000, 'reading'=>2400, 'break' => 600, 'listening'=>3300);
 		}
