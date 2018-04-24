@@ -170,6 +170,9 @@ get_header(); ?>
 							</div><!-- End Title -->
 							<?php if (isset($exam) && $answer): ?>
 							<audio controls src="<?=$answer[0]?>" style="width:100%;"></audio>
+							<?php 	if (current_user_can('edit_users')): ?>
+							<a href="<?=$answer[0]?>" target="_blank">下载</a>
+							<?php 	endif; ?>
 							<?php else: ?>
 							<form method="post" action="/" id="answer-form">
 								<div class="row">
