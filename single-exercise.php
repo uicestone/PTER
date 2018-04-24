@@ -430,7 +430,7 @@ get_header(); ?>
                                 </div>
                                 <div class="audio-navigation">
                                     <form method="post">
-                                        <?php if (current_user_can('edit_post')): ?>
+                                        <?php if (current_user_can('edit_paper')): ?>
                                         <a class="btn" id="mark-audio-time-point">断句</a> <button type="submit" class="btn" id="save-audio-time-point" name="save_audio_time_point">保存</button>
                                         <?php endif; ?>
                                         <?php $audio_time_points = get_post_meta(get_the_ID(), 'audio_time_points', true); if ($audio_time_points): $audio_time_points = explode(',', $audio_time_points); foreach ($audio_time_points as $index => $audio_time_point): ?>

@@ -43,6 +43,17 @@ add_action('after_switch_theme', function () {
 	$administrator->add_cap('publish_promotion_codes');
 	$administrator->add_cap('read_private_promotion_codes');
 	$administrator->add_cap('edit_promotion_codes');
+
+	$editor = get_role('editor');
+	$editor->add_cap('edit_paper');
+	$editor->add_cap('read_paper');
+	$editor->add_cap('delete_paper');
+	$editor->add_cap('edit_papers');
+	$editor->add_cap('edit_others_papers');
+	$editor->add_cap('publish_papers');
+	$editor->add_cap('read_private_papers');
+	$editor->add_cap('edit_papers');
+
 });
 
 function redirect_login ($force = false) {
