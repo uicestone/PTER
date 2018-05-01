@@ -189,7 +189,7 @@ function order_paid ($order_no, $gateway = null) {
 		}
 	}
 
-	$services = array ('full' => '听说读写四项全能', 'base' => '听力口语技巧+练习包', 'tips' => '听力口语技巧包', 'exercises' => '听力口语练习包', 'reading' => '阅读技巧包', 'writing' => '写作技巧包');
+	$services = array ('full' => '听说读写四项全能', 'base' => '听力口语技巧+练习包', 'tips' => '听力口语技巧包', 'exercises' => '听力口语练习包', 'reading' => '阅读技巧包', 'writing' => '写作技巧包', 'ccl' => 'CCL模考');
 	$package_name = $services[$service];
 
 	if (!$package_name) {
@@ -260,7 +260,7 @@ function refund_order ($order_id, $amount) {
 		return;
 	}
 
-	$refundable = get_post_meta($order_id, 'refundable', true);
+	$refundable = get_post_meta($order_id, 'refundable_amount', true);
 
 	if ($refundable <= 0) {
 		return;
