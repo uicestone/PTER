@@ -79,6 +79,9 @@ get_header(); the_post() ?>
 			<?php if (!isset($promotion_discount)): ?>
             <div class="col-sm-4">
                 <form method="get" class="invitation_code-form">
+					<?php if ($_GET): foreach ($_GET as $key => $value): ?>
+					<input type="hidden" name="<?=$key?>" value="<?=$value?>">
+					<?php endforeach; endif; ?>
                     <input type="text" id="promotion_code-input" name="promotion_code" value="<?=$_GET['promotion_code']?>" class="invitation_code-input" placeholder="输入优惠码，获得优惠价格">
                     <input type="submit" id="promotion_code-submit" class="invitation_code-submit ln-tr" value="使用">
                 </form>
