@@ -272,7 +272,7 @@ function refund_order ($order_id, $amount) {
 			$input->setOrderId($order_no);
 			$input->setRefundId('refund.' . $order_no);
 			$input->setFee($amount * 100);
-			RoyalPayApi::refund($input);
+			RoyalPayApi::refund($input, 10, $service);
 			break;
 		case 'paypal':
 			$sale_id = get_post_meta($order_id, 'sale_id', true);
