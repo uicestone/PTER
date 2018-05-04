@@ -266,9 +266,15 @@ function refund_order ($order_id, $amount) {
 		return;
 	}
 
-	switch (get_post_meta($order_id, 'gateway', true)) {
+	if ($refundable < $amount) {
+		$amount = $refundable;
+	}
+
+	$gateway = get_post_meta($order_id, 'gateway', true);
+
+	switch ($gateway) {
 		case 'wechatpay':
-			$input = new RoyalPayApplyRefund();
+			$input = new RoyalPayApplyRefund($service);
 			$input->setOrderId($order_no);
 			$input->setRefundId('refund.' . $order_no);
 			$input->setFee($amount * 100);
@@ -284,7 +290,7 @@ function refund_order ($order_id, $amount) {
 	}
 
 	update_post_meta($order_id, 'refundable_amount',
-		round(get_post_meta($order_id, 'refundable_amount', true) - $amount, 2)
+		round($refundable - $amount, 2)
 	);
 
 	$user = get_post_meta(get_post($order_id)->ID, 'user', true);
