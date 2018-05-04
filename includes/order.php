@@ -93,7 +93,7 @@ function order_paid ($order_no, $gateway = null) {
 	}
 
 	if (in_array($service, array('ccl'))) {
-		$user->add_cap('ccl');
+		$user->add_cap('view_ccl');
 	}
 
 	if (in_array($service, array('full', 'reading'))) {
