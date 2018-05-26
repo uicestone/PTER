@@ -262,6 +262,7 @@ header {
 }
 header .logo-container {
     padding-top: 15px;
+    position: absolute;
 }
 header .logo-container img {
     width: 160px;
