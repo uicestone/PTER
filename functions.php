@@ -4,6 +4,7 @@ require __DIR__ . '/includes/admin.php';
 require __DIR__ . '/includes/cap.php';
 require __DIR__ . '/includes/cron.php';
 require __DIR__ . '/includes/enqueue.php';
+require __DIR__ . '/includes/lang.php';
 require __DIR__ . '/includes/nav.php';
 require __DIR__ . '/includes/order.php';
 require __DIR__ . '/includes/post_type.php';
@@ -230,4 +231,16 @@ function sync_user_meta($user_id, $meta_key, array $new_values, $old_values = nu
 		delete_user_meta($user_id, $meta_key, $value_to_delete);
 	}
 
+}
+
+if (!function_exists('pll_current_language')) {
+	function pll_current_language() {
+		return '';
+	}
+}
+
+if (!function_exists('pll_default_language')) {
+	function pll_default_language() {
+		return '';
+	}
 }
