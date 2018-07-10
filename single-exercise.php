@@ -98,8 +98,9 @@ if ($_GET['random']) {
 	}
 }
 elseif (empty($_GET['section'])) {
-	$previous_exercise = get_previous_post(true, '', $_GET['tag'] ? 'post_tag' : 'question_type');
-	$next_exercise = get_next_post(true, '', $_GET['tag'] ? 'post_tag' : 'question_type');
+	$limited_free_term = get_term_by('slug', 'limited-free', 'post_tag');
+	$previous_exercise = get_previous_post(true, $limited_free_term->term_id, $_GET['tag'] ? 'post_tag' : 'question_type');
+	$next_exercise = get_next_post(true, $limited_free_term->term_id, $_GET['tag'] ? 'post_tag' : 'question_type');
 }
 
 get_header(); ?>
@@ -388,7 +389,7 @@ get_header(); ?>
 								}
 
                                 foreach (get_posts($all_query) as $exercise): $rating = (int)get_post_meta($exercise->ID, 'rating', true); ?>
-                                <option value="<?=get_the_permalink($exercise)?>"<?=$exercise->ID === get_the_ID() ? ' selected' : ''?>>
+                                <option value="<?=get_the_permalink($exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>"<?=$exercise->ID === get_the_ID() ? ' selected' : ''?>>
                                     <?=get_the_title($exercise)?>
                                     <?=str_repeat('★', $rating)?>
                                 </option>
@@ -944,7 +945,6 @@ jQuery(function($) {
     <?php endif; ?>
 
     $('.go-to-exercise').on('change', function () {
-        console.log($(this).val());
         window.location.href = $(this).val();
     });
 	
