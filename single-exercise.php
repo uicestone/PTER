@@ -682,9 +682,13 @@ jQuery(function($) {
             if (answerVoiceRecorder && ding) {
                 ding.play();
 			}
-            $('.btn-record').trigger('click');
-            $('.answer-form audio').each(function () {
-                this.play();
+
+            setTimeout(function () {
+				$('.btn-record').trigger('click');
+            }, answerVoiceRecorder && ding ? 1000 : 0);
+
+			$('.answer-form audio').each(function () {
+				this.play();
 			});
         }
 
