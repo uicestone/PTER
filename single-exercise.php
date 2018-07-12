@@ -680,6 +680,8 @@ jQuery(function($) {
         if ($(this).data('is-answer')) {
             var answerVoiceRecorder = document.querySelector('#answer-voice-record');
             var ding = $('#ding-sound').get(0);
+            var playlistContainer = $(answerVoiceRecorder).find('.playlist');
+
             if (answerVoiceRecorder && ding) {
                 ding.play();
 			}
@@ -691,6 +693,12 @@ jQuery(function($) {
 				    var recorded = moment(moment().diff(recordStartedAt));
                     recordTimeContainer.find('.time').text(recorded.format('mm:ss'));
 				}, 1000);
+
+                $(playlistContainer).on('recorder.silenced', function () {
+                    var recorded = moment(moment().diff(recordStartedAt) - 3000);
+                    recordTimeContainer.find('.time').text(recorded.format('mm:ss'));
+				});
+
                 recordTimeContainer.data('interval', recordTimeInterval);
                 $('.btn-record').trigger('click');
             }, answerVoiceRecorder && ding ? 1000 : 0);

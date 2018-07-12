@@ -1659,6 +1659,11 @@ var WaveformPlaylist =
 	            _this.recordingTrack.setBuffer(audioBuffer);
 	            _this.recordingTrack.setPlayout(new _Playout2.default(_this.ac, audioBuffer));
 	            _this.adjustDuration();
+                if (_this.recordingTrack.buffer.duration > 3) {
+                    if(_this.recordingTrack.buffer.getChannelData(0).slice(-3*_this.recordingTrack.buffer.sampleRate).reduce(function(s,b){return s+Math.abs(b);},0) < 500) {
+                    	$(_this.rootNode).trigger('recorder.silenced');
+					}
+				}
 	          });
 	          _this.working = true;
 	        }
@@ -2370,17 +2375,17 @@ var WaveformPlaylist =
 	    key: 'record',
 	    value: function record() {
 	      var _this12 = this;
-	
+
 	      var playoutPromises = [];
 	      this.mediaRecorder.start(300);
-	
+
 	      // this.tracks.forEach(function (track) {
 	      //   track.setState('none');
 	      //   playoutPromises.push(track.schedulePlay(_this12.ac.currentTime, 0, undefined, {
 	      //     shouldPlay: _this12.shouldTrackPlay(track)
 	      //   }));
 	      // });
-	
+
 	      this.playoutPromises = playoutPromises;
 	    }
 	  }, {

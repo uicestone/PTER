@@ -162,7 +162,11 @@
         ee.emit("record");
     });
 
-//track interaction states
+    $container.on("recorder.silenced", function() {
+        $container.find('.btn-stop').click();
+    });
+
+    //track interaction states
     $container.on("click", ".btn-cursor", function() {
         ee.emit("statechange", "cursor");
         toggleActive(this);
