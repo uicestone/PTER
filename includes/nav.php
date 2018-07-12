@@ -111,3 +111,7 @@ add_filter( 'status_header', function ($header) {
 		unset( $wp_query->query_vars['name'] );
 	}
 } );
+
+if (defined('WP_REMOTE_UPLOADS') && WP_REMOTE_UPLOADS) {
+	add_filter( 'pre_option_upload_url_path', function() { return constant('CDN_CN') . 'wp-content/uploads'; } );
+}
