@@ -45,13 +45,22 @@ if (isset($_GET['paper_id'])):
 	$is_last_section_of_exam = count($sections) === $section_index + 1;
 
 	if (!$review) {
+
+		// set section start time
+		if (!$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true)) {
+			$section_start_time = time();
+			add_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
+		}
+
+		// calculate section time left
+		$section_time_left = $sections_time_limit[$section] - time() + $section_start_time;
+
 		if (isset($_POST['answer'])) {
 			// save answer to paper
 			update_post_meta($paper->ID, 'answer_' . $section . '_' . $exercise_index, $_POST['answer']);
 
 			// individual timer question types
 			if (isset($_POST['current_exercise_time_left']) && is_numeric($_POST['current_exercise_time_left']) && in_array($question_type->slug, array('summarise-spoken-text', 'swt'))) {
-				$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true);
 				$section_start_time -= $_POST['current_exercise_time_left'];
 				update_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
 			}
@@ -62,7 +71,7 @@ if (isset($_GET['paper_id'])):
 
 		if (isset($_POST['submit'])) {
 			// if is not last exercise of the section, go to next exercise
-			if (!$is_last_exercise_of_section) {
+			if (!$is_last_exercise_of_section && $section_time_left >= 0) {
 				update_post_meta($paper->ID, 'exercise_index', $exercise_index + 1);
 			}
 			// is last exercise of the section
@@ -82,15 +91,6 @@ if (isset($_GET['paper_id'])):
 			}
 			header('Location:' . get_the_permalink()); exit;
 		}
-
-		// set section start time
-		if (!$section_start_time = get_post_meta($paper->ID, 'time_start_' . $section, true)) {
-			$section_start_time = time();
-			add_post_meta($paper->ID, 'time_start_' . $section, $section_start_time);
-		}
-
-		// calculate section time left
-		$section_time_left = $sections_time_limit[$section] - time() + $section_start_time;
 	}
 
 	// in review mode, assign next and previous section and exercise links
