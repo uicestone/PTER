@@ -138,6 +138,7 @@
     $container.on("click", ".btn-stop", function() {
         isLooping = false;
         ee.emit("stop");
+        clearInterval($(this).siblings('.record-time').data('interval'));
         console.log('emit start rendering');
         ee.emit('startaudiorendering', 'mp3');
     });

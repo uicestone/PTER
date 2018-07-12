@@ -199,6 +199,7 @@ get_header(); ?>
 																  class="btn btn-download btn-primary hidden">
 																<i class="fa fa-download"></i>
 															</span>
+															<span class="record-time" style="display:none"> <i class="fa fa-clock-o"></i> <span class="time">00:00</span></span>
 														</div>
 													</div>
 												</div>
@@ -684,7 +685,14 @@ jQuery(function($) {
 			}
 
             setTimeout(function () {
-				$('.btn-record').trigger('click');
+                var recordStartedAt = moment();
+                var recordTimeContainer = $(answerVoiceRecorder).find('.record-time').show();
+				var recordTimeInterval = setInterval(function () {
+				    var recorded = moment(moment().diff(recordStartedAt));
+                    recordTimeContainer.find('.time').text(recorded.format('mm:ss'));
+				}, 1000);
+                recordTimeContainer.data('interval', recordTimeInterval);
+                $('.btn-record').trigger('click');
             }, answerVoiceRecorder && ding ? 1000 : 0);
 
 			$('.answer-form audio').each(function () {
