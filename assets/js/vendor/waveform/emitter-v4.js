@@ -136,6 +136,10 @@
     });
 
     $container.on("click", ".btn-stop", function() {
+        if ($(this).hasClass('disabled')) {
+            return false;
+        }
+        $(this).addClass('disabled');
         isLooping = false;
         ee.emit("stop");
         clearInterval($(this).siblings('.record-time').data('interval'));
