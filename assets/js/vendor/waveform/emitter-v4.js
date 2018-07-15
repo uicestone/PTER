@@ -127,6 +127,7 @@
     });
 
     $container.on("click", ".btn-play", function() {
+        $(this).siblings('.btn-stop').removeClass('disabled');
         ee.emit("play");
     });
 
@@ -163,6 +164,7 @@
     });
 
     $container.on("click", ".btn-record", function() {
+        $(this).siblings('.btn-stop').removeClass('disabled');
         ee.emit("record");
     });
 
