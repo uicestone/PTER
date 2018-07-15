@@ -53,7 +53,7 @@
 	</script>
 	<?php endif; ?>
 </head>
-<body id="home" class="<?php body_class(); ?>">
+<body id="home" <?php body_class(); ?>>
 <div id="entire">
     <?php if (is_home()): ?>
 	<div class="loader"></div>
