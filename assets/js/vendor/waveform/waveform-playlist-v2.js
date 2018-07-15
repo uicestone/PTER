@@ -1659,10 +1659,16 @@ var WaveformPlaylist =
 	            _this.recordingTrack.setBuffer(audioBuffer);
 	            _this.recordingTrack.setPlayout(new _Playout2.default(_this.ac, audioBuffer));
 	            _this.adjustDuration();
-                if (_this.recordingTrack.buffer.duration > 3) {
-                    if(_this.recordingTrack.buffer.getChannelData(0).slice(-3*_this.recordingTrack.buffer.sampleRate).reduce(function(s,b){return s+Math.abs(b);},0) < 500) {
-                    	$(_this.rootNode).trigger('recorder.silenced');
-					}
+                var recentSeconds = 3;
+                if (_this.recordingTrack.buffer.duration > recentSeconds) {
+                  var recentSamples = recentSeconds * _this.recordingTrack.buffer.sampleRate;
+                  var recentSamplesIntegral = _this.recordingTrack.buffer.getChannelData(0)
+                    .slice(-recentSamples)
+                    .reduce(function(s,b){return s+Math.abs(b);},0);
+                  console.log('Average level:', recentSamplesIntegral / recentSamples);
+                  if(recentSamplesIntegral / recentSamples < 5e-3) {
+                    $(_this.rootNode).trigger('recorder.silenced');
+                  }
 				}
 	          });
 	          _this.working = true;
