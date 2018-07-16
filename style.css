@@ -2123,11 +2123,11 @@ h6.head-title {
     font-size: 14px;
 }
 /* Listview */
-.blog {
+.blog-section {
     padding: 70px 0 100px;
     background: #f5f5f5;
 }
-.blog .blogpost {
+.blog-section .blogpost {
     padding: 20px 20px 22px;
     background: #fff;
     padding-bottom: 23px;
@@ -2135,19 +2135,19 @@ h6.head-title {
     box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.13), inset 0 -2px 0 0 rgba(0, 0, 0, 0.12);
     margin-top: 30px;
 }
-.blog .blogpost .blogpost-image {
+.blog-section .blogpost .blogpost-image {
     border-radius: 4px;
     overflow: hidden;
     position: relative;
     margin-bottom: 20px;
 }
-.blog .blogpost .blogpost-image img {
+.blog-section .blogpost .blogpost-image img {
     transition: all .2s linear;
 }
-.blog .blogpost:hover img {
+.blog-section .blogpost:hover img {
     transform: scale(1.1);
 }
-.blog .blogpost .blogpost-image:after {
+.blog-section .blogpost .blogpost-image:after {
     content: '';
     background: rgba(0, 0, 0, .25);
     display: block;
@@ -2157,19 +2157,19 @@ h6.head-title {
     left: 0;
     bottom: 0;
 }
-.blog .blogpost h3.blogpost-title {
+.blog-section .blogpost h3.blogpost-title {
     line-height: 15px;
 }
-.blog .blogpost h3.blogpost-title a, .post.single .single-title a {
+.blog-section .blogpost h3.blogpost-title a, .post.single .single-title a {
     display: inline-block;
     padding-bottom: 11px;
     color: #2997ab;
 }
-.blog .blogpost h3.blogpost-title a:hover, .post.single .single-title a:hover,
+.blog-section .blogpost h3.blogpost-title a:hover, .post.single .single-title a:hover,
 .post.single .meta div a:hover {
     color: #383c4b;
 }
-.blog .blogpost h3.blogpost-title .post-type-icon, .post.single .single-title .post-type-icon {
+.blog-section .blogpost h3.blogpost-title .post-type-icon, .post.single .single-title .post-type-icon {
     background: #2997ab;
     display: inline-block;
     width: 29px;
@@ -2180,10 +2180,10 @@ h6.head-title {
     box-shadow: none;
     margin-right: 4px;
 }
-.blog .blogpost h3.blogpost-title .post-type-icon i, .post.single .single-title .post-type-icon i {
+.blog-section .blogpost h3.blogpost-title .post-type-icon i, .post.single .single-title .post-type-icon i {
     color: #fff;
 }
-.blog .blogpost .meta div, .post.single .meta div {
+.blog-section .blogpost .meta div, .post.single .meta div {
     background: #efefef;
     padding: 7px 10px;
     border-radius: 4px;
@@ -2193,45 +2193,45 @@ h6.head-title {
     margin-right: 16px;
     box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
 }
-.blog .blogpost .meta .comments, .post.single .meta .comments {
+.blog-section .blogpost .meta .comments, .post.single .meta .comments {
     margin-right: 0;
 }
-.blog .blogpost .meta div .icon i, .post.single .meta div .icon i {
+.blog-section .blogpost .meta div .icon i, .post.single .meta div .icon i {
     font-size: 15px;
     margin-right: 6px;
 }
-.blog .blogpost .meta div a, .post.single .meta div a {
+.blog-section .blogpost .meta div a, .post.single .meta div a {
     color: #2997ab;
 }
-.blog .blogpost .meta div a:hover {
+.blog-section .blogpost .meta div a:hover {
     color: #383c4b;
 }
-.blog .blogpost .blogpost-info .blogpost-description {
+.blog-section .blogpost .blogpost-info .blogpost-description {
     clear: right;
     margin: 20px 0 28px;
 }
-.blog .blogpost .blogpost-info .btn.orange-btn {
+.blog-section .blogpost .blogpost-info .btn.orange-btn {
     margin-right: 0;
 }
 /* 2 Columns */
-.blog.listview .blogpost .blogpost-image {
+.blog-section.listview .blogpost .blogpost-image {
     float: left;
     margin-right: 20px;
     margin-bottom: 0;
     max-width: 200px;
 }
-.blog.listview .blogpost .blogpost-info .blogpost-description {
+.blog-section.listview .blogpost .blogpost-info .blogpost-description {
     margin: 53px 0 8px;
 }
 /* 3 Columns */
-.blog.three-col .blogpost .meta {
+.blog-section.three-col .blogpost .meta {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 20px;
 }
-.blog.three-col .blogpost .meta div {
+.blog-section.three-col .blogpost .meta div {
     margin: 0;
     margin-top: 20px;
     display: block;
@@ -2239,10 +2239,10 @@ h6.head-title {
     max-width: 150px;
     background: rgba(38, 41, 52, .85);
 }
-.blog .blogpost .blogpost-image .meta div a:hover {
+.blog-section .blogpost .blogpost-image .meta div a:hover {
     color: #fff;
 }
-.blog.three-col .blogpost .blogpost-info .blogpost-description {
+.blog-section.three-col .blogpost .blogpost-info .blogpost-description {
     margin-bottom: 23px;
 }
 /* 15 - Sidebar */
@@ -3811,7 +3811,7 @@ blockquote.blockquote-4 .story {
 .dark .post, .dark .post .entry .share-post,
 .dark .follow-icons, .dark .share-icons,
 .dark .post .entry-sidebar .course-details div,
-.dark .blog, .dark .blog .blogpost .meta div,
+.dark .blog, .dark .blog-section .blogpost .meta div,
 .dark .post.single .meta div, .dark .contact,
 .dark .coming-soon, .dark .error-page,
 .dark .typography, .dark .shortcodes, .dark .pricing-tables,
@@ -3852,7 +3852,7 @@ blockquote.blockquote-4 .story {
 .dark .latest-courses-section .course,
 .dark .add-courses, .dark .instructor.alt,
 .dark .categories-section .cat-box,
-.dark .blog .blogpost, .dark .sidebar .sidebar-widget,
+.dark .blog-section .blogpost, .dark .sidebar .sidebar-widget,
 .dark .sidebar .sidebar-widget ul.tabs li.active,
 .dark .sidebar .search .search-input {
     background-color: #494c57;

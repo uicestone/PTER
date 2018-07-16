@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<section class="blog listview">
+<section class="blog-section listview">
 	<div class="container">
 		<div class="row">
 			<?php if(have_posts()): while (have_posts()): the_post(); ?>
