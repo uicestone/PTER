@@ -634,7 +634,8 @@ jQuery(function($) {
                 sectionTimer.text(moment().startOf('day').add(timeLeft).format('mm:ss'));
 			} else {
 		        clearInterval(timerInterval);
-		        $('.submit-answer').trigger('click', {force: true});
+		        console.log('Trigger submit answer button for time up.');
+		        $('.submit-answer').trigger('click', {force: true, timeup: true});
 			}
 		}, 1000);
 	}
@@ -697,6 +698,8 @@ jQuery(function($) {
                 $(playlistContainer).on('recorder.silenced', function () {
                     var recorded = moment(moment().diff(recordStartedAt) - 3000);
                     recordTimeContainer.find('.time').text(recorded.format('mm:ss'));
+                    console.log('Trigger submit answer button for silenced.');
+                    $('.submit-answer').trigger('click', {force: true, silenced: true}); // click submit-answer button in exam mode
 				});
 
                 recordTimeContainer.data('interval', recordTimeInterval);
@@ -1055,7 +1058,7 @@ jQuery(function($) {
 	        return;
 		}
 
-		if (data.force) {
+		if (data.force && data.timeup) {
             alert ('时间到，即将提交并转入下一题或下一部分');
         }
 
@@ -1070,6 +1073,7 @@ jQuery(function($) {
         if ($('.btn-stop').click().length) {
             // hide submit button, and show next button
             var nextButton = $(self).parent().siblings('.next').find('.btn');
+            console.log('Set next button text data to', nextButton.text());
 			nextButton.prop('disabled', true).addClass('disabled').data('text', nextButton.text()).text('上传中…');
             $(self).parent().hide()
                 .siblings('.next').show();
