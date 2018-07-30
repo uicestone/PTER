@@ -342,8 +342,8 @@
             console.log('File uploaded:', res);
             // enable next button
             var nextButton = $('.next .btn:disabled');
-            console.log('Restore button text data ', nextButton.data('text'));
-            nextButton.prop('disabled', false).removeClass('disabled').text(nextButton.data('text'));
+            console.log('Restore button text data ', nextButton.data('text'), 'and trigger click');
+            nextButton.prop('disabled', false).removeClass('disabled').text(nextButton.data('text')).trigger('click');
         }).fail(function (res) {
             console.error('File upload failed:', res);
         });

@@ -19,7 +19,7 @@ add_action('wp', function() {
 	wp_register_script('jsdiff', get_stylesheet_directory_uri() . '/assets/js/jsdiff.js', array(), '3.3.0', true);
 	wp_register_script('waveform', get_stylesheet_directory_uri() . '/assets/js/vendor/waveform/waveform-playlist-v1.3.js', array(), '1.3', true);
 	wp_register_script('waveform-record', get_stylesheet_directory_uri() . '/assets/js/vendor/waveform/record.js', array(), '3.0.5', true);
-	wp_register_script('waveform-emitter', get_stylesheet_directory_uri() . '/assets/js/vendor/waveform/emitter-v1.5.js', array(), '1.5', true);
+	wp_register_script('waveform-emitter', get_stylesheet_directory_uri() . '/assets/js/vendor/waveform/emitter-v1.6.js', array(), '1.6', true);
 	wp_register_script('mp3-lame-encoder', get_stylesheet_directory_uri() . '/assets/js/vendor/mp3-lame-encoder/Mp3LameEncoder.min.js', array(), false, true);
 	wp_register_script('clipboard', get_stylesheet_directory_uri() . '/assets/js/vendor/clipboard.min.js', array(), '1.7.1', true);
 	wp_register_script('moment', get_stylesheet_directory_uri() . '/assets/js/vendor/moment.min.js', array(), '2.20.1', true);
