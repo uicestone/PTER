@@ -1062,6 +1062,11 @@ jQuery(function($) {
             alert ('时间到，即将提交并转入下一题或下一部分');
         }
 
+        if (data.force && data.silenced && !window.localStorage.getItem('notified.silencedSkip')) {
+            alert ('3秒没有检测到声音，即将提交并转入下一题或下一部分。（注意：本提示不会再出现）');
+            window.localStorage.setItem('notified.silencedSkip', true);
+        }
+
         // stop timer
 		var timer = $('.timer');
 
