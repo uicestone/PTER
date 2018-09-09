@@ -1,8 +1,21 @@
 <?php
 global $post;
+$question_types = get_the_terms($post, 'question_type');
+$question_type_ids = array_column($question_types, 'term_id');
+$ancestors = array_map(function($term_id){
+	$term = get_term($term_id);
+	return $term->slug;
+}, call_user_func_array('array_merge', array_map(function($term_id){
+	return get_ancestors($term_id, 'question_type');
+}, $question_type_ids)));
+
 if(!has_tag('free-trial') && !in_array($post->post_name, ['pte-reading', 'pte-writing'])
     && !(is_limited_free(get_current_user_id()) && has_tag('limited-free'))) {
-    redirect_pricing_table('view_tips');
+	if (in_array('natti', $ancestors)) {
+		redirect_pricing_table('view_ccl');
+	} else {
+		redirect_pricing_table('view_tips');
+	}
 }
 
 get_header(); the_post(); ?>
