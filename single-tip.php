@@ -11,7 +11,7 @@ $ancestors = array_map(function($term_id){
 
 if(!has_tag('free-trial') && !in_array($post->post_name, ['pte-reading', 'pte-writing'])
     && !(is_limited_free(get_current_user_id()) && has_tag('limited-free'))) {
-	if (in_array('natti', $ancestors)) {
+	if (in_array('naati', $ancestors)) {
 		redirect_pricing_table('view_ccl');
 	} else {
 		redirect_pricing_table('view_tips');
