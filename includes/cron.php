@@ -7,7 +7,7 @@ add_action('after_switch_theme', function () {
 	}
 
 	if (!wp_next_scheduled('bingo_subscription_remind')) {
-		wp_schedule_event(strtotime('today 09:00') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_subscription_remind');
+		wp_schedule_event(strtotime('today 11:00') - get_option('gmt_offset') * HOUR_IN_SECONDS, 'daily', 'bingo_subscription_remind');
 	}
 
 	if (!wp_next_scheduled('bingo_member_scoop')) {
@@ -39,8 +39,8 @@ add_action('bingo_subscription_remind', 'remind_unsubscribed_users');
 
 function remind_unsubscribed_users () {
 
-	// 只在周三发送
-	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== '3') {
+	// 只在周四发送
+	if (date('w', time() + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) !== '4') {
 		return;
 	}
 
