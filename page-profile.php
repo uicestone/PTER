@@ -182,7 +182,7 @@ get_header(); the_post(); ?>
 					<div class="home-skills">
 						<?php
                         $active_services = array();
-                        foreach (array ('tips' => '听力口语技巧', 'exercises' => '听力口语练习') as $service => $service_name):
+                        foreach (array ('tips' => '听力口语技巧', 'exercises' => '听力口语练习', 'ccl' => 'CCL模考') as $service => $service_name):
                             $service_valid_before = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
                             if ($service_valid_before && $service_valid_before >= time() && !is_limited_free($user->ID)): $active_services[] = $service; ?>
                         <div class="add-courses box base-pack additional-pack">
