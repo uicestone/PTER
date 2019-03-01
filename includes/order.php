@@ -94,6 +94,7 @@ function order_paid ($order_no, $gateway = null) {
 
 	if (in_array($service, array('ccl'))) {
 		$user->add_cap('view_ccl');
+		delete_user_meta($user->id, 'limited_free');
 	}
 
 	if (in_array($service, array('full', 'reading'))) {
