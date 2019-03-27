@@ -72,7 +72,7 @@
     <div class="container">
         <h3 class="section-title">技巧</h3>
         <p class="section-description">
-            <?=current_user_can('view_tips') ? '以下是该题型的全部技巧' : '订阅会员后可以学习全部技巧'?>
+            <?=current_user_can('view_tips') ? __('以下是该题型的全部技巧', 'bingo') : __('订阅会员后可以学习全部技巧', 'bingo')?>
         </p><!-- End Section Description -->
     </div>
     <?php if (current_user_can('view_tips')): ?>
@@ -107,7 +107,7 @@
     <div class="container">
         <h3 class="section-title">练习</h3>
         <p class="section-description">
-            <?=current_user_can('view_exercises') ? '从以下入口开始练习' : '订阅会员后可以进行全部练习'?>
+            <?=current_user_can('view_exercises') ? __('从以下入口开始练习', 'bingo') : __('订阅会员后可以进行全部练习', 'bingo')?>
         </p><!-- End Section Description -->
     </div>
     <?php if (current_user_can('view_exercises')): ?>

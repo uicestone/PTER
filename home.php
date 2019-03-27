@@ -94,8 +94,8 @@ get_header(); ?>
             <?=get_the_subtitle($welcome_page)?>
         </p><!-- End Section Description -->
         <p>
-			<a href="<?=site_url()?>/pricing-table/" class="btn subscribe">立即订阅PTE</a>
-			<a href="<?=site_url()?>/pricing-table/?ccl" class="btn subscribe">立即订阅CCL</a>
+			<a href="<?=site_url()?>/pricing-table/" class="btn subscribe"><?=sprintf(__('立即订阅%s', 'bingo'), 'PTE')?></a>
+			<a href="<?=site_url()?>/pricing-table/?ccl" class="btn subscribe"><?=sprintf(__('立即订阅%s', 'bingo'), 'CCL')?></a>
 		</p>
     </div>
     <div class="section-content features-content fadeInDown-animation">
@@ -125,7 +125,7 @@ get_header(); ?>
 <?php $recommended_posts = get_posts(array('post_type' => array('post', 'tip'), 'tag' => 'recommended', 'posts_per_page' => 4, 'orderby' => 'menu_order', 'order' => 'asc')); if ($recommended_posts): ?>
 <section class="full-section instructors-section fancy-shadow">
     <div class="container">
-        <h3 class="section-title">推荐阅读</h3>
+        <h3 class="section-title"><?=__('推荐阅读', 'bingo')?></h3>
         <p class="section-description">
 
         </p><!-- End Section Description -->

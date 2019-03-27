@@ -20,7 +20,7 @@
             <div class="col-md-8">
                 <div class="contact-left">
                     <span class="contact-form-icon"><i class="fa fa-envelope"></i></span>
-                    <h5 class="contact-title ib">联系我们</h5>
+                    <h5 class="contact-title ib"><?=__('联系我们', 'bingo')?></h5>
                     <div class="contact-text">
                         <p>
 							<?=get_post_meta(get_the_ID(), 'contact_form_description', true)?>
@@ -39,7 +39,7 @@
                 <div class="contact-right sidebar">
                     <div class="sidebar-widget contact-info">
                         <span class="widget-icon"><i class="fa fa-book"></i></span>
-                        <h5 class="sidebar-widget-title ib">联络方式</h5>
+                        <h5 class="sidebar-widget-title ib"><?=__('联络方式', 'bingo')?></h5>
                         <div class="info-text">
                             <p>
 								<?=get_post_meta(get_the_ID(), 'contact_description', true)?>
@@ -51,10 +51,10 @@
                                 $facebook = get_post_meta(get_the_ID(), 'facebook', true);
 							    $weibo = get_post_meta(get_the_ID(), 'weibo', true);
                             ?>
-                            <p>咨询：<a href="mailto:<?=$email?>"><?=$email?></a></p>
-                            <p>合作：<a href="mailto:cooperation@bingotraining.com">cooperation@bingotraining.com</a></p>
-                            <?php if ($facebook): ?><p><i class="fa fa-facebook" style="width:2em;text-align:center"></i>：<a href="<?=$facebook?>" target="_blank">@BingoTraining</a></p><?php endif; ?>
-                            <?php if ($weibo): ?><p><i class="fa fa-weibo" style="width:2em;text-align:center"></i>：<a href="<?=$weibo?>">@BingoTraining</a></p><?php endif; ?>
+                            <p><?=__('咨询：', 'bingo')?><a href="mailto:<?=$email?>"><?=$email?></a></p>
+                            <p><?=__('合作：', 'bingo')?><a href="mailto:cooperation@bingotraining.com">cooperation@bingotraining.com</a></p>
+                            <?php if ($facebook): ?><p><i class="fa fa-facebook" style="width:2em;text-align:center"></i>: <a href="<?=$facebook?>" target="_blank">@BingoTraining</a></p><?php endif; ?>
+                            <?php if ($weibo): ?><p><i class="fa fa-weibo" style="width:2em;text-align:center"></i>: <a href="<?=$weibo?>">@BingoTraining</a></p><?php endif; ?>
                         </div><!-- end call info -->
                     </div><!-- end 1st block -->
                 </div><!-- End contact right -->

@@ -2,9 +2,9 @@
 
 <div class="inner-head">
     <div class="container">
-        <h1 class="entry-title">技巧</h1>
+        <h1 class="entry-title"><?=__('技巧', 'bingo')?></h1>
         <p class="description">
-            订阅会员后可以学习全部技巧
+            <?=__('订阅会员后可以学习全部技巧', 'bingo')?>
         </p>
     </div><!-- End container -->
 </div><!-- End Inner Page Head -->

@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 			exit('无法确定你的邀请人，请联系客服稍后绑定邀请人');
 		}
 		if ($invited_by_users[0]->ID === $user->ID) {
-		    exit('不能邀请自己');
+		    exit(__('不能邀请自己', 'bingo'));
         }
 		add_user_meta($user->ID, 'invited_by_user', $invited_by_users[0]->ID);
 	}
@@ -182,7 +182,7 @@ get_header(); the_post(); ?>
 					<div class="home-skills">
 						<?php
                         $active_services = array();
-                        foreach (array ('tips' => '听力口语技巧', 'exercises' => '听力口语练习', 'ccl' => 'CCL模考') as $service => $service_name):
+                        foreach (array ('tips' => __('听力口语技巧', 'bingo'), 'exercises' => __('听力口语练习', 'bingo'), 'ccl' => __('CCL模考', 'bingo')) as $service => $service_name):
                             $service_valid_before = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
                             if ($service_valid_before && $service_valid_before >= time() && !is_limited_free($user->ID)): $active_services[] = $service; ?>
                         <div class="add-courses box base-pack additional-pack">
@@ -203,7 +203,7 @@ get_header(); the_post(); ?>
 					</div>
 					<div class="row">
 						<?php
-                        foreach (array ('reading' => '阅读拓展包', 'writing' => '写作拓展包') as $service => $service_name):
+                        foreach (array ('reading' => __('阅读拓展包', 'bingo'), 'writing' => __('写作拓展包', 'bingo')) as $service => $service_name):
                             $service_valid_before = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
     						$service_inactivated = get_user_meta($user->ID, 'service_' . $service . '_inactivated', true);
 						    if ($service_valid_before >= time() || $service_inactivated > 0): $active_services[] = $service; ?>

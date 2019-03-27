@@ -143,7 +143,7 @@ else:
 		// start exam and create a paper
 		$paper_id = wp_insert_post(array(
 			'post_type' => 'paper',
-			'post_title' => $user->display_name . '的' . get_the_title() . '试卷',
+			'post_title' => $user->display_name . __('的', 'bingo') . get_the_title() . __('试卷', 'bingo'),
 			'post_status' => 'private'
 		));
 		add_post_meta($paper_id, 'exam_id', get_the_ID());
@@ -188,8 +188,8 @@ get_header(); the_post(); ?>
         </p>
         <div class="breadcrumb">
             <ul class="clearfix">
-                <li class="ib"><a href="<?=site_url()?>">首页</a></li>
-                <li class="ib current-page"><a href="">考试</a></li>
+                <li class="ib"><a href="<?=site_url()?>"><?=__('首页', 'bingo')?></a></li>
+                <li class="ib current-page"><a href=""><?=__('考试', 'bingo')?></a></li>
             </ul>
         </div>
     </div><!-- End container -->
@@ -217,7 +217,7 @@ get_header(); the_post(); ?>
 		<div class="row comment-form answer-form entry">
 			<div class="addcomment-title">
 				<span class="icon"><i class="fa fa-comments-o"></i></span>
-				<span class="text">试音</span>
+				<span class="text"><?=__('试音', 'bingo')?></span>
 			</div><!-- End Title -->
 			<form method="post" action="/" id="answer-form">
 				<div class="row">
@@ -255,17 +255,17 @@ get_header(); the_post(); ?>
 		</div><!-- End comment form -->
 		<div class="row">
 			<form method="post">
-				<button type="submit" name="start" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;">开始考试</button>
+				<button type="submit" name="start" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;"><?=__('开始考试', 'bingo')?></button>
 			</form>
 		</div>
 		<?php else: ?>
 		<div>
 			<form method="post" class="row">
 				<div class="col-sm-6" style="padding-left:0;padding-right:0.5vw">
-					<button type="submit" name="review" class=" btn btn-block primary-btn orange-btn" style="cursor:pointer;">检查答案</button>
+					<button type="submit" name="review" class=" btn btn-block primary-btn orange-btn" style="cursor:pointer;"><?=__('检查答案', 'bingo')?></button>
 				</div>
 				<div class="col-sm-6" style="padding-right:0;padding-left:0.5vw">
-					<button type="submit" name="restart" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;">删除答案，重新考试</button>
+					<button type="submit" name="restart" class="btn btn-block primary-btn orange-btn" style="cursor:pointer;"><?=__('删除答案，重新考试', 'bingo')?></button>
 				</div>
 			</form>
 		</div>

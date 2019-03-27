@@ -304,7 +304,7 @@ get_header(); ?>
 							<form method="post">
 								<button type="submit" disabled class="btn primary-btn" style="border:none;cursor:progress">
 									<i class="fa fa-clock-o"></i>
-									<span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : '已超时'?></span>
+									<span class="section-timer"><?=$section_time_left > 0 ? date('i:s', $section_time_left) : __('已超时', 'bingo')?></span>
 									<span style="font-size:10px"><?=ucfirst($section)?></span>
 								</button>
 							</form>
@@ -588,7 +588,7 @@ get_header(); ?>
 					$uri = $_GET['random'] ? remove_query_arg(array('random'), $wp->request . '/') : add_query_arg(array('random' => 'yes'), $wp->request . '/');
 					$uri = $_GET['tag'] ? add_query_arg(array('tag' => $_GET['tag']), $uri) : $uri;
 					?>
-                    <a class="btn primary-btn" href="<?=home_url($uri);?>">切换到<?=$_GET['random'] ? '顺序练习' : '随机练习'?></a>
+                    <a class="btn primary-btn" href="<?=home_url($uri);?>">切换到<?=$_GET['random'] ? __('顺序练习', 'bingo') : __('随机练习', 'bingo')?></a>
 					<?php endif; ?>
                     <?php if ($tips = get_post_meta($question_type_desc->ID, 'tips', true)): ?>
                     <div class="sidebar-widget">

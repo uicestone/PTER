@@ -9,7 +9,7 @@ if(isset($_POST['submit'])){
     }
 
     if ($_POST['agree'] !== 'yes') {
-		exit('请同意用户协议');
+		exit(__('请同意用户协议', 'bingo'));
     }
 
 	$user_id = wp_insert_user(array(

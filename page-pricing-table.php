@@ -3,10 +3,10 @@
 if ($invitation_code = $_POST['invitation_code']) {
 	$invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
 	if (count($invited_by_users) !== 1) {
-		exit('无法确定你的邀请人，请联系客服稍后绑定邀请人');
+		exit(__('无法确定你的邀请人，请联系客服稍后绑定邀请人', 'bingo'));
 	}
 	if ($invited_by_users[0]->ID === get_current_user_id()) {
-		exit('不能邀请自己');
+		exit(__('不能邀请自己', 'bingo'));
 	}
 	add_user_meta(get_current_user_id(), 'invited_by_user', $invited_by_users[0]->ID);
 }
@@ -17,21 +17,21 @@ if ($promotion_code_input = $_GET['promotion_code']) {
 	$promotion_code = get_posts(array('post_type' => 'promotion_code', 'name' => $promotion_code_input, 'post_status' => 'private'))[0];
 
 	if (!$promotion_code) {
-		exit('错误的优惠码');
+		exit(__('错误的优惠码', 'bingo'));
 	}
 
 	if (!get_post_meta($promotion_code->ID, 'multi_time', true)) {
 		$bind_to_user = get_post_meta($promotion_code->ID, 'bind_to_user', true);
 
 		if ($bind_to_user) {
-			exit('优惠码已经被绑定');
+			exit(__('优惠码已经被绑定', 'bingo'));
 		}
     }
 
 	$expires_at = get_post_meta($promotion_code->ID, 'expires_at', true);
 
 	if ($expires_at < time()) {
-		exit('优惠码已过期');
+		exit(__('优惠码已过期', 'bingo'));
 	}
 
 	$discount = get_post_meta($promotion_code->ID, 'discount', true);
@@ -56,7 +56,7 @@ get_header(); the_post() ?>
 		</p>
 		<div class="breadcrumb">
 			<ul class="clearfix">
-				<li class="ib"><a href="<?=site_url()?>">首页</a></li>
+				<li class="ib"><a href="<?=site_url()?>"><?=__(首页, 'bingo')?></a></li>
 				<li class="ib current-page"><a href=""><?php the_title(); ?></a></li>
 			</ul>
 		</div>
@@ -71,8 +71,8 @@ get_header(); the_post() ?>
 			<?php if (!$invited_by_user): ?>
             <div class="col-sm-4">
                 <form method="post" class="invitation_code-form">
-                    <input type="text" id="invitation_code-input" name="invitation_code" class="invitation_code-input" placeholder="输入邀请码，获得优惠价格">
-                    <input type="submit" id="invitation_code-submit" name="invitation_code_submit" class="invitation_code-submit ln-tr" value="保存">
+                    <input type="text" id="invitation_code-input" name="invitation_code" class="invitation_code-input" placeholder="<?=__('输入邀请码，获得优惠价格', 'bingo')?>">
+                    <input type="submit" id="invitation_code-submit" name="invitation_code_submit" class="invitation_code-submit ln-tr" value="<?=__('保存', 'bingo')?>">
                 </form>
             </div>
 			<?php endif; ?>
@@ -82,13 +82,13 @@ get_header(); the_post() ?>
 					<?php if ($_GET): foreach ($_GET as $key => $value): ?>
 					<input type="hidden" name="<?=$key?>" value="<?=$value?>">
 					<?php endforeach; endif; ?>
-                    <input type="text" id="promotion_code-input" name="promotion_code" value="<?=$_GET['promotion_code']?>" class="invitation_code-input" placeholder="输入优惠码，获得优惠价格">
-                    <input type="submit" id="promotion_code-submit" class="invitation_code-submit ln-tr" value="使用">
+                    <input type="text" id="promotion_code-input" name="promotion_code" value="<?=$_GET['promotion_code']?>" class="invitation_code-input" placeholder="<?=__('输入优惠码，获得优惠价格', 'bingo')?>">
+                    <input type="submit" id="promotion_code-submit" class="invitation_code-submit ln-tr" value="<?=__('使用', 'bingo')?>">
                 </form>
             </div>
 			<?php 	if (!isset($_GET['ccl'])): ?>
-            <a href="<?=site_url('exercise/repeat-sentence-%E7%BB%83%E4%B9%A01/?tag=free-trial')?>" class="limit-free ln-tr">限时免费课程试用</a>
-			<a href="<?=site_url('pricing-table/?ccl')?>" class="limit-free ln-tr" style="margin-right:1em">订阅CCL模考</a>
+            <a href="<?=site_url('exercise/repeat-sentence-%E7%BB%83%E4%B9%A01/?tag=free-trial')?>" class="limit-free ln-tr"><?=__('限时免费课程试用', 'bingo')?></a>
+			<a href="<?=site_url('pricing-table/?ccl')?>" class="limit-free ln-tr" style="margin-right:1em"><?=__('订阅', 'bingo')?><?=__('CCL模考', 'bingo')?></a>
 			<?php 	endif; ?>
             <?php endif; ?>
         </div><!-- End main content row -->
@@ -99,7 +99,7 @@ get_header(); the_post() ?>
 				<div class="table">
 
 					<div class="table-header grad-btn">
-						<p class="text">CCL 全真模拟练习<br>（1个月）</p><!-- end text -->
+						<p class="text">CCL <?=__('全真模拟练习', 'bingo')?><br>（1<?=__('个月', 'bingo')?>）</p><!-- end text -->
 						<p class="price">
 							<?php $price = get_post_meta(get_the_ID(), 'price_ccl', true); if ($discount): ?>
 								<del><?=$price?></del>
@@ -107,25 +107,25 @@ get_header(); the_post() ?>
 							<?php else: ?>
 								<span class="price-amount"><?=$price?></span>
 							<?php endif; ?>
-							$ / 30天
+							$ / 30<?=__('天', 'bingo')?>
 						</p><!-- end price -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
 						<ul class="features">
-							<li>CCL全真模考题+答案</li>
-							<li>CCL考试题型介绍</li>
-							<li>CCL考试核心评分解析</li>
-							<li>CCL练习答疑</li>
-							<li>CCL精选必备词汇</li>
-							<li>CCL背景知识</li>
-							<li>CCL听力练习</li>
+							<li>CCL<?=__('全真模考题', 'bingo')?>+<?=__('答案', 'bingo')?></li>
+							<li>CCL<?=__('考试题型介绍', 'bingo')?></li>
+							<li>CCL<?=__('考试核心评分解析', 'bingo')?></li>
+							<li>CCL<?=__('练习答疑', 'bingo')?></li>
+							<li>CCL<?=__('精选必备词汇', 'bingo')?></li>
+							<li>CCL<?=__('背景知识', 'bingo')?></li>
+							<li>CCL<?=__('听力练习', 'bingo')?></li>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#payment" data-service="ccl" class="grad-btn ln-tr show-payment-method">订阅</a>
+							<a href="#payment" data-service="ccl" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?></a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
@@ -135,7 +135,7 @@ get_header(); the_post() ?>
 				<div class="table">
 
 					<div class="table-header grad-btn">
-						<p class="text">CCL 全真模拟练习<br>（3个月）</p><!-- end text -->
+						<p class="text">CCL <?=__('全真模拟练习', 'bingo')?><br>（3<?=__('个月', 'bingo')?>）</p><!-- end text -->
 						<p class="price">
 							<?php $price = get_post_meta(get_the_ID(), 'price_ccl_3', true); if ($discount): ?>
 								<del><?=$price?></del>
@@ -143,25 +143,25 @@ get_header(); the_post() ?>
 							<?php else: ?>
 								<span class="price-amount"><?=$price?></span>
 							<?php endif; ?>
-							$ / 90天
+							$ / 90<?=__('天', 'bingo')?>
 						</p><!-- end price -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
 						<ul class="features">
-							<li>CCL全真模考题+答案</li>
-							<li>CCL考试题型介绍</li>
-							<li>CCL考试核心评分解析</li>
-							<li>CCL练习答疑</li>
-							<li>CCL精选必备词汇</li>
-							<li>CCL背景知识</li>
-							<li>CCL听力练习</li>
+							<li>CCL<?=__('全真模考题', 'bingo')?>+<?=__('答案', 'bingo')?></li>
+							<li>CCL<?=__('考试题型介绍', 'bingo')?></li>
+							<li>CCL<?=__('考试核心评分解析', 'bingo')?></li>
+							<li>CCL<?=__('练习答疑', 'bingo')?></li>
+							<li>CCL<?=__('精选必备词汇', 'bingo')?></li>
+							<li>CCL<?=__('背景知识', 'bingo')?></li>
+							<li>CCL<?=__('听力练习', 'bingo')?></li>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
 					<div class="table-footer">
 						<div class="order-btn clearfix">
-							<a href="#payment" data-service="ccl" data-amount="3" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
+							<a href="#payment" data-service="ccl" data-amount="3" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?><?=__('（推荐）', 'bingo')?></a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
@@ -171,7 +171,7 @@ get_header(); the_post() ?>
 				<div class="table">
 
 					<div class="table-header grad-btn">
-						<p class="text">CCL 全真模拟练习<br>（2个月）</p><!-- end text -->
+						<p class="text">CCL <?=__('全真模拟练习', 'bingo')?><br>（2<?=__('个月', 'bingo')?>）</p><!-- end text -->
 						<p class="price">
 							<?php $price = get_post_meta(get_the_ID(), 'price_ccl_2', true); if ($discount): ?>
 								<del><?=$price?></del>
@@ -179,25 +179,25 @@ get_header(); the_post() ?>
 							<?php else: ?>
 								<span class="price-amount"><?=$price?></span>
 							<?php endif; ?>
-							$ / 60天
+							$ / 60<?=__('天', 'bingo')?>
 						</p><!-- end price -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
 						<ul class="features">
-							<li>CCL全真模考题+答案</li>
-							<li>CCL考试题型介绍</li>
-							<li>CCL考试核心评分解析</li>
-							<li>CCL练习答疑</li>
-							<li>CCL精选必备词汇</li>
-							<li>CCL背景知识</li>
-							<li>CCL听力练习</li>
+							<li>CCL<?=__('全真模考题', 'bingo')?>+<?=__('答案', 'bingo')?></li>
+							<li>CCL<?=__('考试题型介绍', 'bingo')?></li>
+							<li>CCL<?=__('考试核心评分解析', 'bingo')?></li>
+							<li>CCL<?=__('练习答疑', 'bingo')?></li>
+							<li>CCL<?=__('精选必备词汇', 'bingo')?></li>
+							<li>CCL<?=__('背景知识', 'bingo')?></li>
+							<li>CCL<?=__('听力练习', 'bingo')?></li>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
 					<div class="table-footer">
 						<div class="order-btn clearfix">
-							<a href="#payment" data-service="ccl" data-amount="2" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
+							<a href="#payment" data-service="ccl" data-amount="2" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?><?=__('（推荐）', 'bingo')?></a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
@@ -210,7 +210,7 @@ get_header(); the_post() ?>
                 <div class="table">
 
                     <div class="table-header grad-btn">
-                        <p class="text">听说读写四项全能（1个月）</p><!-- end text -->
+                        <p class="text"><?=__('听说读写四项全能', 'bingo')?>（1<?=__('个月', 'bingo')?>）</p><!-- end text -->
                         <p class="price">
 							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if ($discount): ?>
                                 <del><?=$price?></del>
@@ -218,21 +218,21 @@ get_header(); the_post() ?>
 							<?php else: ?>
                                 <span class="price-amount"><?=$price?></span>
 							<?php endif; ?>
-                            $ / 30天
+                            $ / 30<?=__('天', 'bingo')?>
                         </p><!-- end price -->
                     </div><!-- end table header -->
 
                     <div class="table-body">
                         <ul class="features">
-							<li>新增 Mock Test (2次)</li>
-                            <li>宾果23天课程包</li>
-                            <li>全站听力口语技巧，模板讲解</li>
-                            <li>全站写作阅读技巧，模板讲解</li>
-                            <li>听说读写海量练习题+满分答案</li>
-                            <li>PTE听说读写备考建议</li>
-                            <li>PTE题型详解+评分细则</li>
-                            <li>参考笔记+答题要点</li>
-                            <li>口语6, 7 ,8 分考生真实答案</li>
+							<li><?=__('新增', 'bingo')?> Mock Test (2<?=__('次', 'bingo')?>)</li>
+                            <li><?=__('宾果', 'bingo')?>23<?=__('天课程包', 'bingo')?></li>
+                            <li><?=__('全站听力口语技巧，模板讲解', 'bingo')?></li>
+                            <li><?=__('全站写作阅读技巧，模板讲解', 'bingo')?></li>
+                            <li><?=__('听说读写海量练习题', 'bingo')?>+<?=__('满分答案', 'bingo')?></li>
+                            <li><?=__('PTE听说读写备考建议', 'bingo')?></li>
+                            <li><?=__('PTE题型详解', 'bingo')?>+<?=__('评分细则', 'bingo')?></li>
+                            <li><?=__('参考笔记')?>+<?=__('答题要点', 'bingo');?></li>
+                            <li><?=__('口语 6, 7 ,8 分考生真实答案', 'bingo')?></li>
                         </ul><!-- end features list -->
                     </div><!-- end table body -->
 
@@ -249,7 +249,7 @@ get_header(); the_post() ?>
 				<div class="table">
 
 					<div class="table-header grad-btn">
-						<p class="text">听说读写四项全能（3个月）</p><!-- end text -->
+						<p class="text"><?=__('听说读写四项全能', 'bingo')?>（3<?=__('个月', 'bingo')?>）</p><!-- end text -->
 						<p class="price">
 							<?php $price = get_post_meta(get_the_ID(), 'price_full_3', true); if ($discount): ?>
 								<del><?=$price?></del>
@@ -263,21 +263,21 @@ get_header(); the_post() ?>
 
 					<div class="table-body">
 						<ul class="features">
-							<li>新增 Mock Test (2次)</li>
-							<li>宾果23天课程包</li>
-							<li>全站听力口语技巧，模板讲解</li>
-							<li>全站写作阅读技巧，模板讲解</li>
-							<li>听说读写海量练习题+满分答案</li>
-							<li>PTE听说读写备考建议</li>
-							<li>PTE题型详解+评分细则</li>
-							<li>参考笔记+答题要点</li>
-							<li>口语6, 7 ,8 分考生真实答案</li>
+							<li><?=__('新增', 'bingo')?> Mock Test (2<?=__('次', 'bingo')?>)</li>
+							<li><?=__('宾果', 'bingo')?>23<?=__('天课程包', 'bingo')?></li>
+							<li><?=__('全站听力口语技巧，模板讲解', 'bingo')?></li>
+							<li><?=__('全站写作阅读技巧，模板讲解', 'bingo')?></li>
+							<li><?=__('听说读写海量练习题', 'bingo')?>+<?=__('满分答案', 'bingo')?></li>
+							<li>PTE<?=__('听说读写备考建议', 'bingo')?></li>
+							<li>PTE<?=__('题型详解', 'bingo')?>+<?=__('评分细则', 'bingo')?></li>
+							<li><?=__('参考笔记', 'bingo')?>+<?=__('答题要点', 'bingo')?></li>
+							<li><?=__('口语 6, 7 ,8 分考生真实答案', 'bingo')?></li>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
 					<div class="table-footer">
 						<div class="order-btn clearfix">
-							<a href="#payment" data-service="full" data-amount="3" class="grad-btn ln-tr show-payment-method">订阅（推荐）</a>
+							<a href="#payment" data-service="full" data-amount="3" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?><?=__('（推荐）', 'bingo')?></a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
