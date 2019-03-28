@@ -29,11 +29,11 @@ get_header(); the_post(); ?>
         <div class="breadcrumb">
 			<?php $question_type = wp_get_object_terms(get_the_ID(), 'question_type')[0]; ?>
             <ul class="clearfix">
-                <li class="ib"><a href="<?=site_url()?>">首页</a></li>
+                <li class="ib"><a href="<?=site_url()?>"><?=__('首页', 'bingo')?></a></li>
                 <?php if ($question_type): ?>
                 <li class="ib"><a href="<?=site_url()?>/question_type_desc/<?=$question_type->slug?>"><?=$question_type->name?></a></li>
                 <?php endif; ?>
-                <li class="ib current-page"><a href="">技巧</a></li>
+                <li class="ib current-page"><a href=""><?=__('技巧', 'bingo')?></a></li>
             </ul>
         </div>
     </div><!-- End container -->
@@ -67,8 +67,8 @@ get_header(); the_post(); ?>
 <div class="features-section">
     <div class="container">
         <blockquote>
-            <p>收费视频未显示，要观看，请在下方订阅包含视频课程的学习包</p>
-            <p>若您已经购买，请前往<strong><a href="<?=site_url()?>/profile/">个人中心</a></strong>激活该视频，并在24小时内学习完毕</p>
+            <p><?=__('收费视频未显示，要观看，请在下方订阅包含视频课程的学习包', 'bingo')?></p>
+            <p><?=__('若您已经购买，请前往', 'bingo')?><strong><a href="<?=site_url()?>/profile/"><?=__('个人中心', 'bingo')?></a></strong><?=__('激活该视频，并在24小时内学习完毕', 'bingo')?></p>
         </blockquote>
     </div>
 </div>
@@ -78,7 +78,7 @@ get_header(); the_post(); ?>
         <p class="section-description">
             <?=get_the_subtitle($welcome_page)?>
         </p><!-- End Section Description -->
-        <p><a href="<?=site_url()?>/pricing-table/" class="btn subscribe">立即订阅</a></p>
+        <p><a href="<?=site_url()?>/pricing-table/" class="btn subscribe"><?=__('立即订阅', 'bingo')?></a></p>
     </div>
     <div class="section-content features-content fadeInDown-animation">
         <div class="container">

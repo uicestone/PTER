@@ -130,9 +130,9 @@
                     <a href="<?=get_the_permalink($ordered_exercise)?>">
                         <blockquote class="blockquote-4">
                             <div class="story">
-                                <h1>顺序练习</h1>
+                                <h1><?=__('顺序练习', 'bingo')?></h1>
                             </div><!-- end story -->
-                            <div class="name">按顺序浏览全部练习题</div><!-- end name -->
+                            <div class="name"><?=__('按顺序浏览全部练习题', 'bingo')?></div><!-- end name -->
                         </blockquote>
                     </a>
 					<?php endif; ?>
@@ -153,9 +153,9 @@
                     <a href="<?=get_the_permalink($random_exercise)?>?random=yes">
                         <blockquote class="blockquote-4">
                             <div class="story">
-                                <h1>随机练习</h1>
+                                <h1><?=__('随机练习', 'bingo')?></h1>
                             </div><!-- end story -->
-                            <div class="name">每次随机挑选一道题进行练习</div><!-- end name -->
+                            <div class="name"><?=__('每次随机挑选一道题进行练习', 'bingo')?></div><!-- end name -->
                         </blockquote>
                     </a>
 					<?php endif; ?>

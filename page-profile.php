@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 	if ($_POST['invitation_code']) {
 		$invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
 		if (count($invited_by_users) !== 1) {
-			exit('无法确定你的邀请人，请联系客服稍后绑定邀请人');
+			exit(__('无法确定你的邀请人，请联系客服稍后绑定邀请人', 'bingo'));
 		}
 		if ($invited_by_users[0]->ID === $user->ID) {
 		    exit(__('不能邀请自己', 'bingo'));
@@ -39,11 +39,11 @@ foreach (array('reading', 'writing') as $service) {
 		$service_valid_before =  get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
 
 		if ($service_valid_before >= time()) {
-			exit('已激活，不要重复激活');
+			exit(__('已激活，不要重复激活', 'bingo'));
 		}
 
 		if ($service_inactivated < 0) {
-			exit('激活失败，没有可激活的额度');
+			exit(__('激活失败，没有可激活的额度', 'bingo'));
 		}
 
 		update_user_meta($user->ID, 'service_' . $service . '_inactivated', --$service_inactivated);
@@ -249,7 +249,7 @@ jQuery(function($) {
     new Clipboard('.copy-invitation-link');
     $('.copy-invitation-link').click(function (e) {
         e.preventDefault();
-        alert('邀请注册链接已复制，发送给好友邀请他们注册吧！');
+        alert('<?=__('邀请注册链接已复制，发送给好友邀请他们注册吧！', 'bingo')?>');
     });
 });
 </script>

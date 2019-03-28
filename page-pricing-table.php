@@ -288,7 +288,7 @@ get_header(); the_post() ?>
 				<div class="table">
 
 					<div class="table-header grad-btn">
-						<p class="text">听说读写四项全能（2个月）</p><!-- end text -->
+						<p class="text"><?=__('听说读写四项全能', 'bingo')?>（2<?=__('个月', 'bingo')?>）</p><!-- end text -->
 						<p class="price">
 							<?php $price = get_post_meta(get_the_ID(), 'price_full_2', true); if ($discount): ?>
 								<del><?=$price?></del>
@@ -296,21 +296,21 @@ get_header(); the_post() ?>
 							<?php else: ?>
 								<span class="price-amount"><?=$price?></span>
 							<?php endif; ?>
-							$ / 60天
+							$ / 60<?=__('天', 'bingo')?>
 						</p><!-- end price -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
 						<ul class="features">
-							<li>新增 Mock Test (2次)</li>
-							<li>宾果23天课程包</li>
-							<li>全站听力口语技巧，模板讲解</li>
-							<li>全站写作阅读技巧，模板讲解</li>
-							<li>听说读写海量练习题+满分答案</li>
-							<li>PTE听说读写备考建议</li>
-							<li>PTE题型详解+评分细则</li>
-							<li>参考笔记+答题要点</li>
-							<li>口语6, 7 ,8 分考生真实答案</li>
+							<li><?=__('新增', 'bingo')?> Mock Test (2<?=__('次', 'bingo')?>)</li>
+							<li><?=__('宾果', 'bingo')?>23<?=__('天课程包', 'bingo')?></li>
+							<li><?=__('全站听力口语技巧', 'bingo')?>，<?=__('模板讲解', 'bingo')?></li>
+							<li><?=__('全站写作阅读技巧', 'bingo')?>，<?=__('模板讲解', 'bingo')?></li>
+							<li><?=__('听说读写海量练习题', 'bingo')?>+<?=__('满分答案', 'bingo')?></li>
+							<li>PTE<?=__('听说读写备考建议', 'bingo')?></li>
+							<li>PTE<?=__('题型详解', 'bingo')?>+<?=__('评分细则', 'bingo')?></li>
+							<li><?=__('参考笔记', 'bingo')?>+答题要点</li>
+							<li><?=__('口语 6, 7 ,8 分考生真实答案', 'bingo')?></li>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
@@ -335,8 +335,8 @@ get_header(); the_post() ?>
 
         <div class="mobile-payment-notice" style="display:none;">
             <blockquote>
-            <p>手机支付暂未全部开通，您也可以电脑版进行支付</p>
-            <p>记住网址http://www.bingotraining.com 在大屏上使用以获得更好的体验</p>
+            <p><?=__('手机支付暂未全部开通，您也可以电脑版进行支付', 'bingo')?></p>
+            <p><?=__('记住网址', 'bingo')?>http://www.bingotraining.com <?=__('在大屏上使用以获得更好的体验', 'bingo')?></p>
             </blockquote>
         </div>
 

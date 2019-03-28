@@ -134,12 +134,12 @@ get_header(); ?>
 						<div class="comment-form answer-form entry">
 							<div class="addcomment-title">
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
-								<span class="text">你的回答</span>
+								<span class="text"><?=__('你的回答', 'bingo')?></span>
                                 <?php if (in_array($question_type->slug, array('summarise-spoken-text', 'write-essay', 'swt'))): ?>
-                                <span class="pull-right word-count">词数：<span class="count">0</span></span>
+                                <span class="pull-right word-count"><?=__('词数：', 'bingo')?><span class="count">0</span></span>
                                 <?php endif; ?>
 								<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening', 'ccl-intensive-listening'))): ?>
-                                    <span class="pull-right word-diff-count">正确率：<span class="diff-percentage">-</span></span>
+                                    <span class="pull-right word-diff-count"><?=__('正确率：', 'bingo')?><span class="diff-percentage">-</span></span>
 								<?php endif; ?>
 							</div><!-- End Title -->
 							<form method="post" action="/" id="answer-form">
@@ -147,14 +147,14 @@ get_header(); ?>
 									<div class="col-md-12">
 										<div class="input">
 											<?php if (isset($exam) && $answer): ?>
-											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" disabled><?=$answer[0]?></textarea>
+											<textarea name="answer-area" id="answer-area" placeholder="<?=__('内容', 'bingo')?>" spellcheck="false" disabled><?=$answer[0]?></textarea>
 											<?php else: ?>
-											<textarea name="answer-area" id="answer-area" placeholder="内容" spellcheck="false" class="answer-input"></textarea>
+											<textarea name="answer-area" id="answer-area" placeholder="<?=__('内容', 'bingo')?>" spellcheck="false" class="answer-input"></textarea>
 											<?php endif; ?>
                                             <div class="diff-check-result content clearfix" style="white-space:pre-line;display:none"></div>
 											<?php if (in_array($question_type->slug, array('write-from-dictation', 'intensive-listening', 'ccl-intensive-listening'))): ?>
-                                            <input type="submit" id="comment-submit" class="diff-check submit-input grad-btn ln-tr" value="检查" disabled="disabled">
-                                            <input type="submit" id="comment-submit" class="resume-input submit-input grad-btn ln-tr" value="返回" style="display:none">
+                                            <input type="submit" id="comment-submit" class="diff-check submit-input grad-btn ln-tr" value="<?=__('检查', 'bingo')?>" disabled="disabled">
+                                            <input type="submit" id="comment-submit" class="resume-input submit-input grad-btn ln-tr" value="<?=__('返回', 'bingo')?>" style="display:none">
 											<?php endif; ?>
 										</div>
 									</div>
@@ -167,12 +167,12 @@ get_header(); ?>
 						<div class="comment-form answer-form entry">
 							<div class="addcomment-title">
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
-								<span class="text">你的回答</span>
+								<span class="text"><?=__('你的回答', 'bingo')?></span>
 							</div><!-- End Title -->
 							<?php if (isset($exam) && $answer): ?>
 							<audio controls src="<?=$answer[0]?>" style="width:100%;"></audio>
 							<?php 	if (current_user_can('edit_posts')): ?>
-							<a href="<?=$answer[0]?>" target="_blank">下载</a>
+							<a href="<?=$answer[0]?>" target="_blank"><?=__('下载', 'bingo')?></a>
 							<?php 	endif; ?>
 							<?php else: ?>
 							<form method="post" action="/" id="answer-form">
@@ -217,7 +217,7 @@ get_header(); ?>
 							<div class="comment-form answer-form entry">
 								<div class="addcomment-title">
 									<span class="icon"><i class="fa fa-comments-o"></i></span>
-									<span class="text">你的选择</span>
+									<span class="text"><?=__('你的选择', 'bingo')?></span>
 								</div><!-- End Title -->
 								<form method="post" action="/" id="answer-form">
 									<div class="input content">
@@ -243,8 +243,8 @@ get_header(); ?>
                         <div class="comment-form comments-list entry answer">
                             <div class="addcomment-title" style="margin-bottom:20px">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
-                                <span class="text">参考答案</span>
-                                <a href="#" class="toggle grad-btn ln-tr pull-right<?=in_array($question_type->slug, array('intensive-listening', 'ccl-intensive-listening')) ? ' disabled disable-on-high-diff' : ''?>">显示</a>
+                                <span class="text"><?=__('参考答案', 'bingo')?></span>
+                                <a href="#" class="toggle grad-btn ln-tr pull-right<?=in_array($question_type->slug, array('intensive-listening', 'ccl-intensive-listening')) ? ' disabled disable-on-high-diff' : ''?>"><?=__('显示', 'bingo')?></a>
                             </div><!-- End Title -->
                             <div class="row" style="margin-top:20px">
                                 <div class="col-md-12">
@@ -260,14 +260,14 @@ get_header(); ?>
                         <div class="comment-form">
                             <div class="addcomment-title">
                                 <span class="icon"><i class="fa fa-comments-o"></i></span>
-                                <span class="text">留下你的提问</span>
+                                <span class="text"><?=__('留下你的提问', 'bingo')?></span>
                             </div><!-- End Title -->
                             <form method="post" id="comment-form">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="input">
                                             <textarea name="comment" id="comment-area"></textarea>
-                                            <input type="submit" id="comment-submit" class="submit-input grad-btn ln-tr" value="提交审核">
+                                            <input type="submit" id="comment-submit" class="submit-input grad-btn ln-tr" value="<?=__('提交审核', 'bingo')?>">
                                         </div>
                                     </div>
                                 </div>
@@ -282,17 +282,17 @@ get_header(); ?>
                     <?php if (isset($random_exercise)): ?>
 					<div class="row">
 						<div class="col-md-4" style="padding-right:5px">
-							<a href="<?=get_the_permalink($random_exercise) . '?random=yes' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 换一题</a>
+							<a href="<?=get_the_permalink($random_exercise) . '?random=yes' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> <?=__('换一题', 'bingo')?></a>
 						</div>
 						<div class="col-md-4" style="padding-left:5px;padding-right:5px">
-							<a href="<?=get_the_permalink($random_exercise) . '?random=yes&marked=no' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> 没做过的</a>
+							<a href="<?=get_the_permalink($random_exercise) . '?random=yes&marked=no' . ($_GET['tag'] ? '&tag=' . $_GET['tag'] : '')?>" class="btn primary-btn"><i class="fa fa-random"></i> <?=__('没做过的', 'bingo')?></a>
 						</div>
 						<div class="col-md-4" style="padding-left:5px">
 							<form method="post">
 								<?php if ($current_exercise_marked): ?>
-								<button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
+								<button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> <?=__('已学', 'bingo')?></button>
 								<?php else: ?>
-								<button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> 已学</button>
+								<button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> <?=__('已学', 'bingo')?></button>
 								<?php endif; ?>
 							</form>
 						</div>
@@ -312,18 +312,18 @@ get_header(); ?>
 						<div class="col-md-6" style="padding-right:15px;padding-left:5px;<?=$section === 'break' || $section_time_left < 0 || $answer ? 'display:none;':''?>">
 							<button type="submit" class="btn primary-btn submit-answer">
 								<i class="fa fa-hand-paper-o"></i>
-								<span>提交本题</span>
+								<span><?=__('提交本题', 'bingo')?></span>
 							</button>
 						</div>
 						<div class="col-md-6 next" style="padding-right:15px;padding-left:5px;<?=$section === 'break' || $section_time_left < 0 || $answer ? '': 'display:none;'?>">
 							<form method="post">
 								<button type="submit" name="submit" class="btn primary-btn">
 									<?php if (!$is_last_exercise_of_section && $section_time_left >= 0): ?>
-									<span>下一题 &raquo;</span>
+									<span><?=__('下一题', 'bingo')?> &raquo;</span>
 									<?php elseif(!$is_last_section_of_exam): ?>
-									<span>下一部分 &raquo;</span>
+									<span><?=__('下一部分', 'bingo')?> &raquo;</span>
 									<?php else: ?>
-									<span>结束考试 &raquo;</span>
+									<span><?=__('结束考试', 'bingo')?> &raquo;</span>
 									<?php endif; ?>
 								</button>
 							</form>
@@ -331,18 +331,18 @@ get_header(); ?>
 						<?php else: ?>
 						<div class="col-md-6" style="padding-left:15px;padding-right:5px">
 							<?php if (isset($previous_exercise_url)): ?>
-							<a class="btn primary-btn next-exercise pull-right" href="<?=$previous_exercise_url?>" title="<?=get_the_title($next_exercise)?>">&laquo; 上一题</a>
+							<a class="btn primary-btn next-exercise pull-right" href="<?=$previous_exercise_url?>" title="<?=get_the_title($next_exercise)?>">&laquo; <?=__('上一题', 'bingo')?></a>
 							<?php elseif (isset($previous_section_url)): ?>
-							<a class="btn primary-btn next-section pull-right" href="<?=$previous_section_url?>">&laquo; 上一部分</a>
+							<a class="btn primary-btn next-section pull-right" href="<?=$previous_section_url?>">&laquo; <?=__('上一部分', 'bingo')?></a>
 							<?php endif; ?>
 						</div>
 						<div class="col-md-6 next" style="padding-right:15px;padding-left:5px">
 							<?php if (isset($next_exercise_url)): ?>
-							<a class="btn primary-btn next-exercise pull-right" href="<?=$next_exercise_url?>">下一题 &raquo;</a>
+							<a class="btn primary-btn next-exercise pull-right" href="<?=$next_exercise_url?>"><?=__('下一题', 'bingo')?> &raquo;</a>
 							<?php elseif (isset($next_section_url)): ?>
-							<a class="btn primary-btn next-section pull-right" href="<?=$next_section_url?>">下一部分 &raquo;</a>
+							<a class="btn primary-btn next-section pull-right" href="<?=$next_section_url?>"><?=__('下一部分', 'bingo')?> &raquo;</a>
 							<?php elseif (isset($return_url)): ?>
-							<a class="btn primary-btn next-section pull-right" href="<?=$return_url?>">返回 &raquo;</a>
+							<a class="btn primary-btn next-section pull-right" href="<?=$return_url?>"><?=__('返回', 'bingo')?> &raquo;</a>
 							<?php endif; ?>
 						</div>
 						<?php endif; ?>
@@ -350,17 +350,17 @@ get_header(); ?>
                     <?php else: ?>
                     <div class="row">
                         <div class="col-md-4" style="padding-right:5px">
-							<?php if ($previous_exercise): ?><a class="btn primary-btn" href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; 上一题</a><?php endif; ?>
+							<?php if ($previous_exercise): ?><a class="btn primary-btn" href="<?=get_the_permalink($previous_exercise) . ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($previous_exercise)?>">&laquo; <?=__('上一题', 'bingo')?></a><?php endif; ?>
                         </div>
                         <div class="col-md-4" style="padding-left:5px;padding-right:5px">
-							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($next_exercise)?>">下一题 &raquo;</a><?php endif; ?>
+							<?php if ($next_exercise): ?><a class="btn primary-btn pull-right" href="<?=get_the_permalink($next_exercise) .  ($_GET['tag'] ? '?tag=' . $_GET['tag'] : '')?>" title="<?=get_the_title($next_exercise)?>"><?=__('下一题', 'bingo')?> &raquo;</a><?php endif; ?>
                         </div>
                         <div class="col-md-4" style="padding-left:5px">
                             <form method="post">
 								<?php if ($current_exercise_marked): ?>
-                                <button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> 已学</button>
+                                <button type="submit" name="marked" value="0" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-check-square-o"></i> <?=__('已学', 'bingo')?></button>
                                 <?php else: ?>
-                                <button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> 已学</button>
+                                <button type="submit" name="marked" value="1" class="btn primary-btn" style="border:none;cursor:pointer"><i class="fa fa-square-o"></i> <?=__('已学', 'bingo')?></button>
                                 <?php endif; ?>
                             </form>
                         </div>
@@ -401,12 +401,12 @@ get_header(); ?>
                     <?php endif; ?>
                     <div class="sidebar-widget">
                         <span class="widget-icon"><i class="fa fa-clock-o"></i></span>
-                        <h5 class="sidebar-widget-title ib">计时器</h5>
+                        <h5 class="sidebar-widget-title ib"><?=__('计时器', 'bingo')?></h5>
                         <div class="home-skills">
 							<?php if(isset($exam) && $time_prepare_exam = get_field('time_prepare_exam', 'question_type_' . $question_type->term_id)): ?>
 								<div class="skillbar timer clearfix" data-duration="<?=$time_prepare_exam?>">
 									<div class="skillbar-title">
-										<span>准备 <span class="seconds-left"><?=date('i:s', $time_prepare_exam)?></span></span>
+										<span><?=__('准备', 'bingo')?> <span class="seconds-left"><?=date('i:s', $time_prepare_exam)?></span></span>
 									</div>
 									<div class="skillbar-bar"></div>
 									<div class="controls">
@@ -416,7 +416,7 @@ get_header(); ?>
 							<?php endif; ?>
                             <div class="skillbar audio-progress clearfix" style="display:none">
                                 <div class="skillbar-title">
-                                    <span>音频</span>
+                                    <span><?=__('音频', 'bingo')?></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
@@ -433,7 +433,7 @@ get_header(); ?>
                                 <div class="audio-navigation">
                                     <form method="post">
                                         <?php if (current_user_can('edit_paper')): ?>
-                                        <a class="btn" id="mark-audio-time-point">断句</a> <button type="submit" class="btn" id="save-audio-time-point" name="save_audio_time_point">保存</button>
+                                        <a class="btn" id="mark-audio-time-point"><?=__('断句', 'bingo')?></a> <button type="submit" class="btn" id="save-audio-time-point" name="save_audio_time_point"><?=__('保存', 'bingo')?></button>
                                         <?php endif; ?>
                                         <?php $audio_time_points = get_post_meta(get_the_ID(), 'audio_time_points', true); if ($audio_time_points): $audio_time_points = explode(',', $audio_time_points); foreach ($audio_time_points as $index => $audio_time_point): ?>
                                         <a class="btn jump-to-time-point saved" data-time-point="<?=$audio_time_point?>"><?=$index + 1?></a>
@@ -444,7 +444,7 @@ get_header(); ?>
 							<?php if(isset($exam) && $_GET['section'] === 'break'): ?>
 								<div class="skillbar timer clearfix" data-duration="600">
 									<div class="skillbar-title">
-										<span>休息 <span class="seconds-left">10:00</span></span>
+										<span><?=__('休息', 'bingo')?> <span class="seconds-left">10:00</span></span>
 									</div>
 									<div class="skillbar-bar"></div>
 									<div class="controls">
@@ -455,7 +455,7 @@ get_header(); ?>
                             <?php if(in_array($question_type->slug, array('read-aloud'))): ?>
                             <div class="skillbar timer clearfix" data-duration="40">
                                 <div class="skillbar-title">
-                                    <span>准备 <span class="seconds-left">00:40</span></span>
+                                    <span><?=__('准备', 'bingo')?> <span class="seconds-left">00:40</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
@@ -468,7 +468,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('retell-lecture'))): ?>
                             <div class="skillbar timer clearfix" data-duration="10" data-wait="previous">
                                 <div class="skillbar-title">
-                                    <span>准备 <span class="seconds-left">00:10</span></span>
+                                    <span><?=__('准备', 'bingo')?> <span class="seconds-left">00:10</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
@@ -481,7 +481,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('describe-image'))): ?>
                             <div class="skillbar timer clearfix" data-duration="25">
                                 <div class="skillbar-title">
-                                    <span>看图 <span class="seconds-left">00:25</span></span>
+                                    <span><?=__('看图', 'bingo')?> <span class="seconds-left">00:25</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
@@ -494,7 +494,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('repeat-sentence'))): ?>
                                 <div class="skillbar timer clearfix" data-wait="previous" data-duration="15" data-is-answer="true">
                                     <div class="skillbar-title">
-                                        <span>复述 <span class="seconds-left">00:15</span></span>
+                                        <span><?=__('复述', 'bingo')?> <span class="seconds-left">00:15</span></span>
                                     </div>
                                     <div class="skillbar-bar"></div>
                                 </div>
@@ -502,7 +502,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('ccl-vocabulary-primary', 'ccl-vocabulary-junior', 'ccl-vocabulary-senior'))): ?>
 								<div class="skillbar timer clearfix" data-wait="previous" data-duration="3" data-is-answer="true">
 									<div class="skillbar-title">
-										<span>翻译 <span class="seconds-left">00:03</span></span>
+										<span><?=__('翻译', 'bingo')?> <span class="seconds-left">00:03</span></span>
 									</div>
 									<div class="skillbar-bar"></div>
 								</div>
@@ -510,7 +510,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('dialogue-interpreting'))): ?>
 								<div class="skillbar timer clearfix" data-wait="previous" data-duration="60" data-is-answer="true">
 									<div class="skillbar-title">
-										<span>翻译 <span class="seconds-left">00:40</span></span>
+										<span><?=__('翻译', 'bingo')?> <span class="seconds-left">00:40</span></span>
 									</div>
 									<div class="skillbar-bar"></div>
 								</div>
@@ -518,7 +518,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('answer-short-question'))): ?>
 								<div class="skillbar timer clearfix" data-wait="previous" data-duration="10" data-is-answer="true">
 									<div class="skillbar-title">
-										<span>回答 <span class="seconds-left">00:10</span></span>
+										<span><?=__('回答', 'bingo')?> <span class="seconds-left">00:10</span></span>
 									</div>
 									<div class="skillbar-bar"></div>
 								</div>
@@ -526,7 +526,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('read-aloud', 'describe-image'))): ?>
                             <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
                                 <div class="skillbar-title">
-                                    <span>说话</span>
+                                    <span><?=__('说话', 'bingo')?></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                             </div>
@@ -534,7 +534,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('retell-lecture'))): ?>
                             <div class="skillbar timer clearfix" data-wait="previous" data-duration="40" data-is-answer="true">
                                 <div class="skillbar-title">
-                                    <span>描述 <span class="seconds-left">00:40</span></span>
+                                    <span><?=__('描述', 'bingo')?> <span class="seconds-left">00:40</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                             </div>
@@ -542,7 +542,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('summarise-spoken-text', 'swt'))): ?>
                             <div class="skillbar timer clearfix" data-duration="600" data-is-answer="true">
                                 <div class="skillbar-title">
-                                    <span>时间 <span class="seconds-left">10:00</span></span>
+                                    <span><?=__('时间', 'bingo')?> <span class="seconds-left">10:00</span></span>
                                 </div>
                                 <div class="skillbar-bar"></div>
                             </div>
@@ -550,7 +550,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('intensive-listening', 'ccl-intensive-listening'))): ?>
                                 <div class="skillbar timer clearfix" data-duration="2400">
                                     <div class="skillbar-title">
-                                        <span>时间 <span class="seconds-left">40:00</span></span>
+                                        <span><?=__('时间', 'bingo')?> <span class="seconds-left">40:00</span></span>
                                     </div>
                                     <div class="skillbar-bar"></div>
                                 </div>
@@ -558,7 +558,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('intensive-reading'))): ?>
                                 <div class="skillbar timer clearfix" data-duration="60">
                                     <div class="skillbar-title">
-                                        <span>时间 <span class="seconds-left">1:00</span></span>
+                                        <span><?=__('时间', 'bingo')?> <span class="seconds-left">1:00</span></span>
                                     </div>
                                     <div class="skillbar-bar"></div>
                                 </div>
@@ -566,7 +566,7 @@ get_header(); ?>
 							<?php if(in_array($question_type->slug, array('write-essay'))): ?>
 								<div class="skillbar timer clearfix" data-duration="1200">
 									<div class="skillbar-title">
-										<span>时间 <span class="seconds-left">20:00</span></span>
+										<span><?=__('时间', 'bingo')?> <span class="seconds-left">20:00</span></span>
 									</div>
 									<div class="skillbar-bar"></div>
 								</div>
@@ -574,7 +574,7 @@ get_header(); ?>
 							<?php if(empty($exam) && in_array($question_type->slug, array('fill-in-the-blanks-i', 'fill-in-the-blanks-ii', 'reorder-paragraph'))): ?>
                                 <div class="skillbar timer clearfix" data-duration="180">
                                     <div class="skillbar-title">
-                                        <span>时间 <span class="seconds-left">03:00</span></span>
+                                        <span><?=__('时间', 'bingo')?> <span class="seconds-left">03:00</span></span>
                                     </div>
                                     <div class="skillbar-bar"></div>
                                 </div>
@@ -588,12 +588,12 @@ get_header(); ?>
 					$uri = $_GET['random'] ? remove_query_arg(array('random'), $wp->request . '/') : add_query_arg(array('random' => 'yes'), $wp->request . '/');
 					$uri = $_GET['tag'] ? add_query_arg(array('tag' => $_GET['tag']), $uri) : $uri;
 					?>
-                    <a class="btn primary-btn" href="<?=home_url($uri);?>">切换到<?=$_GET['random'] ? __('顺序练习', 'bingo') : __('随机练习', 'bingo')?></a>
+                    <a class="btn primary-btn" href="<?=home_url($uri);?>"><?=__('切换到', 'bingo')?><?=$_GET['random'] ? __('顺序练习', 'bingo') : __('随机练习', 'bingo')?></a>
 					<?php endif; ?>
                     <?php if ($tips = get_post_meta($question_type_desc->ID, 'tips', true)): ?>
                     <div class="sidebar-widget">
                         <span class="widget-icon"><i class="fa fa-info-circle"></i></span>
-                        <h5 class="sidebar-widget-title ib">提示</h5>
+                        <h5 class="sidebar-widget-title ib"><?=__('提示', 'bingo')?></h5>
                         <div class="content">
                             <?=$tips?>
                         </div>
@@ -602,8 +602,8 @@ get_header(); ?>
 					<?php if ($notes_id = get_post_meta(get_the_ID(), 'notes', true)): ?>
                     <div class="sidebar-widget">
                         <span class="widget-icon"><i class="fa fa-info-circle"></i></span>
-                        <h5 class="sidebar-widget-title ib">笔记</h5>
-                        <small class="fr">点击图片放大</small>
+                        <h5 class="sidebar-widget-title ib"><?=__('笔记', 'bingo')?></h5>
+                        <small class="fr"><?=__('点击图片放大', 'bingo')?></small>
                         <div class="content" style="overflow:auto;max-height:150px">
                             <a href="<?=wp_get_attachment_url($notes_id)?>"><img src="<?=wp_get_attachment_image_url($notes_id, 'post-thumbnail')?>"></a>
                         </div>
@@ -648,12 +648,12 @@ jQuery(function($) {
             return;
         }
 
-        if ($(this).text() === '显示') {
-            $(this).text('隐藏');
+        if ($(this).text() === '<?=__('显示', 'bingo')?>') {
+            $(this).text('<?=__('隐藏', 'bingo')?>');
             $('.comments-list.answer .content').show(300);
         }
         else {
-            $(this).text('显示');
+            $(this).text('<?=__('显示', 'bingo')?>');
             $('.comments-list.answer .content').hide(300);
         }
     });
@@ -834,7 +834,7 @@ jQuery(function($) {
     var answerContentElement = $('.answer.entry .content');
     var answerToggleButton = $('.answer.entry .toggle');
     if (answerContentElement.length) {
-        var answer = $(answerContentElement).clone().find('sup').remove().end().find('p').map(function (i, p) { return $(p).text().replace(/答案/, ''); }).toArray().join(' ');
+        var answer = $(answerContentElement).clone().find('sup').remove().end().find('p').map(function (i, p) { return $(p).text().replace(/<?=__('答案', 'bingo')?>/, ''); }).toArray().join(' ');
         var answerTrimmed = answer.toLowerCase().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
         var answerWordCount = answerTrimmed.split(/\s+/).length;
 	}
@@ -1054,16 +1054,16 @@ jQuery(function($) {
 		    data = {};
 		}
 		
-	    if (!data.force && !confirm ('提交后将无法修改答案，确认提交吗？')) {
+	    if (!data.force && !confirm ('<?=__('提交后将无法修改答案，确认提交吗？', 'bingo')?>')) {
 	        return;
 		}
 
 		if (data.force && data.timeup) {
-            alert ('时间到，即将提交并转入下一题或下一部分');
+            alert ('<?=__('时间到，即将提交并转入下一题或下一部分', 'bingo')?>');
         }
 
         if (data.force && data.silenced && !window.localStorage.getItem('notified.silencedSkip')) {
-            alert ('3秒没有检测到声音，即将提交并转入下一题或下一部分。（注意：本提示不会再出现）');
+            alert ('<?=__('3秒没有检测到声音，即将提交并转入下一题或下一部分。（注意：本提示不会再出现）', 'bingo')?>');
             window.localStorage.setItem('notified.silencedSkip', true);
         }
 
@@ -1079,7 +1079,7 @@ jQuery(function($) {
             // hide submit button, and show next button
             var nextButton = $(self).parent().siblings('.next').find('.btn');
             console.log('Set next button text data to', nextButton.text());
-			nextButton.prop('disabled', true).addClass('disabled').data('text', nextButton.text()).text('上传中…');
+			nextButton.prop('disabled', true).addClass('disabled').data('text', nextButton.text()).text('<?=__('上传中…', 'bingo')?>');
             $(self).parent().hide()
                 .siblings('.next').show();
 
