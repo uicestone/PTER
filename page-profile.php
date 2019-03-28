@@ -18,6 +18,11 @@ if (isset($_POST['submit'])) {
 	if ($_POST['mobile']) {
 	    update_user_meta($user->ID, 'mobile', $_POST['mobile']);
     }
+	if ($_POST['scoop_email']) {
+		update_user_meta($user->ID, 'scoop_email', $_POST['scoop_email']);
+	} else {
+		delete_user_meta($user->ID, 'scoop_email');
+	}
 
 	if ($_POST['invitation_code']) {
 		$invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
@@ -149,12 +154,20 @@ get_header(); the_post(); ?>
                                 </div>
                             </div><!-- end invitation_code -->
                             <?php endif; ?>
+							<div class="col-md-6 col-sm-6">
+								<div class="static">
+									<label>
+										<input type="checkbox" name="scoop_email" value="no"<?php if('no'===get_user_meta($user->ID, 'scoop_email', true)){ ?> checked<?php } ?>>
+										禁止每周邮件推送
+									</label>
+								</div>
+							</div>
                             <?php global $is_cn_ip; if ($is_cn_ip): ?>
                             <div class="col-md-6 col-sm-6">
                                 <div class="static">
                                     <label>中国大陆网络</label>
                                 </div>
-                            </div><!-- end username -->
+                            </div>
                             <?php endif; ?>
 							<div class="col-md-12">
 								<div class="input clearfix">

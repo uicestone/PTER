@@ -76,9 +76,13 @@ function send_member_scoop () {
 
 	foreach ($users as $user) {
 		// 注册后每三周发送
-		if ((time() - strtotime($user->user_registered)) / (86400 * 7) % 3 === 0) {
-			send_template_mail('member-scoop-email', $user->user_email, array('user_name' => $user->display_name));
+		if ((time() - strtotime($user->user_registered)) / (86400 * 7) % 3 !== 0) {
+			break;
 		}
+		if ('no' === get_user_meta($user->ID, 'scoop_email', true)) {
+			break;
+		}
+		send_template_mail('member-scoop-email', $user->user_email, array('user_name' => $user->display_name));
 	}
 }
 
