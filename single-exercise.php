@@ -435,6 +435,7 @@ get_header(); ?>
                                         <?php if (current_user_can('edit_paper')): ?>
                                         <a class="btn" id="mark-audio-time-point"><?=__('断句', 'bingo')?></a> <button type="submit" class="btn" id="save-audio-time-point" name="save_audio_time_point"><?=__('保存', 'bingo')?></button>
                                         <?php endif; ?>
+										<strong><?=__('断点跳转：', 'bingo')?></strong>
                                         <?php $audio_time_points = get_post_meta(get_the_ID(), 'audio_time_points', true); if ($audio_time_points): $audio_time_points = explode(',', $audio_time_points); foreach ($audio_time_points as $index => $audio_time_point): ?>
                                         <a class="btn jump-to-time-point saved" data-time-point="<?=$audio_time_point?>"><?=$index + 1?></a>
                                         <?php endforeach; endif; ?>
