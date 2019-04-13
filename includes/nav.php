@@ -78,7 +78,7 @@ function custom_nav_menu_item( $title, $url, $order, $parent = 0, $classes = arr
 
 add_filter('wp_get_nav_menu_items', function ($items, $menu) {
 
-	if ( $menu->slug == 'primary' ) {
+	if ( strpos($menu->slug, 'primary') === 0 ) {
 
 		// only add item to a specific menu
 		if ( !is_admin() ){
@@ -88,8 +88,8 @@ add_filter('wp_get_nav_menu_items', function ($items, $menu) {
 				$top = custom_nav_menu_item( __('我的账户', 'bingo'), get_author_posts_url( get_current_user_id() ), 1000, 0, ['account'] );
 				$items[] = $top;
 				$items[] = custom_nav_menu_item( wp_get_current_user()->display_name, null, 1001, $top->ID );
-				$items[] = custom_nav_menu_item( __('个人中心', 'bingo'), site_url() . '/profile/', 1002, $top->ID, ['profile'] );
-				$items[] = custom_nav_menu_item( __('退出登录', 'bingo'), site_url() . '/login/?logout=true', 1003, $top->ID );
+				$items[] = custom_nav_menu_item( __('个人中心', 'bingo'), pll_home_url() . 'profile/', 1002, $top->ID, ['profile'] );
+				$items[] = custom_nav_menu_item( __('退出登录', 'bingo'), pll_home_url() . 'login/?logout=true', 1003, $top->ID );
 			} else {
 				$login = custom_nav_menu_item( '<span class="grad-btn">' . __('注册', 'bingo') . '</span>', site_url('register'), 1000, 0, ['login'] );
 				$items[] = $login;
