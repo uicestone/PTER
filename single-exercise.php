@@ -212,7 +212,7 @@ get_header(); ?>
 							<?php endif; ?>
 						</div><!-- End comment form -->
 						<?php endif; ?>
-						<?php if (in_array($question_type->slug, array('multiple-choice-reading', 'multiple-choice-listening', 'select-missing-word', 'highlight-correct-summary'))): ?>
+						<?php if (in_array($question_type->slug, array('multiple-choice-reading', 'multiple-choice-listening', 'tax-quiz', 'auditing-quiz', 'finance-quiz', 'cap-quiz', 'management-quiz',  'select-missing-word', 'highlight-correct-summary'))): ?>
 							<div class="clearfix" style="margin-top:30px"></div>
 							<div class="comment-form answer-form entry">
 								<div class="addcomment-title">
