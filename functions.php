@@ -15,7 +15,7 @@ add_action('init', function () {
 //	remove_filter('template_redirect','redirect_canonical');
 
 	global $is_cn_ip;
-	$is_cn_ip = is_cn_ip();
+	$is_cn_ip = false;
 });
 
 function pter_adjacent_post_where ($where, $in_same_term, $excluded_terms, $taxonomy, $post) {
