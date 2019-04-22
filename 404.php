@@ -1,4 +1,6 @@
-<?php get_header(); ?>
+<?php
+header('HTTP/1.0 404 Not Found');
+get_header(); ?>
 
 <section class="error-page full-page">
     <div class="container">
