@@ -150,3 +150,12 @@ add_filter( 'manage_users_custom_column', function ( $val, $column_name, $user_i
 	}
 	return $val;
 }, 10, 3 );
+
+add_filter('acf/update_value/type=date_time_picker', function ( $value, $post_id, $field ) {
+	if (!in_array($field['name'], array('service_reading_valid_before', 'service_writing_valid_before'))) {
+		return $value;
+	}
+	return strtotime($value) - get_option( 'gmt_offset' ) * HOUR_IN_SECONDS;
+
+}, 10, 3);
+
