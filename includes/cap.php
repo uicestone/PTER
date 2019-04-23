@@ -66,7 +66,7 @@ function redirect_login ($force = false) {
 		return;
 	}
 
-	header('Location: ' . site_url() . '/register/?intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
+	header('Location: ' . pll_home_url() . 'register/?intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
 }
 
 function redirect_pricing_table ($cap) {
@@ -88,7 +88,7 @@ function redirect_pricing_table ($cap) {
 		if ($cap === 'view_ccl') {
 			$service_syntax = 'ccl&';
 		}
-		header('Location: ' . site_url() . '/pricing-table/?' . $service_syntax . 'intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
+		header('Location: ' . pll_home_url() . 'pricing-table/?' . $service_syntax . 'intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
 	}
 }
 

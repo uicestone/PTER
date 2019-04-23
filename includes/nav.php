@@ -91,7 +91,7 @@ add_filter('wp_get_nav_menu_items', function ($items, $menu) {
 				$items[] = custom_nav_menu_item( __('个人中心', 'bingo'), pll_home_url() . 'profile/', 1002, $top->ID, ['profile'] );
 				$items[] = custom_nav_menu_item( __('退出登录', 'bingo'), pll_home_url() . 'login/?logout=true', 1003, $top->ID );
 			} else {
-				$login = custom_nav_menu_item( '<span class="grad-btn">' . __('注册', 'bingo') . '</span>', site_url('register'), 1000, 0, ['login'] );
+				$login = custom_nav_menu_item( '<span class="grad-btn">' . __('注册', 'bingo') . '</span>', pll_home_url() . 'register', 1000, 0, ['login'] );
 				$items[] = $login;
 			}
 		}
