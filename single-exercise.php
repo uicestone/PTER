@@ -420,7 +420,7 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-									<?php if (in_array($question_type->slug, array('intensive-listening', 'ccl-intensive-listening'))): ?>
+									<?php if (in_array($question_type->slug, array('intensive-listening', 'ccl-intensive-listening', 'tax-219'))): ?>
                                     <i id="rewind-control" class="fa fa-fast-backward"></i>
                                     <i id="fast-forward-control" class="fa fa-fast-forward"></i>
 									<?php endif; ?>
