@@ -122,6 +122,23 @@ add_action('init', function () {
 		'capabilities' => array('delete_posts' => 'delete_papers')
 	));
 
+	register_post_type('subscribe', array(
+		'label' => '订阅',
+		'labels' => array(
+			'all_items' => '所有订阅',
+			'add_new' => '添加订阅',
+			'add_new_item' => '新订阅',
+			'edit_item' => '编辑订阅',
+			'not_found' => '未找到订阅'
+		),
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'supports' => array('title'),
+		'menu_icon' => 'dashicons-networking',
+		'capability_type' => 'member_order',
+		'capabilities' => array('delete_posts' => 'delete_orders')
+	));
+
 	register_post_type('member_order', array(
 		'label' => '订单',
 		'labels' => array(

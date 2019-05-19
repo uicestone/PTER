@@ -374,7 +374,10 @@ jQuery(function ($) {
 
     setInterval(function () {
         $('.recommended a').toggleClass('bling');
-    }, 500);
+        setTimeout(function(){
+            $('.recommended a').toggleClass('bling');
+		}, 500)
+    }, 3000);
 
     Date.prototype.format = function() {
         var m = this.getMonth() + 1; // getMonth() is zero-based
