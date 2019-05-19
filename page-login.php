@@ -92,7 +92,7 @@ get_header(); the_post(); ?>
                             </div><!-- end remember -->
                             <div class="col-md-6 col-sm-6 clearfix">
                                 <div class="forgot fr">
-                                    <a href="<?=site_url()?>/register/<?=(isset($_GET['intend']) ? '?intend=' . $_GET['intend'] : '')?>" class="new-user"><?=__('注册账号', 'bingo')?></a>
+                                    <a href="<?=pll_home_url()?>register/<?=(isset($_GET['intend']) ? '?intend=' . $_GET['intend'] : '')?>" class="new-user"><?=__('注册账号', 'bingo')?></a>
                                     /
                                     <a href="<?=wp_lostpassword_url(site_url(). $_GET['intend'])?>" class="reset"><?=__('忘记密码？', 'bingo')?></a>
                                 </div>
