@@ -10,7 +10,7 @@ $exercises_exclude_tips = array_filter($exercises, function ($exercise) {
 
 $complete_rate = 1 - count(array_diff(array_column($exercises_exclude_tips, 'ID'), $marked_exercises)) / count($exercises_exclude_tips);
 
-get_header(); the_post(); ?>
+get_header(); ?>
 
 <div class="inner-head">
     <div class="container">

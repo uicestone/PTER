@@ -69,29 +69,6 @@ function redirect_login ($force = false) {
 	header('Location: ' . pll_home_url() . 'register/?intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
 }
 
-function redirect_pricing_table ($cap) {
-
-	global $post_require_payment;
-	$post_require_payment = true;
-
-	redirect_login();
-
-	if (is_google_bot()) {
-		return;
-	}
-
-	if (current_user_can($cap)) {
-		return;
-	}
-	else {
-		$service_syntax = '';
-		if ($cap === 'view_ccl') {
-			$service_syntax = 'ccl&';
-		}
-		header('Location: ' . pll_home_url() . 'pricing-table/?' . $service_syntax . 'intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
-	}
-}
-
 function is_google_bot () {
 	$ua = $_SERVER['HTTP_USER_AGENT'];
 	return strpos($ua, 'Googlebot') !== false || isset($_GET['googlebot_test']);
@@ -115,6 +92,10 @@ function ensure_user_cap_on($post) {
 
 	redirect_login();
 	$user = wp_get_current_user();
+
+	if (current_user_can('edit_user')) {
+		return true;
+	}
 
 	if ((is_limited_free($user->ID) && has_tag('limited-free', $post->ID))) {
 		return true;

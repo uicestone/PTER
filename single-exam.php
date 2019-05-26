@@ -172,7 +172,7 @@ else:
 		wp_enqueue_script('mp3-lame-encoder');
 	}
 
-get_header(); the_post(); ?>
+get_header(); ?>
 
 <div class="inner-head">
     <div class="container">

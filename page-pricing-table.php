@@ -1,6 +1,6 @@
 <?php redirect_login();
 
-$products = explode(',', $_GET['products']) ?: array('pte');
+$products = $_GET['products'] ? explode(',', $_GET['products']) : array('pte');
 
 if ($invitation_code = $_POST['invitation_code']) {
 	$invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));

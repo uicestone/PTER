@@ -1,11 +1,13 @@
-<?php the_post(); $post = get_post();
-ensure_user_cap_on($post);
-get_header();
+<?php
 
 // fix when required from single-exam.php
 if (!get_the_content()) {
 	the_post();
+	$post = get_post();
+	ensure_user_cap_on($post);
 }
+
+get_header();
 
 $user = wp_get_current_user();
 $question_types = wp_get_object_terms(get_the_ID(), 'question_type', array('orderby' => 'id')); $question_type = $question_types[0]; $question_sub_type = $question_types[1];
