@@ -81,70 +81,39 @@ function order_paid ($order_no, $gateway = null) {
 		error_log('order_paid(): order user not found. (order no: ' . $order_no . ')');
 	}
 
-	$service = get_post_meta($order->ID, 'service', true);
-	$amount = get_post_meta($order->ID, 'amount', true) ?: 1;
+	$products = get_post_meta($order->ID, 'products');
+	$duration = get_post_meta($order->ID, 'duration', true);
 
-	if (in_array($service, array('tips', 'base', 'full'))) {
-		$user->add_cap('view_tips');
+	if (in_array($products, array('pte-reading'))) {
+		$inactivated_readings = get_user_meta($user->ID, 'video_reading_inactivated', true) ?: 0;
+		update_user_meta($user->ID, 'video_reading_inactivated', $inactivated_readings + 3);
 	}
 
-	if (in_array($service, array('exercises', 'base', 'full'))) {
-		$user->add_cap('view_exercises');
+	if (in_array($products, array('pte-writing'))) {
+		$inactivated_writings = get_user_meta($user->ID, 'video_writing_inactivated', true) ?: 0;
+		update_user_meta($user->ID, 'video_writing_inactivated', $inactivated_writings + 3);
 	}
 
-	if (in_array($service, array('ccl'))) {
-		$user->add_cap('view_ccl');
-		delete_user_meta($user->id, 'limited_free');
-	}
-
-	if (in_array($service, array('full', 'reading'))) {
-		$inactivated_readings = get_user_meta($user->ID, 'service_reading_inactivated', true) ?: 0;
-		update_user_meta($user->ID, 'service_reading_inactivated', $inactivated_readings + 3);
-	}
-
-	if (in_array($service, array('full', 'writing'))) {
-		$inactivated_writings = get_user_meta($user->ID, 'service_writing_inactivated', true) ?: 0;
-		update_user_meta($user->ID, 'service_writing_inactivated', $inactivated_readings + 3);
-	}
-
-	if (in_array($service, array('base', 'full'))) {
-		$service_tips_valid_after = get_user_meta($user->ID, 'service_tips_valid_before', true);
-		$service_exercises_valid_after = get_user_meta($user->ID, 'service_exercises_valid_before', true);
-
-		if (!$service_tips_valid_after || $service_tips_valid_after < time()) {
-			$service_tips_valid_after = time();
+	foreach ($products as $product) {
+		$product_valid_after = get_user_meta($user->ID, 'product_' . $product . '_valid_before', true);
+		if (!$product_valid_after || $product_valid_after < time()) {
+			$product_valid_after = time();
 		}
-
-		if (!$service_exercises_valid_after || $service_exercises_valid_after < time()) {
-			$service_exercises_valid_after = time();
-		}
-
-		update_user_meta($user->ID, 'service_tips_valid_before', $service_tips_valid_after + 86400 * 30 * $amount);
-		update_user_meta($user->ID, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * 30 * $amount);
-		delete_user_meta($user->id, 'limited_free');
+		update_user_meta($user->ID, 'product_' . $product . '_valid_before', $product_valid_after + 86400 * $duration);
 	}
 
-	if (in_array($service, array('tips', 'exercises', 'base', 'full', 'ccl'))) {
-		$service_valid_after = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
-
-		if (!$service_valid_after || $service_valid_after < time()) {
-			$service_valid_after = time();
-		}
-
-		$service_expires_at = $service_valid_after + 86400 * 30 * $amount;
-
-		update_user_meta($user->ID, 'service_' . $service . '_valid_before', $service_expires_at);
+	if (isset($product_valid_after)) {
+		$products_expire_at = $product_valid_after + 86400 * $duration;
 	}
 
 	$order_price = get_post_meta($order->ID, 'price', true);
-	$order_service = get_post_meta($order->ID, 'service', true);
 
 	// user total pay
 	update_user_meta($user->ID, 'total_paid', (get_user_meta($user->ID, 'total_paid', true) ?: 0) + $order_price);
 
 	// log to promotion_code for base & full package
 	$promotion_code_id = get_post_meta($order->ID, 'promotion_code', true);
-	if ($promotion_code_id && in_array($order_service, array('base', 'full'))) {
+	if ($promotion_code_id) {
 		add_post_meta($promotion_code_id, 'user', $user->ID);
 		$promotion_code_total_paid = get_post_meta($promotion_code_id, 'total_paid', true) ?: 0;
 		update_post_meta($promotion_code_id, 'total_paid', $promotion_code_total_paid + $order_price);
@@ -152,10 +121,9 @@ function order_paid ($order_no, $gateway = null) {
 
 	// invitation award and discount
 	$inviter_id = get_user_meta($user->ID, 'invited_by_user', true);
-	$service_awardable = in_array(get_post_meta($order->ID, 'service', true), array('base', 'full'));
 	$discount_order = get_user_meta($user->ID, 'discount_order', true);
 
-	if ($inviter_id && $service_awardable && !$discount_order) {
+	if ($inviter_id && !$discount_order) {
 
 		add_user_meta($user->ID, 'discount_order', $order->ID);
 
@@ -190,18 +158,10 @@ function order_paid ($order_no, $gateway = null) {
 		}
 	}
 
-	$services = array ('full' => __('听说读写四项全能', 'bingo'), 'base' => '听力口语技巧+练习包', 'tips' => __('听力口语技巧包', 'bingo'), 'exercises' => __('听力口语练习包', 'bingo'), 'reading' => __('阅读技巧包', 'bingo'), 'writing' => __('写作技巧包', 'bingo'), 'ccl' => __('CCL模考', 'bingo'));
-	$package_name = $services[$service];
-
-	if (!$package_name) {
-		error_log('Service package name not found: ' . $service);
-		return false;
-	}
-
 	send_template_mail('subscribed-email', $user->user_email, array(
 		'user_name' => $user->display_name,
-		'package_name' => $services[$service],
-		'expires_at' => isset($service_expires_at) ? date('Y-m-d H:i', $service_expires_at + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) : __('激活后24小时', 'bingo')
+		'package_name' => get_the_title($order->ID),
+		'expires_at' => isset($products_expire_at) ? date('Y-m-d H:i', $products_expire_at + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) : __('激活后24小时', 'bingo')
 	));
 
 	return $order;
@@ -212,12 +172,12 @@ function order_paid ($order_no, $gateway = null) {
  * @param $subject string order title
  * @param $total_fee number a price in basic unit
  * @param $currency string
- * @param $service string base, full, tips, exercises, reading or writing
- * @param $amount int count of service package
+ * @param $products array array of slugs of question_types that this order is subject to
+ * @param $duration int days of service package
  * @param $promotion_code string promotion code
  * @param $gateway string alipay, wechatpay or paypal
  */
-function create_order ($out_trade_no, $subject, $total_fee, $currency, $service, $amount, $promotion_code, $gateway) {
+function create_order ($out_trade_no, $subject, $total_fee, $currency, $products, $duration, $promotion_code, $gateway) {
 	$order_id = wp_insert_post(array(
 		'post_type' => 'member_order',
 		'post_author' => get_current_user_id(),
@@ -230,8 +190,10 @@ function create_order ($out_trade_no, $subject, $total_fee, $currency, $service,
 	add_post_meta($order_id, 'currency', $currency);
 	add_post_meta($order_id, 'no', $out_trade_no);
 	add_post_meta($order_id, 'user', get_current_user_id());
-	add_post_meta($order_id, 'service', $service);
-	add_post_meta($order_id, 'amount', $amount);
+	foreach ($products as $product) {
+		add_post_meta($order_id, 'products', $product);
+	}
+	add_post_meta($order_id, 'duration', $duration);
 	add_post_meta($order_id, 'status', 'pending_payment');
 
 	add_post_meta($order_id, 'gateway', $gateway);

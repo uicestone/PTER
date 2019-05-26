@@ -1,5 +1,7 @@
 <?php redirect_login();
 
+$product = $_GET['product'] ?: 'pte';
+
 if ($invitation_code = $_POST['invitation_code']) {
 	$invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
 	if (count($invited_by_users) !== 1) {
@@ -56,7 +58,7 @@ get_header(); the_post() ?>
 		</p>
 		<div class="breadcrumb">
 			<ul class="clearfix">
-				<li class="ib"><a href="<?=site_url()?>"><?=__(首页, 'bingo')?></a></li>
+				<li class="ib"><a href="<?=site_url()?>"><?=__('首页', 'bingo')?></a></li>
 				<li class="ib current-page"><a href=""><?php the_title(); ?></a></li>
 			</ul>
 		</div>
@@ -86,244 +88,56 @@ get_header(); the_post() ?>
                     <input type="submit" id="promotion_code-submit" class="invitation_code-submit ln-tr" value="<?=__('使用', 'bingo')?>">
                 </form>
             </div>
-			<?php 	if (!isset($_GET['ccl'])): ?>
+			<?php 	if ($product !== 'ccl'): ?>
             <a href="<?=site_url('exercise/repeat-sentence-%E7%BB%83%E4%B9%A01/?tag=free-trial')?>" class="limit-free ln-tr"><?=__('限时免费课程试用', 'bingo')?></a>
-			<a href="<?=site_url('pricing-table/?ccl')?>" class="limit-free ln-tr" style="margin-right:1em"><?=__('订阅', 'bingo')?><?=__('CCL模考', 'bingo')?></a>
+			<a href="<?=site_url('pricing-table/?product=ccl')?>" class="limit-free ln-tr" style="margin-right:1em"><?=__('订阅', 'bingo')?><?=__('CCL模考', 'bingo')?></a>
 			<?php 	endif; ?>
             <?php endif; ?>
         </div><!-- End main content row -->
 
-		<?php if (isset($_GET['ccl'])): ?>
 		<div class="row table-row fadeInDown-animation">
-			<div class="col-sm-4 table-2">
-				<div class="table">
+			<?php foreach(get_posts(array('post_type'=>'subscribe', 'posts_per_page'=>-1)) as $index => $subscribe_post): ?>
+			<?php
+				$question_types = get_field('grant_permissions_question_types', $subscribe_post->ID);
+				$products_in_subscription = array_column($question_types, 'slug');
+				if (!in_array($product, $products_in_subscription)) continue;
+			?>
+			<div class="col-sm-4 <?=get_field('recommended', $subscribe_post->ID)?'table-3 recommended':'table-2'?>">
+				<div class="table price-table">
 
 					<div class="table-header grad-btn">
-						<p class="text">CCL <?=__('全真模拟练习', 'bingo')?><br>（1<?=__('个月', 'bingo')?>）</p><!-- end text -->
+						<p class="text"><?=get_the_title($subscribe_post->ID)?></p><!-- end text -->
 						<p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_ccl', true); if ($discount): ?>
+							<?php $price = get_post_meta($subscribe_post->ID, 'price', true); if ($discount): ?>
 								<del><?=$price?></del>
 								<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
 							<?php else: ?>
 								<span class="price-amount"><?=$price?></span>
 							<?php endif; ?>
-							$ / 30<?=__('天', 'bingo')?>
+							$ / <span class="duration-days"><?=get_post_meta($subscribe_post->ID, 'duration', true)?></span><?=__('天', 'bingo')?>
 						</p><!-- end price -->
 					</div><!-- end table header -->
 
 					<div class="table-body">
 						<ul class="features">
-							<li>CCL<?=__('全真模考题', 'bingo')?>+<?=__('答案', 'bingo')?></li>
-							<li>CCL<?=__('考试题型介绍', 'bingo')?></li>
-							<li>CCL<?=__('考试核心评分解析', 'bingo')?></li>
-							<li>CCL<?=__('练习答疑', 'bingo')?></li>
-							<li>CCL<?=__('精选必备词汇', 'bingo')?></li>
-							<li>CCL<?=__('背景知识', 'bingo')?></li>
-							<li>CCL<?=__('听力练习', 'bingo')?></li>
+							<?=implode(array_map(function($line){ return '<li>'.$line.'</li>';}, explode("\n", get_post_meta($subscribe_post->ID, 'features', true))))?>
 						</ul><!-- end features list -->
 					</div><!-- end table body -->
 
 					<div class="table-footer">
 						<div class="order-btn">
-							<a href="#payment" data-service="ccl" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?></a>
+							<a href="#payment" data-products="<?=implode(',', $products_in_subscription)?>" data-gateway-account="<?=get_post_meta($subscribe_post->ID, 'payment_gateway', true)?>" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?></a>
 						</div><!-- end order button -->
 					</div><!-- end table footer -->
 
 				</div><!-- end table -->
 			</div>
-			<div class="col-sm-4 table-3 recommended">
-				<div class="table">
-
-					<div class="table-header grad-btn">
-						<p class="text">CCL <?=__('全真模拟练习', 'bingo')?><br>（3<?=__('个月', 'bingo')?>）</p><!-- end text -->
-						<p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_ccl_3', true); if ($discount): ?>
-								<del><?=$price?></del>
-								<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
-							<?php else: ?>
-								<span class="price-amount"><?=$price?></span>
-							<?php endif; ?>
-							$ / 90<?=__('天', 'bingo')?>
-						</p><!-- end price -->
-					</div><!-- end table header -->
-
-					<div class="table-body">
-						<ul class="features">
-							<li>CCL<?=__('全真模考题', 'bingo')?>+<?=__('答案', 'bingo')?></li>
-							<li>CCL<?=__('考试题型介绍', 'bingo')?></li>
-							<li>CCL<?=__('考试核心评分解析', 'bingo')?></li>
-							<li>CCL<?=__('练习答疑', 'bingo')?></li>
-							<li>CCL<?=__('精选必备词汇', 'bingo')?></li>
-							<li>CCL<?=__('背景知识', 'bingo')?></li>
-							<li>CCL<?=__('听力练习', 'bingo')?></li>
-						</ul><!-- end features list -->
-					</div><!-- end table body -->
-
-					<div class="table-footer">
-						<div class="order-btn clearfix">
-							<a href="#payment" data-service="ccl" data-amount="3" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?><?=__('（推荐）', 'bingo')?></a>
-						</div><!-- end order button -->
-					</div><!-- end table footer -->
-
-				</div><!-- end table -->
-			</div>
-			<div class="col-sm-4 table-2">
-				<div class="table">
-
-					<div class="table-header grad-btn">
-						<p class="text">CCL <?=__('全真模拟练习', 'bingo')?><br>（2<?=__('个月', 'bingo')?>）</p><!-- end text -->
-						<p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_ccl_2', true); if ($discount): ?>
-								<del><?=$price?></del>
-								<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
-							<?php else: ?>
-								<span class="price-amount"><?=$price?></span>
-							<?php endif; ?>
-							$ / 60<?=__('天', 'bingo')?>
-						</p><!-- end price -->
-					</div><!-- end table header -->
-
-					<div class="table-body">
-						<ul class="features">
-							<li>CCL<?=__('全真模考题', 'bingo')?>+<?=__('答案', 'bingo')?></li>
-							<li>CCL<?=__('考试题型介绍', 'bingo')?></li>
-							<li>CCL<?=__('考试核心评分解析', 'bingo')?></li>
-							<li>CCL<?=__('练习答疑', 'bingo')?></li>
-							<li>CCL<?=__('精选必备词汇', 'bingo')?></li>
-							<li>CCL<?=__('背景知识', 'bingo')?></li>
-							<li>CCL<?=__('听力练习', 'bingo')?></li>
-						</ul><!-- end features list -->
-					</div><!-- end table body -->
-
-					<div class="table-footer">
-						<div class="order-btn clearfix">
-							<a href="#payment" data-service="ccl" data-amount="2" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?><?=__('（推荐）', 'bingo')?></a>
-						</div><!-- end order button -->
-					</div><!-- end table footer -->
-
-				</div><!-- end table -->
-			</div>
+			<?php if ($index % 3 === 2): ?>
 		</div><!-- end 1st row -->
-		<?php else: ?>
 		<div class="row table-row fadeInDown-animation">
-            <div class="col-md-4 col-sm-6 table-2 recommended">
-                <div class="table">
-
-                    <div class="table-header grad-btn">
-                        <p class="text"><?=__('听说读写四项全能', 'bingo')?>（1<?=__('个月', 'bingo')?>）</p><!-- end text -->
-                        <p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_full', true); if ($discount): ?>
-                                <del><?=$price?></del>
-                                <span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
-							<?php else: ?>
-                                <span class="price-amount"><?=$price?></span>
-							<?php endif; ?>
-                            $ / 30<?=__('天', 'bingo')?>
-                        </p><!-- end price -->
-                    </div><!-- end table header -->
-
-                    <div class="table-body">
-                        <ul class="features">
-							<li><?=__('新增', 'bingo')?> Mock Test (2<?=__('次', 'bingo')?>)</li>
-                            <li><?=__('宾果', 'bingo')?>23<?=__('天课程包', 'bingo')?></li>
-                            <li><?=__('全站听力口语技巧，模板讲解', 'bingo')?></li>
-                            <li><?=__('全站写作阅读技巧，模板讲解', 'bingo')?></li>
-                            <li><?=__('听说读写海量练习题', 'bingo')?>+<?=__('满分答案', 'bingo')?></li>
-                            <li><?=__('PTE听说读写备考建议', 'bingo')?></li>
-                            <li><?=__('PTE题型详解', 'bingo')?>+<?=__('评分细则', 'bingo')?></li>
-                            <li><?=__('参考笔记')?>+<?=__('答题要点', 'bingo');?></li>
-                            <li><?=__('口语 6, 7 ,8 分考生真实答案', 'bingo')?></li>
-                        </ul><!-- end features list -->
-                    </div><!-- end table body -->
-
-                    <div class="table-footer">
-                        <div class="order-btn">
-                            <a href="#payment" data-service="full" class="grad-btn ln-tr show-payment-method">订阅</a>
-                        </div><!-- end order button -->
-                    </div><!-- end table footer -->
-
-                </div><!-- end table -->
-            </div><!-- end col-md-3 col-sm-6 -->
-
-			<div class="col-md-4 col-sm-6 table-3 recommended">
-				<div class="table">
-
-					<div class="table-header grad-btn">
-						<p class="text"><?=__('听说读写四项全能', 'bingo')?>（3<?=__('个月', 'bingo')?>）</p><!-- end text -->
-						<p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_full_3', true); if ($discount): ?>
-								<del><?=$price?></del>
-								<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
-							<?php else: ?>
-								<span class="price-amount"><?=$price?></span>
-							<?php endif; ?>
-							$ / 90天
-						</p><!-- end price -->
-					</div><!-- end table header -->
-
-					<div class="table-body">
-						<ul class="features">
-							<li><?=__('新增', 'bingo')?> Mock Test (2<?=__('次', 'bingo')?>)</li>
-							<li><?=__('宾果', 'bingo')?>23<?=__('天课程包', 'bingo')?></li>
-							<li><?=__('全站听力口语技巧，模板讲解', 'bingo')?></li>
-							<li><?=__('全站写作阅读技巧，模板讲解', 'bingo')?></li>
-							<li><?=__('听说读写海量练习题', 'bingo')?>+<?=__('满分答案', 'bingo')?></li>
-							<li>PTE<?=__('听说读写备考建议', 'bingo')?></li>
-							<li>PTE<?=__('题型详解', 'bingo')?>+<?=__('评分细则', 'bingo')?></li>
-							<li><?=__('参考笔记', 'bingo')?>+<?=__('答题要点', 'bingo')?></li>
-							<li><?=__('口语 6, 7 ,8 分考生真实答案', 'bingo')?></li>
-						</ul><!-- end features list -->
-					</div><!-- end table body -->
-
-					<div class="table-footer">
-						<div class="order-btn clearfix">
-							<a href="#payment" data-service="full" data-amount="3" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?><?=__('（推荐）', 'bingo')?></a>
-						</div><!-- end order button -->
-					</div><!-- end table footer -->
-
-				</div><!-- end table -->
-			</div><!-- end col-md-3 col-sm-6 -->
-
-			<div class="col-md-4 col-sm-6 table-2 recommended">
-				<div class="table">
-
-					<div class="table-header grad-btn">
-						<p class="text"><?=__('听说读写四项全能', 'bingo')?>（2<?=__('个月', 'bingo')?>）</p><!-- end text -->
-						<p class="price">
-							<?php $price = get_post_meta(get_the_ID(), 'price_full_2', true); if ($discount): ?>
-								<del><?=$price?></del>
-								<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
-							<?php else: ?>
-								<span class="price-amount"><?=$price?></span>
-							<?php endif; ?>
-							$ / 60<?=__('天', 'bingo')?>
-						</p><!-- end price -->
-					</div><!-- end table header -->
-
-					<div class="table-body">
-						<ul class="features">
-							<li><?=__('新增', 'bingo')?> Mock Test (2<?=__('次', 'bingo')?>)</li>
-							<li><?=__('宾果', 'bingo')?>23<?=__('天课程包', 'bingo')?></li>
-							<li><?=__('全站听力口语技巧', 'bingo')?>，<?=__('模板讲解', 'bingo')?></li>
-							<li><?=__('全站写作阅读技巧', 'bingo')?>，<?=__('模板讲解', 'bingo')?></li>
-							<li><?=__('听说读写海量练习题', 'bingo')?>+<?=__('满分答案', 'bingo')?></li>
-							<li>PTE<?=__('听说读写备考建议', 'bingo')?></li>
-							<li>PTE<?=__('题型详解', 'bingo')?>+<?=__('评分细则', 'bingo')?></li>
-							<li><?=__('参考笔记', 'bingo')?>+答题要点</li>
-							<li><?=__('口语 6, 7 ,8 分考生真实答案', 'bingo')?></li>
-						</ul><!-- end features list -->
-					</div><!-- end table body -->
-
-					<div class="table-footer">
-						<div class="order-btn clearfix">
-							<a href="#payment" data-service="full" data-amount="2" class="grad-btn ln-tr show-payment-method">订阅</a>
-						</div><!-- end order button -->
-					</div><!-- end table footer -->
-
-				</div><!-- end table -->
-			</div><!-- end col-md-3 col-sm-6 -->
+			<?php endif; ?>
+			<?php endforeach; ?>
 		</div><!-- end 1st row -->
-		<?php endif; ?>
 
         <div id="payment"></div>
 
@@ -346,14 +160,15 @@ get_header(); the_post() ?>
 <script type="text/javascript">
 jQuery(function ($) {
 
-    var price, subject, service, amount;
+    var price, subject, products, duration, gatewayAccount;
 
     $('.show-payment-method').on('click', function (e) {
         $('.payment-gateways').hide(300).show(300);
         price = $(this).parents('.table').find('.price-amount').text();
+        duration = $(this).parents('.table').find('.duration-days').text();
         subject = $(this).parents('.table').find('.table-header>.text').text();
-        service = $(this).data('service');
-        amount = $(this).data('amount') || 1;
+        products = $(this).data('products');
+        gatewayAccount = $(this).data('gateway-account');
     });
 
     $('.payment-gateways .gateway').on('click', function (e) {
@@ -364,8 +179,9 @@ jQuery(function ($) {
 
         href = '/payment/' + gateway + '/?price='+ price
             + '&subject=' + (subject)
-            + '&service=' + (service)
-            + '&amount=' + (amount)
+            + '&products=' + (products)
+            + '&duration=' + (duration)
+            + '&gateway_account=' + (gatewayAccount)
             + '&intend=' + ('<?=$_GET['intend']?>')
             + '&promotion_code=' + ('<?=$_GET['promotion_code']?>');
 
@@ -373,9 +189,9 @@ jQuery(function ($) {
     });
 
     setInterval(function () {
-        $('.recommended a').toggleClass('bling');
+        $('.price-table a').toggleClass('bling');
         setTimeout(function(){
-            $('.recommended a').toggleClass('bling');
+            $('.price-table a').toggleClass('bling');
 		}, 500)
     }, 3000);
 

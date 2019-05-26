@@ -78,7 +78,7 @@ get_header(); the_post(); ?>
         <p class="section-description">
             <?=get_the_subtitle($welcome_page)?>
         </p><!-- End Section Description -->
-        <p><a href="<?=site_url()?>/pricing-table/" class="btn subscribe"><?=__('立即订阅', 'bingo')?></a></p>
+        <p><a href="<?=pll_home_url()?>/pricing-table/" class="btn subscribe"><?=__('立即订阅', 'bingo')?></a></p>
     </div>
     <div class="section-content features-content fadeInDown-animation">
         <div class="container">

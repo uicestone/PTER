@@ -97,7 +97,7 @@ add_action('init', function () {
 		),
 		'public' => true,
 		'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
-		'taxonomies' => array('post_tag'),
+		'taxonomies' => array('question_type', 'post_tag'),
 		'menu_icon' => 'dashicons-edit',
 		'has_archive' => true
 	));
@@ -131,8 +131,7 @@ add_action('init', function () {
 			'edit_item' => '编辑订阅',
 			'not_found' => '未找到订阅'
 		),
-		'show_ui' => true,
-		'show_in_menu' => true,
+		'public' => true,
 		'supports' => array('title'),
 		'menu_icon' => 'dashicons-networking',
 		'capability_type' => 'member_order',
