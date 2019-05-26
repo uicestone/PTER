@@ -1,9 +1,6 @@
-<?php
-
-if(!has_tag('free-trial')
-	&& !(is_limited_free(get_current_user_id()) && has_tag('limited-free'))) {
-	redirect_pricing_table('view_exercises');
-}
+<?php global $post;
+ensure_user_cap_on($post);
+get_header();
 
 $marked_exercises = get_user_meta(get_current_user_id(), 'marked_exercises') ?: [];
 $exercises = get_field('exercises');

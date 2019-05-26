@@ -96,3 +96,46 @@ function is_google_bot () {
 	$ua = $_SERVER['HTTP_USER_AGENT'];
 	return strpos($ua, 'Googlebot') !== false || isset($_GET['googlebot_test']);
 }
+
+/**
+ * redirect a user to pricing table if no enough capability to current content
+ *
+ * @param $post
+ * @return
+ */
+function ensure_user_cap_on($post) {
+
+	if (has_tag('free-trial', $post->ID)) {
+		return true;
+	}
+
+	if (is_google_bot()) {
+		return true;
+	}
+
+	redirect_login();
+	$user = wp_get_current_user();
+
+	if ((is_limited_free($user->ID) && has_tag('limited-free', $post->ID))) {
+		return true;
+	}
+
+	$question_types = get_post_question_types_family($post);
+
+	$user_meta = get_user_meta($user->ID);
+
+	$user_cap_products = array();
+	foreach ($user_meta as $key => $value) {
+		preg_match('/^product_(.+?)_valid_before/', $key, $matches);
+		if (!$matches) continue;
+		if ($value[0] < time()) continue;
+		$user_cap_products[] = $matches[1];
+	}
+
+	if (array_intersect($user_cap_products, $question_types)) {
+		return true;
+	}
+
+	header('Location: ' . pll_home_url() . 'pricing-table/?products=' . implode(',', $question_types) . '&intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
+
+}

@@ -328,3 +328,15 @@ function get_images_from_the_post () {
 	}
 	return $images;
 }
+
+function get_post_question_types_family($post) {
+	$question_types = get_the_terms($post, 'question_type');
+	$family_members = array_map(function($term_id){
+		$term = get_term($term_id);
+		return $term->slug;
+	}, call_user_func_array('array_merge', array_map(function($question_type){
+		return array_merge(array($question_type->term_id), get_ancestors($question_type->term_id, 'question_type'));
+	}, $question_types)));
+	$family_members = array_unique($family_members);
+	return $family_members;
+}

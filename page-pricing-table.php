@@ -1,6 +1,6 @@
 <?php redirect_login();
 
-$product = $_GET['product'] ?: 'pte';
+$products = explode(',', $_GET['products']) ?: array('pte');
 
 if ($invitation_code = $_POST['invitation_code']) {
 	$invited_by_users = get_users(array('meta_key' => 'invitation_code', 'meta_compare' => 'LIKE', 'meta_value' => $_POST['invitation_code']));
@@ -88,7 +88,7 @@ get_header(); the_post() ?>
                     <input type="submit" id="promotion_code-submit" class="invitation_code-submit ln-tr" value="<?=__('使用', 'bingo')?>">
                 </form>
             </div>
-			<?php 	if ($product !== 'ccl'): ?>
+			<?php 	if (!in_array('ccl', $products)): ?>
             <a href="<?=site_url('exercise/repeat-sentence-%E7%BB%83%E4%B9%A01/?tag=free-trial')?>" class="limit-free ln-tr"><?=__('限时免费课程试用', 'bingo')?></a>
 			<a href="<?=site_url('pricing-table/?product=ccl')?>" class="limit-free ln-tr" style="margin-right:1em"><?=__('订阅', 'bingo')?><?=__('CCL模考', 'bingo')?></a>
 			<?php 	endif; ?>
@@ -100,7 +100,7 @@ get_header(); the_post() ?>
 			<?php
 				$question_types = get_field('grant_permissions_question_types', $subscribe_post->ID);
 				$products_in_subscription = array_column($question_types, 'slug');
-				if (!in_array($product, $products_in_subscription)) continue;
+				if (!array_intersect($products, $products_in_subscription)) continue;
 			?>
 			<div class="col-sm-4 <?=get_field('recommended', $subscribe_post->ID)?'table-3 recommended':'table-2'?>">
 				<div class="table price-table">

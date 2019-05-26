@@ -1,9 +1,6 @@
-<?php
-
-if(empty($exam) && !has_tag('free-trial') && !has_tag('free-trial-ccl')
-	&& !(is_limited_free(get_current_user_id()) && has_tag('limited-free'))) {
-    redirect_pricing_table('view_exercises');
-}
+<?php global $post;
+ensure_user_cap_on($post);
+get_header();
 
 // fix when required from single-exam.php
 if (!get_the_content()) {
