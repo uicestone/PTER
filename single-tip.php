@@ -1,4 +1,4 @@
-<?php global $post;
+<?php the_post(); $post = get_post();
 ensure_user_cap_on($post);
 get_header(); ?>
 

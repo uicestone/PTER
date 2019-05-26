@@ -136,6 +136,6 @@ function ensure_user_cap_on($post) {
 		return true;
 	}
 
-	header('Location: ' . pll_home_url() . 'pricing-table/?products=' . implode(',', $question_types) . '&intend=' . urlencode($_SERVER['REQUEST_URI'])); exit;
+	header('Location: ' . pll_home_url() . 'pricing-table/?products=' . implode(',', $question_types) . '&intend=' . rawurlencode($_SERVER['REQUEST_URI'])); exit;
 
 }

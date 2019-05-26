@@ -182,7 +182,7 @@ jQuery(function ($) {
             + '&products=' + (products)
             + '&duration=' + (duration)
             + '&gateway_account=' + (gatewayAccount)
-            + '&intend=' + ('<?=$_GET['intend']?>')
+            + '&intend=' + ('<?=urlencode($_GET['intend'])?>')
             + '&promotion_code=' + ('<?=$_GET['promotion_code']?>');
 
         window.location.href = href;
