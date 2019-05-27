@@ -50,7 +50,11 @@ function remind_unsubscribed_users () {
 
 		// 有权限的不发送
 		if ($user->can('view_tips') || $user->can('view_exercises')) {
-			return;
+			continue;
+		}
+
+		if ('no' === get_user_meta($user->ID, 'scoop_email', true)) {
+			continue;
 		}
 
 		send_template_mail('subscription-reminder-email', $user->user_email, array('user_name' => $user->display_name));
@@ -80,7 +84,7 @@ function send_member_scoop () {
 			break;
 		}
 		if ('no' === get_user_meta($user->ID, 'scoop_email', true)) {
-			break;
+			continue;
 		}
 		send_template_mail('member-scoop-email', $user->user_email, array('user_name' => $user->display_name));
 	}
