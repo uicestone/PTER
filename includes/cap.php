@@ -94,7 +94,7 @@ function ensure_user_cap_on($post) {
 	$user = wp_get_current_user();
 
 	if (current_user_can('edit_user')) {
-		return true;
+		// return true;
 	}
 
 	if ((is_limited_free($user->ID) && has_tag('limited-free', $post->ID))) {
