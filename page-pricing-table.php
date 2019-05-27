@@ -90,7 +90,7 @@ get_header(); the_post() ?>
             </div>
 			<?php 	if (!in_array('ccl', $products)): ?>
             <a href="<?=site_url('exercise/repeat-sentence-%E7%BB%83%E4%B9%A01/?tag=free-trial')?>" class="limit-free ln-tr"><?=__('限时免费课程试用', 'bingo')?></a>
-			<a href="<?=site_url('pricing-table/?product=ccl')?>" class="limit-free ln-tr" style="margin-right:1em"><?=__('订阅', 'bingo')?><?=__('CCL模考', 'bingo')?></a>
+			<a href="<?=site_url('pricing-table/?products=ccl')?>" class="limit-free ln-tr" style="margin-right:1em"><?=__('订阅', 'bingo')?><?=__('CCL模考', 'bingo')?></a>
 			<?php 	endif; ?>
             <?php endif; ?>
         </div><!-- End main content row -->
