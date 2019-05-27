@@ -81,8 +81,43 @@ get_header(); ?>
 <?php endforeach; ?>
 
 <section class="full-section features-section fancy-shadow pricing-tables">
-    <div class="container">
-        <a href="<?=site_url('pricing-table')?>"><img src="<?=get_stylesheet_directory_uri()?>/assets/img/pricing-table-3.png"></a>
+    <div class="table-row" style="white-space:nowrap;width:100%;overflow-x:auto">
+		<?php foreach(get_posts(array('post_type'=>'subscribe', 'posts_per_page'=>-1)) as $index => $subscribe_post): ?>
+		<?php
+		$question_types = get_field('grant_permissions_question_types', $subscribe_post->ID);
+		$products_in_subscription = array_column($question_types, 'slug');
+		?>
+		<div class="<?=get_field('recommended', $subscribe_post->ID)?'table-3 recommended':'table-2'?>" style="width:25%;display:inline-block;margin-right:2%">
+			<div class="table price-table">
+
+				<div class="table-header grad-btn">
+					<p class="text"><?=get_the_title($subscribe_post->ID)?></p><!-- end text -->
+					<p class="price">
+						<?php $price = get_post_meta($subscribe_post->ID, 'price', true); if ($discount): ?>
+							<del><?=$price?></del>
+							<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
+						<?php else: ?>
+							<span class="price-amount"><?=$price?></span>
+						<?php endif; ?>
+						$ / <span class="duration-days"><?=get_post_meta($subscribe_post->ID, 'duration', true)?></span><?=__('天', 'bingo')?>
+					</p><!-- end price -->
+				</div><!-- end table header -->
+
+				<div class="table-body">
+					<ul class="features">
+						<?=implode(array_map(function($line){ return '<li>'.$line.'</li>';}, explode("\n", get_post_meta($subscribe_post->ID, 'features', true))))?>
+					</ul><!-- end features list -->
+				</div><!-- end table body -->
+
+				<div class="table-footer">
+					<div class="order-btn">
+						<a href="<?=pll_home_url()?>pricing-table/?products=<?=implode(',', $products_in_subscription)?>&id=<?=$subscribe_post->ID?>" data-products="<?=implode(',', $products_in_subscription)?>" data-gateway-account="<?=get_post_meta($subscribe_post->ID, 'payment_gateway', true)?>" class="grad-btn ln-tr show-payment-method"><?=__('订阅', 'bingo')?></a>
+					</div><!-- end order button -->
+				</div><!-- end table footer -->
+
+			</div><!-- end table -->
+		</div>
+		<?php endforeach; ?>
     </div>
 </section><!-- End Features Section -->
 
