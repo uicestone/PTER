@@ -97,6 +97,16 @@ body {
 .full-section .section-content.post {
     padding-top: 0;
 }
+.full-section.pricing-tables .table-row {
+    white-space: nowrap;
+    width: 100%;
+    overflow-x: auto;
+}
+.full-section.pricing-tables .table-2, .full-section.pricing-tables .table-3 {
+    width: 25%;
+    display: inline-block;
+    margin-right: 2%;
+}
 .fancy-shadow {
     box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
     position: relative;

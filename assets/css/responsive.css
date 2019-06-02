@@ -784,6 +784,10 @@
 		opacity: 1;
 	}
 
+	.full-section.pricing-tables .table-2, .full-section.pricing-tables .table-3 {
+		width: 60%;
+	}
+
 	.add-courses .add-courses-title {
 		line-height: 28px;
 	}

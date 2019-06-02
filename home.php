@@ -81,13 +81,13 @@ get_header(); ?>
 <?php endforeach; ?>
 
 <section class="full-section features-section fancy-shadow pricing-tables">
-    <div class="table-row" style="white-space:nowrap;width:100%;overflow-x:auto">
+    <div class="table-row">
 		<?php foreach(get_posts(array('post_type'=>'subscribe', 'posts_per_page'=>-1)) as $index => $subscribe_post): ?>
 		<?php
 		$question_types = get_field('grant_permissions_question_types', $subscribe_post->ID);
 		$products_in_subscription = array_column($question_types, 'slug');
 		?>
-		<div class="<?=get_field('recommended', $subscribe_post->ID)?'table-3 recommended':'table-2'?>" style="width:25%;display:inline-block;margin-right:2%">
+		<div class="<?=get_field('recommended', $subscribe_post->ID)?'table-3 recommended':'table-2'?>">
 			<div class="table price-table">
 
 				<div class="table-header grad-btn">
