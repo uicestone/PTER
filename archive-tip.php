@@ -12,17 +12,51 @@
 <div class="clearfix"></div>
 
 <section>
-    <div class="section-content post latest-courses-content alt fadeInDown-animation">
-        <div class="container">
+    <div class="section-content post latest-courses-content listview alt fadeInDown-animation">
+        <div class="container latest-courses-section no-slider">
             <div class="row">
 				<?php while (have_posts()): the_post(); ?>
-                <div class="add-courses box entry">
-                    <img src="<?=get_stylesheet_directory_uri()?>/assets/img/logo-bingo.png" alt="" class="fl add-courses-icon">
-                    <span class="add-courses-title ln-tr"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></span>
-                    <div class="content">
-						<?php the_excerpt(); ?>
-                    </div>
-                </div>
+				<div class="course col-xs-offset-2 col-md-8 clearfix">
+					<?php if (has_tag('limited-free') && is_limited_free()) { ?><div class="featured-badge"><span><?=__('限时免费', 'bingo')?></span></div><?php } ?>
+					<?php if (has_tag('free-trial')) { ?><div class="featured-badge"><span><?=__('免费试用', 'bingo')?></span></div><?php } ?>
+					<div class="course-image">
+						<!--<div class="details-overlay">
+							<span class="place">
+								<i class="fa fa-map-marker"></i>
+								<span class="text">Place : Alexandria, Miami</span>
+							</span>
+							<span class="time">
+								<i class="fa fa-clock-o"></i>
+								<span class="text">Time : 7 Dec, 2015</span>
+							</span>
+						</div>-->
+						<img src="<?=get_stylesheet_directory_uri()?>/assets/img/logo-bingo.png" alt="" class="img-responsive">
+					</div>
+					<div class="course-info">
+						<h3 class="course-title"><a href="<?php the_permalink(); ?>" class="ln-tr"><?php the_title(); ?></a></h3>
+						<p class="course-description">
+							<?php the_excerpt(); ?>
+						</p>
+						<!--<div class="details fl">
+							<div class="date ib">
+								<span class="icon"><i class="fa fa-clock-o"></i></span>
+								<span class="text">Time : 7 Dec, 2014</span>
+							</div>
+							<div class="place ib">
+								<span class="icon"><i class="fa fa-map-marker"></i></span>
+								<span class="text">Place : Alex, Miami</span>
+							</div>
+							<div class="center ib">
+								<span class="icon"><i class="fa fa-building"></i></span>
+								<span class="text">Yat Academy</span>
+							</div>
+						</div>
+						<div class="buttons fr">
+							<a href="#" class="btn grad-btn orange-btn read-btn">Read More</a>
+							<a href="#" class="btn grad-btn subscribe-btn">Subscribe</a>
+						</div>-->
+					</div>
+				</div>
                 <?php endwhile; ?>
                 <div class="col-md-12 pagination">
 					<?php

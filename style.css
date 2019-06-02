@@ -1063,6 +1063,9 @@ header.alt .mobile-navigation .mobile-btn span:after {
     left: 0;
     bottom: 0;
 }
+.post-type-archive-tip .latest-courses-section .course-image:after {
+    content: none;
+}
 .latest-courses-section .course-info .course-title a {
     padding-top: 11px;
     display: block;

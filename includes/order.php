@@ -50,7 +50,10 @@ function add_limited_free ($user_id, $days) {
 	update_user_meta($user_id, 'service_exercises_valid_before', $service_exercises_valid_after + 86400 * $days);
 }
 
-function is_limited_free ($user_id) {
+function is_limited_free ($user_id = null) {
+	if (!$user_id) {
+		$user_id = get_current_user_id();
+	}
 	return 'yes' === get_user_meta($user_id, 'limited_free', true);
 }
 
