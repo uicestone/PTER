@@ -183,7 +183,7 @@ get_header(); the_post(); ?>
 				<div class="login-form register my-services">
 					<div class="login-title">
 						<span class="icon"><i class="fa fa-group"></i></span>
-						<span class="text">我的服务</span>
+						<span class="text">我订阅的产品</span>
                         <div class="ib fr">
                             <span>付款：$<?=get_user_meta($user->ID, 'total_paid', true) ?: 0?></span>，
                             <span>奖励：$<?=get_user_meta($user->ID, 'total_awarded', true) ?: 0?></span>，
@@ -194,20 +194,20 @@ get_header(); the_post(); ?>
                     <div class="clearfix"></div>
 					<div class="home-skills">
 						<?php
-                        $active_services = array();
-                        foreach (array ('tips' => __('听力口语技巧', 'bingo'), 'exercises' => __('听力口语练习', 'bingo'), 'ccl' => __('CCL模考', 'bingo')) as $service => $service_name):
-                            $service_valid_before = get_user_meta($user->ID, 'service_' . $service . '_valid_before', true);
-                            if ($service_valid_before && $service_valid_before >= time() && !is_limited_free($user->ID)): $active_services[] = $service; ?>
+                        $active_products = array();
+                        foreach (array ('pte' => __('PTE', 'bingo'), 'ccl' => __('CCL', 'bingo')) as $product => $product_name):
+                            $product_valid_before = get_user_meta($user->ID, 'product_' . $product . '_valid_before', true);
+                            if ($product_valid_before && $product_valid_before >= time()): $active_products[] = $product; ?>
                         <div class="add-courses box base-pack additional-pack">
-							<?php $percent = ($service_valid_before - time()) / (30 * 86400) * 100 ?>
-							<a href="#" class="add-courses-title ln-tr"><?=$service_name?></a>
+							<?php $percent = ($product_valid_before - time()) / (30 * 86400) * 100 ?>
+							<a href="#" class="add-courses-title ln-tr"><?=$product_name?></a>
 							<div class="skillbar clearfix" data-percent="<?=min($percent, 100)?>%">
 								<div class="skillbar-title"><span><?=round($percent)?>%</span></div><div class="skillbar-bar" style="width:0"></div>
 							</div>
                             <hr>
                             <div class="expires-at">
-                                剩余天数：<?=round(($service_valid_before - time()) / 86400, 1)?>
-								<?php if ($service_valid_before - time() < 86400 * 10): ?>
+                                剩余天数：<?=round(($product_valid_before - time()) / 86400, 1)?>
+								<?php if ($product_valid_before - time() < 86400 * 10): ?>
                                 <a href="<?=site_url()?>/pricing-table/" class="active btn btn-sm ln-tr">续费</a>
 								<?php endif; ?>
                             </div>
