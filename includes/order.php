@@ -68,7 +68,7 @@ function order_paid ($order_no, $gateway = null) {
 
 	// update order payment status
 	update_post_meta($order->ID, 'status', 'paid');
-	add_post_meta($order->ID, 'refundable_amount', get_post_meta($order->ID, 'price', true));
+	update_post_meta($order->ID, 'refundable_amount', get_post_meta($order->ID, 'price', true));
 
 	if ($gateway) {
 		update_post_meta($order->ID, 'gateway', $gateway);
@@ -84,7 +84,7 @@ function order_paid ($order_no, $gateway = null) {
 		error_log('order_paid(): order user not found. (order no: ' . $order_no . ')');
 	}
 
-	$products = get_post_meta($order->ID, 'products');
+	$products = get_field('products', $order->ID);
 	$duration = get_post_meta($order->ID, 'duration', true);
 
 	if (in_array($products, array('pte-reading'))) {
@@ -166,7 +166,7 @@ function order_paid ($order_no, $gateway = null) {
 		'package_name' => get_the_title($order->ID),
 		'expires_at' => isset($products_expire_at) ? date('Y-m-d H:i', $products_expire_at + get_option( 'gmt_offset' ) * HOUR_IN_SECONDS) : __('激活后24小时', 'bingo')
 	));
-
+// echo get_post_meta($order->ID, 'status', true); exit;
 	return $order;
 }
 
@@ -193,9 +193,7 @@ function create_order ($out_trade_no, $subject, $total_fee, $currency, $products
 	add_post_meta($order_id, 'currency', $currency);
 	add_post_meta($order_id, 'no', $out_trade_no);
 	add_post_meta($order_id, 'user', get_current_user_id());
-	foreach ($products as $product) {
-		add_post_meta($order_id, 'products', $product);
-	}
+	update_field('products', $products, $order_id);
 	add_post_meta($order_id, 'duration', $duration);
 	add_post_meta($order_id, 'status', 'pending_payment');
 
