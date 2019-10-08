@@ -13,7 +13,7 @@
 
 <?php get_template_part('content-top-copyright'); ?>
 
-<article class="post<?=current_user_can('view_tips') ? '' : ' free-trial'?>">
+<article class="post<?=pte_valid() ? '' : ' free-trial'?>">
     <div class="container">
         <div class="row">
             <div class="col-md-3">
@@ -47,7 +47,7 @@
                                 'posts_per_page' => -1,
                             )))?>题</span>
                         </div><!-- place icon -->
-                        <?php if (!current_user_can('view_tips')): ?>
+                        <?php if (!pte_valid()): ?>
                         <a href="<?=site_url()?>/pricing-table/?intend=<?=urlencode($_SERVER['REQUEST_URI'])?>" class="btn grad-btn orange-btn join-btn">订阅</a>
                         <?php endif; ?>
                     </div><!-- End Course Details -->
@@ -72,10 +72,10 @@
     <div class="container">
         <h3 class="section-title">技巧</h3>
         <p class="section-description">
-            <?=current_user_can('view_tips') ? __('以下是该题型的全部技巧', 'bingo') : __('订阅会员后可以学习全部技巧', 'bingo')?>
+            <?=pte_valid() ? __('以下是该题型的全部技巧', 'bingo') : __('订阅会员后可以学习全部技巧', 'bingo')?>
         </p><!-- End Section Description -->
     </div>
-    <?php if (current_user_can('view_tips')): ?>
+    <?php if (pte_valid()): ?>
     <div class="section-content post latest-courses-content alt fadeInDown-animation">
         <div class="container">
             <div class="row">
@@ -107,10 +107,10 @@
     <div class="container">
         <h3 class="section-title">练习</h3>
         <p class="section-description">
-            <?=current_user_can('view_exercises') ? __('从以下入口开始练习', 'bingo') : __('订阅会员后可以进行全部练习', 'bingo')?>
+            <?=pte_valid() ? __('从以下入口开始练习', 'bingo') : __('订阅会员后可以进行全部练习', 'bingo')?>
         </p><!-- End Section Description -->
     </div>
-    <?php if (current_user_can('view_exercises')): ?>
+    <?php if (pte_valid()): ?>
     <div class="section-content post latest-courses-content alt fadeInDown-animation">
         <div class="container">
             <div class="row">

@@ -120,3 +120,11 @@ function ensure_user_cap_on($post) {
 	header('Location: ' . pll_home_url() . 'pricing-table/?products=' . implode(',', $question_types) . '&intend=' . rawurlencode($_SERVER['REQUEST_URI'])); exit;
 
 }
+
+function pte_valid($user_id = null) {
+	if (!$user_id) {
+		$user_id = get_current_user_id();
+	}
+	$valid_before = get_user_meta($user_id, 'product_pte_valid_before', true);
+	return $valid_before >= time();
+}
