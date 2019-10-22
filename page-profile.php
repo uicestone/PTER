@@ -241,12 +241,12 @@ get_header(); the_post(); ?>
 						</div>
 						<?php endif; endforeach; ?>
 
-						<?php if (!$active_services): ?>
+						<?php if (!$active_products): ?>
 						<div class="subscribe">
                             <?php if (is_limited_free($user->ID)): ?>
                                 <a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您正在试用限时课程，点击订阅完整技巧和学习包</a>
                             <?php else: ?>
-							<a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您目前没有任何服务，点击订阅</a>
+							<a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您目前没有订阅任何产品，点击订阅</a>
                             <?php endif; ?>
 						</div>
 						<?php endif; ?>
