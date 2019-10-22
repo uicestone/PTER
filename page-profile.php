@@ -259,7 +259,7 @@ get_header(); the_post(); ?>
 
 <script type="text/javascript">
 jQuery(function($) {
-    new Clipboard('.copy-invitation-link');
+    new ClipboardJS('.copy-invitation-link');
     $('.copy-invitation-link').click(function (e) {
         e.preventDefault();
         alert('<?=__('邀请注册链接已复制，发送给好友邀请他们注册吧！', 'bingo')?>');
