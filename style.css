@@ -3087,6 +3087,7 @@ h6.head-title {
 }
 .my-services .subscribe {
     padding: 15px;
+    clear: both;
 }
 .my-services .subscribe .subscribe-btn {
     width: 100%;
