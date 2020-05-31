@@ -82,15 +82,16 @@ function is_google_bot () {
  */
 function ensure_user_cap_on($post) {
 
-	if (has_tag('free-trial', $post->ID)) {
-		return true;
-	}
-
 	if (is_google_bot()) {
 		return true;
 	}
 
 	redirect_login();
+
+	if (has_tag('free-trial', $post->ID)) {
+		return true;
+	}
+
 	$user = wp_get_current_user();
 
 	if (current_user_can('edit_user')) {
