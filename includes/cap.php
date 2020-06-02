@@ -86,6 +86,10 @@ function ensure_user_cap_on($post) {
 		return true;
 	}
 
+	if (has_tag('free-trial', $post->ID) && $post->post_type !== 'exam') {
+		return true;
+	}
+
 	redirect_login();
 
 	if (has_tag('free-trial', $post->ID)) {
