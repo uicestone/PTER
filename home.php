@@ -93,13 +93,14 @@ get_header(); ?>
 				<div class="table-header grad-btn">
 					<p class="text"><?=get_the_title($subscribe_post->ID)?></p><!-- end text -->
 					<p class="price">
+						$
 						<?php $price = get_post_meta($subscribe_post->ID, 'price', true); if ($discount): ?>
 							<del><?=$price?></del>
 							<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
 						<?php else: ?>
 							<span class="price-amount"><?=$price?></span>
 						<?php endif; ?>
-						$ / <span class="duration-days"><?=get_post_meta($subscribe_post->ID, 'duration', true)?></span><?=__('天', 'bingo')?>
+						 / <span class="duration-days"><?=get_post_meta($subscribe_post->ID, 'duration', true)?></span><?=__('天', 'bingo')?>
 					</p><!-- end price -->
 				</div><!-- end table header -->
 
