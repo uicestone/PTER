@@ -54,7 +54,7 @@ foreach (array('reading', 'writing') as $service) {
 		update_user_meta($user->ID, 'service_' . $service . '_inactivated', --$service_inactivated);
 		update_user_meta($user->ID, 'service_' . $service . '_valid_before', time() + 86400 * 2 - 1);
 		$user->add_cap('view_' . $service);
-		header('Location: ' . site_url() . $_SERVER['REQUEST_URI']); exit;
+		header('Location: ' . site_url_ml() . $_SERVER['REQUEST_URI']); exit;
 	}
 }
 
@@ -77,7 +77,7 @@ get_header(); the_post(); ?>
 		</p>
 		<div class="breadcrumb">
 			<ul class="clearfix">
-				<li class="ib"><a href="<?=site_url()?>">首页</a></li>
+				<li class="ib"><a href="<?=site_url_ml()?>"><?=__('首页', 'bingo')?></a></li>
 				<li class="ib current-page"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
 			</ul>
 		</div>
@@ -91,47 +91,53 @@ get_header(); the_post(); ?>
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
                 <div class="alert alert-info">
-                    <h3 class="course-title">优惠活动一 （未付费用户）</h3>
+                    <h3 class="course-title"><?=__('优惠活动一 （未付费用户）', 'bingo')?></h3>
                     <ol>
-                        <li>邀请好友通过<a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url('register?invitation_code=' . $invitation_code)?>">您的专属链接</a>或您的优惠码<?=$invitation_code?>，登录并注册试用网站</li>
-                        <li>好友注册成功, 您便可增多2天宾果课程试用</li>
+						<li><?=sprintf(__('邀请好友通过%s或您的优惠码%s，登录并注册试用网站。', 'bingo'),
+								'<a href="#" class="copy-invitation-link" data-clipboard-text="' . site_url_ml('register?invitation_code=' . $invitation_code) . '">' . __('您的专属链接', 'bingo') . '</a>',
+								$invitation_code
+							)?></li>
+                        <li><?=__('好友注册成功, 您便可增多2天宾果课程试用')?></li>
                     </ol>
                 </div>
                 <div class="alert alert-info">
-                    <h3 class="course-title">优惠活动二 （已付费用户）</h3>
+                    <h3 class="course-title"><?=__('优惠活动二 （已付费用户）', 'bingo')?></h3>
                     <ol>
-                        <li>邀请好友通过<a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url('register?invitation_code=' . $invitation_code)?>">您的专属链接</a>或您的优惠码<?=$invitation_code?>订阅学习，TA可获得<strong>八五折</strong>优惠。</li>
-                        <li>好友购买成功后，您会<strong>立即获得$4返现</strong>，现金会自动返回到您当时支付课程时使用的账户</li>
+						<li><?=sprintf(__('邀请好友通过%s或您的优惠码%s订阅学习，TA可获得<strong>八五折</strong>优惠。', 'bingo'),
+								'<a href="#" class="copy-invitation-link" data-clipboard-text="' . site_url_ml('register?invitation_code=' . $invitation_code) . '">' . __('您的专属链接', 'bingo') . '</a>',
+								$invitation_code
+							)?></li>
+                        <li><?=__('好友购买成功后，您会<strong>立即获得$4返现</strong>，现金会自动返回到您当时支付课程时使用的账户', 'bingo')?></li>
                     </ol>
                 </div>
 				<div class="login-form register">
 					<div class="login-title">
 						<span class="icon"><i class="fa fa-group"></i></span>
-						<span class="text">基本信息</span>
+						<span class="text"><?=__('基本信息', 'bingo')?></span>
 					</div><!-- End Title -->
 					<form method="post" id="register-form">
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<div class="static">
-									<label>用户名：</label>
+									<label><?=__('用户名：', 'bingo')?></label>
 									<?=$user->user_login?>
 								</div>
 							</div><!-- end username -->
 							<div class="col-md-6 col-sm-6">
 								<div class="input-with-label">
-									<label>显示名：</label>
+									<label><?=__('显示名：', 'bingo')?></label>
 									<input type="text" id="reg_name" name="display_name" class="name-input" placeholder="对外显示的我的名称" value="<?=$user->display_name?>">
 								</div>
 							</div><!-- end display_name -->
                             <div class="col-md-6 col-sm-6">
                                 <div class="input-with-label">
-                                    <label>手机：</label>
+                                    <label><?=__('手机：', 'bingo')?></label>
                                     <input type="text" id="reg_mobile" name="mobile" class="mobile-input" placeholder="<?=is_cn_ip() ? '+86 13612345678' : '+61 412345678'?>" value="<?=get_user_meta($user->ID, 'mobile', true)?>">
                                 </div>
                             </div><!-- end email -->
 							<div class="col-md-6 col-sm-6">
 								<div class="input-with-label">
-									<label>电子邮箱：</label>
+									<label><?=__('电子邮箱：', 'bingo')?></label>
 									<input type="email" id="reg_email" name="email" class="email-input" placeholder="my.name@domain.com" value="<?=$user->user_email?>">
 								</div>
 							</div><!-- end email -->
@@ -143,7 +149,7 @@ get_header(); the_post(); ?>
                             <?php if ($invited_by_user = get_user_by('ID', get_user_meta($user->ID, 'invited_by_user', true))): ?>
                             <div class="col-md-6 col-sm-6">
                                 <div class="static">
-                                    <label>邀请人：</label>
+                                    <label><?=__('邀请人：', 'bingo')?></label>
                                     <?=$invited_by_user->display_name?>
                                 </div>
                             </div><!-- end username -->
@@ -158,14 +164,14 @@ get_header(); the_post(); ?>
 								<div class="static">
 									<label>
 										<input type="checkbox" name="scoop_email" value="no"<?php if('no'===get_user_meta($user->ID, 'scoop_email', true)){ ?> checked<?php } ?>>
-										禁止每周邮件推送
+										<?=__('禁止每周邮件推送', 'bingo')?>
 									</label>
 								</div>
 							</div>
                             <?php global $is_cn_ip; if ($is_cn_ip): ?>
                             <div class="col-md-6 col-sm-6">
                                 <div class="static">
-                                    <label>中国大陆网络</label>
+                                    <label><?=__('中国大陆网络', 'bingo')?></label>
                                 </div>
                             </div>
                             <?php endif; ?>
@@ -183,12 +189,12 @@ get_header(); the_post(); ?>
 				<div class="login-form register my-services">
 					<div class="login-title">
 						<span class="icon"><i class="fa fa-group"></i></span>
-						<span class="text">我订阅的产品</span>
+						<span class="text"><?=__('我订阅的产品', 'bingo')?></span>
                         <div class="ib fr">
-                            <span>付款：$<?=get_user_meta($user->ID, 'total_paid', true) ?: 0?></span>，
-                            <span>奖励：$<?=get_user_meta($user->ID, 'total_awarded', true) ?: 0?></span>，
-                            <span>邀请码：<?=$invitation_code?></span>
-                            <a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url('register?invitation_code=' . $invitation_code)?>">复制邀请链接</a>
+                            <span><?=__('付款：', 'bingo')?>$<?=get_user_meta($user->ID, 'total_paid', true) ?: 0?></span>，
+                            <span><?=__('奖励：', 'bingo')?>$<?=get_user_meta($user->ID, 'total_awarded', true) ?: 0?></span>，
+                            <span><?=__('邀请码：', 'bingo')?><?=$invitation_code?></span>
+                            <a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url_ml('register?invitation_code=' . $invitation_code)?>">复制邀请链接</a>
                         </div>
 					</div><!-- End Title -->
                     <div class="clearfix"></div>
@@ -206,9 +212,9 @@ get_header(); the_post(); ?>
 							</div>
                             <hr>
                             <div class="expires-at">
-                                剩余天数：<?=round(($product_valid_before - time()) / 86400, 1)?>
+                                <?=__('剩余天数：', 'bingo')?><?=round(($product_valid_before - time()) / 86400, 1)?>
 								<?php if ($product_valid_before - time() < 86400 * 10): ?>
-                                <a href="<?=site_url()?>/pricing-table/" class="active btn btn-sm ln-tr">续费</a>
+                                <a href="<?=site_url_ml('pricing-table/')?>" class="active btn btn-sm ln-tr"><?=__('续费', 'bingo')?></a>
 								<?php endif; ?>
                             </div>
 						</div>
@@ -225,16 +231,16 @@ get_header(); the_post(); ?>
 								<div class="icon"><i class="fa fa-book"></i></div>
 								<a href="#" class="add-courses-title ln-tr"><?=$service_name?></a>
 								<p class="add-courses-description">
-									你可以在激活后24小时内完整学习3次视频
+									<?=__('你可以在激活后24小时内完整学习3次视频', 'bingo')?>
 								</p>
                                 <hr>
 	    						<?php if ($service_valid_before < time()): ?>
-								<form method="post"><input type="submit" name="activate_<?=$service?>" value="激活" class="btn btn-sm ln-tr active"></form>
+								<form method="post"><input type="submit" name="activate_<?=$service?>" value="<?=__('激活', 'bingo')?>" class="btn btn-sm ln-tr active"></form>
     							<?php else: ?>
                                 <div class="expires-at">
-                                    还可以学习 <?=date('H:i', $service_valid_before - time())?>
-                                    <?php if ($service_inactivated): ?>+<?=$service_inactivated?>次<?php endif; ?>
-                                    <a href="<?=site_url()?>/tip/pte-<?=$service?>/" class="active btn btn-sm ln-tr learn">前往学习</a>
+                                    <?=__('还可以学习', 'bingo')?> <?=date('H:i', $service_valid_before - time())?>
+                                    <?php if ($service_inactivated): ?>+<?=$service_inactivated?><?=__('次', 'bingo')?><?php endif; ?>
+                                    <a href="<?=site_url_ml( 'tip/pte-' . $service . '/')?>" class="active btn btn-sm ln-tr learn"><?=__('前往学习', 'bingo')?></a>
                                 </div>
                                 <?php endif; ?>
 							</div>
@@ -244,9 +250,9 @@ get_header(); the_post(); ?>
 						<?php if (!$active_products): ?>
 						<div class="subscribe">
                             <?php if (is_limited_free($user->ID)): ?>
-                                <a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您正在试用限时课程，点击订阅完整技巧和学习包</a>
+                                <a href="<?=site_url_ml('pricing-table/?intend=' . $_SERVER['REQUEST_URI'])?>" class="subscribe-btn ln-tr"><?=__('您正在试用限时课程，点击订阅完整技巧和学习包', 'bingo')?></a>
                             <?php else: ?>
-							<a href="<?=site_url()?>/pricing-table/?intend=<?=$_SERVER['REQUEST_URI']?>" class="subscribe-btn ln-tr">您目前没有订阅任何产品，点击订阅</a>
+							<a href="<?=site_url_ml('pricing-table/?intend=' . $_SERVER['REQUEST_URI'])?>" class="subscribe-btn ln-tr"><?=__('您目前没有订阅任何产品，点击订阅', 'bingo')?></a>
                             <?php endif; ?>
 						</div>
 						<?php endif; ?>

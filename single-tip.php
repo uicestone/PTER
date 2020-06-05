@@ -11,9 +11,9 @@ get_header(); ?>
         <div class="breadcrumb">
 			<?php $question_type = wp_get_object_terms(get_the_ID(), 'question_type')[0]; ?>
             <ul class="clearfix">
-                <li class="ib"><a href="<?=site_url()?>"><?=__('首页', 'bingo')?></a></li>
+                <li class="ib"><a href="<?=site_url_ml()?>"><?=__('首页', 'bingo')?></a></li>
                 <?php if ($question_type): ?>
-                <li class="ib"><a href="<?=site_url()?>/question_type_desc/<?=$question_type->slug?>"><?=$question_type->name?></a></li>
+                <li class="ib"><a href="<?=site_url_ml('question_type_desc/' . $question_type->slug)?>"><?=$question_type->name?></a></li>
                 <?php endif; ?>
                 <li class="ib current-page"><a href=""><?=__('技巧', 'bingo')?></a></li>
             </ul>
@@ -50,7 +50,7 @@ get_header(); ?>
     <div class="container">
         <blockquote>
             <p><?=__('收费视频未显示，要观看，请在下方订阅包含视频课程的学习包', 'bingo')?></p>
-            <p><?=__('若您已经购买，请前往', 'bingo')?><strong><a href="<?=site_url()?>/profile/"><?=__('个人中心', 'bingo')?></a></strong><?=__('激活该视频，并在24小时内学习完毕', 'bingo')?></p>
+            <p><?=__('若您已经购买，请前往', 'bingo')?><strong><a href="<?=site_url_ml('profile')?>"><?=__('个人中心', 'bingo')?></a></strong><?=__('激活该视频，并在24小时内学习完毕', 'bingo')?></p>
         </blockquote>
     </div>
 </div>

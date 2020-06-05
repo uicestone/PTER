@@ -21,3 +21,9 @@ function language_slug_suffix () {
     return '-' . pll_current_language();
   }
 }
+
+if (function_exists('pll_home_url')) {
+	function site_url_ml($uri) {
+		return pll_home_url() . preg_replace('/^\//', '', $uri);
+	}
+}

@@ -25,11 +25,11 @@ if (class_exists('WeixinAPI') && $_GET['code']) {
 		add_limited_free($user->ID, 2);
 	}
 
-	$redirect_query = parse_url(site_url($_SERVER['REQUEST_URI']), PHP_URL_QUERY);
-	$redirect_path = parse_url(site_url($_SERVER['REQUEST_URI']), PHP_URL_PATH);
+	$redirect_query = parse_url(site_url_ml($_SERVER['REQUEST_URI']), PHP_URL_QUERY);
+	$redirect_path = parse_url(site_url_ml($_SERVER['REQUEST_URI']), PHP_URL_PATH);
 	parse_str($redirect_query, $redirect_query_object);
 	unset($redirect_query_object['code']);
-	header('Location: ' . site_url($redirect_path . '?' . http_build_query($redirect_query_object))); exit;
+	header('Location: ' . site_url_ml($redirect_path . '?' . http_build_query($redirect_query_object))); exit;
 }
 
 function add_limited_free ($user_id, $days) {

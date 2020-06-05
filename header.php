@@ -38,7 +38,7 @@
 		, "headline": "<?php the_title(); ?>"
 		, "author": "<?php the_author(); ?>"
 		, "datePublished": "<?php the_date('Y-m-d'); ?>"
-		, "publisher": {"@type":"Organization", "name":"Bingo Training Pty. Ltd.", "logo": {"@type": "ImageObject", "url": <?=json_encode(site_url('wp-content/themes/coursaty/assets/img/logo.png'))?>}, "url": "<?=site_url()?>"}
+		, "publisher": {"@type":"Organization", "name":"Bingo Training Pty. Ltd.", "logo": {"@type": "ImageObject", "url": <?=json_encode(site_url('wp-content/themes/coursaty/assets/img/logo.png'))?>}, "url": "<?=site_url_ml()?>"}
 		, "dateModified": "<?php the_modified_date('Y-m-d'); ?>"
 		, "image": <?=json_encode(get_images_from_the_post())?>
 		<?php global $post_require_payment; if ($post_require_payment): ?>
@@ -62,7 +62,7 @@
 	<header id="header" class="<?=is_home() ? '' : 'alt static-header'?>">
 		<div class="container">
 			<div class="logo-container fl clearfix">
-				<a href="<?=site_url()?>" class="ib">
+				<a href="<?=site_url_ml()?>" class="ib">
 					<img src="<?=get_stylesheet_directory_uri()?>/assets/img/<?=is_home() ? 'logo-white' : 'logo'?>.png" class="fl" alt="Logo">
 				</a>
 			</div><!-- End Logo Container -->

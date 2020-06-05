@@ -49,7 +49,7 @@ if(isset($_POST['submit'])){
 
 	$wx = new WeixinAPI();
 
-	header('Location: ' . $wx->generate_oauth_url(site_url($_GET['intend'] ?: 'profile'))); exit;
+	header('Location: ' . $wx->generate_oauth_url(site_url_ml($_GET['intend'] ?: 'profile'))); exit;
 }
 
 get_header(); the_post(); ?>
@@ -62,7 +62,7 @@ get_header(); the_post(); ?>
         </p>
         <div class="breadcrumb">
             <ul class="clearfix">
-                <li class="ib"><a href="<?=site_url()?>"><?=__('首页', 'bingo')?></a></li>
+                <li class="ib"><a href="<?=site_url_ml()?>"><?=__('首页', 'bingo')?></a></li>
                 <li class="ib current-page"><a href="<?php the_permalink(); ?>"><?=__('注册', 'bingo')?></a></li>
             </ul>
         </div>
@@ -121,7 +121,7 @@ get_header(); the_post(); ?>
                                 <div class="input clearfix agree">
                                     <div class="custom-checkbox">
                                         <input type="checkbox" id="reg_agree" name="agree" value="yes" class="checkbox-input">
-                                        <label for="reg_agree"><?=__('同意', 'bingo')?> <a href="<?=site_url()?>/agreement/" target="_blank"><?=__('用户协议', 'bingo')?></a></label>
+                                        <label for="reg_agree"><?=__('同意', 'bingo')?> <a href="<?=site_url_ml('agreement')?>" target="_blank"><?=__('用户协议', 'bingo')?></a></label>
                                     </div>
                                 </div>
                             </div><!-- end submit -->

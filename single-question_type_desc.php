@@ -48,7 +48,7 @@
                             )))?>题</span>
                         </div><!-- place icon -->
                         <?php if (!pte_valid()): ?>
-                        <a href="<?=site_url()?>/pricing-table/?intend=<?=urlencode($_SERVER['REQUEST_URI'])?>" class="btn grad-btn orange-btn join-btn">订阅</a>
+                        <a href="<?=site_url_ml('pricing-table/?intend=' . urlencode($_SERVER['REQUEST_URI']))?>" class="btn grad-btn orange-btn join-btn">订阅</a>
                         <?php endif; ?>
                     </div><!-- End Course Details -->
                 </div><!-- End Sidebar Entry -->

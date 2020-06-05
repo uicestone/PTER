@@ -182,7 +182,7 @@ get_header(); ?>
         </p>
         <div class="breadcrumb">
             <ul class="clearfix">
-                <li class="ib"><a href="<?=site_url()?>"><?=__('首页', 'bingo')?></a></li>
+                <li class="ib"><a href="<?=site_url_ml()?>"><?=__('首页', 'bingo')?></a></li>
                 <li class="ib current-page"><a href=""><?=__('考试', 'bingo')?></a></li>
             </ul>
         </div>

@@ -20,7 +20,7 @@ if(isset($_POST['submit'])){
     }
 
     if (count($user_ips_today) > 2) {
-        exit('账号状态异常，如果您使用的是朋友的账号，或许可以考虑：<br><a href="' . site_url() . '/register/">注册自己的账号</a>，输入朋友的<b>邀请码</b>优惠购买！<br>当前优惠折扣：<b>' . get_post_meta(get_page_by_path('pricing-table')->ID, 'intro_discount', true) . '%OFF</b>');
+        exit('账号状态异常，如果您使用的是朋友的账号，或许可以考虑：<br><a href="' . site_url_ml() . '/register/">注册自己的账号</a>，输入朋友的<b>邀请码</b>优惠购买！<br>当前优惠折扣：<b>' . get_post_meta(get_page_by_path('pricing-table')->ID, 'intro_discount', true) . '%OFF</b>');
     }
 
 	wp_set_auth_cookie($user->ID, isset($_POST['remember']));
@@ -30,13 +30,13 @@ if(isset($_POST['submit'])){
 	    header('Location: ' . $_GET['intend']); exit;
     }
     else {
-		header('Location: ' . site_url('profile')); exit;
+		header('Location: ' . site_url_ml('profile')); exit;
     }
 }
 
 if(isset($_GET['logout'])){
 	wp_logout();
-	header('Location: ' . site_url());
+	header('Location: ' . site_url_ml());
 }
 
 get_header(); the_post(); ?>
@@ -49,7 +49,7 @@ get_header(); the_post(); ?>
         </p>
         <div class="breadcrumb">
             <ul class="clearfix">
-                <li class="ib"><a href="<?=site_url()?>"><?=__('首页', 'bingo')?></a></li>
+                <li class="ib"><a href="<?=site_url_ml()?>"><?=__('首页', 'bingo')?></a></li>
                 <li class="ib current-page"><a href="<?php the_permalink(); ?>"><?=__('登录', 'bingo')?></a></li>
             </ul>
         </div>
@@ -94,7 +94,7 @@ get_header(); the_post(); ?>
                                 <div class="forgot fr">
                                     <a href="<?=pll_home_url()?>register/<?=(isset($_GET['intend']) ? '?intend=' . $_GET['intend'] : '')?>" class="new-user"><?=__('注册账号', 'bingo')?></a>
                                     /
-                                    <a href="<?=wp_lostpassword_url(site_url(). $_GET['intend'])?>" class="reset"><?=__('忘记密码？', 'bingo')?></a>
+                                    <a href="<?=wp_lostpassword_url(site_url_ml($_GET['intend']))?>" class="reset"><?=__('忘记密码？', 'bingo')?></a>
                                 </div>
                             </div><!-- end forgot password -->
                         </div><!-- end row -->
