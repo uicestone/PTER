@@ -2,6 +2,7 @@
 
 add_action('after_setup_theme', function () {
 	register_nav_menu('primary', '主导航');
+	register_nav_menu('welcome', '首页欢迎区块按钮');
 	add_theme_support('post-thumbnails');
 	add_image_size('headline', 1600, 700, true);
 	add_image_size('mentor', 270, 270, true);

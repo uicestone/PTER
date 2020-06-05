@@ -130,8 +130,7 @@ get_header(); ?>
             <?=get_the_subtitle($welcome_page)?>
         </p><!-- End Section Description -->
         <p>
-			<a href="<?=site_url_ml('pricing-table/')?>" class="btn subscribe"><?=sprintf(__('立即订阅%s', 'bingo'), 'PTE')?></a>
-			<a href="<?=site_url_ml('pricing-table/?ccl')?>" class="btn subscribe"><?=sprintf(__('立即订阅%s', 'bingo'), 'CCL')?></a>
+	        <?php echo str_replace('class="ln-tr"', 'class="btn subscribe"', preg_replace('/<\/?ul.*?>|<\/?li.*?>/', '', wp_nav_menu(array('theme_location' => 'welcome', 'container' => false, 'echo' => false)))); ?>
 		</p>
     </div>
     <div class="section-content features-content fadeInDown-animation">
