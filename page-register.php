@@ -47,7 +47,7 @@ if(isset($_POST['submit'])){
 
 	send_template_mail('welcome-email', wp_get_current_user()->user_email);
 
-	if (pll_current_language() === 'cn') {
+	if (pll_current_language() === 'zh') {
 		$wx = new WeixinAPI();
 		header('Location: ' . $wx->generate_oauth_url(site_url_ml($_GET['intend'] ?: 'profile'))); exit;
 	} else {

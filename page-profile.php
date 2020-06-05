@@ -177,9 +177,9 @@ get_header(); the_post(); ?>
                             <?php endif; ?>
 							<div class="col-md-12">
 								<div class="input clearfix">
-									<input type="submit" id="reg_submit" name="submit" value="修改" class="submit-input grad-btn ln-tr">
-                                    <?php if (!get_user_meta($user->ID, 'wx_openid', true)): ?>
-                                    <a href="<?=$wx->generate_oauth_url()?>" class="submit-input grad-btn ln-tr input-with-label" style="background:#00c44e">绑定微信，立即获得3天课程试用</a>
+									<input type="submit" id="reg_submit" name="submit" value="<?=__('修改', 'bingo')?>" class="submit-input grad-btn ln-tr">
+                                    <?php if (pll_current_language() === 'zh' && !get_user_meta($user->ID, 'wx_openid', true)): ?>
+                                    <a href="<?=$wx->generate_oauth_url()?>" class="submit-input grad-btn ln-tr input-with-label" style="background:#00c44e"><?=__('绑定微信，立即获得3天课程试用', 'bingo')?></a>
                                     <?php endif; ?>
 								</div>
 							</div><!-- end submit -->
@@ -194,7 +194,7 @@ get_header(); the_post(); ?>
                             <span><?=__('付款：', 'bingo')?>$<?=get_user_meta($user->ID, 'total_paid', true) ?: 0?></span>，
                             <span><?=__('奖励：', 'bingo')?>$<?=get_user_meta($user->ID, 'total_awarded', true) ?: 0?></span>，
                             <span><?=__('邀请码：', 'bingo')?><?=$invitation_code?></span>
-                            <a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url_ml('register?invitation_code=' . $invitation_code)?>">复制邀请链接</a>
+                            <a href="#" class="copy-invitation-link" data-clipboard-text="<?=site_url_ml('register?invitation_code=' . $invitation_code)?>"><?=__('复制邀请链接', 'bingo')?></a>
                         </div>
 					</div><!-- End Title -->
                     <div class="clearfix"></div>

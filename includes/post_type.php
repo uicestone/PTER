@@ -4,7 +4,7 @@ add_action('init', function () {
 	add_post_type_support('post', 'page-attributes');
 
 	register_taxonomy('question_type', null, array(
-		'label' => '题型分类',
+		'label' => __('题型分类', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有题型',
 			'add_new' => '添加题型',
@@ -16,7 +16,7 @@ add_action('init', function () {
 	));
 
 	register_post_type('question_type_desc', array(
-		'label' => '题型',
+		'label' => __('题型', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有题型',
 			'add_new' => '添加题型',
@@ -35,7 +35,7 @@ add_action('init', function () {
 	add_post_type_support('question_type_desc', 'wps_subtitle');
 
 	register_post_type('tip', array(
-		'label' => '技巧',
+		'label' => __('技巧', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有技巧',
 			'add_new' => '添加技巧',
@@ -53,7 +53,7 @@ add_action('init', function () {
 	add_post_type_support('tip', 'wps_subtitle');
 
 	register_post_type('exercise', array(
-		'label' => '练习',
+		'label' => __('练习', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有练习',
 			'add_new' => '添加练习',
@@ -69,7 +69,7 @@ add_action('init', function () {
 	));
 
 	register_post_type('exercise_pack', array(
-		'label' => '打卡',
+		'label' => __('打卡', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有打卡',
 			'add_new' => '添加打卡',
@@ -87,7 +87,7 @@ add_action('init', function () {
 	add_post_type_support('exam', 'wps_subtitle');
 
 	register_post_type('exam', array(
-		'label' => '考试',
+		'label' => __('考试', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有考试',
 			'add_new' => '添加考试',
@@ -105,7 +105,7 @@ add_action('init', function () {
 	add_post_type_support('exam', 'wps_subtitle');
 
 	register_post_type('paper', array(
-		'label' => '试卷',
+		'label' => __('试卷', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有试卷',
 			'add_new' => '手动添加试卷',
@@ -123,7 +123,7 @@ add_action('init', function () {
 	));
 
 	register_post_type('subscribe', array(
-		'label' => '订阅',
+		'label' => __('订阅', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有订阅',
 			'add_new' => '添加订阅',
@@ -139,7 +139,7 @@ add_action('init', function () {
 	));
 
 	register_post_type('member_order', array(
-		'label' => '订单',
+		'label' => __('订单', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有订单',
 			'add_new' => '手动添加订单',
@@ -237,7 +237,7 @@ add_action('init', function () {
 	});
 
 	register_post_type('promotion_code', array(
-		'label' => '优惠码',
+		'label' => __('优惠码', 'bingo'),
 		'labels' => array(
 			'all_items' => '所有优惠码',
 			'add_new' => '添加优惠码',
