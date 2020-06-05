@@ -47,9 +47,13 @@ if(isset($_POST['submit'])){
 
 	send_template_mail('welcome-email', wp_get_current_user()->user_email);
 
-	$wx = new WeixinAPI();
-
-	header('Location: ' . $wx->generate_oauth_url(site_url_ml($_GET['intend'] ?: 'profile'))); exit;
+	if (pll_current_language() === 'cn') {
+		$wx = new WeixinAPI();
+		header('Location: ' . $wx->generate_oauth_url(site_url_ml($_GET['intend'] ?: 'profile'))); exit;
+	} else {
+		add_limited_free($user_id, 3);
+		header('Location: ' . site_url_ml($_GET['intend'] ?: 'profile')); exit;
+	}
 }
 
 get_header(); the_post(); ?>
@@ -127,7 +131,7 @@ get_header(); the_post(); ?>
                             </div><!-- end submit -->
                             <div class="col-md-12">
                                 <div class="input clearfix">
-                                    <input type="submit" id="reg_submit" name="submit" class="submit-input grad-btn ln-tr" value="<?=__('注册并绑定微信，立即获得', 'bingo')?>3<?=__('天课程试用', 'bingo')?>">
+                                    <input type="submit" id="reg_submit" name="submit" class="submit-input grad-btn ln-tr" value="<?=sprintf(__('注册并绑定微信，立即获得%s天课程试用', 'bingo'), '3')?>">
                                 </div>
                             </div><!-- end submit -->
                             <div class="col-md-6 col-sm-6 col-sm-offset-6 clearfix">
