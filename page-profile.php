@@ -97,7 +97,7 @@ get_header(); the_post(); ?>
 								'<a href="#" class="copy-invitation-link" data-clipboard-text="' . site_url_ml('register?invitation_code=' . $invitation_code) . '">' . __('您的专属链接', 'bingo') . '</a>',
 								$invitation_code
 							)?></li>
-                        <li><?=__('好友注册成功, 您便可增多2天宾果课程试用')?></li>
+                        <li><?=__('好友注册成功, 您便可增多2天宾果课程试用', 'bingo')?></li>
                     </ol>
                 </div>
                 <div class="alert alert-info">

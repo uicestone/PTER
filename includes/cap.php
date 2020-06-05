@@ -86,13 +86,13 @@ function ensure_user_cap_on($post) {
 		return true;
 	}
 
-	if (has_tag('free-trial', $post->ID) && $post->post_type !== 'exam') {
+	if (has_tag_dl_slug('free-trial', $post->ID) && $post->post_type !== 'exam') {
 		return true;
 	}
 
 	redirect_login();
 
-	if (has_tag('free-trial', $post->ID)) {
+	if (has_tag_dl_slug('free-trial', $post->ID)) {
 		return true;
 	}
 
@@ -102,7 +102,7 @@ function ensure_user_cap_on($post) {
 		return true;
 	}
 
-	if ((is_limited_free($user->ID) && has_tag('limited-free', $post->ID))) {
+	if ((is_limited_free($user->ID) && has_tag_dl_slug('limited-free', $post->ID))) {
 		return true;
 	}
 
@@ -132,4 +132,9 @@ function pte_valid($user_id = null) {
 	}
 	$valid_before = get_user_meta($user_id, 'product_pte_valid_before', true);
 	return $valid_before >= time();
+}
+
+function has_tag_dl_slug($slug, $post_id = null) {
+	$tag = get_terms(['slug' => $slug, 'taxonomy' => 'post_tag', 'lang' => null]);
+	return has_tag_dl_slug(pll_get_term($tag->term_id), $post_id);
 }
