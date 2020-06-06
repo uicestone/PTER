@@ -191,7 +191,7 @@ get_header(); ?>
 
 <?php get_template_part('content-top-copyright'); ?>
 
-<article class="post<?=has_tag('free-trial') ? ' free-trial' : ''?>">
+<article class="post<?=has_tag_dl_slug('free-trial') ? ' free-trial' : ''?>">
     <div class="container">
         <div class="row">
             <div class="add-courses box entry">

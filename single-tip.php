@@ -23,7 +23,7 @@ get_header(); ?>
 
 <?php get_template_part('content-top-copyright'); ?>
 
-<article class="post single<?=has_tag('free-trial') ? ' free-trial' : ''?>">
+<article class="post single<?=has_tag_dl_slug('free-trial') ? ' free-trial' : ''?>">
     <div class="container">
         <div class="row">
             <div class="add-courses box entry">
@@ -45,7 +45,7 @@ get_header(); ?>
 </article><!-- End Single Article -->
 <?php endif; ?>
 
-<?php if ((has_tag('free-trial') || ($post->post_name === 'pte-reading' && !current_user_can('view_reading')) || ($post->post_name === 'pte-writing' && !current_user_can('view_writing'))) && $welcome_pages = get_posts(array('post_type' => 'page', 'name' => 'welcome'))): $welcome_page = $welcome_pages[0]; ?>
+<?php if ((has_tag_dl_slug('free-trial') || ($post->post_name === 'pte-reading' && !current_user_can('view_reading')) || ($post->post_name === 'pte-writing' && !current_user_can('view_writing'))) && $welcome_pages = get_posts(array('post_type' => 'page', 'name' => 'welcome'))): $welcome_page = $welcome_pages[0]; ?>
 <div class="features-section">
     <div class="container">
         <blockquote>

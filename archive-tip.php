@@ -17,8 +17,8 @@
             <div class="row">
 				<?php while (have_posts()): the_post(); ?>
 				<div class="course col-xs-offset-2 col-md-8 clearfix">
-					<?php if (has_tag('limited-free') && is_limited_free()) { ?><div class="featured-badge"><span><?=__('限时免费', 'bingo')?></span></div><?php } ?>
-					<?php if (has_tag('free-trial')) { ?><div class="featured-badge"><span><?=__('免费试用', 'bingo')?></span></div><?php } ?>
+					<?php if (has_tag_dl_slug('limited-free') && is_limited_free()) { ?><div class="featured-badge"><span><?=__('限时免费', 'bingo')?></span></div><?php } ?>
+					<?php if (has_tag_dl_slug('free-trial')) { ?><div class="featured-badge"><span><?=__('免费试用', 'bingo')?></span></div><?php } ?>
 					<div class="course-image">
 						<!--<div class="details-overlay">
 							<span class="place">
