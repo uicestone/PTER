@@ -29,7 +29,7 @@ get_header(); ?>
             <div class="col-md-4">
                 <div class="add-courses top-margin" style="padding:30px;">
                     <img src="<?=get_stylesheet_directory_uri()?>/assets/img/icons/addcourse-icon.png" alt="" class="fl add-courses-icon">
-                    <a class="add-courses-title ln-tr" style="margin-bottom:15px"><?php the_title(); ?></a>
+                    <a class="add-courses-title ln-tr" style="margin-bottom:15px;max-width:210px;line-height:1"><?php the_title(); ?></a>
                     <?php if ($last_exercise_packs = get_posts(array('post_type'=>'exercise_pack', 'meta_key'=>'next_pack', 'meta_value'=>get_the_ID()))): ?>
                     <a href="<?=get_the_permalink($last_exercise_packs[0]->ID)?>" class="pull-right"><i class="fa fa-undo"></i> <?=__('上一个打卡', 'bingo')?></a>
                     <?php endif; ?>
