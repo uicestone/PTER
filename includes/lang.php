@@ -23,7 +23,7 @@ function language_slug_suffix () {
 }
 
 if (function_exists('pll_home_url')) {
-	function site_url_ml($uri) {
+	function site_url_ml($uri = '') {
 		return pll_home_url() . preg_replace('/^\//', '', $uri);
 	}
 }

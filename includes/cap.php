@@ -136,5 +136,5 @@ function pte_valid($user_id = null) {
 
 function has_tag_dl_slug($slug, $post_id = null) {
 	$tag = get_terms(['slug' => $slug, 'taxonomy' => 'post_tag', 'lang' => null]);
-	return has_tag_dl_slug(pll_get_term($tag->term_id), $post_id);
+	return has_tag(pll_get_term($tag->term_id), $post_id);
 }
