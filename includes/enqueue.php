@@ -22,7 +22,7 @@ add_action('wp', function() {
 	wp_register_script('waveform-emitter', get_stylesheet_directory_uri() . '/assets/js/vendor/waveform/emitter-v1.6.js', array(), '1.6', true);
 	wp_register_script('mp3-lame-encoder', get_stylesheet_directory_uri() . '/assets/js/vendor/mp3-lame-encoder/Mp3LameEncoder.min.js', array(), false, true);
 	wp_register_script('clipboard', get_stylesheet_directory_uri() . '/assets/js/vendor/clipboard-2.0.4.min.js', array(), '2.0.4', true);
-	wp_register_script('moment', get_stylesheet_directory_uri() . '/assets/js/vendor/moment.min.js', array(), '2.20.1', true);
+	wp_register_script('moment', get_stylesheet_directory_uri() . '/assets/js/vendor/moment.min.js', array(), '2.26.0', false);
 	wp_register_script('scripts', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array('jquery'), '1.0.2', true);
 
 });
