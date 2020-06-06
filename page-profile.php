@@ -143,7 +143,7 @@ get_header(); the_post(); ?>
 							</div><!-- end email -->
 							<div class="col-md-6 col-sm-6">
 								<div class="input">
-									<input type="password" id="reg_password" name="password" class="password-input" placeholder="重置密码">
+									<input type="password" id="reg_password" name="password" class="password-input" placeholder="<?=__('重置密码', 'bingo')?>">
 								</div>
 							</div><!-- end password -->
                             <?php if ($invited_by_user = get_user_by('ID', get_user_meta($user->ID, 'invited_by_user', true))): ?>
@@ -156,7 +156,7 @@ get_header(); the_post(); ?>
                             <?php else: ?>
                             <div class="col-md-6 col-sm-6">
                                 <div class="input">
-                                    <input type="text" id="reg_invitation_code" name="invitation_code" class="invitation_code-input" placeholder="邀请码，填写后你和邀请人都将获得奖励">
+                                    <input type="text" id="reg_invitation_code" name="invitation_code" class="invitation_code-input" placeholder="<?=__('邀请码，填写后你和邀请人都将获得奖励', 'bingo')?>">
                                 </div>
                             </div><!-- end invitation_code -->
                             <?php endif; ?>
@@ -268,7 +268,7 @@ jQuery(function($) {
     new ClipboardJS('.copy-invitation-link');
     $('.copy-invitation-link').click(function (e) {
         e.preventDefault();
-        alert('<?=__('邀请注册链接已复制，发送给好友邀请他们注册吧！', 'bingo')?>');
+        alert("<?=__('邀请注册链接已复制，发送给好友邀请他们注册吧！', 'bingo')?>");
     });
 });
 </script>
