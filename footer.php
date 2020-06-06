@@ -3,6 +3,7 @@
 <footer id="footer">
 	<div class="container">
 		<div class="row">
+			<?php if (pll_current_language() === 'zh'): ?>
 			<div class="col-md-3 col-sm-6">
 				<div class="widget about-widget">
 					<h6 class="widget-title"><?=__('微信客服号', 'bingo')?></h6>
@@ -15,6 +16,11 @@
                     <img src="<?=get_stylesheet_directory_uri()?>/assets/img/qrcode_mp_co.jpg">
 				</div><!-- End Courses Widget -->
 			</div><!-- End col-md4 -->
+			<?php elseif (!is_cn_ip()): ?>
+			<div class="col-md-6">
+				<div class="fb-page" data-href="https://www.facebook.com/Bingotraining/" data-tabs="timeline" data-width="500" data-height="265" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Bingotraining/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Bingotraining/">Bingotraining Pty Ltd</a></blockquote></div>
+			</div>
+			<?php endif; ?>
 			<div class="col-md-6">
 				<div class="widget">
                     <?php if ($copyright = get_posts('name=copyright')[0]): ?>
@@ -54,5 +60,9 @@ if (!localStorage.getItem('promotionRead')) {
 </script>
 
 <?php wp_footer(); ?>
+<?php if (!is_cn_ip()): ?>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_CN/sdk.js#xfbml=1&version=v7.0"></script>
+<?php endif; ?>
 </body>
 </html>
