@@ -751,8 +751,13 @@ jQuery(function($) {
             self.currentTime = timePoint; self.play();
 
             if (nextTimePoint && nextTimePoint > timePoint) {
-                setTimeout(function () {
+				console.log('Will pause after ' + (nextTimePoint - timePoint) + 'seconds.');
+				if (window.timePointPlayTimeout) {
+				    clearTimeout(window.timePointPlayTimeout);
+				}
+                window.timePointPlayTimeout = setTimeout(function () {
                     self.pause();
+                    console.log('Paused.');
                 }, (nextTimePoint - timePoint) * 1000);
             }
         })
