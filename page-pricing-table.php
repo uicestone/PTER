@@ -108,7 +108,7 @@ get_header(); the_post() ?>
 					<div class="table-header grad-btn">
 						<p class="text"><?=get_the_title($subscribe_post->ID)?></p><!-- end text -->
 						<p class="price">
-							$
+							$AUD
 							<?php $price = get_post_meta($subscribe_post->ID, 'price', true); if ($discount): ?>
 								<del><?=$price?></del>
 								<span class="price-amount"><?=round($price * (1 - $discount / 100), 2)?></span>
