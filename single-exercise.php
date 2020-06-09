@@ -19,7 +19,7 @@ $question_type_desc = get_posts(array('post_type' => 'question_type_desc', 'post
 		'terms' => $question_type->slug
 	)
 )))[0];
-$question_type_main_language = get_term(pll_get_term($question_type->term_id, 'zh'));
+$question_type_main_language = get_term(pll_get_term($question_type->term_id, 'zh') ?: $question_type->term_id);
 $marked_exercises = get_user_meta($user->ID, 'marked_exercises') ?: array();
 $current_exercise_marked = in_array(get_the_ID(), $marked_exercises);
 
@@ -421,7 +421,7 @@ get_header(); ?>
                                 </div>
                                 <div class="skillbar-bar"></div>
                                 <div class="controls">
-									<?php if (in_array($question_type_main_language->slug, array('intensive-listening', 'ccl-intensive-listening', 'tax-219'))): ?>
+									<?php if (in_array($question_type_main_language->slug, array('intensive-listening', 'ccl-intensive-listening', 'tax', 'fin'))): ?>
                                     <i id="rewind-control" class="fa fa-fast-backward"></i>
                                     <i id="fast-forward-control" class="fa fa-fast-forward"></i>
 									<?php endif; ?>
