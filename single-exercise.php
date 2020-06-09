@@ -774,7 +774,10 @@ jQuery(function($) {
 
         if (!audioProgress.prev('.timer').length) {
             setTimeout(function () {
-                self.play();
+                self.play().catch(function(e){
+                    console.error(e.message);
+                    audioProgress.find('#play-control').show();
+	            });
             }, 3000);
 		}
     })
