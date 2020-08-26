@@ -494,7 +494,7 @@ header .main-navigation li.parent-item ul.sub-menu li.haschild:hover>ul {
     transform: scaleY(1);
 }
 header .main-navigation li a.unread::after {
-    content: '优惠';
+    content: 'Promotion';
     background: #ef7648;
     border-radius: 3px;
     margin-left: 4px;
