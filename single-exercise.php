@@ -618,7 +618,7 @@ get_header(); ?>
 </article><!-- End Single Article -->
 
 <style type="text/css">
-    .question.content .mejs-audio {
+    .question.content audio {
         display: none;
     }
 </style>
