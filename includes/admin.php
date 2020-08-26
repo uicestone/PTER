@@ -127,6 +127,14 @@ add_action('login_enqueue_scripts', function () { ?>
 	<?php
 });
 
+add_filter('pre_get_users', function (WP_User_Query $query) {
+	if (is_admin() && is_main_query() && !$_GET['orderby']) {
+		$query->set('order', 'desc');
+		$query->set('orderby', 'registered');
+	}
+	return $query;
+});
+
 add_filter( 'user_contactmethods', function ( $contactmethods ) {
 	$contactmethods['mobile'] = '手机号';
 	return $contactmethods;
