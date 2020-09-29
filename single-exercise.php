@@ -4,6 +4,10 @@
 if (!get_the_content()) {
 	the_post();
 	$post = get_post();
+}
+
+// cap guard only on exercise page
+if (preg_match('/^\/exercise\//',$_SERVER['REQUEST_URI'])) {
 	ensure_user_cap_on($post);
 }
 
