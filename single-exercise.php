@@ -7,7 +7,7 @@ if (!get_the_content()) {
 }
 
 // cap guard only on exercise page
-if (preg_match('/^\/exercise\//',$_SERVER['REQUEST_URI'])) {
+if (preg_match('/\/exercise\//',$_SERVER['REQUEST_URI'])) {
 	ensure_user_cap_on($post);
 }
 
