@@ -135,12 +135,12 @@ get_header(); ?>
 								<?php if (isset($exam) && $section === 'break') { echo wpautop(get_post_meta(get_the_ID(), 'break_content', true)); } else { the_content(); } ?>
 							</div>
 						</div><!-- End Entry -->
-                        <?php if (in_array($question_type_main_language->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening', 'ccl-intensive-listening', 'write-essay', 'swt'))): ?>
+                        <?php if (in_array($question_type_main_language->slug, array('summarise-spoken-text', 'write-from-dictation', 'intensive-listening', 'ccl-intensive-listening', 'write-essay', 'ca-exam-question', 'swt'))): ?>
 						<div class="comment-form answer-form entry">
 							<div class="addcomment-title">
 								<span class="icon"><i class="fa fa-comments-o"></i></span>
 								<span class="text"><?=__('你的回答', 'bingo')?></span>
-                                <?php if (in_array($question_type_main_language->slug, array('summarise-spoken-text', 'write-essay', 'swt'))): ?>
+                                <?php if (in_array($question_type_main_language->slug, array('summarise-spoken-text', 'write-essay', 'ca-exam-question', 'swt'))): ?>
                                 <span class="pull-right word-count"><?=__('词数：', 'bingo')?><span class="count">0</span></span>
                                 <?php endif; ?>
 								<?php if (in_array($question_type_main_language->slug, array('write-from-dictation', 'intensive-listening', 'ccl-intensive-listening'))): ?>
@@ -577,6 +577,14 @@ get_header(); ?>
 									<div class="skillbar-bar"></div>
 								</div>
 							<?php endif; ?>
+	                        <?php if(in_array($question_type_main_language->slug, array('ca-exam-question'))): ?>
+							  <div class="skillbar timer clearfix" data-duration="3000">
+								  <div class="skillbar-title">
+									  <span><?=__('时间', 'bingo')?> <span class="seconds-left">50:00</span></span>
+								  </div>
+								  <div class="skillbar-bar"></div>
+							  </div>
+	                        <?php endif; ?>
 							<?php if(empty($exam) && in_array($question_type_main_language->slug, array('fill-in-the-blanks-i', 'fill-in-the-blanks-ii', 'reorder-paragraph'))): ?>
                                 <div class="skillbar timer clearfix" data-duration="180">
                                     <div class="skillbar-title">
