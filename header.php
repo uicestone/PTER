@@ -3,8 +3,8 @@
 <head>
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
-	<title><?php wp_title('-', true, 'right'); bloginfo('name'); echo ' - '; bloginfo('description') ?></title>
-	<meta name="keywords" content="<?=__('PTE练习')?> PTE技巧 PTE考试 PTE模考">
+	<title><?php wp_title('-', true, 'right'); bloginfo('name'); echo ' - '; echo __('全球首家付费PTE练习平台', 'bingo') ?></title>
+	<meta name="keywords" content="<?=__('PTE练习 PTE技巧 PTE考试 PTE模考', 'bingo')?>">
 	<meta name="description" content="<?php is_single() ? print(get_the_excerpt()) : bloginfo('description'); ?>">
 	<meta name="author" content="Bingo Training Pty Ltd, Uice Lu">
 	<!-- Mobile Meta -->
