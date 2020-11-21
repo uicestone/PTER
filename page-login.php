@@ -11,15 +11,15 @@ if(isset($_POST['submit'])){
 	}
 
 	// 检查并记录当日IP数
-    $user_ips_today = get_user_meta($user->ID, 'ip_' . current_time('Y-W'));
+    $user_recent_ips = get_user_meta($user->ID, 'ip_' . current_time('Y-W'));
     $user_ip = get_the_user_ip();
 
-    if (!in_array(get_the_user_ip(), $user_ips_today)) {
-		$user_ips_today[] = $user_ip;
+    if (!in_array(get_the_user_ip(), $user_recent_ips)) {
+		$user_recent_ips[] = $user_ip;
 		add_user_meta($user->ID, 'ip_' . current_time('Y-W'), $user_ip);
     }
 
-    if (count($user_ips_today) > 2) {
+    if (count($user_recent_ips) > 20) {
         exit('账号状态异常，如果您使用的是朋友的账号，或许可以考虑：<br><a href="' . site_url_ml() . '/register/">注册自己的账号</a>，输入朋友的<b>邀请码</b>优惠购买！<br>当前优惠折扣：<b>' . get_post_meta(get_page_by_path('pricing-table')->ID, 'intro_discount', true) . '%OFF</b>');
     }
 
