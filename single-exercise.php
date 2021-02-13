@@ -857,7 +857,7 @@ jQuery(function($) {
     var answerToggleButton = $('.answer.entry .toggle');
     if (answerContentElement.length) {
         var answer = $(answerContentElement).clone().find('sup').remove().end().find('p').map(function (i, p) { return $(p).text().replace(/<?=__('答案', 'bingo')?>/, ''); }).toArray().join(' ');
-        var answerTrimmed = answer.toLowerCase().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
+        var answerTrimmed = answer.toLowerCase().replace(new RegExp('\.(?!\d)','g'), '').replace(/[\'\?\!\-\<\>]/g, '').trim();
         var answerWordCount = answerTrimmed.split(/\s+/).length;
 	}
 
@@ -876,7 +876,7 @@ jQuery(function($) {
 
         // answer word count
         var answerInputValue = $(this).val().trim();
-        var answerInputValueTrimmed = answerInputValue.toLowerCase().replace(/\.(?!\d)/g, '').replace(/[\'\?\!\-\<\>]/g, '').trim();
+        var answerInputValueTrimmed = answerInputValue.toLowerCase().replace(new RegExp('\.(?!\d)','g'), '').replace(/[\'\?\!\-\<\>]/g, '').trim();
         var wordCount = answerInputValue.split(/\s+/).filter(function(w){ return w; }).length;
         var _self = this;
         wordCountElement.text(wordCount);
